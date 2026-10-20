@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sguzman.github.io/sceneology/ontology/schemas/record-v1.schema.json",
+  "title": "Sceneology public technical record v1",
+  "description": "Technical catalog metadata; status does not imply owner gallery approval.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "title",
+    "kind",
+    "status",
+    "summary",
+    "path",
+    "rights"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*$"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "kind": {
+      "enum": [
+        "scene",
+        "object",
+        "experiment",
+        "effect",
+        "animation",
+        "renderer",
+        "tool",
+        "ontology",
+        "other"
+      ]
+    },
+    "status": {
+      "enum": [
+        "planned",
+        "active",
+        "experimental",
+        "validated",
+        "failed",
+        "complete",
+        "archived"
+      ]
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 1
+    },
+    "path": {
+      "type": "string",
+      "pattern": "^(scenes|experiments|ontology|runtime|assets|tools|docs)/[a-zA-Z0-9._/-]+$"
+    },
+    "viewer": {
+      "type": "string",
+      "pattern": "^(scenes|experiments|site)/[a-zA-Z0-9._/-]+\\.html$"
+    },
+    "thumbnail": {
+      "type": "string",
+      "pattern": "^(scenes|experiments|site|assets)/[a-zA-Z0-9._/-]+\\.(png|jpg|jpeg|webp|avif|svg)$"
+    },
+    "rights": {
+      "enum": [
+        "original",
+        "permitted-third-party",
+        "mixed-cleared"
+      ]
+    },
+    "limitations": {
+      "type": "string"
+    },
+    "tags": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

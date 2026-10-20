@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#19211d">
+  <meta name="description" content="Sceneology: a public scene-construction laboratory and curated interactive exhibition.">
+  <title>Sceneology — Scenes, systems, experiments</title>
+  <link rel="stylesheet" href="./site/style.css">
+  <script type="module" src="./site/main.js"></script>
+</head>
+<body>
+  <header>
+    <nav class="wrap" aria-label="Main navigation">
+      <a class="brand" href="./">Sceneology</a>
+      <div class="navlinks">
+        <a href="#gallery-section">Selected works</a>
+        <a href="#about">About</a>
+        <a href="https://github.com/sguzman/sceneology">Source &amp; ontology</a>
+      </div>
+    </nav>
+  </header>
+  <main class="wrap">
+    <div class="hero">
+      <p class="eyebrow">Scenes · Systems · Experiments</p>
+      <h1>Constructing worlds, one scene at a time.</h1>
+      <p class="lead">Sceneology explores how visual and interactive scenes are built, described and experienced. The research is open; this exhibition features only selected works.</p>
+    </div>
+    <section id="gallery-section" aria-labelledby="gallery-title">
+      <h2 id="gallery-title">Selected works</h2>
+      <p class="caption">Only owner-approved scenes, objects and experiments appear here. The underlying repository also preserves ongoing research and unsuccessful experiments.</p>
+      <div id="gallery" aria-live="polite"><p class="caption">Loading selected works…</p></div>
+    </section>
+    <section id="about" aria-labelledby="about-title">
+      <h2 id="about-title">Behind the scenes</h2>
+      <p class="caption">Sceneology is both a technical research project and a place to experience finished or experimental artworks selected for public presentation.</p>
+      <div class="tiles">
+        <div class="tile"><h3>Ontology</h3><p>Concepts, parts, relationships, constraints and machine-readable descriptions of scenes.</p></div>
+        <div class="tile"><h3>Construction</h3><p>Real scene and object implementations, renderers, tools, animation and interaction.</p></div>
+        <div class="tile"><h3>Experimentation</h3><p>Technical successes, failures, hypotheses, revisions and reproducible evidence.</p></div>
+      </div>
+      <p style="margin-top:30px"><a href="https://github.com/sguzman/sceneology/tree/main/ontology">Explore the public ontology ↗</a></p>
+    </section>
+  </main>
+  <footer><div class="wrap">Sceneology · Independent scene-making research · <a href="https://github.com/sguzman/sceneology">GitHub</a></div></footer>
+</body>
+</html>
