@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "id": "flat-static-svg-binding",
+  "scene_id": "static-shapes-two-d",
+  "scene_dimension": "2d",
+  "target": "svg",
+  "coordinate_conversion": "top-left-px-to-svg",
+  "status": "declared",
+  "bindings": [
+    {
+      "element_id": "ground",
+      "target_id": "ground-rect",
+      "representation": "shape"
+    },
+    {
+      "element_id": "sun",
+      "target_id": "sun-ellipse",
+      "representation": "shape"
+    }
+  ],
+  "unsupported_features": [],
+  "notes": "Synthetic mapping contract: names renderer nodes but does not generate an SVG or claim visual output."
+}
