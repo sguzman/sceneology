@@ -110,6 +110,16 @@ try{
  const png=fs.readFileSync(image);
  assert.ok(png.length>6000&&png.subarray(0,8).toString("hex")==="89504e470d0a1a0a","Bad Chrome screenshot");
 }finally{fs.rmSync(screenshotProfile,{recursive:true,force:true});}
+const zoneCaptureProfile=fs.mkdtempSync(path.join(os.tmpdir(),"sceneology-zone-guide-review-"));
+try{
+ const image=path.join(output,"cozy-bedroom-source-zones.png");
+ const target=new URL("site/room-proxy-review.html?room=cozy-bedroom-study-v1.3&zones=1",base).href;
+ const shot=spawnSync(chrome,[...flags,"--window-size=1400,1300","--user-data-dir="+zoneCaptureProfile,
+  "--screenshot="+image,target],{encoding:"utf8",timeout:100000});
+ if(shot.error||shot.status!==0)throw Error("Source zone overlay screenshot failed");
+ const bytes=fs.readFileSync(image);
+ assert.ok(bytes.length>6000&&bytes.subarray(0,8).toString("hex")==="89504e470d0a1a0a");
+}finally{fs.rmSync(zoneCaptureProfile,{recursive:true,force:true});}
 const report={schema_version:1,status:"passed",technical_only:true,original_binding_certified:false,approved_gallery_additions:0,
  explicit_instance_count:18,unplaced_parented_count:11,snapshots:[cozy,study,sleep,rotated,alternate]};
 fs.writeFileSync(path.join(output,"proxy-review-report.json"),JSON.stringify(report,null,2)+"\n");

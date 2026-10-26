@@ -170,6 +170,16 @@ try{
  const png=fs.readFileSync(picture);
  assert.ok(png.length>7000&&png.subarray(0,8).toString("hex")==="89504e470d0a1a0a");
 }finally{fs.rmSync(forwardPillowProfile,{recursive:true,force:true});}
+const regionCaptureProfile=fs.mkdtempSync(path.join(os.tmpdir(),"sceneology-reading-zone-capture-"));
+try{
+ const image=path.join(output,"reading-corner-zone-guides.png");
+ const target=new URL("site/reading-corner-study.html?zones=1&yaw=130",base).href;
+ const shot=spawnSync(browser,[...flags,"--window-size=1250,1450","--user-data-dir="+regionCaptureProfile,
+  "--screenshot="+image,target],{encoding:"utf8",timeout:100000});
+ if(shot.error||shot.status!==0)throw Error("Reading Corner source-zone snapshot failed");
+ const bytes=fs.readFileSync(image);
+ assert.ok(bytes.length>7000&&bytes.subarray(0,8).toString("hex")==="89504e470d0a1a0a");
+}finally{fs.rmSync(regionCaptureProfile,{recursive:true,force:true});}
 const report={schema_version:1,status:"passed",artwork_approved:false,original_accepted_room_render:false,
  partial_placed_instances:6,unplaced_instances:2,source_shoe_gap:-.99,
  opt_in_support_offset:.99,original_occupancy_transform_preserved:true,cameras:[first,second]};
