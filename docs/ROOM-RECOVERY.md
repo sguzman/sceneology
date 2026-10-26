@@ -114,3 +114,9 @@ The [machine-generated embedded-content audit](https://sguzman.github.io/sceneol
 Both room research viewers now offer source-authored 2D X/Z planning-zone guides directly over the furniture proxies. Four rooms declare 17 total zone rectangles: five Cozy Bedroom zones and four each for Study Corner, Sleep Room and Reading Corner. Only Cozy Bedroom explicitly declares a 6 × 5 original architectural footprint, so the visual guide shows that outline there and *no inferred walls or footprint* for the other three rooms.
 
 The optional [three-room zones](https://sguzman.github.io/sceneology/site/room-proxy-review.html?zones=1) and [Reading Corner zones](https://sguzman.github.io/sceneology/site/reading-corner-study.html?zones=1) are planning diagnostics, not physical walkable-floor geometry, collision clearance, exact renderer fidelity, or gallery approval.
+
+## Conservative reserved-area X/Z overlap screening
+
+The [source zone plan-view audit](https://sguzman.github.io/sceneology/site/room-zone-footprint-audit.json) compares the transformed axis-aligned X/Z bounding rectangles of **24 placed research proxy models** against the **five source-authored character-stage, bedside-stage, and circulation zones** across four accepted room specifications. The intentional area rug and wall-mounted windows are excluded from *potential obstructing furniture mass* counts, not silently repositioned. An intersection is classified as a broad-phase candidate only; it does not establish an actual visual clutter, walkable-space obstruction, original-renderer penetration, or failed human-reviewed room. The default variants are unapproved and can differ from the originals.
+
+The audited zones and the only explicit Cozy Bedroom footprint are also independently available as optional guides in the two 3D research viewers. No missing walls or parent attachment positions were manufactured.

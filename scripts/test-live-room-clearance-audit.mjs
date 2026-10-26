@@ -28,4 +28,23 @@ const totalCandidates=audit.rooms.reduce((n,r)=>n+r.geometry.total_candidate_pai
 const byRoom=audit.rooms.map(room=>({id:room.room_id,bounds:room.geometry.instances.length,
  potentialOverlapPairs:room.geometry.total_candidate_pairs,
  proxyPartAabbCandidates:room.geometry.component_bbox_candidate_pairs}));
+const zoning=new URL("site/room-zone-footprint-audit.json",base.endsWith("/")?base:base+"/");
+zoning.searchParams.set("revision",process.env.GITHUB_SHA||"latest");
+const bytes=fs.readFileSync(path.join(root,"site/room-zone-footprint-audit.json"));
+let issue;
+for(let attempt=0;attempt<5;attempt++){
+ try{
+  const response=await fetch(zoning,{cache:"no-store",signal:AbortSignal.timeout(18000)});
+  assert.equal(response.status,200,"Missing published authored-zone planning screen");
+  assert.ok(Buffer.from(await response.arrayBuffer()).equals(bytes),"Published zone evidence does not match CI source");
+  issue=null;break;
+ }catch(e){issue=e;if(attempt<4)await new Promise(r=>setTimeout(r,2600));}
+}
+if(issue)throw issue;
+const screen=JSON.parse(bytes);
+assert.equal(screen.zone_count,5);
+assert.equal(screen.represented_world_proxy_count,24);
+assert.equal(screen.does_not_establish_original_room_clearance,true);
+assert.equal(screen.does_not_certify_walking_or_standing_space,true);
+console.log("Sceneology five reserved room-stage and circulation zones published unchanged, with zero verified blocked corridors.");
 console.log("Sceneology bounds review deployed exactly: "+JSON.stringify({totalCandidates,byRoom,roomBindingsCertified:0,collisionCertified:false}));
