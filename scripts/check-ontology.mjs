@@ -8,7 +8,8 @@ export const load=rel=>JSON.parse(fs.readFileSync(path.join(root,rel),"utf8"));
 export const schemas={
  scene:load("ontology/schemas/scene-v1.schema.json"),
  entity:load("ontology/schemas/entity-v1.schema.json"),
- experiment:load("ontology/schemas/experiment-v1.schema.json")
+ experiment:load("ontology/schemas/experiment-v1.schema.json"),
+ mapping:load("ontology/schemas/representation-map-v1.schema.json")
 };
 const requireValid=(value,schema)=>assert.deepEqual(errorsFor(value,schema,schema),[]);
 const ensure=(ok,why)=>{if(!ok)throw Error(why);};
@@ -83,10 +84,27 @@ export function checkScene(s){
 export function checkEntity(e){requireValid(e,schemas.entity);return true;}
 export function checkExperiment(e){requireValid(e,schemas.experiment);return true;}
 
+export function checkMapping(map,scene){
+ requireValid(map,schemas.mapping);
+ ensure(map.scene_id===scene.id&&map.scene_dimension===scene.dimension,"mapping scene identity/dimension");
+ const ids=new Set(scene.elements.map(e=>e.id)),targets=new Set();
+ const bound=new Set();
+ for(const b of map.bindings){
+  ensure(ids.has(b.element_id),"mapping source missing");
+  ensure(!targets.has(b.target_id),"mapping target reused");targets.add(b.target_id);
+  ensure(!bound.has(b.element_id),"mapping element rebound");bound.add(b.element_id);
+ }
+ if(map.scene_dimension==="2d")ensure(map.coordinate_conversion!=="world-to-clip","invalid 2D coordinate conversion");
+ if(map.scene_dimension==="3d")ensure(map.coordinate_conversion!=="top-left-px-to-svg","invalid 3D coordinate conversion");
+ if(map.status==="verified")ensure(map.unsupported_features.length===0,"incomplete mapping cannot be verified");
+ return true;
+}
+
 const sceneFiles=["static-2d.scene.json","animated-2d.scene.json","static-3d.scene.json","interactive-2d.scene.json"];
 for(const name of sceneFiles)checkScene(load("ontology/examples/"+name));
 checkEntity(load("ontology/examples/reusable-entity.json"));
 checkExperiment(load("ontology/examples/failed-experiment.json"));
+checkMapping(load("ontology/examples/static-2d.mapping.json"),load("ontology/examples/static-2d.scene.json"));
 // Negative controls guard the checks themselves: malformed data must fail.
 const original=load("ontology/examples/animated-2d.scene.json");
 const mutators=[
@@ -111,4 +129,6 @@ assert.throws(()=>checkExperiment(invalidExperiment));
 const invalidEntity=load("ontology/examples/reusable-entity.json");
 invalidEntity.dimensions=["4d"];
 assert.throws(()=>checkEntity(invalidEntity));
-console.log("Sceneology ontology verified: 6 positive fixtures and semantic negative controls.");
+const mapBad=load("ontology/examples/static-2d.mapping.json");mapBad.bindings[0].element_id="missing";
+assert.throws(()=>checkMapping(mapBad,load("ontology/examples/static-2d.scene.json")));
+console.log("Sceneology ontology verified: 7 positive fixtures and 13 negative controls.");
