@@ -134,14 +134,24 @@
         {
           "id": "O02",
           "points": 6,
-          "status": "todo",
-          "evidence": []
+          "status": "done",
+          "evidence": [
+            "ontology/REPRESENTATION.md",
+            "ontology/SCENES.md",
+            "ontology/MAPPINGS.md"
+          ]
         },
         {
           "id": "O03",
           "points": 6,
-          "status": "todo",
-          "evidence": []
+          "status": "done",
+          "evidence": [
+            "ontology/schemas/scene-v1.schema.json",
+            "ontology/schemas/entity-v1.schema.json",
+            "ontology/schemas/experiment-v1.schema.json",
+            "ontology/schemas/representation-map-v1.schema.json",
+            "scripts/check-ontology.mjs"
+          ]
         },
         {
           "id": "O04",
