@@ -15,7 +15,13 @@ assert.equal(data.source_model_bindings_certified,false);
 assert.equal(data.showcase_approved,false);
 assert.equal(data.rooms.length,3);
 assert.equal(gallery.approved_ids.length,24);
-const resources=["site/room-proxy-review.html","site/room-proxy-review.js","site/room-proxy-review-data.json","site/family-orbit-data.json","site/room-variant-reduction.json","site/source-room-region-guide.mjs","site/room-attachment-fit-audit.json"];
+const bedding=JSON.parse(fs.readFileSync(path.join(root,"site/bed-pillow-placement-research.json"),"utf8"));
+assert.equal(bedding.original_bed_candidates.length,3);
+assert.equal(bedding.eligible_only_if_source_embedded_pillow_and_blanket_hidden,true);
+assert.equal(bedding.all_original_room_binding_unknown,true);
+assert.equal(bedding.original_blanket_v1_3_still_missing,true);
+assert.equal(bedding.showcase_approved,false);
+const resources=["site/room-proxy-review.html","site/room-proxy-review.js","site/room-proxy-review-data.json","site/family-orbit-data.json","site/room-variant-reduction.json","site/source-room-region-guide.mjs","site/room-attachment-fit-audit.json","site/bed-pillow-placement-research.json"];
 for(const relative of resources){
  let failure;
  for(let attempt=0;attempt<5;attempt++){
