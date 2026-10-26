@@ -41,6 +41,9 @@ try{
  if(run.error||run.status!==0)throw Error("Quest Girl browser failed: "+String(run.error||run.stderr).slice(-700));
  const dom=run.stdout;
  fs.writeFileSync(path.join(output,"motion.dom.html"),dom);
+ const errorStatus=dom.match(/id="motion-status"[^>]*>([^<]*)</)?.[1]||"";
+ if(errorStatus.startsWith("Motion rendering failed")||errorStatus.startsWith("Unable to load"))
+  throw Error("Character renderer reported: "+errorStatus);
  assert.ok(/id="motion-stage"[^>]*data-clip="idle-soft"[^>]*data-rendered="true"/.test(dom),
   "Headless Chrome did not actually paint idle clip");
  assert.ok((dom.match(/<polygon /g)||[]).length>=70,"Motion player geometry missing");
