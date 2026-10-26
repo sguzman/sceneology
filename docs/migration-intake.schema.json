@@ -1,0 +1,169 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sguzman.github.io/sceneology/docs/migration-intake.schema.json",
+  "title": "Sceneology migration review decision (nonpublic working record)",
+  "description": "Schema for screening decisions kept outside the public Sceneology repository. Do not publish populated private inventory records. A passed review does not authorize gallery selection.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "material_kind",
+    "publication_safety",
+    "rights",
+    "dependency_closure",
+    "domain_fit",
+    "technical_evidence",
+    "score",
+    "disposition"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]+$",
+      "description": "Opaque review ID, not a revealing filename or private path."
+    },
+    "material_kind": {
+      "enum": [
+        "scene",
+        "object",
+        "animation",
+        "experiment",
+        "ontology",
+        "renderer",
+        "effect",
+        "audio",
+        "tool",
+        "other"
+      ]
+    },
+    "publication_safety": {
+      "$ref": "#/$defs/gate"
+    },
+    "rights": {
+      "$ref": "#/$defs/gate"
+    },
+    "dependency_closure": {
+      "$ref": "#/$defs/gate"
+    },
+    "domain_fit": {
+      "$ref": "#/$defs/gate"
+    },
+    "technical_evidence": {
+      "$ref": "#/$defs/gate"
+    },
+    "score": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "relevance",
+        "learning",
+        "reproducibility",
+        "distinctiveness",
+        "maintainability"
+      ],
+      "properties": {
+        "relevance": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 3
+        },
+        "learning": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 3
+        },
+        "reproducibility": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 3
+        },
+        "distinctiveness": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 3
+        },
+        "maintainability": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 3
+        }
+      }
+    },
+    "disposition": {
+      "enum": [
+        "admit",
+        "hold",
+        "decline",
+        "rewrite"
+      ]
+    },
+    "reason_code": {
+      "enum": [
+        "passes-gates",
+        "rights-unclear",
+        "safety-unclear",
+        "dependencies-unclear",
+        "out-of-scope",
+        "redundant",
+        "not-reproducible",
+        "insufficient-value",
+        "requires-rewrite",
+        "exceptional-negative-evidence",
+        "other"
+      ]
+    },
+    "exception_rationale": {
+      "type": "string",
+      "minLength": 1
+    },
+    "screened_revision": {
+      "type": "string",
+      "description": "Opaque revision ID; do not place nonpublic URLs or private paths in public artifacts."
+    }
+  },
+  "$defs": {
+    "gate": {
+      "enum": [
+        "pass",
+        "fail",
+        "unknown"
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "disposition": {
+            "const": "admit"
+          }
+        },
+        "required": [
+          "disposition"
+        ]
+      },
+      "then": {
+        "properties": {
+          "publication_safety": {
+            "const": "pass"
+          },
+          "rights": {
+            "const": "pass"
+          },
+          "dependency_closure": {
+            "const": "pass"
+          },
+          "domain_fit": {
+            "const": "pass"
+          },
+          "technical_evidence": {
+            "const": "pass"
+          }
+        },
+        "required": [
+          "screened_revision"
+        ]
+      }
+    }
+  ]
+}
