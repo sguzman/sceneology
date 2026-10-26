@@ -1,0 +1,30 @@
+name: Verify source-backed model previews
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'models/*-review.html'
+      - 'scripts/test-model-preview-browser.mjs'
+      - '.github/workflows/model-browser.yml'
+  workflow_dispatch:
+jobs:
+  model-captures:
+    runs-on: ubuntu-latest
+    timeout-minutes: 14
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Exercise six standalone 3D models in browser
+        run: node scripts/test-model-preview-browser.mjs
+      - name: Save model preview screenshot evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sceneology-model-visual-review
+          path: artifacts/model-candidates/
+          if-no-files-found: warn
+          retention-days: 30
