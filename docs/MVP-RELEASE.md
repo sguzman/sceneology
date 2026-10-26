@@ -1,0 +1,40 @@
+# Sceneology — bounded migration MVP completion
+
+**Review date:** October 26, 2026  
+**What "100%" measures:** the 100 weighted points in [this specific migration MVP roadmap](roadmap.json), **not** the completion of all future Sceneology research, every possible imported source, or the selection of artworks for exhibition.
+
+## Delivered and verified
+
+| Category | Accepted result |
+| --- | --- |
+| Repository | Public independent source tree, clean publication rules, CI and GitHub Pages deployment |
+| Source census | 2,413 revision-indexed records across scoped sources; complete fail-closed intake decision ledger stored only privately |
+| Source decisions | 6 admitted; 1,851 held pending hard gates; 556 declined for this bounded release |
+| Version reconciliation | 194 identical public/private blob pairs, 9 divergent overlapping files, 57 public-only files, and 59 historical variant families retained without automatic promotion |
+| Ontology | Human-readable representation contract; versioned machine-readable scene, entity, experiment and renderer-mapping schemas; fixtures, negative controls and synthetic format-upgrade tests |
+| Technical transfers | 6 actual source-backed artifacts: 5 self-contained WebGL2 effects/renderer experiments and 1 reconstructed editable SVG character-motion scene |
+| Privacy and rights | Selected artifact contents inspected, source/media/dependency boundaries documented, source bytes and local runtime digests pinned, release-wide safety checks and provenance declarations validated |
+| Browser QA | Automated first draw and image capture for five WebGL2 experiments; SVG rig/reflection/motion/blink tests; gallery mock-approval tests; live HTTPS desktop/mobile/keyboard/deployment checks |
+| Gallery | Owner-controlled ID allowlist, safe real-thumbnail handling and an intentionally empty public exhibition |
+| Curation handoff | 4 real, independently browsable candidates and a separate browser-captured comparison-sheet artifact, without automatic publication or selection |
+
+## Curation acceptance and zero approved exhibits
+
+Roadmap G03 is accepted as **curation readiness and actual presentation of real candidates**, not as an assertion that the owner reviewed, liked or approved any particular work. The contract explicitly permits an empty showcase until the owner decides. The reviewed candidate set and first-render screenshots were produced in [this successful GitHub Actions run](https://github.com/sguzman/sceneology/actions/runs/40352006822), which uploaded the `sceneology-owner-review-contact-sheet` review artifact. Open its `index.html` to compare the four actual captures and follow the live viewer links. The real `catalog/showcase.json` still contains zero approved IDs.
+
+**No scene is automatically promoted as a reward for a passed technical test.** Historical artistic failures remain accessible in the technical repository and are excluded from the proposed exhibition shortlist. If the owner later chooses an artwork, that choice opens a distinct release action: capture an exact real thumbnail, approve the card, update the allowlist and test the resulting live exhibit.
+
+## Deliberately not claimed
+
+- No exhaustive content, privacy, copyright or transitive dependency review was conducted on the 1,851 held records. They stay out of the public release.
+- The 556 declined records were not deleted; they remain at their source. Some are simply outside the Sceneology discipline.
+- Six admitted technical artifacts do not equal migration of every historically created scene or an entire source repository.
+- Screenshot and software-WebGL checks do not establish aesthetic quality, physical GPU speed, rendering parity, robust interactive UX on every device, or successful 2D game creation.
+- Neither the owner nor an assistant has approved any work for public exhibition.
+- The contact-sheet artifact is separate from the GitHub Pages site, and GitHub's artifact retention window may expire; the CI workflow can regenerate the sheet from the pinned candidate sources.
+
+## Ongoing rules
+
+Keep the source libraries, completed and failed studies, and future 2D/3D experiments versioned independently. New private source bytes require a new content-level admission review before the first public commit. Never import private histories, confidential expressions or third-party materials without redistribution rights. Always keep the curated showcase controlled by explicit per-work owner permission.
+
+This document closes the **bounded public-migration MVP**, not the larger creative mission. Later scene development, additional selected migrations, more refined ontology, and owner gallery approvals can proceed as new evidence-backed goals without retroactively inflating or falsifying this baseline.
