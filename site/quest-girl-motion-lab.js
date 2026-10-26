@@ -132,9 +132,12 @@ function draw(){
 }
 function tick(timestamp){
  if(lastTimestamp===null)lastTimestamp=timestamp;
- if(playing&&clip)elapsed+=(timestamp-lastTimestamp)/1000;
+ if(playing&&clip){
+  elapsed+=(timestamp-lastTimestamp)/1000;
+  try{draw();}catch(e){playing=false;message.textContent="Motion rendering failed: "+e.message;toggle.disabled=true;return;}
+ }
+ // A paused clip is drawn by its selection/seek handler only; do not redraw it every RAF.
  lastTimestamp=timestamp;
- try{draw();}catch(e){playing=false;message.textContent="Motion rendering failed: "+e.message;toggle.disabled=true;return;}
  requestAnimationFrame(tick);
 }
 try{
