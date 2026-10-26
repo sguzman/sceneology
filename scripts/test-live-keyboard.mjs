@@ -81,6 +81,23 @@ try{
   }
  }
  assert.ok(loaded,"Live gallery did not render every approved work with real loaded thumbnails");
+
+ if(approved.length>0){
+  const items=JSON.parse(fs.readFileSync(path.join(root,"catalog/library.json"),"utf8")).records;
+  const types=new Map(items.map(x=>[x.id,x.kind]));
+  for(const kind of ["scene","object","character"]){
+   const subset=approved.filter(id=>types.get(id)===kind);
+   if(!subset.length)continue;
+   const filtered=await evaluate("(()=>{const b=document.querySelector('#gallery-filters button[data-kind=\""+kind+"\"]');if(!b)return null;b.click();return {pressed:b.getAttribute('aria-pressed'),ids:[...document.querySelectorAll('#gallery [data-record-id]')].map(el=>el.dataset.recordId)}})()");
+   assert.ok(filtered,"Gallery category filter unavailable: "+kind);
+   assert.equal(filtered.pressed,"true","Gallery category filter not activated");
+   assert.deepEqual(filtered.ids,subset,"Gallery category filter showed incorrect items: "+kind);
+  }
+  const all=await evaluate("(()=>{const b=document.querySelector('#gallery-filters button[data-kind=\"all\"]');if(!b)return null;b.click();return [...document.querySelectorAll('#gallery [data-record-id]')].map(el=>el.dataset.recordId)})()");
+  assert.deepEqual(all,approved,"Gallery All filter failed to restore full exhibition");
+  report.gallery_filters="passed";
+ }
+
  await rpc("Runtime.evaluate",{expression:"document.activeElement?.blur?.()"});
  await key("Tab","Tab",9);
  report.keyboard.first_tab=await evaluate("document.activeElement?.className || ''");
