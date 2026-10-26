@@ -86,11 +86,22 @@ function chooseRoom(){
    picker.value=requestedVariant;
    chosen.set(item.id,requestedVariant);
   }
+  const provenance=document.createElement("a");
+  provenance.target="_blank";provenance.rel="noopener noreferrer";
+  provenance.textContent="Inspect exact model source and version";
+  provenance.style.display="block";provenance.style.fontSize=".82rem";provenance.style.marginTop="6px";
+  const updateSource=()=>{
+   const selected=item.choices.find(x=>x.key===picker.value);
+   if(!selected)throw Error("Unsupported proxy source");
+   provenance.href="https://github.com/sguzman/renderarium/blob/"+encodeURIComponent("main")+"/"+selected.source_path;
+   provenance.title="Source Git blob "+selected.source_sha+" — research candidate only";
+  };
+  updateSource();
   picker.addEventListener("change",()=>{
    if(!item.choices.some(x=>x.key===picker.value))throw Error("Unsupported proxy variant");
-   chosen.set(item.id,picker.value);onRender();
+   chosen.set(item.id,picker.value);updateSource();onRender();
   });
-  group.append(descriptor,picker);controls.push(group);
+  group.append(descriptor,picker,provenance);controls.push(group);
  }
  variantList.replaceChildren(...controls);
  onRender();
