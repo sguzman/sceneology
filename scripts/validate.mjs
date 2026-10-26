@@ -86,6 +86,8 @@ await import("./test-blanket-review.mjs");
 
 await import("./build-family-orbit-data.mjs");
 await import("./test-family-orbit-data.mjs");
+await import("./build-reading-corner-study.mjs");
+await import("./test-reading-corner-study.mjs");
 
 await import("./build-room-diagnostics.mjs");
 await import("./test-room-diagnostics.mjs");

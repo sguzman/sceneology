@@ -1,0 +1,31 @@
+import assert from "node:assert/strict";
+import fs from "node:fs";
+import crypto from "node:crypto";
+import path from "node:path";
+const root=path.resolve(import.meta.dirname,"..");
+const get=p=>JSON.parse(fs.readFileSync(path.join(root,p),"utf8"));
+const room=get("site/reading-corner-study-data.json"),models=get("site/family-orbit-data.json");
+const selected=get("catalog/showcase.json");
+const byKey=new Map(models.models.map(m=>[m.key,m]));
+assert.equal(room.schema_version,1);
+assert.equal(room.historical_composition_accepted,true);
+assert.equal(room.rendering_is_original_accepted,false);
+assert.equal(room.model_variants_are_original_room_bindings,false);
+assert.equal(room.gallery_approved,false);
+assert.equal(room.complete_room,false);
+assert.equal(room.floor_walls_lighting_reconstructed,false);
+assert.equal(room.instances.length,6);
+assert.deepEqual(room.omitted_parented_instances.map(x=>x.id),["lumbar-pillow","shelf-books"]);
+assert.equal(new Set(room.instances.map(x=>x.id)).size,6);
+for(const entry of room.instances){
+ const model=byKey.get(entry.model_key);
+ assert.ok(model,"Not a source-pinned representative asset");
+ assert.equal(entry.model_sha,model.source_sha);
+ assert.ok(entry.translate.length===3&&entry.translate.every(Number.isFinite)&&Number.isFinite(entry.yaw_deg));
+ assert.match(entry.alias,/^accepted:block-chibi-room::/);
+}
+const bytes=fs.readFileSync(path.join(root,room.source_scene));
+const sha=crypto.createHash("sha1").update(Buffer.from("blob "+bytes.length+"\0")).update(bytes).digest("hex");
+assert.equal(sha,room.source_scene_sha);
+assert.ok(!selected.approved_ids.includes(room.study));
+console.log("Sceneology partial Reading Corner source geometry: 6/8 authored instances realized with qualified representative models; 2 withheld, 0 gallery changes.");
