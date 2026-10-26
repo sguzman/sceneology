@@ -36,7 +36,7 @@ fs.mkdirSync(output,{recursive:true});
 const chrome=process.env.CHROME_BIN||"google-chrome";
 const flags=["--headless=new","--no-sandbox","--disable-dev-shm-usage","--disable-background-networking","--no-first-run",
  "--window-size=1300,920","--virtual-time-budget=7000"];
-function snapshot(id,yaw,variant=null,showZones=false,bareBed=false){
+function snapshot(id,yaw,variant=null,showZones=false,bareBed=false,pillowTrial=false){
  const profile=fs.mkdtempSync(path.join(os.tmpdir(),"sceneology-proxy-"));
  try{
   const url=new URL("site/room-proxy-review.html",base);
@@ -44,15 +44,19 @@ function snapshot(id,yaw,variant=null,showZones=false,bareBed=false){
   if(variant)url.searchParams.set("variant-"+variant.id,variant.key);
   if(showZones)url.searchParams.set("zones","1");
   if(bareBed)url.searchParams.set("bed","bare");
+  if(pillowTrial)url.searchParams.set("pillow","1");
   const process=spawnSync(chrome,[...flags,"--user-data-dir="+profile,"--dump-dom",url.href],
    {encoding:"utf8",timeout:100000,maxBuffer:28*1024*1024});
   if(process.error||process.status!==0)throw Error("Proxy browser execution failed "+String(process.error||process.stderr).slice(-650));
   const dom=process.stdout;
-  const suffix=(variant?"-"+variant.key:"")+(showZones?"-with-zones":"")+(bareBed?"-without-embedded-bedding":"")+"-"+yaw;
+  const suffix=(variant?"-"+variant.key:"")+(showZones?"-with-zones":"")+(bareBed?"-without-embedded-bedding":"")+(pillowTrial?"-with-external-bed-pillow":"")+"-"+yaw;
   fs.writeFileSync(path.join(output,id+suffix+".dom.html"),dom);
   const tag=dom.match(/<div\b[^>]*\bid="proxy-stage"[^>]*>/)?.[0]||"";
   assert.ok(tag.includes('data-room="'+id+'"'),"Historical room selector did not update");
   const expectedBedState=id==="study-corner-v1.1"?"not-present":bareBed?"experimental-hidden":"source-raw";
+  assert.ok(tag.includes('data-external-pillow="'+(pillowTrial?"unapproved-support-proposal":"hidden")+'"'),"External bed pillow research flag not respected");
+  if(pillowTrial)assert.ok(dom.includes("NOT historically authored")&&dom.includes('data-instance="external-bed-pillow-proposal"'),
+   "New bedding appears without source-proposal boundary");
   assert.ok(tag.includes('data-embedded-bed="'+expectedBedState+'"'),"Technical bed source mask state incorrect");
   assert.ok(tag.includes('data-withheld-bed-faces="'+(bareBed&&id!=="study-corner-v1.1"?12:0)+'"'),"Source pillow/blanket face filter must suppress exactly two original parts");
   if(bareBed)assert.ok(dom.includes("no replacement pillow or blanket has been placed"),"Experimental bed mask disclosure missing");
@@ -104,6 +108,9 @@ const guidedStudy=snapshot("study-corner-v1.1",130,null,true);
 const guidedSleep=snapshot("sleep-room-v1",130,null,true);
 const rawBed=snapshot("sleep-room-v1",130);
 const hiddenBed=snapshot("sleep-room-v1",130,null,false,true);
+const withPillow=snapshot("sleep-room-v1",130,null,false,true,true);
+assert.ok(withPillow.faces>hiddenBed.faces,"Separate sourced bed-pillow placement was not visible");
+assert.notEqual(hiddenBed.digest,withPillow.digest,"Adding source-backed pillow did not change 3D geometry");
 assert.notEqual(rawBed.digest,hiddenBed.digest,"Hidden embedded bedding did not alter projected source geometry");
 assert.ok(hiddenBed.faces<rawBed.faces,"Bed masking must remove visible original source bedding faces");
 for(const item of [guidedCozy,guidedStudy,guidedSleep])assert.ok(item.faces>20,"Zone guide obscured all model bodies");

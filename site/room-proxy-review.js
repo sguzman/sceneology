@@ -7,6 +7,7 @@ const roomSelect=document.getElementById("proxy-room");
 const variantList=document.getElementById("proxy-variants");
 const attachmentList=document.getElementById("proxy-attachments");
 const bareBedInput=document.getElementById("proxy-bare-bed");
+const trialPillowInput=document.getElementById("proxy-external-bed-pillow");
 const bedMaskNotice=document.getElementById("proxy-bed-mask-notice");
 const yawInput=document.getElementById("proxy-yaw");
 const elevationInput=document.getElementById("proxy-elevation");
@@ -24,7 +25,7 @@ const shade=(hex,factor)=>{
  const value=parseInt(hex.slice(1),16);
  return "#"+[value>>16,value>>8&255,value&255].map(x=>Math.min(255,Math.max(0,Math.round(x*factor+7))).toString(16).padStart(2,"0")).join("");
 };
-let rooms=[],library=null,current=null,variantReductions=null,attachmentFit=null;
+let rooms=[],library=null,current=null,variantReductions=null,attachmentFit=null,bedPillowResearch=null;
 const chosen=new Map();
 function render(){
  if(!current||!library)return;
@@ -36,8 +37,28 @@ function render(){
  const faces=[];
  const hasSourceBed=current.placed.some(item=>item.id==="bed");
  const experiment=hasSourceBed&&bareBedInput.checked;
+ const showExternalPillow=experiment&&trialPillowInput.checked;
  let withheldBedFaces=0;
- for(const inst of current.placed){
+ const stagedInstances=[...current.placed];
+ let pillowTrial=null;
+ if(showExternalPillow){
+  const bed=current.placed.find(item=>item.id==="bed");
+  const bedKey=chosen.get("bed")||bed.default_model_key;
+  const chosenBed=bed.choices.find(item=>item.key===bedKey);
+  const hypothesis=bedPillowResearch?.original_bed_candidates.find(
+   item=>item.bed_source_key===bedKey&&item.bed_source_sha===chosenBed?.source_sha);
+  if(!hypothesis)throw Error("No source-pinned bed pillow compatibility proof");
+  if(!bedPillowResearch.eligible_only_if_source_embedded_pillow_and_blanket_hidden)
+   throw Error("Separate bedding candidate cannot overlay built-in bedding");
+  const angle=bed.yaw_deg*Math.PI/180,c=Math.cos(angle),s=Math.sin(angle);
+  const [x,y,z]=hypothesis.local_translate;
+  pillowTrial={id:"external-bed-pillow-proposal",default_model_key:"bed-pillow",
+   choices:[{key:"bed-pillow",source_sha:bedPillowResearch.original_pillow_sha}],
+   translate:[bed.translate[0]+c*x+s*z,bed.translate[1]+y,bed.translate[2]-s*x+c*z],
+   yaw_deg:bed.yaw_deg};
+  stagedInstances.push(pillowTrial);
+ }
+ for(const inst of stagedInstances){
   const selection=chosen.get(inst.id)||inst.default_model_key;
   const permitted=inst.choices.find(c=>c.key===selection);
   const model=library.get(selection);
@@ -88,9 +109,12 @@ function render(){
  stage.dataset.embeddedBed="not-present";
  if(hasSourceBed)stage.dataset.embeddedBed=experiment?"experimental-hidden":"source-raw";
  stage.dataset.withheldBedFaces=String(withheldBedFaces);
+ stage.dataset.externalPillow=showExternalPillow?"unapproved-support-proposal":"hidden";
  if(experiment&&withheldBedFaces!==12)throw Error("Not exactly two source-pinned embedded bed parts withheld");
  bedMaskNotice.textContent=hasSourceBed?
-  (experiment?"Research-only source-face mask: hidden the selected bed model's built-in pillow and blanket. The original file is intact; no replacement pillow or blanket has been placed. NOT a recovered original scene.":
+  (experiment?(showExternalPillow?
+    "Research-only: built-in bedding hidden, and a separate source pillow positioned at derived mattress/headboard contact. The 0.02 source-unit headboard gap and exact placement are NOT historically authored. The original file and missing blanket remain unchanged.":
+    "Research-only source-face mask: hidden the selected bed model's built-in pillow and blanket. The original file is intact; no replacement pillow or blanket has been placed. NOT a recovered original scene."):
    "Source bed includes built-in pillow and blanket meshes. The accepted composition independently declares bedding attachments. Their original renderer relationship is unresolved."):
   "This source room has no bed, so no bedding mask applies.";
  stage.dataset.zoneCount=String(sourceZones.filter(z=>z.kind==="zone-only").length);
@@ -98,7 +122,7 @@ function render(){
  counter.textContent=current.placed.length+" placed furniture proxies · "+current.omitted_parented.length+" parent-attached objects deliberately omitted · yaw "+yaw+"°";
  if(sourceZones.length)counter.textContent+=" · Source guides: "+current.region_guide.zones.map(z=>z.id.replaceAll("-"," ")).join(", ")+
   (current.region_guide.source_room_footprint?" · source footprint "+current.region_guide.source_room_footprint.join(" × "):" · no source room footprint");
- const geometry=current.placed.map(item=>{
+ const geometry=stagedInstances.map(item=>{
   const key=chosen.get(item.id)||item.default_model_key;
   const match=item.choices.find(c=>c.key===key);
   if(!match)throw Error("Unknown clearance source choice "+item.id);
@@ -132,6 +156,8 @@ function chooseRoom(){
  const hasBed=current.placed.some(item=>item.id==="bed");
  bareBedInput.disabled=!hasBed;
  bareBedInput.checked=hasBed&&new URLSearchParams(location.search).get("bed")==="bare";
+ trialPillowInput.disabled=!bareBedInput.checked;
+ trialPillowInput.checked=bareBedInput.checked&&new URLSearchParams(location.search).get("pillow")==="1";
  const controls=[];
  for(const item of current.placed){
   const group=document.createElement("div");group.className="proxy-choice";
@@ -199,16 +225,27 @@ function chooseRoom(){
  status.textContent="Source coordinate fidelity checked. Model identities are proxies; zero original room bindings certified.";
 }
 try{
- const [roomsResponse,modelResponse,reductionsResponse,fitResponse]=await Promise.all([
+ const [roomsResponse,modelResponse,reductionsResponse,fitResponse,pillowResponse]=await Promise.all([
   fetch("./room-proxy-review-data.json",{cache:"no-cache"}),
   fetch("./family-orbit-data.json",{cache:"no-cache"}),
   fetch("./room-variant-reduction.json",{cache:"no-cache"}),
-  fetch("./room-attachment-fit-audit.json",{cache:"no-cache"})
+  fetch("./room-attachment-fit-audit.json",{cache:"no-cache"}),
+  fetch("./bed-pillow-placement-research.json",{cache:"no-cache"})
  ]);
- if(!roomsResponse.ok||!modelResponse.ok||!reductionsResponse.ok||!fitResponse.ok)throw Error("Room source data is not available");
+ if(!roomsResponse.ok||!modelResponse.ok||!reductionsResponse.ok||!fitResponse.ok||!pillowResponse.ok)
+   throw Error("Room source data is not available");
  const data=await roomsResponse.json(),modelData=await modelResponse.json();
  variantReductions=await reductionsResponse.json();
  attachmentFit=await fitResponse.json();
+ bedPillowResearch=await pillowResponse.json();
+ if(bedPillowResearch.schema_version!==1||
+   bedPillowResearch.kind!=="unapproved-bed-pillow-parent-transform-research"||
+   bedPillowResearch.original_bed_candidates?.length!==3||
+   bedPillowResearch.all_original_room_binding_unknown!==true||
+   bedPillowResearch.human_aesthetic_approval!==false||
+   bedPillowResearch.showcase_approved!==false||
+   bedPillowResearch.original_blanket_v1_3_still_missing!==true)
+  throw Error("Unapproved bedding placement source restrictions changed");
  if(attachmentFit.schema_version!==1||
     attachmentFit.original_asset_binding_recovered!==false||
     attachmentFit.accepted_character_or_scene_geometry_rewritten!==false||
@@ -239,7 +276,12 @@ try{
  roomSelect.addEventListener("change",chooseRoom);
  yawInput.addEventListener("input",onRender);
  elevationInput.addEventListener("input",onRender);
- bareBedInput.addEventListener("change",onRender);
+ bareBedInput.addEventListener("change",()=>{
+  trialPillowInput.disabled=!bareBedInput.checked;
+  if(!bareBedInput.checked)trialPillowInput.checked=false;
+  onRender();
+ });
+ trialPillowInput.addEventListener("change",onRender);
  zonesInput.checked=query.get("zones")==="1";
  zonesInput.addEventListener("change",onRender);
  chooseRoom();
