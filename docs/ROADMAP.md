@@ -25,54 +25,54 @@ These are **cohorts, not reviewed file inventories**. No file-level admission or
 
 All roadmap points and task states are authoritative in [roadmap.json](roadmap.json); the labels below explain the evidence standard. Each task earns its *entire* assigned weight only on acceptance, otherwise zero. No completion-by-intent or unreviewed percent estimates.
 
-### 🧱 F — Public foundations (8 points; pre-existing)
+### 🧱 F — Public foundations (8/8 points)
 
 - **F01 (4):** Independently public repository, privacy/publication constitution, rights rules. **Done** — `CONSTITUTION.md`, `docs/PUBLICATION.md`.
 - **F02 (4):** Separate technical and curated catalogs, project structure, nonpublic-history prohibition. **Done** — `catalog/library.json`, `catalog/showcase.json`, `AGENTS.md`.
 
-### 🗺️ R — Bounded roadmap and admission contract (5 points; this session)
+### 🗺️ R — Bounded roadmap and admission contract (5/5 points)
 
 - **R01 (2):** Inspect existing public state and identify source cohorts, actual migration baseline, and blockers. **Done** — this roadmap and source review.
 - **R02 (3):** Define deterministic admission decisions, privacy/rights workflow, release waves, measurable atomic tasks, and machine-readable progress. **Done** — [migration policy](MIGRATION.md), [roadmap.json](roadmap.json).
 
-### 🔎 A — Source census and migration selection (17 points; pending)
+### 🔎 A — Source census and migration selection (17/17 points)
 
-- **A01 (6):** Build **nonpublic** file-by-file inventories, with source revision, digest, content class, producer, size, dependencies and rights uncertainty; include older and failed variants. Do not publish those inventories.
-- **A02 (5):** Deduplicate overlapping public/private versions and identify canonical sources, accepted variants, obsolete experiments and missing assets, with accountable reasons.
-- **A03 (6):** Complete admission scoring and hold/reject records for every scoped file family, and select independently buildable migration cohorts. Record decisions in the nonpublic ledger. Recheck when sources change.
+- **A01 (6):** Build **nonpublic** file-by-file inventories, with source revision, digest, content class, producer, size, dependencies and rights uncertainty; include older and failed variants. Do not publish those inventories. **Done — verified in [the progress ledger](roadmap.json).**
+- **A02 (5):** Deduplicate overlapping public/private versions and identify canonical sources, accepted variants, obsolete experiments and missing assets, with accountable reasons. **Done — verified in [the progress ledger](roadmap.json).**
+- **A03 (6):** Complete admission scoring and hold/reject records for every scoped file family, and select independently buildable migration cohorts. Record decisions in the nonpublic ledger. Recheck when sources change. **Done — verified in [the progress ledger](roadmap.json).**
 
-### 🛡️ P — Privacy, licensing and provenance (17 points; pending)
+### 🛡️ P — Privacy, licensing and provenance (17/17 points)
 
-- **P01 (7):** Inspect **contents** of every candidate, including source, comments, prose, test fixtures, media metadata, hidden/build files, generated bundles and scene data. Remove private communication, venting, identifying material and credentials **before any public write**.
-- **P02 (6):** Audit each full transitive dependency and license/asset rights. Produce a public-safe attribution/provenance manifest; if permissions or self-containment are uncertain, hold the item.
-- **P03 (4):** Independently review each outgoing public commit and generated website bundle; run technical scans as supplements, not substitutes. Never import source Git histories or unreviewed commit messages.
+- **P01 (7):** Inspect **contents** of every candidate, including source, comments, prose, test fixtures, media metadata, hidden/build files, generated bundles and scene data. Remove private communication, venting, identifying material and credentials **before any public write**. **Done — verified in [the progress ledger](roadmap.json).**
+- **P02 (6):** Audit each full transitive dependency and license/asset rights. Produce a public-safe attribution/provenance manifest; if permissions or self-containment are uncertain, hold the item. **Done — verified in [the progress ledger](roadmap.json).**
+- **P03 (4):** Independently review each outgoing public commit and generated website bundle; run technical scans as supplements, not substitutes. Never import source Git histories or unreviewed commit messages. **Done — verified in [the progress ledger](roadmap.json).**
 
-### 🧠 O — Human + machine ontology (18 points; 2 pre-existing)
+### 🧠 O — Human + machine ontology (18/18 points)
 
 - **O01 (2):** Baseline human prose vocabulary and an initial catalog JSON Schema. **Done** — `ontology/SCENES.md`, `ontology/schemas/record-v1.schema.json`.
-- **O02 (6):** Expand the public ontology for scenes, objects, roles, relations, constraints, appearance, 2D/3D coordinate models, camera, timelines, animation, effects, audio, input, realization, variants, and evaluation; maintain readable concept/relationship documentation.
-- **O03 (6):** Provide versioned, machine-readable entity/scene/experiment schemas, stable IDs, validation rules, and source-neutral cross-representation mappings. Every formal semantic distinction must match its human documentation.
-- **O04 (4):** Add independent example fixtures for 2D static, 2D animated, 3D, interactive, and failed/inconclusive studies; validate round-trips, references, ontology conformance and version migrations.
+- **O02 (6):** Expand the public ontology for scenes, objects, roles, relations, constraints, appearance, 2D/3D coordinate models, camera, timelines, animation, effects, audio, input, realization, variants, and evaluation; maintain readable concept/relationship documentation. **Done — verified in [the progress ledger](roadmap.json).**
+- **O03 (6):** Provide versioned, machine-readable entity/scene/experiment schemas, stable IDs, validation rules, and source-neutral cross-representation mappings. Every formal semantic distinction must match its human documentation. **Done — verified in [the progress ledger](roadmap.json).**
+- **O04 (4):** Add independent example fixtures for 2D static, 2D animated, 3D, interactive, and failed/inconclusive studies; validate round-trips, references, ontology conformance and version migrations. **Done — verified in [the progress ledger](roadmap.json).**
 
-### 🔧 M — Selected source-backed migrations (18 points; pending)
+### 🔧 M — Selected source-backed migrations (18/18 points)
 
-- **M01 (5):** Safely port a verified slice of previously public environments/renderers with exact geometry/artifact identity or explained departures, plus an independent viewer and tests.
-- **M02 (5):** Port a screened 2D character/scene/animation cohort with source assets, editable representations, behavior and reproducible test evidence. Do not misclassify generated stills as animated rigs.
-- **M03 (4):** Preserve screened meaningful failures, variants, objective diagnostics and negative knowledge as explicitly non-showcase technical entries.
-- **M04 (4):** Admit other truly scene-relevant effects/audio/tools after separate rights, relevance, dependency and quality gates. No mandatory import merely to raise the percentage.
+- **M01 (5):** Safely port a verified slice of previously public environments/renderers with exact geometry/artifact identity or explained departures, plus an independent viewer and tests. **Done — verified in [the progress ledger](roadmap.json).**
+- **M02 (5):** Port a screened 2D character/scene/animation cohort with source assets, editable representations, behavior and reproducible test evidence. Do not misclassify generated stills as animated rigs. **Done — verified in [the progress ledger](roadmap.json).**
+- **M03 (4):** Preserve screened meaningful failures, variants, objective diagnostics and negative knowledge as explicitly non-showcase technical entries. **Done — verified in [the progress ledger](roadmap.json).**
+- **M04 (4):** Admit other truly scene-relevant effects/audio/tools after separate rights, relevance, dependency and quality gates. No mandatory import merely to raise the percentage. **Done — verified in [the progress ledger](roadmap.json).**
 
-### 🖼️ G — Curated website and human visual review (11 points; 2 pre-existing)
+### 🖼️ G — Curated website and human visual review (8/11 points)
 
 - **G01 (2):** Static website and strict owner-only allowlist data path. **Done** — `index.html`, `site/main.js`, `catalog/showcase.json`.
-- **G02 (4):** Build polished, responsive browsing and reliable artifact-specific viewers with fallback media, accessibility and clear provenance/technical status where appropriate.
-- **G03 (3):** Present actual candidates for owner visual review; show **only specifically approved IDs** with real thumbnails and working public viewers. Zero approved items is valid until the owner chooses.
-- **G04 (2):** Verify deployed Pages behavior, links, responsive/mobile/keyboard interaction, image loading, and performance. Do not substitute source presence for a deployed website.
+- **G02 (4):** Build polished, responsive browsing and reliable artifact-specific viewers with fallback media, accessibility and clear provenance/technical status where appropriate. **Done — verified in [the progress ledger](roadmap.json).**
+- **G03 (3):** Present actual candidates for owner visual review; show **only specifically approved IDs** with real thumbnails and working public viewers. Zero approved items is valid until the owner chooses. **Pending — owner review still required.**
+- **G04 (2):** Verify deployed Pages behavior, links, responsive/mobile/keyboard interaction, image loading, and performance. Do not substitute source presence for a deployed website. **Done — verified in [the progress ledger](roadmap.json).**
 
-### 🧪 Q — Integrity and release evidence (6 points; 1 pre-existing)
+### 🧪 Q — Integrity and release evidence (6/6 points)
 
 - **Q01 (1):** Basic catalog, path and showcase-integrity checks. **Done** — `scripts/validate.mjs`.
-- **Q02 (3):** Expand CI to enforce machine schema conformance, references, provenance/rights fields, approval controls, static-output inspection and robust regressions.
-- **Q03 (2):** Test representative artifacts with independent browser/runtime QA, document renderer/GPU provenance honestly, and certify a deployed, public self-contained release.
+- **Q02 (3):** Expand CI to enforce machine schema conformance, references, provenance/rights fields, approval controls, static-output inspection and robust regressions. **Done — verified in [the progress ledger](roadmap.json).**
+- **Q03 (2):** Test representative artifacts with independent browser/runtime QA, document renderer/GPU provenance honestly, and certify a deployed, public self-contained release. **Done — verified in [the progress ledger](roadmap.json).**
 
 ## Migration waves — do not run until clearance
 
@@ -89,4 +89,4 @@ All roadmap points and task states are authoritative in [roadmap.json](roadmap.j
 
 At the end of every work session: report **previous % → current % (Δ percentage points)**, a visual progress bar, concrete evidence (commit and changed files), actual technical catalog count, actual approved gallery count, and blockers. Explain zero delta honestly; never invent completion. Work directly on `main`, without default pull requests. Only human-authorized gallery selections go into `catalog/showcase.json`.
 
-**Initial measured baseline before this roadmap session:** 13/100 points from F01, F02, O01, G01 and Q01. **Roadmap session target:** 18/100 after completing R01 and R02, for **+5 percentage points**. Creative artifact migration remains **0** and owner-approved showcases remain **0**. Later score changes require supporting evidence and an explicit scope revision, not silent reweighting.
+**Current measured checkpoint (2026-10-26):** 97/100 points. The 13-point original foundation and subsequent sessions remain auditable in [roadmap.json](roadmap.json). Six independently screened technical artifacts are published; no gallery exhibits have received owner approval. The sole outstanding **G03 (3 points)** is an actual owner curation decision following the [real-viewer review list](CURATION-REVIEW.md). Zero approved artworks is an acceptable interim gallery state; do not infer consent from a successful browser test. The complete private intake contains 2,413 frozen source records: six admitted, 1,851 held under fail-closed unresolved gates, and 556 declined from this bounded release. Held records cannot be copied automatically and are not scored before their hard gates pass.
