@@ -1,0 +1,1317 @@
+{
+  "schema_version": 1,
+  "id": "quest-girl-v7",
+  "title": "Quest Girl v7",
+  "accepted_visual_baseline": true,
+  "original_source_blob": "81aca18adfc08135ba8eb6db1395b2715f22e97f",
+  "graphics_approval_scope": "static character only; motion v0.2 functional, not artistic",
+  "materials": {
+    "skin": "#f3c9ae",
+    "hair": "#402536",
+    "hair_shadow": "#2f1c29",
+    "dress": "#d77a9c",
+    "dress_dark": "#a44f72",
+    "cream": "#f4e8d2",
+    "eye": "#352635",
+    "eye_glint": "#fffaf1",
+    "blush": "#e58c9c",
+    "shoe": "#62404c"
+  },
+  "parts": [
+    {
+      "id": "root",
+      "anchors": {},
+      "transform": {},
+      "attachment": {},
+      "geometry": {},
+      "role": "root",
+      "parent": null,
+      "articulation": "static"
+    },
+    {
+      "id": "torso",
+      "anchors": {
+        "neck": [
+          0,
+          0.28,
+          0
+        ],
+        "shoulder_left": [
+          -0.38,
+          0.13,
+          0
+        ],
+        "shoulder_right": [
+          0.38,
+          0.13,
+          0
+        ],
+        "hip_left": [
+          -0.24,
+          -0.27,
+          0
+        ],
+        "hip_right": [
+          0.24,
+          -0.27,
+          0
+        ]
+      },
+      "transform": {
+        "translate": [
+          0,
+          0.18,
+          0
+        ]
+      },
+      "attachment": {},
+      "geometry": {
+        "kind": "tapered_box",
+        "bottom": [
+          0.78,
+          0.42
+        ],
+        "top": [
+          0.7,
+          0.36
+        ],
+        "height": 0.56
+      },
+      "role": "torso",
+      "parent": "root",
+      "material": "dress",
+      "articulation": "rigid"
+    },
+    {
+      "id": "collar",
+      "anchors": {},
+      "transform": {
+        "translate": [
+          0,
+          0.185,
+          -0.19
+        ]
+      },
+      "attachment": {},
+      "geometry": {
+        "kind": "cuboid",
+        "size": [
+          0.44,
+          0.08,
+          0.045
+        ]
+      },
+      "role": "collar",
+      "parent": "torso",
+      "material": "cream",
+      "articulation": "rigid"
+    },
+    {
+      "id": "neck_bow_left",
+      "anchors": {},
+      "transform": {
+        "translate": [
+          -0.1,
+          0.035,
+          -0.215
+        ],
+        "rotate_deg": [
+          0,
+          0,
+          17
+        ]
+      },
+      "attachment": {},
+      "geometry": {
+        "kind": "cuboid",
+        "size": [
+          0.22,
+          0.12,
+          0.055
+        ]
+      },
+      "role": "neck-bow-left",
+      "parent": "torso",
+      "material": "dress_dark",
+      "articulation": "rigid"
+    },
+    {
+      "id": "neck_bow_right",
+      "anchors": {},
+      "transform": {
+        "translate": [
+          0.1,
+          0.035,
+          -0.215
+        ],
+        "rotate_deg": [
+          0,
+          0,
+          -17
+        ]
+      },
+      "attachment": {},
+      "geometry": {
+        "kind": "cuboid",
+        "size": [
+          0.22,
+          0.12,
+          0.055
+        ]
+      },
+      "role": "neck-bow-right",
+      "parent": "torso",
+      "material": "dress_dark",
+      "articulation": "rigid"
+    },
+    {
+      "id": "neck_bow_knot",
+      "anchors": {},
+      "transform": {
+        "translate": [
+          0,
+          0.035,
+          -0.225
+        ]
+      },
+      "attachment": {},
+      "geometry": {
+        "kind": "cuboid",
+        "size": [
+          0.11,
+          0.11,
+          0.065
+        ]
+      },
+      "role": "neck-bow-knot",
+      "parent": "torso",
+      "material": "cream",
+      "articulation": "rigid"
+    },
+    {
+      "id": "skirt",
+      "anchors": {},
+      "transform": {
+        "translate": [
+          0,
+          -0.42,
+          0
+        ]
+      },
+      "attachment": {},
+      "geometry": {
+        "kind": "tapered_box",
+        "bottom": [
+          1.02,
+          0.58
+        ],
+        "top": [
+          0.73,
+          0.4
+        ],
+        "height": 0.52
+      },
+      "role": "skirt",
+      "parent": "torso",
+      "material": "dress",
+      "articulation": "rigid"
+    },
+    {
+      "id": "skirt_band",
+      "anchors": {},
+      "transform": {
+        "translate": [
+          0,
+          -0.205,
+          -0.295
+        ]
+      },
+      "attachment": {},
+      "geometry": {
+        "kind": "cuboid",
+        "size": [
+          0.91,
+          0.075,
+          0.05
+        ]
+      },
+      "role": "skirt-trim",
+      "parent": "skirt",
+      "material": "cream",
+      "articulation": "rigid"
+    },
+    {
+      "id": "head",
+      "anchors": {
+        "neck": [
+          0,
+          -0.51,
+          0
+        ]
+      },
+      "transform": {},
+      "attachment": {
+        "parent_anchor": "neck",
+        "child_anchor": "neck",
+        "offset": [
+          0,
+          -0.115,
+          0
+        ]
+      },
+      "geometry": {
+        "kind": "cuboid",
+        "size": [
+          1.18,
+          1.02,
+          0.84
+        ]
+      },
+      "role": "head",
+      "parent": "torso",
+      "material": "skin",
+      "pivot": [
+        0,
+        -0.51,
+        0
+      ],
+      "articulation": "rigid"
+    },
+    {
+      "id": "hair_back",
+      "anchors": {},
+      "transform": {
+        "translate": [
+          0,
+          -0.01,
+          0.35
+        ]
+      },
+      "attachment": {},
+      "geometry": {
+        "kind": "cuboid",
+        "size": [
+          1.24,
+          1,
+          0.3
+        ]
+      },
+      "role": "hair-back",
+      "parent": "head",
+      "material": "hair_shadow",
+      "articulation": "rigid"
+    },
+    {
+      "id": "crown",
+      "anchors": {},
+      "transform": {
+        "translate": [
+          0,
+          0.38,
+          0.02
+        ]
+      },
+      "attachment": {},
+      "geometry": {
+        "kind": "tapered_box",
+        "bottom": [
+          1.2,
+          0.84
+        ],
+        "top": [
+          1.24,
+          0.88
+        ],
+        "height": 0.4
+      },
+      "role": "hair-crown",
+      "parent": "head",
+      "material": "hair",
+      "articulation": "rigid"
+    },
+    {
+      "id": "front_hair_body",
+      "anchors": {},
+      "transform": {
+        "translate": [
+          0,
+          0.46,
+          -0.39
+        ]
+      },
+      "attachment": {},
+      "geometry": {
+        "kind": "tapered_box",
+        "bottom": [
+          1.04,
+          0.14
+        ],
+        "top": [
+          1.1,
+          0.18
+        ],
+        "height": 0.18
+      },
+      "role": "hair-front-body",
+      "parent": "head",
+      "material": "hair",
+      "articulation": "rigid"
+    },
+    {
+      "id": "side_bridge_left",
+      "anchors": {},
+      "transform": {
+        "translate": [
+          -0.6,
+          0.14,
+          0.16
+        ],
+        "rotate_deg": [
+          0,
+          0,
+          -3
+        ]
+      },
+      "attachment": {},
+      "geometry": {
+        "kind": "tapered_box",
+        "bottom": [
+          0.17,
+          0.27
+        ],
+        "top": [
+          0.2,
+          0.3
+        ],
+        "height": 0.34
+      },
+      "role": "hair-side-bridge-left",
+      "parent": "head",
+      "material": "hair",
+      "articulation": "rigid"
+    },
+    {
+      "id": "side_bridge_right",
+      "anchors": {},
+      "transform": {
+        "translate": [
+          0.6,
+          0.14,
+          0.16
+        ],
+        "rotate_deg": [
+          0,
+          0,
+          3
+        ]
+      },
+      "attachment": {},
+      "geometry": {
+        "kind": "tapered_box",
+        "bottom": [
+          0.17,
+          0.27
+        ],
+        "top": [
+          0.2,
+          0.3
+        ],
+        "height": 0.34
+      },
+      "role": "hair-side-bridge-right",
+      "parent": "head",
+      "material": "hair",
+      "articulation": "rigid"
+    },
+    {
+      "id": "rear_side_lock_left",
+      "anchors": {},
+      "transform": {
+        "translate": [
+          -0.585,
+          -0.2,
+          0.27
+        ],
+        "rotate_deg": [
+          0,
+          0,
+          -6
+        ]
+      },
+      "attachment": {},
+      "geometry": {
+        "kind": "tapered_box",
+        "bottom": [
+          0.13,
+          0.22
+        ],
+        "top": [
+          0.18,
+          0.27
+        ],
+        "height": 0.38
+      },
+      "role": "hair-rear-side-left",
+      "parent": "head",
+      "material": "hair_shadow",
+      "articulation": "rigid"
+    },
+    {
+      "id": "rear_side_lock_right",
+      "anchors": {},
+      "transform": {
+        "translate": [
+          0.585,
+          -0.2,
+          0.27
+        ],
+        "rotate_deg": [
+          0,
+          0,
+          6
+        ]
+      },
+      "attachment": {},
+      "geometry": {
+        "kind": "tapered_box",
+        "bottom": [
+          0.13,
+          0.22
+        ],
+        "top": [
+          0.18,
+          0.27
+        ],
+        "height": 0.38
+      },
+      "role": "hair-rear-side-right",
+      "parent": "head",
+      "material": "hair_shadow",
+      "articulation": "rigid"
+    },
+    {
+      "id": "fringe_left",
+      "anchors": {},
+      "transform": {
+        "translate": [
+          -0.34,
+          0.35,
+          -0.445
+        ],
+        "rotate_deg": [
+          0,
+          0,
+          -6
+        ]
+      },
+      "attachment": {},
+      "geometry": {
+        "kind": "tapered_box",
+        "bottom": [
+          0.28,
+          0.085
+        ],
+        "top": [
+          0.4,
+          0.12
+        ],
+        "height": 0.24
+      },
+      "role": "hair-rooted-fringe-left",
+      "parent": "head",
+      "material": "hair",
+      "articulation": "rigid"
+    },
+    {
+      "id": "fringe_center",
+      "anchors": {},
+      "transform": {
+        "translate": [
+          0,
+          0.355,
+          -0.447
+        ]
+      },
+      "attachment": {},
+      "geometry": {
+        "kind": "tapered_box",
+        "bottom": [
+          0.26,
+          0.085
+        ],
+        "top": [
+          0.4,
+          0.12
+        ],
+        "height": 0.25
+      },
+      "role": "hair-rooted-fringe-center",
+      "parent": "head",
+      "material": "hair",
+      "articulation": "rigid"
+    },
+    {
+      "id": "fringe_right",
+      "anchors": {},
+      "transform": {
+        "translate": [
+          0.34,
+          0.35,
+          -0.445
+        ],
+        "rotate_deg": [
+          0,
+          0,
+          6
+        ]
+      },
+      "attachment": {},
+      "geometry": {
+        "kind": "tapered_box",
+        "bottom": [
+          0.28,
+          0.085
+        ],
+        "top": [
+          0.4,
+          0.12
+        ],
+        "height": 0.24
+      },
+      "role": "hair-rooted-fringe-right",
+      "parent": "head",
+      "material": "hair",
+      "articulation": "rigid"
+    },
+    {
+      "id": "ponytail_root",
+      "anchors": {},
+      "transform": {
+        "translate": [
+          0,
+          0.08,
+          0.53
+        ]
+      },
+      "attachment": {},
+      "geometry": {
+        "kind": "cuboid",
+        "size": [
+          0.34,
+          0.28,
+          0.3
+        ]
+      },
+      "role": "ponytail-root",
+      "parent": "head",
+      "material": "hair",
+      "articulation": "rigid"
+    },
+    {
+      "id": "ponytail_mid",
+      "anchors": {},
+      "transform": {
+        "translate": [
+          0.05,
+          -0.34,
+          0.03
+        ],
+        "rotate_deg": [
+          0,
+          0,
+          -8
+        ]
+      },
+      "attachment": {},
+      "geometry": {
+        "kind": "tapered_box",
+        "bottom": [
+          0.26,
+          0.24
+        ],
+        "top": [
+          0.34,
+          0.3
+        ],
+        "height": 0.48
+      },
+      "role": "ponytail-mid",
+      "parent": "ponytail_root",
+      "material": "hair",
+      "articulation": "rigid"
+    },
+    {
+      "id": "ponytail_tip",
+      "anchors": {},
+      "transform": {
+        "translate": [
+          0.05,
+          -0.34,
+          0.015
+        ],
+        "rotate_deg": [
+          0,
+          0,
+          -7
+        ]
+      },
+      "attachment": {},
+      "geometry": {
+        "kind": "tapered_box",
+        "bottom": [
+          0.16,
+          0.17
+        ],
+        "top": [
+          0.27,
+          0.24
+        ],
+        "height": 0.38
+      },
+      "role": "ponytail-tip",
+      "parent": "ponytail_mid",
+      "material": "hair_shadow",
+      "articulation": "rigid"
+    },
+    {
+      "id": "hair_bow_left",
+      "anchors": {},
+      "transform": {
+        "translate": [
+          -0.14,
+          0.08,
+          0.555
+        ],
+        "rotate_deg": [
+          0,
+          0,
+          18
+        ]
+      },
+      "attachment": {},
+      "geometry": {
+        "kind": "wedge",
+        "size": [
+          0.24,
+          0.16,
+          0.16
+        ],
+        "slope": "back-to-front"
+      },
+      "role": "hair-bow-left",
+      "parent": "head",
+      "material": "dress_dark",
+      "articulation": "rigid"
+    },
+    {
+      "id": "hair_bow_right",
+      "anchors": {},
+      "transform": {
+        "translate": [
+          0.14,
+          0.08,
+          0.555
+        ],
+        "rotate_deg": [
+          0,
+          0,
+          -18
+        ]
+      },
+      "attachment": {},
+      "geometry": {
+        "kind": "wedge",
+        "size": [
+          0.24,
+          0.16,
+          0.16
+        ],
+        "slope": "back-to-front"
+      },
+      "role": "hair-bow-right",
+      "parent": "head",
+      "material": "dress_dark",
+      "articulation": "rigid"
+    },
+    {
+      "id": "hair_bow_knot",
+      "anchors": {},
+      "transform": {
+        "translate": [
+          0,
+          0.08,
+          0.565
+        ]
+      },
+      "attachment": {},
+      "geometry": {
+        "kind": "cuboid",
+        "size": [
+          0.13,
+          0.13,
+          0.16
+        ]
+      },
+      "role": "hair-bow-knot",
+      "parent": "head",
+      "material": "cream",
+      "articulation": "rigid"
+    },
+    {
+      "id": "left_eye",
+      "anchors": {},
+      "transform": {
+        "translate": [
+          -0.245,
+          0.015,
+          -0.435
+        ]
+      },
+      "attachment": {},
+      "geometry": {
+        "kind": "cuboid",
+        "size": [
+          0.16,
+          0.21,
+          0.028
+        ]
+      },
+      "role": "eye-left",
+      "parent": "head",
+      "material": "eye",
+      "articulation": "rigid"
+    },
+    {
+      "id": "right_eye",
+      "anchors": {},
+      "transform": {
+        "translate": [
+          0.245,
+          0.015,
+          -0.435
+        ]
+      },
+      "attachment": {},
+      "geometry": {
+        "kind": "cuboid",
+        "size": [
+          0.16,
+          0.21,
+          0.028
+        ]
+      },
+      "role": "eye-right",
+      "parent": "head",
+      "material": "eye",
+      "articulation": "rigid"
+    },
+    {
+      "id": "left_eye_glint",
+      "anchors": {},
+      "transform": {
+        "translate": [
+          -0.22,
+          0.06,
+          -0.451
+        ]
+      },
+      "attachment": {},
+      "geometry": {
+        "kind": "cuboid",
+        "size": [
+          0.04,
+          0.05,
+          0.016
+        ]
+      },
+      "role": "eye-glint-left",
+      "parent": "head",
+      "material": "eye_glint",
+      "articulation": "rigid"
+    },
+    {
+      "id": "right_eye_glint",
+      "anchors": {},
+      "transform": {
+        "translate": [
+          0.27,
+          0.06,
+          -0.451
+        ]
+      },
+      "attachment": {},
+      "geometry": {
+        "kind": "cuboid",
+        "size": [
+          0.04,
+          0.05,
+          0.016
+        ]
+      },
+      "role": "eye-glint-right",
+      "parent": "head",
+      "material": "eye_glint",
+      "articulation": "rigid"
+    },
+    {
+      "id": "left_brow",
+      "anchors": {},
+      "transform": {
+        "translate": [
+          -0.245,
+          0.19,
+          -0.438
+        ],
+        "rotate_deg": [
+          0,
+          0,
+          -3
+        ]
+      },
+      "attachment": {},
+      "geometry": {
+        "kind": "cuboid",
+        "size": [
+          0.15,
+          0.035,
+          0.02
+        ]
+      },
+      "role": "brow-left",
+      "parent": "head",
+      "material": "hair_shadow",
+      "articulation": "rigid"
+    },
+    {
+      "id": "right_brow",
+      "anchors": {},
+      "transform": {
+        "translate": [
+          0.245,
+          0.19,
+          -0.438
+        ],
+        "rotate_deg": [
+          0,
+          0,
+          3
+        ]
+      },
+      "attachment": {},
+      "geometry": {
+        "kind": "cuboid",
+        "size": [
+          0.15,
+          0.035,
+          0.02
+        ]
+      },
+      "role": "brow-right",
+      "parent": "head",
+      "material": "hair_shadow",
+      "articulation": "rigid"
+    },
+    {
+      "id": "mouth",
+      "anchors": {},
+      "transform": {
+        "translate": [
+          0,
+          -0.185,
+          -0.438
+        ]
+      },
+      "attachment": {},
+      "geometry": {
+        "kind": "cuboid",
+        "size": [
+          0.1,
+          0.035,
+          0.02
+        ]
+      },
+      "role": "mouth",
+      "parent": "head",
+      "material": "eye",
+      "articulation": "rigid"
+    },
+    {
+      "id": "blush_left",
+      "anchors": {},
+      "transform": {
+        "translate": [
+          -0.4,
+          -0.105,
+          -0.438
+        ]
+      },
+      "attachment": {},
+      "geometry": {
+        "kind": "cuboid",
+        "size": [
+          0.13,
+          0.045,
+          0.018
+        ]
+      },
+      "role": "blush-left",
+      "parent": "head",
+      "material": "blush",
+      "articulation": "rigid"
+    },
+    {
+      "id": "blush_right",
+      "anchors": {},
+      "transform": {
+        "translate": [
+          0.4,
+          -0.105,
+          -0.438
+        ]
+      },
+      "attachment": {},
+      "geometry": {
+        "kind": "cuboid",
+        "size": [
+          0.13,
+          0.045,
+          0.018
+        ]
+      },
+      "role": "blush-right",
+      "parent": "head",
+      "material": "blush",
+      "articulation": "rigid"
+    },
+    {
+      "id": "sleeve_left",
+      "anchors": {
+        "proximal": [
+          0,
+          0.16,
+          0
+        ]
+      },
+      "transform": {
+        "rotate_deg": [
+          0,
+          0,
+          -12
+        ]
+      },
+      "attachment": {
+        "parent_anchor": "shoulder_left",
+        "child_anchor": "proximal",
+        "offset": [
+          0,
+          0,
+          0
+        ]
+      },
+      "geometry": {
+        "kind": "tapered_box",
+        "bottom": [
+          0.28,
+          0.28
+        ],
+        "top": [
+          0.32,
+          0.3
+        ],
+        "height": 0.32
+      },
+      "role": "sleeve-left",
+      "parent": "torso",
+      "material": "dress",
+      "pivot": [
+        0,
+        0.16,
+        0
+      ],
+      "articulation": "rigid"
+    },
+    {
+      "id": "sleeve_right",
+      "anchors": {
+        "proximal": [
+          0,
+          0.16,
+          0
+        ]
+      },
+      "transform": {
+        "rotate_deg": [
+          0,
+          0,
+          12
+        ]
+      },
+      "attachment": {
+        "parent_anchor": "shoulder_right",
+        "child_anchor": "proximal",
+        "offset": [
+          0,
+          0,
+          0
+        ]
+      },
+      "geometry": {
+        "kind": "tapered_box",
+        "bottom": [
+          0.28,
+          0.28
+        ],
+        "top": [
+          0.32,
+          0.3
+        ],
+        "height": 0.32
+      },
+      "role": "sleeve-right",
+      "parent": "torso",
+      "material": "dress",
+      "pivot": [
+        0,
+        0.16,
+        0
+      ],
+      "articulation": "rigid"
+    },
+    {
+      "id": "forearm_left",
+      "anchors": {},
+      "transform": {
+        "translate": [
+          -0.035,
+          -0.32,
+          -0.015
+        ],
+        "rotate_deg": [
+          0,
+          0,
+          -5
+        ]
+      },
+      "attachment": {},
+      "geometry": {
+        "kind": "tapered_box",
+        "bottom": [
+          0.17,
+          0.17
+        ],
+        "top": [
+          0.19,
+          0.19
+        ],
+        "height": 0.34
+      },
+      "role": "forearm-left",
+      "parent": "sleeve_left",
+      "material": "skin",
+      "articulation": "rigid"
+    },
+    {
+      "id": "forearm_right",
+      "anchors": {},
+      "transform": {
+        "translate": [
+          0.035,
+          -0.32,
+          -0.015
+        ],
+        "rotate_deg": [
+          0,
+          0,
+          5
+        ]
+      },
+      "attachment": {},
+      "geometry": {
+        "kind": "tapered_box",
+        "bottom": [
+          0.17,
+          0.17
+        ],
+        "top": [
+          0.19,
+          0.19
+        ],
+        "height": 0.34
+      },
+      "role": "forearm-right",
+      "parent": "sleeve_right",
+      "material": "skin",
+      "articulation": "rigid"
+    },
+    {
+      "id": "hand_left",
+      "anchors": {},
+      "transform": {
+        "translate": [
+          -0.02,
+          -0.255,
+          -0.02
+        ]
+      },
+      "attachment": {},
+      "geometry": {
+        "kind": "cuboid",
+        "size": [
+          0.2,
+          0.18,
+          0.2
+        ]
+      },
+      "role": "hand-left",
+      "parent": "forearm_left",
+      "material": "skin",
+      "articulation": "rigid"
+    },
+    {
+      "id": "hand_right",
+      "anchors": {},
+      "transform": {
+        "translate": [
+          0.02,
+          -0.255,
+          -0.02
+        ]
+      },
+      "attachment": {},
+      "geometry": {
+        "kind": "cuboid",
+        "size": [
+          0.2,
+          0.18,
+          0.2
+        ]
+      },
+      "role": "hand-right",
+      "parent": "forearm_right",
+      "material": "skin",
+      "articulation": "rigid"
+    },
+    {
+      "id": "leg_left",
+      "anchors": {
+        "proximal": [
+          0,
+          0.21,
+          0
+        ]
+      },
+      "transform": {},
+      "attachment": {
+        "parent_anchor": "hip_left",
+        "child_anchor": "proximal",
+        "offset": [
+          -0.06,
+          -0.27,
+          0.015
+        ]
+      },
+      "geometry": {
+        "kind": "cuboid",
+        "size": [
+          0.23,
+          0.42,
+          0.25
+        ]
+      },
+      "role": "leg-left",
+      "parent": "torso",
+      "material": "cream",
+      "pivot": [
+        0,
+        0.21,
+        0
+      ],
+      "articulation": "rigid"
+    },
+    {
+      "id": "leg_right",
+      "anchors": {
+        "proximal": [
+          0,
+          0.21,
+          0
+        ]
+      },
+      "transform": {},
+      "attachment": {
+        "parent_anchor": "hip_right",
+        "child_anchor": "proximal",
+        "offset": [
+          0.06,
+          -0.27,
+          0.015
+        ]
+      },
+      "geometry": {
+        "kind": "cuboid",
+        "size": [
+          0.23,
+          0.42,
+          0.25
+        ]
+      },
+      "role": "leg-right",
+      "parent": "torso",
+      "material": "cream",
+      "pivot": [
+        0,
+        0.21,
+        0
+      ],
+      "articulation": "rigid"
+    },
+    {
+      "id": "shoe_left",
+      "anchors": {},
+      "transform": {
+        "translate": [
+          0,
+          -0.285,
+          -0.055
+        ]
+      },
+      "attachment": {},
+      "geometry": {
+        "kind": "cuboid",
+        "size": [
+          0.3,
+          0.18,
+          0.37
+        ]
+      },
+      "role": "shoe-left",
+      "parent": "leg_left",
+      "material": "shoe",
+      "articulation": "rigid"
+    },
+    {
+      "id": "shoe_right",
+      "anchors": {},
+      "transform": {
+        "translate": [
+          0,
+          -0.285,
+          -0.055
+        ]
+      },
+      "attachment": {},
+      "geometry": {
+        "kind": "cuboid",
+        "size": [
+          0.3,
+          0.18,
+          0.37
+        ]
+      },
+      "role": "shoe-right",
+      "parent": "leg_right",
+      "material": "shoe",
+      "articulation": "rigid"
+    }
+  ]
+}
