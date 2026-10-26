@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "reviewed_on": "2026-10-26",
+  "research_purpose": "Keep character variants and accepted parts distinct from whole-character exhibition approval.",
+  "source_repository": "sguzman/scenarium",
+  "source_repository_public_url": "https://github.com/sguzman/scenarium",
+  "automatic_exhibition": false,
+  "records": [
+    {
+      "id": "quest-girl-v2",
+      "source": "assets/constructive-3d/quest-girl-v2.sc3d.yml",
+      "status": "partial-positive-only",
+      "publication": "research-only",
+      "decision": "Improved over v1 but not an accepted complete character; do not replace the selected v7 baseline.",
+      "evidence": "evaluations/quest-girl-v2-retained-positive-iteration.md"
+    },
+    {
+      "id": "quest-girl-v6",
+      "source": "assets/constructive-3d/quest-girl-v6.sc3d.yml",
+      "status": "accepted-specific-feature-only",
+      "publication": "research-only",
+      "decision": "Connected fringe/hair topology accepted; residual side-hair issue led to v7. Do not claim full static approval of v6.",
+      "evidence": "evaluations/quest-girl-v6-first-accepted-connected-hair.md"
+    },
+    {
+      "id": "quest-girl-v7",
+      "source": "assets/constructive-3d/quest-girl-v7.sc3d.yml",
+      "status": "accepted-static-character",
+      "publication": "selected",
+      "decision": "Owner-approved static baseline. Motion functionality is evaluated separately from motion aesthetics.",
+      "evidence": "evaluations/quest-girl-v7-accepted-static-character.md"
+    },
+    {
+      "id": "cozy-reader-girl-v3",
+      "source": "reference-fit/cozy-reader-girl-v3/assemblies/full-character.yml",
+      "status": "rejected-full-character",
+      "publication": "exclude-from-gallery",
+      "decision": "Human-rejected reference-fit character; retaining implementation source does not imply aesthetic acceptance.",
+      "evidence": "docs/REFERENCE-FIT-CHARACTERS.md"
+    },
+    {
+      "id": "cozy-reader-girl-v4",
+      "source": "reference-fit/cozy-reader-girl-v4/assemblies/full-character.yml",
+      "status": "rejected-full-character",
+      "publication": "exclude-from-gallery",
+      "decision": "Human-rejected reference-fit character. No auto-restart or showcase.",
+      "evidence": "docs/REFERENCE-FIT-CHARACTERS.md"
+    },
+    {
+      "id": "princess-idle-001",
+      "source": "scenes/princess-idle-001/alpha-admission.json",
+      "status": "blocked-artifact-integrity",
+      "publication": "exclude-from-gallery",
+      "decision": "Alpha-admission gate failed; unsuitable for release without replacing the source and repeating integrity checks.",
+      "evidence": "scenes/princess-idle-001/alpha-admission.json"
+    }
+  ]
+}
