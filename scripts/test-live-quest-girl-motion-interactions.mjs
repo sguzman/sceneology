@@ -104,6 +104,9 @@ try{
  for(const clip of spec.clips){
   const start=await pose(clip.id,0);
   const other=await pose(clip.id,times[clip.id]);
+  if(start.shape_hash===other.shape_hash){
+   report.debug={id:clip.id,zeroTime:start.seconds,sampleTime:other.seconds,shapeStart:start.shape.slice(0,120),shapeSample:other.shape.slice(0,120),zeroHash:start.shape_hash,sampleHash:other.shape_hash,polygonCount:start.polygons};
+  }
   assert.notEqual(start.shape_hash,other.shape_hash,"Visible pose did not change for "+clip.id);
   const captured=await rpc("Page.captureScreenshot",{format:"png",captureBeyondViewport:false});
   const image=Buffer.from(captured.data,"base64");
