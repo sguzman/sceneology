@@ -4,6 +4,7 @@ import fs from "node:fs";
 import path from "node:path";
 import {localRigid,composeRigid,transformPoint,applyBasis} from "./rigid-transform.mjs";
 import {analyzeProxyGeometry} from "../site/room-geometry-audit.mjs";
+import {measureSourceShoeSupport} from "../site/reading-support-alignment.mjs";
 
 const root=path.resolve(import.meta.dirname,"..");
 const read=p=>JSON.parse(fs.readFileSync(path.join(root,p),"utf8"));
@@ -87,6 +88,13 @@ const character={key:"quest-girl-v7",source_sha:sourceCharacter.original_source_
 const modelMap=new Map([...model.models.map(m=>[m.key,m]),[character.key,character]]);
 const represented={id:"quest-girl",model_key:character.key,model_sha:character.source_sha,translate:translation,yaw_deg:yaw};
 const geometry=analyzeProxyGeometry([...reading.instances,represented],modelMap);
+const rugPlacement=reading.instances.find(item=>item.id==="rug");
+assert.ok(rugPlacement,"Reading Corner source rug is missing");
+const rugModel=modelMap.get(rugPlacement.model_key);
+assert.ok(rugModel&&rugModel.source_sha===rugPlacement.model_sha);
+const support=measureSourceShoeSupport(character,rugModel,represented,rugPlacement);
+assert.equal(support.all_shoe_corners_within_rug_field,true,"Both authored shoe soles must lie within the rug field");
+assert.ok(Math.abs(support.original_vertical_gap_to_field+.990)<.00001,"Historical character support discrepancy changed");
 const characterBounds=geometry.instances.find(item=>item.id==="quest-girl");
 const rugBounds=geometry.instances.find(item=>item.id==="rug");
 assert.ok(characterBounds&&rugBounds);
@@ -123,6 +131,7 @@ const output={
   rug_proxy_max_y:rugBounds.origin_plane_max_y,
   signed_character_bottom_minus_rug_top:offset,
   not_a_support_or_contact_verdict:true,
+  source_shoe_support_research:support,
   possible_volume_overlaps:geometry.broad_phase_candidates.filter(p=>p.first==="quest-girl"||p.second==="quest-girl")
  },
  model:character

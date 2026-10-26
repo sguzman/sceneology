@@ -92,6 +92,7 @@ await import("./build-room-proxy-review.mjs");
 await import("./test-room-proxy-review.mjs");
 await import("./build-room-clearance-audit.mjs");
 await import("./test-room-clearance-audit.mjs");
+await import("./test-reading-support-alignment.mjs");
 await import("./build-reading-corner-occupancy.mjs");
 await import("./test-reading-corner-occupancy.mjs");
 await import("./build-room-variant-reduction.mjs");

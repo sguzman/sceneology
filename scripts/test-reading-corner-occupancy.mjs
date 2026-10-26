@@ -24,6 +24,23 @@ assert.deepEqual(data.authored_character.translate,[.25,0,-1.02]);
 assert.equal(data.authored_character.yaw_deg,-8);
 assert.equal(data.authored_character.stage_contains_authored_origin,true);
 assert.equal(data.comparison.not_a_support_or_contact_verdict,true);
+const support=data.comparison.source_shoe_support_research;
+assert.equal(support.original_occupancy_position_preserved,true);
+assert.equal(support.stage_floor_geometry_verified,false);
+assert.equal(support.exact_mesh_contact_certified,false);
+assert.equal(support.proposal_is_original_source_transform,false);
+assert.equal(support.all_shoe_corners_within_rug_field,true);
+assert.equal(support.source_field_top_y,.045);
+assert.equal(support.original_sole_y,-.945);
+assert.equal(support.original_vertical_gap_to_field,-.99);
+assert.equal(support.proposed_visualization_only_y_offset,.99);
+assert.equal(support.corrected_sole_y_if_offset_applied,.045);
+assert.equal(support.shoes.length,2);
+for(const shoe of support.shoes){
+ assert.equal(shoe.sole_corner_count,4);
+ assert.equal(shoe.within_rug_field_footprint,true);
+}
+
 assert.ok(Number.isFinite(data.comparison.signed_character_bottom_minus_rug_top));
 assert.ok(data.model.faces.length>=200);
 for(const face of data.model.faces){
