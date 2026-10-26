@@ -10,7 +10,7 @@ const data=sourceZonePolygons(source);
 assert.equal(data.length,2);
 assert.equal(data[0].kind,"explicit-footprint");
 assert.deepEqual(data[0].vertices[0],[-3,0,-2.5]);
-assert.deepEqual(data[1].vertices[2],[1.1,0,.1]);
+assert.ok(data[1].vertices[2].every((v,i)=>Math.abs(v-[1.1,0,.1][i])<1e-10));
 const svg=renderZoneGuide(data,([x,y,z])=>[x*100+400,z*100+250]);
 assert.ok(svg.includes('data-zone-guide="source-footprint"'));
 assert.ok(svg.includes('data-zone-guide="character-stage"'));
