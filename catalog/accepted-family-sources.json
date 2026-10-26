@@ -1,0 +1,104 @@
+{
+  "schema_version": 1,
+  "as_of": "2026-10-26",
+  "source_repository": "sguzman/renderarium",
+  "source_tree_sha": "595d8aeddccae01da42d63a5c2f704564389cc46",
+  "source_family_reviews": [
+    "block-chibi-bed-family-v1",
+    "block-chibi-bookshelf-family-v1.1",
+    "block-chibi-lamp-family-v1.2"
+  ],
+  "scope": "Exact source copies of 9 historically visually accepted model family members; newly constructed previews must be independently reviewed before gallery selection.",
+  "items": [
+    {
+      "key": "simple-study-bed",
+      "family": "beds",
+      "source_path": "assets/constructive-3d/beds/block-chibi-simple-study-bed-v1.sc3d.yml",
+      "public_path": "models/families/block-chibi-simple-study-bed-v1.sc3d.yml",
+      "sha": "276e003196878910c602f2c4507db3b16e3c7df8",
+      "source_acceptance": "owner-accepted-family",
+      "new_renderer_visual_approval": false,
+      "selection_status": "source-staged-not-in-gallery"
+    },
+    {
+      "key": "wide-cute-bed",
+      "family": "beds",
+      "source_path": "assets/constructive-3d/beds/block-chibi-wide-cute-bed-v1.sc3d.yml",
+      "public_path": "models/families/block-chibi-wide-cute-bed-v1.sc3d.yml",
+      "sha": "ae1c6ab02c08fb5daa653ee5727ec134d3f61280",
+      "source_acceptance": "owner-accepted-family",
+      "new_renderer_visual_approval": false,
+      "selection_status": "source-staged-not-in-gallery"
+    },
+    {
+      "key": "compact-cozy-bed",
+      "family": "beds",
+      "source_path": "assets/constructive-3d/beds/block-chibi-compact-cozy-bed-v1.sc3d.yml",
+      "public_path": "models/families/block-chibi-compact-cozy-bed-v1.sc3d.yml",
+      "sha": "0a590ebf6649fdae8d7ac56653622b51cb0381ed",
+      "source_acceptance": "owner-accepted-family",
+      "new_renderer_visual_approval": false,
+      "selection_status": "source-staged-not-in-gallery"
+    },
+    {
+      "key": "low-wide-bookshelf",
+      "family": "bookshelves",
+      "source_path": "assets/constructive-3d/bookshelves/block-chibi-low-wide-bookshelf-v1.1.sc3d.yml",
+      "public_path": "models/families/block-chibi-low-wide-bookshelf-v1.1.sc3d.yml",
+      "sha": "f639c7094ce76dd26e74bd40bc8e6b9e36ae7b45",
+      "source_acceptance": "owner-accepted-family",
+      "new_renderer_visual_approval": false,
+      "selection_status": "source-staged-not-in-gallery"
+    },
+    {
+      "key": "narrow-bookcase",
+      "family": "bookshelves",
+      "source_path": "assets/constructive-3d/bookshelves/block-chibi-narrow-bookcase-v1.1.sc3d.yml",
+      "public_path": "models/families/block-chibi-narrow-bookcase-v1.1.sc3d.yml",
+      "sha": "71c8ac66793c18cf61cec9313e460e6bb7195062",
+      "source_acceptance": "owner-accepted-family",
+      "new_renderer_visual_approval": false,
+      "selection_status": "source-staged-not-in-gallery"
+    },
+    {
+      "key": "tall-bookcase",
+      "family": "bookshelves",
+      "source_path": "assets/constructive-3d/bookshelves/block-chibi-tall-bookcase-v1.1.sc3d.yml",
+      "public_path": "models/families/block-chibi-tall-bookcase-v1.1.sc3d.yml",
+      "sha": "3a3564445fd1eaefb013b29c3d1727e7c79008b0",
+      "source_acceptance": "owner-accepted-family",
+      "new_renderer_visual_approval": false,
+      "selection_status": "source-staged-not-in-gallery"
+    },
+    {
+      "key": "cozy-table-lamp",
+      "family": "lamps",
+      "source_path": "assets/constructive-3d/lamps/block-chibi-cozy-table-lamp-v1.2.sc3d.yml",
+      "public_path": "models/families/block-chibi-cozy-table-lamp-v1.2.sc3d.yml",
+      "sha": "93a5f29be20fc22335082f26852464456863a4b0",
+      "source_acceptance": "owner-accepted-family",
+      "new_renderer_visual_approval": false,
+      "selection_status": "source-staged-not-in-gallery"
+    },
+    {
+      "key": "tall-floor-lamp",
+      "family": "lamps",
+      "source_path": "assets/constructive-3d/lamps/block-chibi-tall-floor-lamp-v1.2.sc3d.yml",
+      "public_path": "models/families/block-chibi-tall-floor-lamp-v1.2.sc3d.yml",
+      "sha": "c22982dbe2d3a7c46c5c3fc18805961dbbbdc879",
+      "source_acceptance": "owner-accepted-family",
+      "new_renderer_visual_approval": false,
+      "selection_status": "source-staged-not-in-gallery"
+    },
+    {
+      "key": "task-lamp",
+      "family": "lamps",
+      "source_path": "assets/constructive-3d/lamps/block-chibi-task-lamp-v1.2.sc3d.yml",
+      "public_path": "models/families/block-chibi-task-lamp-v1.2.sc3d.yml",
+      "sha": "6a03a0885b1c64a0a2abe5ddc4155358e2873a3d",
+      "source_acceptance": "owner-accepted-family",
+      "new_renderer_visual_approval": false,
+      "selection_status": "source-staged-not-in-gallery"
+    }
+  ]
+}
