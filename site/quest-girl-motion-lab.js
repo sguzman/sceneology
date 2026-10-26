@@ -121,8 +121,16 @@ try{
  if(!mr.ok||!cr.ok)throw Error("Character or motion source unavailable");
  model=await mr.json();motions=await cr.json();
  if(model.id!=="quest-girl-v7"||model.parts.length!==44||motions.source_acceptance!=="passed-functional-baseline"||motions.artistic_approval!==false||motions.clips.length!==4)throw Error("Unexpected source revision or approval status");
+ const search=new URLSearchParams(location.search);
+ const requested=search.get("clip");
+ if(motions.clips.some(c=>c.id===requested))choice.value=requested;
  clip=motions.clips.find(c=>c.id===choice.value);
  if(!clip)throw Error("Unknown initial motion clip");
+ const phase=search.get("phase");
+ if(phase!==null){
+  const fraction=Number(phase);
+  if(Number.isFinite(fraction)&&fraction>=0&&fraction<1)elapsed=fraction*clip.duration_seconds;
+ }
  choice.addEventListener("change",()=>{
   clip=motions.clips.find(c=>c.id===choice.value);
   if(!clip)throw Error("Unknown selected motion");

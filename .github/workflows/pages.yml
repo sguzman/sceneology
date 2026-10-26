@@ -68,6 +68,10 @@ jobs:
         env:
           SCENEOLOGY_SITE_URL: ${{ steps.deployment.outputs.page_url }}
         run: node scripts/test-live-quest-girl-motion-interactions.mjs
+      - name: Verify four Quest Girl poses in real Chrome
+        env:
+          SCENEOLOGY_SITE_URL: ${{ steps.deployment.outputs.page_url }}
+        run: node scripts/test-live-quest-girl-motion-clips.mjs
       - name: Preserve website verification evidence
         if: always()
         uses: actions/upload-artifact@v4
