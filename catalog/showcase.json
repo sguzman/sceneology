@@ -1,4 +1,12 @@
 {
   "schema_version": 1,
-  "approved_ids": []
+  "approved_ids": [
+    "block-chibi-living-room-v1",
+    "block-chibi-kitchen-v1",
+    "block-chibi-bathroom-v1",
+    "block-chibi-office-v1",
+    "block-chibi-backyard-v1",
+    "block-chibi-garage-v1",
+    "block-chibi-factory-v1"
+  ]
 }

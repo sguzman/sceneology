@@ -54,7 +54,7 @@
     },
     "path": {
       "type": "string",
-      "pattern": "^(scenes|experiments|ontology|runtime|assets|tools|docs)/[a-zA-Z0-9._/-]+$"
+      "pattern": "^(scenes|source-scenes|experiments|ontology|runtime|assets|tools|docs)/[a-zA-Z0-9._/-]+$"
     },
     "viewer": {
       "type": "string",

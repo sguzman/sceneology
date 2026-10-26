@@ -164,6 +164,195 @@
         "dependency_closure": "self-contained",
         "notes": "Previously public single-file effects experiment. Original technical content kept except historical acceptance wording."
       }
+    },
+    {
+      "id": "block-chibi-living-room-v1",
+      "title": "Block-Chibi LivingRoom",
+      "kind": "scene",
+      "status": "archived",
+      "summary": "Previously visually accepted living room environment; exact source geometry, alternate static presentation.",
+      "path": "source-scenes/block-chibi-living-room-v1.json",
+      "viewer": "scenes/accepted-living-room.html",
+      "thumbnail": "site/generated/block-chibi-living-room-v1.svg",
+      "rights": "original",
+      "limitations": "The source geometry was previously visually accepted; the new isometric SVG presentation is a reconstructed static view rather than canonical renderer parity.",
+      "tags": [
+        "environment",
+        "block-chibi",
+        "source-accepted",
+        "3d"
+      ],
+      "provenance": {
+        "origin": "previously-public",
+        "reviewed_on": "2026-10-26",
+        "rights_basis": "Owner-authored public scene geometry with recorded visual acceptance",
+        "dependency_closure": "public-cleared",
+        "public_source": "https://github.com/sguzman/renderarium/blob/main/scenes/block-chibi-living-room-v1/preview-geometry.json",
+        "source_blob": "d168f2dd95b5777c50f93c5275f97c9b9abfb35d",
+        "notes": "Source geometry migrated byte-identically. Gallery choice grounded in owner's prior explicit scene visual acceptance and current request to show liked work; static preview is independently generated."
+      }
+    },
+    {
+      "id": "block-chibi-kitchen-v1",
+      "title": "Block-Chibi Kitchen",
+      "kind": "scene",
+      "status": "archived",
+      "summary": "Previously visually accepted kitchen environment; exact source geometry, alternate static presentation.",
+      "path": "source-scenes/block-chibi-kitchen-v1.json",
+      "viewer": "scenes/accepted-kitchen.html",
+      "thumbnail": "site/generated/block-chibi-kitchen-v1.svg",
+      "rights": "original",
+      "limitations": "The source geometry was previously visually accepted; the new isometric SVG presentation is a reconstructed static view rather than canonical renderer parity.",
+      "tags": [
+        "environment",
+        "block-chibi",
+        "source-accepted",
+        "3d"
+      ],
+      "provenance": {
+        "origin": "previously-public",
+        "reviewed_on": "2026-10-26",
+        "rights_basis": "Owner-authored public scene geometry with recorded visual acceptance",
+        "dependency_closure": "public-cleared",
+        "public_source": "https://github.com/sguzman/renderarium/blob/main/scenes/block-chibi-kitchen-v1/preview-geometry.json",
+        "source_blob": "18f96a285ac3ef6b669d9c89a9a08a36bfaa310d",
+        "notes": "Source geometry migrated byte-identically. Gallery choice grounded in owner's prior explicit scene visual acceptance and current request to show liked work; static preview is independently generated."
+      }
+    },
+    {
+      "id": "block-chibi-bathroom-v1",
+      "title": "Block-Chibi Bathroom",
+      "kind": "scene",
+      "status": "archived",
+      "summary": "Previously visually accepted bathroom environment; exact source geometry, alternate static presentation.",
+      "path": "source-scenes/block-chibi-bathroom-v1.json",
+      "viewer": "scenes/accepted-bathroom.html",
+      "thumbnail": "site/generated/block-chibi-bathroom-v1.svg",
+      "rights": "original",
+      "limitations": "The source geometry was previously visually accepted; the new isometric SVG presentation is a reconstructed static view rather than canonical renderer parity.",
+      "tags": [
+        "environment",
+        "block-chibi",
+        "source-accepted",
+        "3d"
+      ],
+      "provenance": {
+        "origin": "previously-public",
+        "reviewed_on": "2026-10-26",
+        "rights_basis": "Owner-authored public scene geometry with recorded visual acceptance",
+        "dependency_closure": "public-cleared",
+        "public_source": "https://github.com/sguzman/renderarium/blob/main/scenes/block-chibi-bathroom-v1/preview-geometry.json",
+        "source_blob": "2e69d0f28bed609a91ca87ef0b4af78e9be42b5e",
+        "notes": "Source geometry migrated byte-identically. Gallery choice grounded in owner's prior explicit scene visual acceptance and current request to show liked work; static preview is independently generated."
+      }
+    },
+    {
+      "id": "block-chibi-office-v1",
+      "title": "Block-Chibi Office",
+      "kind": "scene",
+      "status": "archived",
+      "summary": "Previously visually accepted office environment; exact source geometry, alternate static presentation.",
+      "path": "source-scenes/block-chibi-office-v1.json",
+      "viewer": "scenes/accepted-office.html",
+      "thumbnail": "site/generated/block-chibi-office-v1.svg",
+      "rights": "original",
+      "limitations": "The source geometry was previously visually accepted; the new isometric SVG presentation is a reconstructed static view rather than canonical renderer parity.",
+      "tags": [
+        "environment",
+        "block-chibi",
+        "source-accepted",
+        "3d"
+      ],
+      "provenance": {
+        "origin": "previously-public",
+        "reviewed_on": "2026-10-26",
+        "rights_basis": "Owner-authored public scene geometry with recorded visual acceptance",
+        "dependency_closure": "public-cleared",
+        "public_source": "https://github.com/sguzman/renderarium/blob/main/scenes/block-chibi-office-v1/preview-geometry.json",
+        "source_blob": "f6055e2ccb05226398ff688972170bf9d6182034",
+        "notes": "Source geometry migrated byte-identically. Gallery choice grounded in owner's prior explicit scene visual acceptance and current request to show liked work; static preview is independently generated."
+      }
+    },
+    {
+      "id": "block-chibi-backyard-v1",
+      "title": "Block-Chibi Backyard",
+      "kind": "scene",
+      "status": "archived",
+      "summary": "Previously visually accepted backyard environment; exact source geometry, alternate static presentation.",
+      "path": "source-scenes/block-chibi-backyard-v1.json",
+      "viewer": "scenes/accepted-backyard.html",
+      "thumbnail": "site/generated/block-chibi-backyard-v1.svg",
+      "rights": "original",
+      "limitations": "The source geometry was previously visually accepted; the new isometric SVG presentation is a reconstructed static view rather than canonical renderer parity.",
+      "tags": [
+        "environment",
+        "block-chibi",
+        "source-accepted",
+        "3d"
+      ],
+      "provenance": {
+        "origin": "previously-public",
+        "reviewed_on": "2026-10-26",
+        "rights_basis": "Owner-authored public scene geometry with recorded visual acceptance",
+        "dependency_closure": "public-cleared",
+        "public_source": "https://github.com/sguzman/renderarium/blob/main/scenes/block-chibi-backyard-v1/preview-geometry.json",
+        "source_blob": "ba84322ab1a5c1e7db4515b35bd0ce760d3cbc03",
+        "notes": "Source geometry migrated byte-identically. Gallery choice grounded in owner's prior explicit scene visual acceptance and current request to show liked work; static preview is independently generated."
+      }
+    },
+    {
+      "id": "block-chibi-garage-v1",
+      "title": "Block-Chibi Garage",
+      "kind": "scene",
+      "status": "archived",
+      "summary": "Previously visually accepted garage environment; exact source geometry, alternate static presentation.",
+      "path": "source-scenes/block-chibi-garage-v1.json",
+      "viewer": "scenes/accepted-garage.html",
+      "thumbnail": "site/generated/block-chibi-garage-v1.svg",
+      "rights": "original",
+      "limitations": "The source geometry was previously visually accepted; the new isometric SVG presentation is a reconstructed static view rather than canonical renderer parity.",
+      "tags": [
+        "environment",
+        "block-chibi",
+        "source-accepted",
+        "3d"
+      ],
+      "provenance": {
+        "origin": "previously-public",
+        "reviewed_on": "2026-10-26",
+        "rights_basis": "Owner-authored public scene geometry with recorded visual acceptance",
+        "dependency_closure": "public-cleared",
+        "public_source": "https://github.com/sguzman/renderarium/blob/main/scenes/block-chibi-garage-v1/preview-geometry.json",
+        "source_blob": "003e1015cc48884a687fe17f13b0751512d23380",
+        "notes": "Source geometry migrated byte-identically. Gallery choice grounded in owner's prior explicit scene visual acceptance and current request to show liked work; static preview is independently generated."
+      }
+    },
+    {
+      "id": "block-chibi-factory-v1",
+      "title": "Block-Chibi Factory",
+      "kind": "scene",
+      "status": "archived",
+      "summary": "Previously visually accepted factory environment; exact source geometry, alternate static presentation.",
+      "path": "source-scenes/block-chibi-factory-v1.json",
+      "viewer": "scenes/accepted-factory.html",
+      "thumbnail": "site/generated/block-chibi-factory-v1.svg",
+      "rights": "original",
+      "limitations": "The source geometry was previously visually accepted; the new isometric SVG presentation is a reconstructed static view rather than canonical renderer parity.",
+      "tags": [
+        "environment",
+        "block-chibi",
+        "source-accepted",
+        "3d"
+      ],
+      "provenance": {
+        "origin": "previously-public",
+        "reviewed_on": "2026-10-26",
+        "rights_basis": "Owner-authored public scene geometry with recorded visual acceptance",
+        "dependency_closure": "public-cleared",
+        "public_source": "https://github.com/sguzman/renderarium/blob/main/scenes/block-chibi-factory-v1/preview-geometry.json",
+        "source_blob": "2a40f271a50dc22a1fe94a6dfb42cf3648a55efa",
+        "notes": "Source geometry migrated byte-identically. Gallery choice grounded in owner's prior explicit scene visual acceptance and current request to show liked work; static preview is independently generated."
+      }
     }
   ]
 }
