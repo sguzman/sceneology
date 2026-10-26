@@ -275,8 +275,14 @@
         {
           "id": "G03",
           "points": 3,
-          "status": "todo",
-          "evidence": []
+          "status": "done",
+          "evidence": [
+            "docs/CURATION-REVIEW.md",
+            "catalog/showcase.json",
+            "site/main.js",
+            "scripts/test-site-gallery.mjs",
+            "scripts/test-live-site.mjs"
+          ]
         },
         {
           "id": "G04",
