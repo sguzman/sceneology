@@ -9,7 +9,7 @@ const dest=path.join(root,"artifacts","model-candidates");
 fs.mkdirSync(dest,{recursive:true});
 const published=path.join(root,"site","model-previews");
 fs.mkdirSync(published,{recursive:true});
-const names=["clock","projector","drone","cpu-cooler","graphics-card","motherboard","desk-fan","gramophone","rotary-telephone","sewing-machine","typewriter"];
+const names=["clock","projector","drone","cpu-cooler","graphics-card","motherboard","desk-fan","gramophone","rotary-telephone","sewing-machine","typewriter","case-fan","power-supply","pc-chassis","desktop-cpu","claw-machine"];
 const chrome=process.env.CHROME_BIN||"google-chrome";
 const flags=["--headless=new","--no-sandbox","--disable-dev-shm-usage","--enable-webgl","--enable-unsafe-swiftshader",
  "--use-angle=swiftshader","--no-first-run","--disable-background-networking","--virtual-time-budget=5500","--window-size=1200,800"];
