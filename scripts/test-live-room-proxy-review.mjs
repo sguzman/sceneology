@@ -137,6 +137,28 @@ try{
  const bytes=fs.readFileSync(image);
  assert.ok(bytes.length>6000&&bytes.subarray(0,8).toString("hex")==="89504e470d0a1a0a");
 }finally{fs.rmSync(zoneCaptureProfile,{recursive:true,force:true});}
+// Screenshot proof of non-destructive embedded dressing removal versus the
+// independently authored pillow placement proposal. Both are research-only.
+for(const [name,suffix] of [
+ ["sleep-room-bed-source-original.png","?room=sleep-room-v1&yaw=130"],
+ ["sleep-room-bed-hidden-bedding.png","?room=sleep-room-v1&yaw=130&bed=bare"],
+ ["sleep-room-separate-pillow-candidate.png","?room=sleep-room-v1&yaw=130&bed=bare&pillow=1"]
+]){
+ const profile=fs.mkdtempSync(path.join(os.tmpdir(),"sceneology-bed-attached-proposal-"));
+ try{
+  const png=path.join(output,name);
+  const u=new URL("site/room-proxy-review.html"+suffix,base).href;
+  const run=spawnSync(chrome,[...flags,"--window-size=1400,1250","--user-data-dir="+profile,"--screenshot="+png,u],
+   {encoding:"utf8",timeout:100000});
+  if(run.error||run.status!==0)throw Error("Source bed-pillow visual capture failed");
+  const image=fs.readFileSync(png);
+  assert.ok(image.length>7000&&image.subarray(0,8).toString("hex")==="89504e470d0a1a0a");
+ }finally{fs.rmSync(profile,{recursive:true,force:true});}
+}
+const fingerprint=name=>crypto.createHash("sha256").update(fs.readFileSync(path.join(output,name))).digest("hex");
+assert.equal(new Set(["sleep-room-bed-source-original.png","sleep-room-bed-hidden-bedding.png",
+ "sleep-room-separate-pillow-candidate.png"].map(fingerprint)).size,3,
+ "Separate original/bare/external-pillow Chrome screenshots unexpectedly identical");
 const report={schema_version:1,status:"passed",technical_only:true,original_binding_certified:false,approved_gallery_additions:0,
  explicit_instance_count:18,unplaced_parented_count:11,snapshots:[cozy,study,sleep,rotated,alternate]};
 fs.writeFileSync(path.join(output,"proxy-review-report.json"),JSON.stringify(report,null,2)+"\n");
