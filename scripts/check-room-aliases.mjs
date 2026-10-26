@@ -84,5 +84,5 @@ for(const item of covered){
  for(const match of matches)assert.ok(prepared.items.some(p=>p.sha===match.blob_sha&&p.source_path===match.path),"Staged alias source identity mismatch");
 }
 console.log("Sceneology room all-source staging: "+allCovered.length+"/"+manifest.alias_count+" aliases have staged original bytes (22 accepted-family, 1 research-only blanket); missing exact v1.3 remains unresolved.");
-console.log("Sceneology room staged-source coverage: +covered.length+"/"+manifest.alias_count+" aliases have at least one exact source staged; "+uncovered.length+" remain without a staged exact-source candidate. All 24 remain unbound, not approved.");
+console.log("Sceneology room staged-source coverage: "+covered.length+"/"+manifest.alias_count+" aliases have at least one accepted-family exact source staged; "+uncovered.length+" lack an accepted-family source. All 24 remain unbound.");
 console.log("Sceneology room dependency census passed: 4 accepted source-only compositions; 37 placements, 24 distinct aliases; 7 one-source candidates, 16 ambiguous, 1 missing exact version. No automatic binding/visual approval.");
