@@ -103,8 +103,14 @@
         {
           "id": "P01",
           "points": 7,
-          "status": "todo",
-          "evidence": []
+          "status": "done",
+          "evidence": [
+            "docs/CONTENT-AUDIT.md",
+            "scripts/publication-gate.mjs",
+            "scripts/check-inline-geometry.mjs",
+            "scripts/check-provenance.mjs",
+            "catalog/library.json"
+          ]
         },
         {
           "id": "P02",
