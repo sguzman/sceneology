@@ -33,6 +33,7 @@ const expectedStatus={
  "backyard-rain-wind-archival":{id:"rain-status",phrase:"181 archival geometry parts"},
  "backyard-snow-archival":{id:"snow-status",phrase:"181 archival geometry parts"}
 };
+const pendingIds=candidates.ids.filter(id=>!showcase.approved_ids.includes(id));
 const captures=[];
 function run(args,name){
  const r=spawnSync(chrome,args,{encoding:"utf8",timeout:100000,maxBuffer:14*1024*1024});
@@ -41,11 +42,10 @@ function run(args,name){
  return r.stdout;
 }
 let failed=false;
-for(const id of candidates.ids){
+for(const id of pendingIds){
  const rec=byId.get(id),spec=expectedStatus[id];
  assert.ok(rec&&spec,"Unrecognized/unregistered candidate "+id);
  assert.ok(!["failed","blocked"].includes(rec.status),"Rejected candidate nominated: "+id);
- assert.ok(!showcase.approved_ids.includes(id),"Review artifact must not impersonate an already published exhibit: "+id);
  assert.ok(/^experiments\/[a-z0-9._/-]+\.html$/.test(rec.viewer),"Unreviewed candidate path: "+id);
  const file=path.join(root,rec.viewer);
  assert.ok(fs.statSync(file).isFile());
@@ -85,7 +85,7 @@ img{display:block;width:100%;height:auto;object-fit:contain}a{color:#07598b}
 <footer><p>Captured under headless Chrome software WebGL. Screenshots may contain viewer controls. Inspect animations and effects in the linked interactive viewers before judging them. Failed studies are retained separately in the research repository.</p></footer></html>`;
 fs.writeFileSync(path.join(output,"index.html"),page);
 fs.writeFileSync(path.join(output,"manifest.json"),JSON.stringify({
- schema_version:1,review_only:true,approved_ids:showcase.approved_ids,candidates:captures,
+ schema_version:1,review_only:true,approved_ids:showcase.approved_ids,pending_ids:pendingIds,candidates:captures,
  evidence_scope:"Chrome SwiftShader framebuffer screenshots, not aesthetic judgment"
 },null,2)+"\n");
 for(const c of captures)console.log(c.id+": "+c.capture+(c.error?" ("+c.error+")":""));
