@@ -44,11 +44,17 @@ jobs:
         env:
           SCENEOLOGY_SITE_URL: ${{ steps.deployment.outputs.page_url }}
         run: node scripts/test-live-keyboard.mjs
+      - name: Verify live approved models and archived source families
+        env:
+          SCENEOLOGY_SITE_URL: ${{ steps.deployment.outputs.page_url }}
+        run: node scripts/test-live-model-collection.mjs
       - name: Preserve website verification evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: sceneology-live-pages-evidence
-          path: artifacts/live-site/
+          path: |
+            artifacts/live-site/
+            artifacts/model-site/
           if-no-files-found: warn
           retention-days: 7
