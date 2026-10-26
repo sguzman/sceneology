@@ -21,3 +21,7 @@ Historical negative results remain valid technical research. Neither rejection n
 The source-reviewed [Quest Girl v7 motion lab](https://sguzman.github.io/sceneology/characters/quest-girl-motion.html) now samples four original-valued rigid-pivot clips: soft idle, look around, small wave and step in place. It uses the 44-part static character, retains the original source clip durations, frequencies, amplitudes and keyframe values, and preserves the explicit boundary of **functional pass, not aesthetic animation approval**. The playback documents its renderer approximations and zero-phase sine assumption where the original source omits phase conventions.
 
 The separately selected static Quest Girl v7 character is unchanged. The motion experiment is a technical library record, not a new gallery exhibit.
+
+## Four-clip browser interaction verification
+
+The functional-only Quest Girl motion lab is checked with Chrome DevTools across all four source-authored clips. The test pauses, selects each clip, scrubs, verifies changed rendered polygon vertices, resumes/repauses, records real-frame screenshots, and checks 390-pixel mobile layout. This validates controls and visible motion, not the artistic appeal or exact original runtime parity. No new gallery approval is inferred.
