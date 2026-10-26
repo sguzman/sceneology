@@ -66,3 +66,11 @@ The [partial Reading Corner viewer](https://sguzman.github.io/sceneology/site/re
 ## Parent-relationship recovery without invented placements
 
 For the three technical room studies, every omitted parent-relative object now retains an explicit, source-checked link to an actually positioned furniture parent (for example, `on_desk → desk`). This adds **11 verified semantic attachment edges** without manufacturing coordinates, model collision solutions, pillow orientation, book distribution, lamp-light parenting, or blanket v1.3 geometry. The review UI lists each withheld attachment. Reading Corner independently retains its two parent-relative items, bringing the four-room total to **13 known but still unpositioned attachment relationships**.
+
+## Conservative per-instance geometry screening (research only)
+
+The research viewers now compute transformed axis-aligned bounds from actual source-derived part vertices for each currently selected representative model. The machine-readable, reproducibly generated [four-room bounds report](https://sguzman.github.io/sceneology/site/room-clearance-audit.json) covers **24 explicitly positioned proxy instances**, while all **13 original parent-linked attachments** remain withheld from 3D placement. Original scene coordinates and model blob identities are checked before the report is constructed.
+
+Possible overlaps are a **broad-phase warning**: intersecting world-space boxes and even overlapping individual part bounding boxes do *not* prove that two polygonal objects truly intersect. Conversely, clean proxy boxes do not establish clearance for alternative historical assets, rooms with walls, parented decorations, exact floor contact, light sources, or the actual accepted renderer. The report records source-placement Y extents relative to `y=0`, not a verified floor-contact result. No objects are adjusted automatically, and none of this evidence changes `catalog/showcase.json` or certifies original model bindings.
+
+Both the three-room variant viewer and the Reading Corner viewer display these candidate warnings alongside their unfinished-room disclaimers. The QA includes explicit synthetic separated, touching, overlapping and rotated-box cases and verifies the published report's exact bytes after deployment.

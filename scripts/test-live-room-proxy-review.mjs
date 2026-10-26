@@ -53,6 +53,10 @@ function snapshot(id,yaw,variant=null){
   assert.ok(tag.includes('data-rendered="true"'),"Source proxies did not render");
   assert.ok(tag.includes('data-yaw="'+yaw+'"'),"Camera setting ignored");
   assert.ok(!dom.includes("Unable to show research room:")&&!dom.includes("Technical projection unavailable:"));
+  const geometryStatus=dom.match(/<section\b[^>]*\bid="proxy-clearance"[^>]*>/)?.[0]||"";
+  assert.ok(geometryStatus.includes('data-status="technical-only"'),"Live conservative bounds audit missing");
+  assert.match(geometryStatus,/data-candidates="\d+"/,"Source geometry bounds were not evaluated");
+  assert.ok(dom.includes("NOT confirmed mesh collisions"),"Research collision disclaimer missing");
   const expected=data.rooms.find(r=>r.id===id);
   assert.ok(expected);
   assert.equal((dom.match(/class="proxy-choice"/g)||[]).length,expected.placed.length);

@@ -1,0 +1,31 @@
+import assert from "node:assert/strict";
+import fs from "node:fs";
+import path from "node:path";
+const root=path.resolve(import.meta.dirname,"..");
+const base=process.env.SCENEOLOGY_SITE_URL;
+assert.ok(base?.startsWith("https://"),"Deployed HTTPS URL required");
+const url=new URL("site/room-clearance-audit.json",base.endsWith("/")?base:base+"/");
+url.searchParams.set("revision",process.env.GITHUB_SHA||"latest");
+const local=fs.readFileSync(path.join(root,"site/room-clearance-audit.json"));
+let last;
+for(let attempt=0;attempt<5;attempt++){
+ try{
+  const response=await fetch(url,{cache:"no-store",signal:AbortSignal.timeout(18000)});
+  assert.equal(response.status,200,"Missing published geometry audit");
+  assert.ok(Buffer.from(await response.arrayBuffer()).equals(local),"Published model-derived AABB screen differs from CI source");
+  last=null;break;
+ }catch(e){last=e;if(attempt<4)await new Promise(r=>setTimeout(r,2600));}
+}
+if(last)throw last;
+const audit=JSON.parse(local);
+assert.equal(audit.status,"technical-geometry-diagnostics-only");
+assert.equal(audit.collision_clearance_accepted,false);
+assert.equal(audit.original_asset_bindings_certified,false);
+assert.equal(audit.rooms.length,4);
+assert.equal(audit.explicitly_positioned_count,24);
+assert.equal(audit.omitted_parented_count,13);
+const totalCandidates=audit.rooms.reduce((n,r)=>n+r.geometry.total_candidate_pairs,0);
+const byRoom=audit.rooms.map(room=>({id:room.room_id,bounds:room.geometry.instances.length,
+ potentialOverlapPairs:room.geometry.total_candidate_pairs,
+ proxyPartAabbCandidates:room.geometry.component_bbox_candidate_pairs}));
+console.log("Sceneology bounds review deployed exactly: "+JSON.stringify({totalCandidates,byRoom,roomBindingsCertified:0,collisionCertified:false}));

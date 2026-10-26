@@ -50,6 +50,10 @@ function sample(yaw){
   assert.ok(faces.length>=30&&faces.every(v=>!v.includes("NaN")&&!v.includes("Infinity")),"Invalid visible room geometry");
   assert.ok(dom.includes('data-instance="chair"')&&dom.includes('data-instance="rug"'),"Source object instances missing");
   assert.ok(dom.includes("two")||dom.includes("2 deliberately omitted attachments"),"Incomplete room disclaimer disappeared");
+  const geometryStatus=dom.match(/<section\b[^>]*\bid="reading-clearance"[^>]*>/)?.[0]||"";
+  assert.ok(geometryStatus.includes('data-status="technical-only"'),"Reading Corner bounds QA never appeared");
+  assert.match(geometryStatus,/data-candidates="\d+"/);
+  assert.ok(dom.includes("neither confirmed collisions"),"Source clearance gate disclaimer missing");
   assert.ok(dom.includes('data-omitted-instance="lumbar-pillow"')&&dom.includes('data-omitted-instance="shelf-books"'),"Unpositioned parent links not displayed");
   return {yaw,faces:faces.length,digest:crypto.createHash("sha256").update(faces.join("|")).digest("hex")};
  }finally{fs.rmSync(profile,{recursive:true,force:true});}
