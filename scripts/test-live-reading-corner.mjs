@@ -154,6 +154,16 @@ try{
  assert.notEqual(crypto.createHash("sha256").update(baseline).digest("hex"),
   crypto.createHash("sha256").update(png).digest("hex"),"Aligned image cannot be identical to source pose image");
 }finally{fs.rmSync(proposedScreenshotProfile,{recursive:true,force:true});}
+const forwardPillowProfile=fs.mkdtempSync(path.join(os.tmpdir(),"sceneology-pillow-front-capture-"));
+try{
+ const picture=path.join(output,"reading-lumbar-placement-front-perspective.png");
+ const url=new URL("site/reading-corner-study.html?yaw=-45&pillow=1",base).href;
+ const run=spawnSync(browser,[...flags,"--window-size=1250,1460","--user-data-dir="+forwardPillowProfile,
+  "--screenshot="+picture,url],{encoding:"utf8",timeout:100000});
+ if(run.error||run.status!==0)throw Error("Lumbar front-face review capture failed");
+ const png=fs.readFileSync(picture);
+ assert.ok(png.length>7000&&png.subarray(0,8).toString("hex")==="89504e470d0a1a0a");
+}finally{fs.rmSync(forwardPillowProfile,{recursive:true,force:true});}
 const report={schema_version:1,status:"passed",artwork_approved:false,original_accepted_room_render:false,
  partial_placed_instances:6,unplaced_instances:2,source_shoe_gap:-.99,
  opt_in_support_offset:.99,original_occupancy_transform_preserved:true,cameras:[first,second]};
