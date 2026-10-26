@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "id": "static-shapes-two-d",
+  "title": "Static geometric composition",
+  "summary": "Synthetic scene schema example; not an authored gallery specimen.",
+  "dimension": "2d",
+  "units": "px",
+  "frame": {
+    "width": 320,
+    "height": 180
+  },
+  "elements": [
+    {
+      "id": "ground",
+      "role": "environment",
+      "shape": "rectangle",
+      "transform": {
+        "position": [
+          0,
+          130
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "opacity": 1,
+        "visible": true
+      },
+      "size": [
+        320,
+        50
+      ],
+      "color": "#54795d"
+    },
+    {
+      "id": "sun",
+      "role": "object",
+      "shape": "ellipse",
+      "transform": {
+        "position": [
+          245,
+          35
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "opacity": 1,
+        "visible": true
+      },
+      "size": [
+        38,
+        38
+      ],
+      "color": "#f8bf4e"
+    }
+  ],
+  "relations": [],
+  "constraints": [
+    {
+      "kind": "within-frame",
+      "subject_id": "sun",
+      "required": true
+    }
+  ],
+  "presentation": {
+    "background": "#d1e7f2",
+    "draw_order": [
+      "ground",
+      "sun"
+    ],
+    "style": {
+      "name": "flat-geometry",
+      "palette": [
+        "#54795d",
+        "#f8bf4e",
+        "#d1e7f2"
+      ]
+    }
+  },
+  "realization": {
+    "kind": "declarative-only",
+    "engine": "none",
+    "assets": [],
+    "notes": "Data fixture only; no renderer or visual QA."
+  }
+}
