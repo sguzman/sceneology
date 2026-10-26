@@ -66,3 +66,5 @@ await import("./publication-gate.mjs");
 await import("./test-ontology-roundtrip.mjs");
 
 await import("./check-provenance.mjs");
+
+await import("./check-inline-geometry.mjs");
