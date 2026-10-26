@@ -250,8 +250,14 @@
         {
           "id": "G04",
           "points": 2,
-          "status": "todo",
-          "evidence": []
+          "status": "done",
+          "evidence": [
+            ".github/workflows/pages.yml",
+            "scripts/test-live-site.mjs",
+            "scripts/test-live-keyboard.mjs",
+            "scripts/test-site-gallery.mjs",
+            "docs/RELEASE-EVIDENCE.md"
+          ]
         }
       ]
     },
