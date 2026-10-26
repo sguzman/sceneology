@@ -2,6 +2,7 @@ import {analyzeProxyGeometry} from "./room-geometry-audit.mjs";
 const stage=document.getElementById("reading-stage");
 const clearance=document.getElementById("reading-clearance");
 const showCharacter=document.getElementById("reading-show-character");
+const alignCharacter=document.getElementById("reading-align-character");
 const characterNotice=document.getElementById("reading-character-notice");
 const status=document.getElementById("reading-status");
 const yaw=document.getElementById("reading-yaw");
@@ -28,9 +29,16 @@ function draw(){
  const light=unit([.48,.92,-.34]);
  const visible=[];
  const characterShown=Boolean(showCharacter.checked&&occupancy);
+ const support=occupancy?.comparison.source_shoe_support_research;
+ const aligned=Boolean(characterShown&&alignCharacter.checked&&support);
+ const characterTranslation=characterShown?[
+  occupancy.authored_character.translate[0],
+  occupancy.authored_character.translate[1]+(aligned?support.proposed_visualization_only_y_offset:0),
+  occupancy.authored_character.translate[2]
+ ]:null;
  const drawn=characterShown?[...room.instances,{
   id:"quest-girl",model_key:occupancy.model.key,model_sha:occupancy.model.source_sha,
-  translate:occupancy.authored_character.translate,yaw_deg:occupancy.authored_character.yaw_deg
+  translate:characterTranslation,yaw_deg:occupancy.authored_character.yaw_deg
  }]:room.instances;
  for(const instance of drawn){
   const model=library.get(instance.model_key);
@@ -72,6 +80,8 @@ function draw(){
  stage.dataset.yaw=String(yawDeg);stage.dataset.elevation=String(elevationDeg);
  stage.dataset.viewportTop=String(Math.round(stage.getBoundingClientRect().top));
  stage.dataset.occupancy=characterShown?"research-candidate":"hidden";
+ stage.dataset.support=aligned?"alignment-proposal":characterShown?"authored-unaligned":"hidden";
+ stage.dataset.characterY=characterShown?String(characterTranslation[1]):"none";
  caption.textContent="Six authored positions · "+room.omitted_parented_instances.length+" deliberately omitted attachments · camera "+yawDeg+"° / "+elevationDeg+"°";
  const audit=analyzeProxyGeometry(drawn,library);
  clearance.dataset.candidates=String(audit.total_candidate_pairs);
@@ -90,11 +100,14 @@ function draw(){
  }
  clearance.replaceChildren(heading,explanation,list);
  if(characterShown){
-  characterNotice.textContent="Character: original authored position "+
-    occupancy.authored_character.translate.join(", ")+" · yaw "+
-    occupancy.authored_character.yaw_deg+"°. Source character bottom versus proxy rug top: "+
-    occupancy.comparison.signed_character_bottom_minus_rug_top+
-    " source units. This is not verified contact, clipping clearance, scale fidelity, or an approved occupancy scene.";
+  characterNotice.textContent="Character source translation "+
+    occupancy.authored_character.translate.join(", ")+", yaw "+
+    occupancy.authored_character.yaw_deg+"°. Sole-to-rug CENTRAL FIELD gap "+
+    support.original_vertical_gap_to_field+" source units. "+
+    (aligned?"Optional viewer-only Y correction +"+support.proposed_visualization_only_y_offset+
+      " (original geometry and scene coordinates unchanged).":"No support correction applied.")+
+    " Both shoe sole footprints lie within the rug field: "+support.all_shoe_corners_within_rug_field+
+    ". This is NOT verified contact, collision clearance, original-renderer behavior or artistic approval.";
  }else{
   characterNotice.textContent="Character-occupancy candidate hidden by default; its historical visual verdict is still pending.";
  }
@@ -112,7 +125,10 @@ try{
     room.complete_room!==false||modelData.models?.length!==30||
     occupancy.historical_occupancy_proof_status!=="human-review-candidate"||
     occupancy.occupancy_approved!==false||occupancy.stage_contact_certified!==false||
-    occupancy.showcase_approved!==false||occupancy.model.key!=="quest-girl-v7")
+    occupancy.showcase_approved!==false||occupancy.model.key!=="quest-girl-v7"||
+    occupancy.comparison.source_shoe_support_research?.original_occupancy_position_preserved!==true||
+    occupancy.comparison.source_shoe_support_research?.proposal_is_original_source_transform!==false||
+    occupancy.comparison.source_shoe_support_research?.exact_mesh_contact_certified!==false)
   throw Error("Room completeness or approval boundary changed");
  library=new Map([...modelData.models,occupancy.model].map(x=>[x.key,x]));
  attachments.replaceChildren(...room.omitted_parented_instances.map(item=>{
@@ -125,7 +141,13 @@ try{
  const preferred=Number(params.get("yaw"));
  if(params.has("yaw")&&Number.isFinite(preferred)&&preferred>=-180&&preferred<=180)yaw.value=String(preferred);
  showCharacter.checked=params.get("occupancy")==="1";
- showCharacter.addEventListener("change",draw);
+ alignCharacter.checked=params.get("support")==="1";
+ alignCharacter.disabled=!showCharacter.checked;
+ showCharacter.addEventListener("change",()=>{
+  alignCharacter.disabled=!showCharacter.checked;
+  draw();
+ });
+ alignCharacter.addEventListener("change",draw);
  for(const input of [yaw,elevation])input.addEventListener("input",draw);
  draw();
  status.textContent="Partial source-derived geometry ready · no claim of canonical room fidelity";
