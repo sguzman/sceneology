@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "source_repository": "sguzman/renderarium",
+  "source_tree_sha": "595d8aeddccae01da42d63a5c2f704564389cc46",
+  "scope": "Technical archival candidate only; original blanket v1 had awaiting-family-review status, and cannot substitute for v1.3 accepted room cover.",
+  "items": [
+    {
+      "alias": "accepted:block-chibi-room::blanket/bed-cover",
+      "source_path": "assets/constructive-3d/blankets/block-chibi-bed-cover-blanket-v1.sc3d.yml",
+      "public_path": "models/source-archives/block-chibi-bed-cover-blanket-v1.sc3d.yml",
+      "sha": "2712f1eaaca55062f093b691c5d503fd3a7fb3f7",
+      "source_evaluation": "awaiting-family-review",
+      "gallery_approved": false,
+      "room_binding_approved": false,
+      "source_accepted_as_current_room_asset": false
+    }
+  ],
+  "unresolved_exact_alias": "accepted:block-chibi-room::blanket/bed-cover-v1.3"
+}

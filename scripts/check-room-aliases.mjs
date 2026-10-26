@@ -51,11 +51,38 @@ const stagedBlobs=new Set(prepared.items.map(item=>item.sha));
 assert.equal(stagedBlobs.size,prepared.items.length,"Duplicate staged source blobs");
 const covered=manifest.aliases.filter(alias=>alias.candidates.some(candidate=>stagedBlobs.has(candidate.blob_sha)));
 const uncovered=manifest.aliases.filter(alias=>!alias.candidates.some(candidate=>stagedBlobs.has(candidate.blob_sha)));
+// Separately stage a source-only, NOT owner-accepted earlier blanket for forensic comparison.
+// This never upgrades its visual verdict or binds it into an accepted composition.
+const archives=JSON.parse(fs.readFileSync(path.join(root,"catalog/room-technical-source-staging.json"),"utf8"));
+assert.equal(archives.schema_version,1);
+assert.equal(archives.source_tree_sha,manifest.source_revision_tree);
+assert.equal(archives.items.length,1);
+const technical=archives.items[0];
+assert.equal(technical.alias,"accepted:block-chibi-room::blanket/bed-cover");
+assert.match(technical.public_path,/^models\/source-archives\/[a-z0-9.-]+\.sc3d\.yml$/);
+assert.equal(technical.source_evaluation,"awaiting-family-review");
+assert.equal(technical.gallery_approved,false);
+assert.equal(technical.room_binding_approved,false);
+assert.equal(technical.source_accepted_as_current_room_asset,false);
+const archivedBytes=fs.readFileSync(path.join(root,technical.public_path));
+const archivedSha=crypto.createHash("sha1").update(Buffer.from("blob "+archivedBytes.length+"\\0")).update(archivedBytes).digest("hex");
+assert.equal(archivedSha,technical.sha,"Technical blanket copy changed");
+const alias=manifest.aliases.find(a=>a.alias===technical.alias);
+assert.ok(alias?.candidates.some(c=>c.blob_sha===technical.sha&&c.path===technical.source_path));
+assert.ok(!stagedBlobs.has(technical.sha),"Unapproved blanket must not enter accepted family previews");
+const allSourceBlobs=new Set([...stagedBlobs,technical.sha]);
+const allCovered=manifest.aliases.filter(a=>a.candidates.some(c=>allSourceBlobs.has(c.blob_sha)));
+const stillMissing=manifest.aliases.filter(a=>!a.candidates.some(c=>allSourceBlobs.has(c.blob_sha)));
+assert.equal(covered.length,22,"Accepted-family staging scope unexpectedly changed");
+assert.equal(allCovered.length,23,"Exactly one additional technical blanket candidate expected");
+assert.deepEqual(stillMissing.map(a=>a.alias),[archives.unresolved_exact_alias]);
+
 assert.ok(uncovered.every(alias=>alias.alias.startsWith("accepted:block-chibi-room::blanket/")),"Unexpected accepted-family source gap");
 for(const item of covered){
  const matches=item.candidates.filter(candidate=>stagedBlobs.has(candidate.blob_sha));
  assert.ok(matches.length>0);
  for(const match of matches)assert.ok(prepared.items.some(p=>p.sha===match.blob_sha&&p.source_path===match.path),"Staged alias source identity mismatch");
 }
-console.log("Sceneology room staged-source coverage: "+covered.length+"/"+manifest.alias_count+" aliases have at least one exact source staged; "+uncovered.length+" remain without a staged exact-source candidate. All 24 remain unbound, not approved.");
+console.log("Sceneology room all-source staging: "+allCovered.length+"/"+manifest.alias_count+" aliases have staged original bytes (22 accepted-family, 1 research-only blanket); missing exact v1.3 remains unresolved.");
+console.log("Sceneology room staged-source coverage: +covered.length+"/"+manifest.alias_count+" aliases have at least one exact source staged; "+uncovered.length+" remain without a staged exact-source candidate. All 24 remain unbound, not approved.");
 console.log("Sceneology room dependency census passed: 4 accepted source-only compositions; 37 placements, 24 distinct aliases; 7 one-source candidates, 16 ambiguous, 1 missing exact version. No automatic binding/visual approval.");

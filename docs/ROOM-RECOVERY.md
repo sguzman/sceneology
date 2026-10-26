@@ -44,3 +44,9 @@ The two source-staging gaps are both blanket aliases: the existing bed-cover v1 
 The accepted Sleep Room source specifically requests bed-cover v1.3, **preserving the lighter top fold** and **forbidding the confusing extra dark foot piece**. Its original accepted layout also requires a coherent blanket-on-bed arrangement rather than a clipping or unsupported drape. Those are evidence-backed acceptance constraints, **not an exact original geometry file**.
 
 A public, previously authored bed-cover v1 file is known, but that is an earlier specimen, not the accepted v1.3 output. It must not be used as a stand-in or silently renamed. The machine-readable [reconstruction target](../catalog/room-blanket-target.json) and [gate](../scripts/check-room-blanket-target.mjs) preserve the precise distinction; new geometry is unapproved until the original can be recovered or a separately evaluated proposal is accepted. Source coverage remains 22/24 aliases; none are bound.
+
+## Unapproved blanket v1 source archived separately
+
+The original publicly authored **bed-cover blanket v1** is now copied byte-for-byte into `models/source-archives/block-chibi-bed-cover-blanket-v1.sc3d.yml` with its original Git blob identity and explicit metadata in `catalog/room-technical-source-staging.json`. Its source evaluation remains *awaiting family review*: it is **not** the later accepted blanket v1.3, and cannot be bound into a finished room or promoted into the showcase. This is technical preservation of an earlier reference only.
+
+With this separate archival specimen, **23 of 24 aliases now have at least one exact-byte staged source candidate**, but only **22** have an accepted-family candidate. The remaining alias specifically requests **bed-cover v1.3**; neither Renderarium nor the current Scenarium source tree exposes an exact matching file. All **24 aliases remain unbound**, and the four rooms are still source-only.
