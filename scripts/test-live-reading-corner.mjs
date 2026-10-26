@@ -45,7 +45,7 @@ function sample(yaw){
   const stage=dom.match(/<div[^>]*\bid="reading-stage"[^>]*>/)?.[0]||"";
   assert.ok(stage.includes('data-rendered="true"'),"Partial room did not render actual geometry");
   assert.ok(stage.includes('data-yaw="'+yaw+'"'),"Room camera angle ignored");
-  const top=Number(stage.match(/data-viewport-top="(-?\\d+)"/)?.[1]);
+  const top=Number(stage.match(/data-viewport-top="(-?\d+)"/)?.[1]);
   assert.ok(Number.isFinite(top)&&top>50&&top<600,"Room visual stage pushed below desktop first viewport: "+top);
   assert.ok(!dom.includes("Unable to reconstruct research layout:"));
   const faces=[...dom.matchAll(/<polygon [^>]*points="([^"]+)"/g)].map(m=>m[1]);
