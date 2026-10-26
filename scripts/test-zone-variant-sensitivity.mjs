@@ -1,0 +1,50 @@
+import assert from "node:assert/strict";
+import fs from "node:fs";
+import path from "node:path";
+const root=path.resolve(import.meta.dirname,"..");
+const get=p=>JSON.parse(fs.readFileSync(path.join(root,p),"utf8"));
+const audit=get("site/room-zone-variant-sensitivity.json");
+const original=get("site/room-zone-footprint-audit.json");
+const proxy=get("site/room-proxy-review-data.json");
+const family=get("catalog/accepted-family-sources.json");
+const gallery=get("catalog/showcase.json");
+assert.equal(audit.schema_version,1);
+assert.equal(audit.source_position_mutation,false);
+assert.equal(audit.original_room_bindings_certified,false);
+assert.equal(audit.no_new_gallery_approval,true);
+assert.equal(audit.source_scene_room_revision_preserved,true);
+assert.equal(audit.rooms.length,3);
+assert.equal(gallery.approved_ids.length,24);
+let alternatives=0;
+for(const room of audit.rooms){
+ const originalRoom=original.rooms.find(r=>r.id===room.room_id),source=proxy.rooms.find(r=>r.id===room.room_id);
+ assert.ok(source&&originalRoom);
+ assert.equal(room.original_source_sha,source.source_sha);
+ assert.equal(room.all_variants_faithful_to_original_source_binding,false);
+ assert.equal(room.baseline.possible_pairs,originalRoom.zones.reduce((n,z)=>n+z.candidate_overlaps.length,0));
+ assert.equal(room.baseline_overlap_candidates.length,room.baseline.possible_pairs);
+ for(const variant of room.one_variant_sensitive_alternatives){
+  const item=source.placed.find(i=>i.id===variant.instance_id);
+  const choice=item?.choices.find(c=>c.key===variant.candidate_model_key);
+  const staged=family.items.find(f=>f.key===variant.candidate_model_key);
+  assert.ok(choice&&staged&&choice.source_sha===variant.source_sha&&choice.source_path===variant.source_path);
+  assert.equal(staged.sha,choice.source_sha);
+  assert.equal(staged.new_renderer_visual_approval,false);
+  assert.equal(variant.base_model_key,item.default_model_key);
+  assert.equal(variant.exact_original_variant_identified,false);
+  assert.equal(variant.geometry_clearance_certified,false);
+  assert.ok(variant.overlap_delta_area>0,"Candidate was not supposed to be a source-binding selection");
+  alternatives++;
+ }
+}
+assert.equal(alternatives,7);
+const cozy=audit.rooms.find(r=>r.room_id==="cozy-bedroom-study-v1.3");
+const sleep=audit.rooms.find(r=>r.room_id==="sleep-room-v1");
+assert.equal(cozy.baseline.possible_pairs,1);
+assert.deepEqual(cozy.baseline_overlap_candidates.map(x=>[x.id,x.zone_id]),[["desk","circulation"]]);
+assert.equal(cozy.baseline.cumulative_2d_overlapping_area,.0279);
+assert.equal(sleep.baseline.possible_pairs,0);
+assert.deepEqual(audit.rooms.filter(r=>r.room_id!=="cozy-bedroom-study-v1.3").map(r=>r.baseline.possible_pairs),[0,0]);
+assert.deepEqual(cozy.one_variant_sensitive_alternatives.filter(x=>x.instance_id==="desk").map(x=>x.candidate_model_key).sort(),["simple-study-desk","wide-writing-desk"]);
+assert.deepEqual(sleep.one_variant_sensitive_alternatives.map(x=>x.candidate_model_key).sort(),["simple-study-bed","wide-cute-bed"]);
+console.log("Sceneology original room-zone alternative QA passed: 1 default proxy rectangle concern, 7 source-variant changes all increasing overlap, zero original asset identities certified.");

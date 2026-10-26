@@ -96,6 +96,8 @@ await import("./build-room-clearance-audit.mjs");
 await import("./test-room-clearance-audit.mjs");
 await import("./build-room-zone-footprint-audit.mjs");
 await import("./test-room-zone-footprint-audit.mjs");
+await import("./build-zone-variant-sensitivity.mjs");
+await import("./test-zone-variant-sensitivity.mjs");
 await import("./test-reading-support-alignment.mjs");
 await import("./build-reading-corner-occupancy.mjs");
 await import("./test-reading-corner-occupancy.mjs");
