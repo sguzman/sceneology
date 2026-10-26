@@ -6,6 +6,8 @@ on:
       - 'experiments/backyard-daynight-legacy-webgl2.html'
       - 'experiments/backyard-outline-inverted-hull-rejected.html'
       - 'experiments/backyard-outline-screen-space-v2.html'
+      - 'experiments/backyard-rain-wind-archival.html'
+      - 'experiments/backyard-snow-archival.html'
       - 'scripts/test-webgl-browser.mjs'
       - '.github/workflows/browser-smoke.yml'
   workflow_dispatch:
@@ -22,7 +24,7 @@ jobs:
           node-version: '22'
       - name: Identify software renderer environment
         run: google-chrome --version
-      - name: Exercise three archival WebGL2 viewers
+      - name: Exercise five archival WebGL2 viewers
         run: node scripts/test-webgl-browser.mjs
       - name: Preserve render and failure evidence
         if: always()
