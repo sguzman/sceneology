@@ -11,7 +11,16 @@ const urlBase=base.endsWith("/")?base:base+"/";
 const outDir=path.join(root,"artifacts","live-site");
 fs.mkdirSync(outDir,{recursive:true});
 const sha=bytes=>crypto.createHash("sha256").update(bytes).digest("hex");
-const paths=["index.html","site/main.js","site/style.css","catalog/library.json","catalog/showcase.json","ontology/schemas/scene-v1.schema.json"];
+const paths=[
+ "index.html","site/main.js","site/style.css","catalog/library.json","catalog/showcase.json",
+ "ontology/schemas/scene-v1.schema.json","runtime/timeline-lite.js",
+ "experiments/backyard-daynight-legacy-webgl2.html",
+ "experiments/backyard-outline-inverted-hull-rejected.html",
+ "experiments/backyard-outline-screen-space-v2.html",
+ "experiments/backyard-rain-wind-archival.html",
+ "experiments/backyard-snow-archival.html",
+ "scenes/mirror-vector-motion-study.html"
+];
 const wait=ms=>new Promise(resolve=>setTimeout(resolve,ms));
 async function getWithRetries(rel){
  let error;
