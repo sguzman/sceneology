@@ -17,6 +17,7 @@ for(const model of manifest.items){
  const source=fs.readFileSync(svg,"utf8");
  assert.ok(source.startsWith("<svg"),"Invalid SVG "+model.key);
  const polygons=(source.match(/<polygon /g)||[]).length;
+ if(model.family==="rugs")assert.ok(!source.includes("<ellipse "),"Invented detached shadow beneath a floor rug");
  if(model.key==="task-lamp")assert.match(source,/<polygon data-part="emitter" data-face="0"/,"Downward emitter face missing from task lamp preview");
  assert.ok(polygons>=(model.family==="rugs"?3:8),"Sparse geometric preview "+model.key);
  const withoutSvgNamespace=source.replace('xmlns="http://www.w3.org/2000/svg"',"");

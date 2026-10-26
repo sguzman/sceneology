@@ -74,7 +74,7 @@ function parseMaterials(source){
  }
  return table;
 }
-function projectArtifact(source,identity){
+function projectArtifact(source,identity,minimumFaces=8){
  const parts=parseParts(source),materials=parseMaterials(source);
  const transforms=new Map();
  function world(id,visiting=new Set()){
@@ -111,14 +111,16 @@ function projectArtifact(source,identity){
    faces.push({partId:p.id,faceIndex,vs,depth:dot(vs.reduce((a,b)=>add(a,b),[0,0,0]).map(v=>v/4),camera),color:shade(materials.get(p.colorRef),f),stroke:shade(materials.get(p.colorRef),f*.78)});
   }
  }
- assert.ok(faces.length>=3,"Sparse SVG geometry "+identity);
+ assert.ok(faces.length>=minimumFaces,"Sparse SVG geometry "+identity);
  const pts=faces.flatMap(f=>f.vs.map(v=>[dot(v,right),-dot(v,up)])),xs=pts.map(v=>v[0]),ys=pts.map(v=>v[1]);
  const minX=Math.min(...xs),maxX=Math.max(...xs),minY=Math.min(...ys),maxY=Math.max(...ys);
  const scale=Math.min(710/(maxX-minX||1),400/(maxY-minY||1)),ox=480-(minX+maxX)*scale/2,oy=300-(minY+maxY)*scale/2;
  faces.sort((a,b)=>a.depth-b.depth);
  const svg=['<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 640" role="img" aria-label="Source-derived '+identity+' preview">',
  '<defs><linearGradient id="bg" x2="0" y2="1"><stop stop-color="#edf2f2"/><stop offset="1" stop-color="#cfdbdc"/></linearGradient></defs>',
- '<rect width="960" height="640" fill="url(#bg)"/>','<ellipse cx="480" cy="535" rx="225" ry="27" fill="#778995" opacity=".12"/>'];
+ '<rect width="960" height="640" fill="url(#bg)"/>'];
+ // Rugs are the ground-contact surface itself: a detached floating shadow misrepresents them.
+ if(!identity.endsWith("-rug"))svg.push('<ellipse cx="480" cy="535" rx="225" ry="27" fill="#778995" opacity=".12"/>');
  for(const f of faces)svg.push('<polygon data-part="'+f.partId+'" data-face="'+f.faceIndex+'" points="'+f.vs.map(v=>(ox+dot(v,right)*scale).toFixed(1)+","+(oy-dot(v,up)*scale).toFixed(1)).join(" ")+'" fill="'+f.color+'" stroke="'+f.stroke+'" stroke-width=".65" stroke-linejoin="round"/>');
  svg.push("</svg>");
  return{svg:svg.join("\n")+"\n",polygons:faces.length,parts:[...parts.values()].filter(p=>p.geometry).length};
@@ -128,7 +130,7 @@ for(const record of manifest.items){
  const sourceSha=crypto.createHash("sha1").update(Buffer.from("blob "+bytes.length+"\0")).update(bytes).digest("hex");
  assert.equal(sourceSha,record.sha,"Family source modified without review: "+record.key);
  assert.equal(record.new_renderer_visual_approval,false,"New renderer was auto-approved");
- const result=projectArtifact(bytes.toString("utf8"),record.key);
+ const result=projectArtifact(bytes.toString("utf8"),record.key,record.family==="rugs"?3:8);
  if(record.key==="task-lamp")assert.match(result.svg,/<polygon data-part="emitter" data-face="0"/,"The task lamp's source-defined downward-facing emitter must be visible");
  const name=path.basename(record.public_path,".sc3d.yml")+".svg";
  fs.writeFileSync(path.join(output,name),result.svg);
