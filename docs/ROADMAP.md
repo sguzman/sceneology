@@ -2,7 +2,7 @@
 
 **Scope:** a self-contained public scene-construction research repository with useful technical history, rigorous human- and machine-readable ontology, and an owner-curated website. This roadmap governs **admission and later migration**, not automatic publication of source material.
 
-**Status as of 2026-10-26:** the original public scaffold is in place; the technical library and owner-approved showcase both contain zero records. This roadmap deliberately imports **no** source artifact and grants **no** new showcase approvals.
+**Current status:** [the machine-readable ledger](roadmap.json), [technical catalog](../catalog/library.json), and [owner-curated showcase allowlist](../catalog/showcase.json) report live progress. Screened archival studies have been admitted since the initial scaffold, including preserved failures and an editable 2D motion scene. No such transfer implies exhibition approval. The public gallery remains owner-selected only.
 
 ## Success definition (bounded migration MVP)
 
