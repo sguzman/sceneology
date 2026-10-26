@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "purpose": "owner-review-only",
+  "automatic_exhibition": false,
+  "notes": "These records are eligible for owner visual review, not approved exhibitions. A real screenshot is technical capture, not aesthetic endorsement.",
+  "ids": [
+    "backyard-daynight-legacy-webgl2",
+    "backyard-outline-screen-space-v2",
+    "backyard-rain-wind-archival",
+    "backyard-snow-archival"
+  ]
+}
