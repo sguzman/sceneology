@@ -94,6 +94,8 @@ await import("./build-room-clearance-audit.mjs");
 await import("./test-room-clearance-audit.mjs");
 await import("./build-reading-corner-occupancy.mjs");
 await import("./test-reading-corner-occupancy.mjs");
+await import("./build-room-variant-reduction.mjs");
+await import("./test-room-variant-reduction.mjs");
 
 await import("./build-room-diagnostics.mjs");
 await import("./test-room-diagnostics.mjs");

@@ -1,0 +1,36 @@
+import assert from "node:assert/strict";
+import fs from "node:fs";
+import path from "node:path";
+const root=path.resolve(import.meta.dirname,"..");
+const get=p=>JSON.parse(fs.readFileSync(path.join(root,p),"utf8"));
+const report=get("site/room-variant-reduction.json");
+const source=get("site/room-proxy-review-data.json");
+const gallery=get("catalog/showcase.json");
+assert.equal(report.schema_version,1);
+assert.equal(report.automatic_source_binding,false);
+assert.equal(report.original_historical_variants_inferred,false);
+assert.equal(report.collision_clearance_certified,false);
+assert.equal(report.artistic_approval,false);
+assert.equal(report.rooms.length,3);
+assert.equal(gallery.approved_ids.length,24);
+const pairs=new Map(report.rooms.map(x=>[x.id,x]));
+const cozy=pairs.get("cozy-bedroom-study-v1.3"),study=pairs.get("study-corner-v1.1"),sleep=pairs.get("sleep-room-v1");
+assert.equal(cozy.baseline_possible_pairs,1);
+assert.equal(study.baseline_possible_pairs,1);
+assert.equal(sleep.baseline_possible_pairs,0);
+assert.equal(sleep.one_change_reductions.length,0);
+const all=report.rooms.flatMap(r=>r.one_change_reductions.map(a=>({room:r.id,...a})));
+assert.equal(all.length,5,"Expected five original-source alternatives with fewer proxy overlap candidates");
+for(const row of all){
+ const room=source.rooms.find(r=>r.id===row.room);
+ const original=room.placed.find(p=>p.id===row.instance);
+ const variant=original.choices.find(c=>c.key===row.to_key);
+ assert.ok(variant&&variant.source_sha===row.to_source_sha&&variant.source_path===row.to_source_path);
+ assert.equal(original.default_model_key,row.from_key);
+ assert.ok(row.alternative_possible_pairs<row.default_possible_pairs);
+ assert.equal(row.certified_binding,false);
+ assert.equal(row.collision_confirmed,false);
+}
+assert.deepEqual(cozy.one_change_reductions.map(x=>x.to_key).sort(),["narrow-bookcase","tall-bookcase"]);
+assert.deepEqual(study.one_change_reductions.map(x=>x.to_key).sort(),["narrow-bookcase","small-snake-plant","tall-bookcase"]);
+console.log("Sceneology alternative source geometry: five measured one-variant decreases across two room proxies; no accidental historical binding, no gallery changes.");
