@@ -84,6 +84,16 @@ try{
  const bytes=fs.readFileSync(picture);
  assert.ok(bytes.length>7000&&bytes.subarray(0,8).toString("hex")==="89504e470d0a1a0a");
 }finally{fs.rmSync(shotProfile,{recursive:true,force:true});}
+const occupancyScreenshotProfile=fs.mkdtempSync(path.join(os.tmpdir(),"sceneology-occupancy-screen-"));
+try{
+ const pngPath=path.join(output,"reading-corner-quest-girl-candidate.png");
+ const url=new URL("site/reading-corner-study.html?yaw=130&occupancy=1",base).href;
+ const chromeShot=spawnSync(browser,[...flags,"--user-data-dir="+occupancyScreenshotProfile,"--screenshot="+pngPath,url],
+  {encoding:"utf8",timeout:100000});
+ if(chromeShot.error||chromeShot.status!==0)throw Error("Quest Girl occupancy screenshot failed "+String(chromeShot.error||chromeShot.stderr).slice(-250));
+ const png=fs.readFileSync(pngPath);
+ assert.ok(png.length>8500&&png.subarray(0,8).toString("hex")==="89504e470d0a1a0a","Invalid research occupancy PNG");
+}finally{fs.rmSync(occupancyScreenshotProfile,{recursive:true,force:true});}
 const report={schema_version:1,status:"passed",artwork_approved:false,original_accepted_room_render:false,partial_placed_instances:6,unplaced_instances:2,cameras:[first,second]};
 fs.writeFileSync(path.join(output,"room-report.json"),JSON.stringify(report,null,2)+"\n");
 console.log("Partial Reading Corner Chrome QA: 6/8 authored instances with distinct camera projections, byte-exact release assets; no gallery approval.");
