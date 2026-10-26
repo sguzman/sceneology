@@ -1,0 +1,121 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sguzman.github.io/sceneology/ontology/schemas/entity-v1.schema.json",
+  "title": "Sceneology reusable entity archetype v1",
+  "description": "A reusable semantic object/character/effect identity, independent of scene placement or a particular rendering engine.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "id",
+    "name",
+    "roles",
+    "dimensions",
+    "properties",
+    "realization_options"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*$"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "description": {
+      "type": "string"
+    },
+    "roles": {
+      "type": "array",
+      "uniqueItems": true,
+      "minItems": 1,
+      "items": {
+        "enum": [
+          "object",
+          "character",
+          "environment",
+          "camera",
+          "light",
+          "emitter",
+          "controller"
+        ]
+      }
+    },
+    "dimensions": {
+      "type": "array",
+      "uniqueItems": true,
+      "minItems": 1,
+      "items": {
+        "enum": [
+          "2d",
+          "3d"
+        ]
+      }
+    },
+    "properties": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "position",
+          "scale",
+          "rotation",
+          "opacity",
+          "visible",
+          "color",
+          "layer",
+          "emits-light",
+          "emits-sound",
+          "interactable"
+        ]
+      }
+    },
+    "relation_capabilities": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "inside",
+          "adjacent-to",
+          "supported-by",
+          "attached-to",
+          "occludes",
+          "in-front-of",
+          "interacts-with"
+        ]
+      }
+    },
+    "realization_options": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "authored-raster",
+          "authored-vector",
+          "constructive",
+          "procedural",
+          "hybrid"
+        ]
+      }
+    },
+    "constraints": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "examples": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  }
+}
