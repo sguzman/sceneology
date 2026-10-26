@@ -1,0 +1,105 @@
+{
+  "schema_version": 1,
+  "reviewed_on": "2026-10-26",
+  "project": "sceneology",
+  "description": "Public-safe, content-pinned dependency and provenance attestations for admitted technical artifacts. Not a general authorship or aesthetic certification.",
+  "review_scope": "currently-admitted-technical-library-only",
+  "hold_policy": "Any missing file, SHA mismatch, undeclared resource or uncertain redistribution permission blocks publication until reviewed.",
+  "items": [
+    {
+      "id": "backyard-daynight-legacy-webgl2",
+      "path": "experiments/backyard-daynight-legacy-webgl2.html",
+      "git_blob_sha": "2fece03257bd210e4aa2db7155d9a976bc746300",
+      "kind": "experiment",
+      "technical_status": "archived",
+      "rights": "original",
+      "source_origin": "previously-public",
+      "source_blob": "dbebe23f8de97b398dd49013bca6358ac10d2284",
+      "required_local_files": [],
+      "external_resources": [],
+      "assets_class": "authored-webgl-shaders-and-inline-geometry",
+      "review_summary": "Previously public owner-controlled WebGL2 source, with embedded scene geometry and effects; no linked external media or executable libraries.",
+      "limitations": "Verified for declared static references and admitted source; rights claims depend on owner authorship and do not certify all future variants."
+    },
+    {
+      "id": "backyard-outline-inverted-hull-rejected",
+      "path": "experiments/backyard-outline-inverted-hull-rejected.html",
+      "git_blob_sha": "7d98da713db2623240c97327d29b4629834247f6",
+      "kind": "experiment",
+      "technical_status": "failed",
+      "rights": "original",
+      "source_origin": "previously-public",
+      "source_blob": "216ebee8a0f26e944e8db4e433657d5757b0820f",
+      "required_local_files": [],
+      "external_resources": [],
+      "assets_class": "authored-webgl-shaders-and-inline-geometry",
+      "review_summary": "Previously public owner-controlled WebGL2 source, with embedded scene geometry and effects; no linked external media or executable libraries.",
+      "limitations": "Verified for declared static references and admitted source; rights claims depend on owner authorship and do not certify all future variants."
+    },
+    {
+      "id": "backyard-outline-screen-space-v2",
+      "path": "experiments/backyard-outline-screen-space-v2.html",
+      "git_blob_sha": "94f930f7fa476ec159ee4745a9cb7c9bdd540c0e",
+      "kind": "experiment",
+      "technical_status": "experimental",
+      "rights": "original",
+      "source_origin": "previously-public",
+      "source_blob": "0e90e32b5af871f14090f2f31d4a9c6dd0263937",
+      "required_local_files": [],
+      "external_resources": [],
+      "assets_class": "authored-webgl-shaders-and-inline-geometry",
+      "review_summary": "Previously public owner-controlled WebGL2 source, with embedded scene geometry and effects; no linked external media or executable libraries.",
+      "limitations": "Verified for declared static references and admitted source; rights claims depend on owner authorship and do not certify all future variants."
+    },
+    {
+      "id": "mirror-vector-motion-study",
+      "path": "scenes/mirror-vector-motion-study.html",
+      "git_blob_sha": "cbd96557db464bc5816c1cda95538ea6c74698af",
+      "kind": "animation",
+      "technical_status": "failed",
+      "rights": "original",
+      "source_origin": "cleared-transfer",
+      "source_blob": null,
+      "required_local_files": [
+        {
+          "path": "runtime/timeline-lite.js",
+          "git_blob_sha": "213c83d89ac1aaf4c636f6082dc29c592fc10b11"
+        }
+      ],
+      "external_resources": [],
+      "assets_class": "authored-svg-elements-and-local-runtime",
+      "review_summary": "Owner-authored editable vector material reconstructed with a separately authored no-network animation runtime; no imported external art or audio.",
+      "limitations": "Verified for declared static references and admitted source; rights claims depend on owner authorship and do not certify all future variants."
+    },
+    {
+      "id": "backyard-rain-wind-archival",
+      "path": "experiments/backyard-rain-wind-archival.html",
+      "git_blob_sha": "1687afefb667c623da966acfb13cbbb9105b6905",
+      "kind": "effect",
+      "technical_status": "experimental",
+      "rights": "original",
+      "source_origin": "previously-public",
+      "source_blob": "2bac25b77ddcc30aeb405a70d0c841600f83eda7",
+      "required_local_files": [],
+      "external_resources": [],
+      "assets_class": "authored-webgl-shaders-and-inline-geometry",
+      "review_summary": "Previously public owner-controlled WebGL2 source, with embedded scene geometry and effects; no linked external media or executable libraries.",
+      "limitations": "Verified for declared static references and admitted source; rights claims depend on owner authorship and do not certify all future variants."
+    },
+    {
+      "id": "backyard-snow-archival",
+      "path": "experiments/backyard-snow-archival.html",
+      "git_blob_sha": "81e70e1dff00fa4056a7f3afec6cb056a9a8919a",
+      "kind": "effect",
+      "technical_status": "experimental",
+      "rights": "original",
+      "source_origin": "previously-public",
+      "source_blob": "4312a9a8ddbddda5bee3b3604fde1104bef1b4fd",
+      "required_local_files": [],
+      "external_resources": [],
+      "assets_class": "authored-webgl-shaders-and-inline-geometry",
+      "review_summary": "Previously public owner-controlled WebGL2 source, with embedded scene geometry and effects; no linked external media or executable libraries.",
+      "limitations": "Verified for declared static references and admitted source; rights claims depend on owner authorship and do not certify all future variants."
+    }
+  ]
+}
