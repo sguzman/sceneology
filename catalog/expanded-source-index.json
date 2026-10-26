@@ -1,0 +1,1357 @@
+{
+  "schema_version": 1,
+  "source": "sguzman/renderarium",
+  "summary": "Expanded cross-category source discovery. Models are versioned technical source assets, NOT individually approved showcase works.",
+  "status": "triage-open",
+  "accepted_environments": [
+    {
+      "id": "block-chibi-living-room-v1",
+      "kind": "environment",
+      "title": "living room",
+      "artistic_status": "previously-owner-accepted",
+      "source_preview_blob": "d168f2dd95b5777c50f93c5275f97c9b9abfb35d",
+      "source_assembly_blob": "8d0e1bf11ac1a65b501c33829e24bdbca2ca5a12",
+      "source_url": "https://github.com/sguzman/renderarium/tree/main/scenes/block-chibi-living-room-v1",
+      "parts": 87,
+      "instances": 9
+    },
+    {
+      "id": "block-chibi-kitchen-v1",
+      "kind": "environment",
+      "title": "kitchen",
+      "artistic_status": "previously-owner-accepted",
+      "source_preview_blob": "18f96a285ac3ef6b669d9c89a9a08a36bfaa310d",
+      "source_assembly_blob": "cc5d8b00667503fcca0d7b860dd23e202b9eef2b",
+      "source_url": "https://github.com/sguzman/renderarium/tree/main/scenes/block-chibi-kitchen-v1",
+      "parts": 149,
+      "instances": 11
+    },
+    {
+      "id": "block-chibi-bathroom-v1",
+      "kind": "environment",
+      "title": "bathroom",
+      "artistic_status": "previously-owner-accepted",
+      "source_preview_blob": "2e69d0f28bed609a91ca87ef0b4af78e9be42b5e",
+      "source_assembly_blob": "cdb5eb446bd0bd6541a2ba2a21265fa8682944ac",
+      "source_url": "https://github.com/sguzman/renderarium/tree/main/scenes/block-chibi-bathroom-v1",
+      "parts": 139,
+      "instances": 10
+    },
+    {
+      "id": "block-chibi-office-v1",
+      "kind": "environment",
+      "title": "office",
+      "artistic_status": "previously-owner-accepted",
+      "source_preview_blob": "f6055e2ccb05226398ff688972170bf9d6182034",
+      "source_assembly_blob": "68ce44f722dd36ca4c9d6a4062256c3363d2605c",
+      "source_url": "https://github.com/sguzman/renderarium/tree/main/scenes/block-chibi-office-v1",
+      "parts": 104,
+      "instances": 12
+    },
+    {
+      "id": "block-chibi-backyard-v1",
+      "kind": "environment",
+      "title": "backyard",
+      "artistic_status": "previously-owner-accepted",
+      "source_preview_blob": "06c608928f4c51cc3abc9663d1a6a81b4ae722c8",
+      "source_assembly_blob": "19f4ff08ccc1e4f3044b9a240be9b635870394b6",
+      "source_url": "https://github.com/sguzman/renderarium/tree/main/scenes/block-chibi-backyard-v1",
+      "parts": 181,
+      "instances": 18
+    },
+    {
+      "id": "block-chibi-garage-v1",
+      "kind": "environment",
+      "title": "garage",
+      "artistic_status": "previously-owner-accepted",
+      "source_preview_blob": "003e1015cc48884a687fe17f13b0751512d23380",
+      "source_assembly_blob": "8f786a100d91534671cd11c7ef1340ca7809a8f7",
+      "source_url": "https://github.com/sguzman/renderarium/tree/main/scenes/block-chibi-garage-v1",
+      "parts": 112,
+      "instances": 8
+    },
+    {
+      "id": "block-chibi-factory-v1",
+      "kind": "environment",
+      "title": "factory",
+      "artistic_status": "previously-owner-accepted",
+      "source_preview_blob": "2a40f271a50dc22a1fe94a6dfb42cf3648a55efa",
+      "source_assembly_blob": "045972bf390939cf86c5278c297dba0bd5f36af3",
+      "source_url": "https://github.com/sguzman/renderarium/tree/main/scenes/block-chibi-factory-v1",
+      "parts": 209,
+      "instances": 16
+    }
+  ],
+  "models": [
+    {
+      "id": "block-chibi-bath-mat-v1",
+      "kind": "model",
+      "category": "bathrooms",
+      "title": "bath mat",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/bathrooms/block-chibi-bath-mat-v1.sc3d.yml",
+      "source_blob": "054b5337ce3886b8166a328856ab81347258ec8d",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-bathroom-mirror-v1",
+      "kind": "model",
+      "category": "bathrooms",
+      "title": "bathroom mirror",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/bathrooms/block-chibi-bathroom-mirror-v1.sc3d.yml",
+      "source_blob": "8b67d3510a8cc497aa6d8b33b4be74224468c281",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-bathtub-v1",
+      "kind": "model",
+      "category": "bathrooms",
+      "title": "bathtub",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/bathrooms/block-chibi-bathtub-v1.sc3d.yml",
+      "source_blob": "a8cf27577d5a99137d3dde1f6374ca71ba3c415e",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-laundry-hamper-v1",
+      "kind": "model",
+      "category": "bathrooms",
+      "title": "laundry hamper",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/bathrooms/block-chibi-laundry-hamper-v1.sc3d.yml",
+      "source_blob": "afcf0d6b5c085ce9ad6cb356205b91ad59f07c0d",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-sink-vanity-v1",
+      "kind": "model",
+      "category": "bathrooms",
+      "title": "sink vanity",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/bathrooms/block-chibi-sink-vanity-v1.sc3d.yml",
+      "source_blob": "8b8feaa7eac909b7cdb88b49c062675c07e3a0b1",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-toilet-v1",
+      "kind": "model",
+      "category": "bathrooms",
+      "title": "toilet",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/bathrooms/block-chibi-toilet-v1.sc3d.yml",
+      "source_blob": "7e0123388bb57e24313de21d312f1fe750c7f821",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-towel-rail-v1",
+      "kind": "model",
+      "category": "bathrooms",
+      "title": "towel rail",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/bathrooms/block-chibi-towel-rail-v1.sc3d.yml",
+      "source_blob": "cf25e1cda16213c5e7380d3ff74a7d3e4f1fd455",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-compact-cozy-bed-v1",
+      "kind": "model",
+      "category": "beds",
+      "title": "compact cozy bed",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/beds/block-chibi-compact-cozy-bed-v1.sc3d.yml",
+      "source_blob": "0a590ebf6649fdae8d7ac56653622b51cb0381ed",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-simple-study-bed-v1",
+      "kind": "model",
+      "category": "beds",
+      "title": "simple study bed",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/beds/block-chibi-simple-study-bed-v1.sc3d.yml",
+      "source_blob": "276e003196878910c602f2c4507db3b16e3c7df8",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-wide-cute-bed-v1",
+      "kind": "model",
+      "category": "beds",
+      "title": "wide cute bed",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/beds/block-chibi-wide-cute-bed-v1.sc3d.yml",
+      "source_blob": "ae1c6ab02c08fb5daa653ee5727ec134d3f61280",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-bed-cover-blanket-v1",
+      "kind": "model",
+      "category": "blankets",
+      "title": "bed cover blanket",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/blankets/block-chibi-bed-cover-blanket-v1.sc3d.yml",
+      "source_blob": "2712f1eaaca55062f093b691c5d503fd3a7fb3f7",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-chair-throw-blanket-v1",
+      "kind": "model",
+      "category": "blankets",
+      "title": "chair throw blanket",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/blankets/block-chibi-chair-throw-blanket-v1.sc3d.yml",
+      "source_blob": "0bfc25b96d3d90d32c107396b0658856da73ec3e",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-folded-blanket-v1",
+      "kind": "model",
+      "category": "blankets",
+      "title": "folded blanket",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/blankets/block-chibi-folded-blanket-v1.sc3d.yml",
+      "source_blob": "b3bb00306a228028c8cd884d626a6a28fdbaf871",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-closed-desk-book-v1",
+      "kind": "model",
+      "category": "books",
+      "title": "closed desk book",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/books/block-chibi-closed-desk-book-v1.sc3d.yml",
+      "source_blob": "835f6f2e63ebcdef4e141aa8874aafc1cec91bc6",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-open-reading-book-v1",
+      "kind": "model",
+      "category": "books",
+      "title": "open reading book",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/books/block-chibi-open-reading-book-v1.sc3d.yml",
+      "source_blob": "6e36e31b5b15f34a1627a75a6a84f9a913f2ca05",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-upright-shelf-book-v1",
+      "kind": "model",
+      "category": "books",
+      "title": "upright shelf book",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/books/block-chibi-upright-shelf-book-v1.sc3d.yml",
+      "source_blob": "5aa3b9fd5d8dd52a01b5bf471826ade45c7bb643",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-low-wide-bookshelf-v1.1",
+      "kind": "model",
+      "category": "bookshelves",
+      "title": "low wide bookshelf",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/bookshelves/block-chibi-low-wide-bookshelf-v1.1.sc3d.yml",
+      "source_blob": "f639c7094ce76dd26e74bd40bc8e6b9e36ae7b45",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-low-wide-bookshelf-v1",
+      "kind": "model",
+      "category": "bookshelves",
+      "title": "low wide bookshelf",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/bookshelves/block-chibi-low-wide-bookshelf-v1.sc3d.yml",
+      "source_blob": "536834832e5cdd92df34c1583221a985538f0ef9",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-narrow-bookcase-v1.1",
+      "kind": "model",
+      "category": "bookshelves",
+      "title": "narrow bookcase",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/bookshelves/block-chibi-narrow-bookcase-v1.1.sc3d.yml",
+      "source_blob": "71c8ac66793c18cf61cec9313e460e6bb7195062",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-narrow-bookcase-v1",
+      "kind": "model",
+      "category": "bookshelves",
+      "title": "narrow bookcase",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/bookshelves/block-chibi-narrow-bookcase-v1.sc3d.yml",
+      "source_blob": "7b44bdfdb6cea876d2608b5d37759cfb7378bbb5",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-tall-bookcase-v1.1",
+      "kind": "model",
+      "category": "bookshelves",
+      "title": "tall bookcase",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/bookshelves/block-chibi-tall-bookcase-v1.1.sc3d.yml",
+      "source_blob": "3a3564445fd1eaefb013b29c3d1727e7c79008b0",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-tall-bookcase-v1",
+      "kind": "model",
+      "category": "bookshelves",
+      "title": "tall bookcase",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/bookshelves/block-chibi-tall-bookcase-v1.sc3d.yml",
+      "source_blob": "173e5faf1c5f98e35e5d2dda63fa2a132b4cdadd",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-compact-chair-v1",
+      "kind": "model",
+      "category": "chairs",
+      "title": "compact chair",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/chairs/block-chibi-compact-chair-v1.sc3d.yml",
+      "source_blob": "498bd7ce61fe2d83fe555ab129ef18b34870aa40",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-study-chair-v1",
+      "kind": "model",
+      "category": "chairs",
+      "title": "study chair",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/chairs/block-chibi-study-chair-v1.sc3d.yml",
+      "source_blob": "51b044f91609700f602789e67bb11a1b3dff1cc9",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-wide-cute-chair-v1",
+      "kind": "model",
+      "category": "chairs",
+      "title": "wide cute chair",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/chairs/block-chibi-wide-cute-chair-v1.sc3d.yml",
+      "source_blob": "a97ee954f000356f56b7e63ca07280002029d2d6",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "cozy-block-room-v1",
+      "kind": "model",
+      "category": "general",
+      "title": "cozy block room",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/cozy-block-room-v1.sc3d.yml",
+      "source_blob": "9c3f4a17a3e4754ea9c053039e3860d37becdd25",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "cozy-block-room-v2.1",
+      "kind": "model",
+      "category": "general",
+      "title": "cozy block room",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/cozy-block-room-v2.1.sc3d.yml",
+      "source_blob": "8d0ed703b34d92986153e65f887b3d6fbe97f39a",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "cozy-block-room-v2",
+      "kind": "model",
+      "category": "general",
+      "title": "cozy block room",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/cozy-block-room-v2.sc3d.yml",
+      "source_blob": "70adf56d0d090c182efb8d3a182c16ef78723896",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "cozy-reader-girl-v1.1",
+      "kind": "model",
+      "category": "general",
+      "title": "cozy reader girl",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/cozy-reader-girl-v1.1.sc3d.yml",
+      "source_blob": "3029378bf391fe878912ace180003d0461670f62",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "cozy-reader-girl-v1",
+      "kind": "model",
+      "category": "general",
+      "title": "cozy reader girl",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/cozy-reader-girl-v1.sc3d.yml",
+      "source_blob": "07d75a3e1ae9700fefe027431d4c558e77d9909a",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "cozy-reader-girl-v2.1",
+      "kind": "model",
+      "category": "general",
+      "title": "cozy reader girl",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/cozy-reader-girl-v2.1.sc3d.yml",
+      "source_blob": "1bdbdc7e4552008d0c21ca7e137358c1f3d9cd0b",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "cozy-reader-girl-v2.2.1",
+      "kind": "model",
+      "category": "general",
+      "title": "cozy reader girl",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/cozy-reader-girl-v2.2.1.sc3d.yml",
+      "source_blob": "467eabd6c0027f524a58946b4901d8e059ec801e",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "cozy-reader-girl-v2.2",
+      "kind": "model",
+      "category": "general",
+      "title": "cozy reader girl",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/cozy-reader-girl-v2.2.sc3d.yml",
+      "source_blob": "47e3e094a793816a294f4e529c6cc09512841cfb",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "cozy-reader-girl-v2",
+      "kind": "model",
+      "category": "general",
+      "title": "cozy reader girl",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/cozy-reader-girl-v2.sc3d.yml",
+      "source_blob": "d34c22a314250c61b405e11c68e36da9d4f7fcab",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-compact-hutch-desk-v1",
+      "kind": "model",
+      "category": "desks",
+      "title": "compact hutch desk",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/desks/block-chibi-compact-hutch-desk-v1.sc3d.yml",
+      "source_blob": "20b84286350c40e98a197e200abc234fa739092d",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-simple-study-desk-v1",
+      "kind": "model",
+      "category": "desks",
+      "title": "simple study desk",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/desks/block-chibi-simple-study-desk-v1.sc3d.yml",
+      "source_blob": "c065d4c7c1dac97d0fe0d5161a0512cb7cd2f654",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-wide-writing-desk-v1",
+      "kind": "model",
+      "category": "desks",
+      "title": "wide writing desk",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/desks/block-chibi-wide-writing-desk-v1.sc3d.yml",
+      "source_blob": "46859ad081caaf4ddb4bf972296c4b62482b6d4a",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-conveyor-belt-v1",
+      "kind": "model",
+      "category": "factories",
+      "title": "conveyor belt",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/factories/block-chibi-conveyor-belt-v1.sc3d.yml",
+      "source_blob": "7017fd50869e7d90a5cd7795e3d516452417e99b",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-factory-control-console-v1",
+      "kind": "model",
+      "category": "factories",
+      "title": "factory control console",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/factories/block-chibi-factory-control-console-v1.sc3d.yml",
+      "source_blob": "e2f86f894e6bc3ad8d31b91e29e9fdb441c32a5c",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-feed-chute-v1",
+      "kind": "model",
+      "category": "factories",
+      "title": "feed chute",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/factories/block-chibi-feed-chute-v1.sc3d.yml",
+      "source_blob": "ff4f5f56482714685d05d9da5ce27e108b945cf3",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-industrial-supply-bin-v1",
+      "kind": "model",
+      "category": "factories",
+      "title": "industrial supply bin",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/factories/block-chibi-industrial-supply-bin-v1.sc3d.yml",
+      "source_blob": "90f58b9daf5f88b4214a7872b03cf7bc2fdff2b2",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-inspection-gantry-v1",
+      "kind": "model",
+      "category": "factories",
+      "title": "inspection gantry",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/factories/block-chibi-inspection-gantry-v1.sc3d.yml",
+      "source_blob": "5c9fdc0401fd87e1d60be83976c5a9a04f802cf5",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-pastel-toy-block-v1",
+      "kind": "model",
+      "category": "factories",
+      "title": "pastel toy block",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/factories/block-chibi-pastel-toy-block-v1.sc3d.yml",
+      "source_blob": "401a75e4a11df0ff0bf264d8adf722dc381cd869",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-pick-place-robot-arm-v1",
+      "kind": "model",
+      "category": "factories",
+      "title": "pick place robot arm",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/factories/block-chibi-pick-place-robot-arm-v1.sc3d.yml",
+      "source_blob": "4c2d620c3e95e42e01d36aa79607d2787b3191ce",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-shipping-carton-v1",
+      "kind": "model",
+      "category": "factories",
+      "title": "shipping carton",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/factories/block-chibi-shipping-carton-v1.sc3d.yml",
+      "source_blob": "6e832805da8aaacea436078aba85740587e9b3f5",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-shipping-pallet-v1",
+      "kind": "model",
+      "category": "factories",
+      "title": "shipping pallet",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/factories/block-chibi-shipping-pallet-v1.sc3d.yml",
+      "source_blob": "0a7f1baa6410191c8516881ac6db0a1c65d88904",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-stamping-press-v1",
+      "kind": "model",
+      "category": "factories",
+      "title": "stamping press",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/factories/block-chibi-stamping-press-v1.sc3d.yml",
+      "source_blob": "1b3d03fdc1a9cff313fd75674960445c467a6b2e",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-continuous-room-floor-v1",
+      "kind": "model",
+      "category": "floors",
+      "title": "continuous room floor",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/floors/block-chibi-continuous-room-floor-v1.sc3d.yml",
+      "source_blob": "91a46ef4e062698148e0e7080a54b87220b06397",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-warm-plank-floor-v1",
+      "kind": "model",
+      "category": "floors",
+      "title": "warm plank floor",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/floors/block-chibi-warm-plank-floor-v1.sc3d.yml",
+      "source_blob": "f957e05335f56f16f060e5ec82cb4833d7025dae",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-warm-tile-floor-v1",
+      "kind": "model",
+      "category": "floors",
+      "title": "warm tile floor",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/floors/block-chibi-warm-tile-floor-v1.sc3d.yml",
+      "source_blob": "80126e049253c0f8f4773d99ee8d58f3c13175ca",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-compact-car-v1",
+      "kind": "model",
+      "category": "garages",
+      "title": "compact car",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/garages/block-chibi-compact-car-v1.sc3d.yml",
+      "source_blob": "f6eb238ab1c8e68a8e2d25cbdf02ab84ba1e1cb1",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-compact-car-v10",
+      "kind": "model",
+      "category": "garages",
+      "title": "compact car",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/garages/block-chibi-compact-car-v10.sc3d.yml",
+      "source_blob": "459f7abe7b57526268fec685a62bfcfc21725ab4",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-compact-car-v11",
+      "kind": "model",
+      "category": "garages",
+      "title": "compact car",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/garages/block-chibi-compact-car-v11.sc3d.yml",
+      "source_blob": "eb4e3fef467979c02c9110edc827a2017ac736f9",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-compact-car-v11r",
+      "kind": "model",
+      "category": "garages",
+      "title": "compact car",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/garages/block-chibi-compact-car-v11r.sc3d.yml",
+      "source_blob": "b49f749246048cec765886345d3a91466e64378e",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-compact-car-v2",
+      "kind": "model",
+      "category": "garages",
+      "title": "compact car",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/garages/block-chibi-compact-car-v2.sc3d.yml",
+      "source_blob": "2d1ea6b495921fd06066c3048be62439355923b5",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-compact-car-v3",
+      "kind": "model",
+      "category": "garages",
+      "title": "compact car",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/garages/block-chibi-compact-car-v3.sc3d.yml",
+      "source_blob": "f4bd88fe7adbd933a6dbb8f27ade0fa9c9d80e39",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-compact-car-v4",
+      "kind": "model",
+      "category": "garages",
+      "title": "compact car",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/garages/block-chibi-compact-car-v4.sc3d.yml",
+      "source_blob": "85517f4a0f83e8595549fd69b1e4559ee2819c18",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-compact-car-v5",
+      "kind": "model",
+      "category": "garages",
+      "title": "compact car",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/garages/block-chibi-compact-car-v5.sc3d.yml",
+      "source_blob": "2d72f30fa1d8b51a1adb98ccd6728c418b64ee92",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-compact-car-v6",
+      "kind": "model",
+      "category": "garages",
+      "title": "compact car",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/garages/block-chibi-compact-car-v6.sc3d.yml",
+      "source_blob": "4a2e1a417de846026a45365dbeb15d813fdb849e",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-compact-car-v7",
+      "kind": "model",
+      "category": "garages",
+      "title": "compact car",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/garages/block-chibi-compact-car-v7.sc3d.yml",
+      "source_blob": "408364f223427904fbbd5784ac15509ded7721ce",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-compact-car-v8",
+      "kind": "model",
+      "category": "garages",
+      "title": "compact car",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/garages/block-chibi-compact-car-v8.sc3d.yml",
+      "source_blob": "e2b473bcb72651ca84afa87821d20ac3e9ee3df2",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-compact-car-v9",
+      "kind": "model",
+      "category": "garages",
+      "title": "compact car",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/garages/block-chibi-compact-car-v9.sc3d.yml",
+      "source_blob": "b33936a72c8d0697b904fde38e4b672c9e8984c6",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-garage-storage-shelf-v1",
+      "kind": "model",
+      "category": "garages",
+      "title": "garage storage shelf",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/garages/block-chibi-garage-storage-shelf-v1.sc3d.yml",
+      "source_blob": "794f4c83c68ae84c6bd635d268a12a4503857654",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-garage-workbench-v1",
+      "kind": "model",
+      "category": "garages",
+      "title": "garage workbench",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/garages/block-chibi-garage-workbench-v1.sc3d.yml",
+      "source_blob": "5a5997a36fbee4bd3ddea2c87b86257d4d05830d",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-rolling-tool-chest-v1",
+      "kind": "model",
+      "category": "garages",
+      "title": "rolling tool chest",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/garages/block-chibi-rolling-tool-chest-v1.sc3d.yml",
+      "source_blob": "0879d2ecc1e284a89510fd06dba5b377d9fd22a4",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-spare-tire-stack-v1",
+      "kind": "model",
+      "category": "garages",
+      "title": "spare tire stack",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/garages/block-chibi-spare-tire-stack-v1.sc3d.yml",
+      "source_blob": "833eb59fb6d5c93b9c9efd81a6bdc93119e6eaf1",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-tool-pegboard-v1",
+      "kind": "model",
+      "category": "garages",
+      "title": "tool pegboard",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/garages/block-chibi-tool-pegboard-v1.sc3d.yml",
+      "source_blob": "1329643fd55bcb16678e676c6af54ed65fa3f83a",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-utility-bicycle-v1",
+      "kind": "model",
+      "category": "garages",
+      "title": "utility bicycle",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/garages/block-chibi-utility-bicycle-v1.sc3d.yml",
+      "source_blob": "9227c16e09d57fd1dee5cf3aa0e42f432429a7db",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-utility-bicycle-v2",
+      "kind": "model",
+      "category": "garages",
+      "title": "utility bicycle",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/garages/block-chibi-utility-bicycle-v2.sc3d.yml",
+      "source_blob": "a404756c020613b6f85e247b5f21093f3c2613bd",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-birdhouse-v1",
+      "kind": "model",
+      "category": "gardens",
+      "title": "birdhouse",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/gardens/block-chibi-birdhouse-v1.sc3d.yml",
+      "source_blob": "e9955723d3bf77516119f843eff3d656ccd1ccb8",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-flower-cluster-v1",
+      "kind": "model",
+      "category": "gardens",
+      "title": "flower cluster",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/gardens/block-chibi-flower-cluster-v1.sc3d.yml",
+      "source_blob": "7b891cfaf8392867b845462497f3a4a1e1d802bb",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-garden-bench-v1",
+      "kind": "model",
+      "category": "gardens",
+      "title": "garden bench",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/gardens/block-chibi-garden-bench-v1.sc3d.yml",
+      "source_blob": "f116ca7dae7d9d3149f6cb78b5a24a6f7f7e2a3b",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-garden-tree-v1",
+      "kind": "model",
+      "category": "gardens",
+      "title": "garden tree",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/gardens/block-chibi-garden-tree-v1.sc3d.yml",
+      "source_blob": "b04ea3433e763e8488af4363c7bf1bca2d10bbf6",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-patio-table-v1",
+      "kind": "model",
+      "category": "gardens",
+      "title": "patio table",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/gardens/block-chibi-patio-table-v1.sc3d.yml",
+      "source_blob": "47f8336dce806c4bf5a72c4dc6b28a9f21e141f8",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-raised-garden-bed-v1",
+      "kind": "model",
+      "category": "gardens",
+      "title": "raised garden bed",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/gardens/block-chibi-raised-garden-bed-v1.sc3d.yml",
+      "source_blob": "9390c5b112ad050de04cf8088a6390e669fe850a",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-stepping-stones-v1",
+      "kind": "model",
+      "category": "gardens",
+      "title": "stepping stones",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/gardens/block-chibi-stepping-stones-v1.sc3d.yml",
+      "source_blob": "09a2f6a985ea9538387d00c5a3641828e4a93641",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-breakfast-table-v1",
+      "kind": "model",
+      "category": "kitchens",
+      "title": "breakfast table",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/kitchens/block-chibi-breakfast-table-v1.sc3d.yml",
+      "source_blob": "aa6a09b7bc98f7da1175875b6d9d08877bc2c63d",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-prep-counter-v1",
+      "kind": "model",
+      "category": "kitchens",
+      "title": "prep counter",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/kitchens/block-chibi-prep-counter-v1.sc3d.yml",
+      "source_blob": "01884c0dbc0c78f3973da5ef64dbed187660d3bb",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-range-v1",
+      "kind": "model",
+      "category": "kitchens",
+      "title": "range",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/kitchens/block-chibi-range-v1.sc3d.yml",
+      "source_blob": "9e4886c5e552198d3d00265439506a5b1325ced3",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-refrigerator-v1",
+      "kind": "model",
+      "category": "kitchens",
+      "title": "refrigerator",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/kitchens/block-chibi-refrigerator-v1.sc3d.yml",
+      "source_blob": "b9f72edd891c083b4c782793913d1edbd82b4a7a",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-sink-unit-v1",
+      "kind": "model",
+      "category": "kitchens",
+      "title": "sink unit",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/kitchens/block-chibi-sink-unit-v1.sc3d.yml",
+      "source_blob": "5c81e24ff1ea93f1699aed6d0b5880534d089a09",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-stool-v1",
+      "kind": "model",
+      "category": "kitchens",
+      "title": "stool",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/kitchens/block-chibi-stool-v1.sc3d.yml",
+      "source_blob": "2eacbe6d44ab9a70a9920b91b5bc13671ab1e904",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-upper-cabinet-v1",
+      "kind": "model",
+      "category": "kitchens",
+      "title": "upper cabinet",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/kitchens/block-chibi-upper-cabinet-v1.sc3d.yml",
+      "source_blob": "3971ebd16102be6e512d887ee6b8838e8fcc0bb5",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-cozy-table-lamp-v1.1",
+      "kind": "model",
+      "category": "lamps",
+      "title": "cozy table lamp",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/lamps/block-chibi-cozy-table-lamp-v1.1.sc3d.yml",
+      "source_blob": "dce1b720e85af122ef053d2bbb557a692e28b217",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-cozy-table-lamp-v1.2",
+      "kind": "model",
+      "category": "lamps",
+      "title": "cozy table lamp",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/lamps/block-chibi-cozy-table-lamp-v1.2.sc3d.yml",
+      "source_blob": "93a5f29be20fc22335082f26852464456863a4b0",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-cozy-table-lamp-v1",
+      "kind": "model",
+      "category": "lamps",
+      "title": "cozy table lamp",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/lamps/block-chibi-cozy-table-lamp-v1.sc3d.yml",
+      "source_blob": "c99639455ba758a95066f62d009901343841f7f5",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-tall-floor-lamp-v1.1",
+      "kind": "model",
+      "category": "lamps",
+      "title": "tall floor lamp",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/lamps/block-chibi-tall-floor-lamp-v1.1.sc3d.yml",
+      "source_blob": "cd09e7d8715cd922dcb937edaae12238eaf4c496",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-tall-floor-lamp-v1.2",
+      "kind": "model",
+      "category": "lamps",
+      "title": "tall floor lamp",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/lamps/block-chibi-tall-floor-lamp-v1.2.sc3d.yml",
+      "source_blob": "c22982dbe2d3a7c46c5c3fc18805961dbbbdc879",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-tall-floor-lamp-v1",
+      "kind": "model",
+      "category": "lamps",
+      "title": "tall floor lamp",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/lamps/block-chibi-tall-floor-lamp-v1.sc3d.yml",
+      "source_blob": "3132912fc2d956143877ef856ba658be5cf46894",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-task-lamp-v1.1",
+      "kind": "model",
+      "category": "lamps",
+      "title": "task lamp",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/lamps/block-chibi-task-lamp-v1.1.sc3d.yml",
+      "source_blob": "6c6849a9bc2b324ef5443ee664d0712b886a9d84",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-task-lamp-v1.2",
+      "kind": "model",
+      "category": "lamps",
+      "title": "task lamp",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/lamps/block-chibi-task-lamp-v1.2.sc3d.yml",
+      "source_blob": "6a03a0885b1c64a0a2abe5ddc4155358e2873a3d",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-task-lamp-v1",
+      "kind": "model",
+      "category": "lamps",
+      "title": "task lamp",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/lamps/block-chibi-task-lamp-v1.sc3d.yml",
+      "source_blob": "0192ffbe5f4d5743236b08193fcad6bddec05fce",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-computer-monitor-v1",
+      "kind": "model",
+      "category": "offices",
+      "title": "computer monitor",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/offices/block-chibi-computer-monitor-v1.sc3d.yml",
+      "source_blob": "fd3038030f04a16b9c18f5cbe478c760b7f8e94f",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-filing-cabinet-v1",
+      "kind": "model",
+      "category": "offices",
+      "title": "filing cabinet",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/offices/block-chibi-filing-cabinet-v1.sc3d.yml",
+      "source_blob": "85c29ab2b06bc34771be77918cd3ec25751f5b91",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-keyboard-mouse-v1",
+      "kind": "model",
+      "category": "offices",
+      "title": "keyboard mouse",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/offices/block-chibi-keyboard-mouse-v1.sc3d.yml",
+      "source_blob": "b3f89d2a5d292887fb9600225b0f6610efdf7e7e",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-pinboard-v1",
+      "kind": "model",
+      "category": "offices",
+      "title": "pinboard",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/offices/block-chibi-pinboard-v1.sc3d.yml",
+      "source_blob": "f7723fdc46528262620ca8fbf979a94d3994b265",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-bed-pillow-v1",
+      "kind": "model",
+      "category": "pillows",
+      "title": "bed pillow",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/pillows/block-chibi-bed-pillow-v1.sc3d.yml",
+      "source_blob": "e6d4b03d89b53b48cb605dd587f532937a05e263",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-lumbar-pillow-v1",
+      "kind": "model",
+      "category": "pillows",
+      "title": "lumbar pillow",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/pillows/block-chibi-lumbar-pillow-v1.sc3d.yml",
+      "source_blob": "8e2eab0bea9f68f22025e93042cfeaf7b04e471b",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-square-throw-pillow-v1",
+      "kind": "model",
+      "category": "pillows",
+      "title": "square throw pillow",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/pillows/block-chibi-square-throw-pillow-v1.sc3d.yml",
+      "source_blob": "0eaafaa81523e4c35ee8ca94d3c82a892bd97f1f",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-bushy-desk-plant-v1.1",
+      "kind": "model",
+      "category": "plants",
+      "title": "bushy desk plant",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/plants/block-chibi-bushy-desk-plant-v1.1.sc3d.yml",
+      "source_blob": "41ab589ef8fbd15a4bdf4f75beabf50e7f71fb82",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-bushy-desk-plant-v1",
+      "kind": "model",
+      "category": "plants",
+      "title": "bushy desk plant",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/plants/block-chibi-bushy-desk-plant-v1.sc3d.yml",
+      "source_blob": "60fbb4c22be4d86128df3f18b11e4baf8a20d37a",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-medium-snake-plant-v1",
+      "kind": "model",
+      "category": "plants",
+      "title": "medium snake plant",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/plants/block-chibi-medium-snake-plant-v1.sc3d.yml",
+      "source_blob": "c3a3078aa779270929d5053510b0bc38b0c47366",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-small-snake-plant-v1",
+      "kind": "model",
+      "category": "plants",
+      "title": "small snake plant",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/plants/block-chibi-small-snake-plant-v1.sc3d.yml",
+      "source_blob": "ad4417537c801847cc4dc4046f307865bb512bf2",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-tall-floor-plant-v1.1",
+      "kind": "model",
+      "category": "plants",
+      "title": "tall floor plant",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/plants/block-chibi-tall-floor-plant-v1.1.sc3d.yml",
+      "source_blob": "33e86794fa09ca59a9fbb81cf00b7eae8ccc2cfd",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-tall-floor-plant-v1",
+      "kind": "model",
+      "category": "plants",
+      "title": "tall floor plant",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/plants/block-chibi-tall-floor-plant-v1.sc3d.yml",
+      "source_blob": "e18ef215ae3c93eceae793ede2c6fcf36045e09d",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-tall-snake-plant-v1",
+      "kind": "model",
+      "category": "plants",
+      "title": "tall snake plant",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/plants/block-chibi-tall-snake-plant-v1.sc3d.yml",
+      "source_blob": "ebca01a9ededc1b11211ef181f0297f88fa56abf",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-tiny-sprout-pot-v1.1",
+      "kind": "model",
+      "category": "plants",
+      "title": "tiny sprout pot",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/plants/block-chibi-tiny-sprout-pot-v1.1.sc3d.yml",
+      "source_blob": "fe480628599e9a2ad754a4ea33c97b6751a279d5",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-tiny-sprout-pot-v1",
+      "kind": "model",
+      "category": "plants",
+      "title": "tiny sprout pot",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/plants/block-chibi-tiny-sprout-pot-v1.sc3d.yml",
+      "source_blob": "481431a7c02487b28f22ec66c545c4be77fe71da",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "quest-girl-minimal",
+      "kind": "model",
+      "category": "general",
+      "title": "quest girl minimal",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/quest-girl-minimal.sc3d.yml",
+      "source_blob": "49d1709077cc403d3642622156e46431babd0c6d",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "quest-girl-v1",
+      "kind": "model",
+      "category": "general",
+      "title": "quest girl",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/quest-girl-v1.sc3d.yml",
+      "source_blob": "901ffe1a737cc78a923a4ecb21b6238a19fe199b",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "quest-girl-v2",
+      "kind": "model",
+      "category": "general",
+      "title": "quest girl",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/quest-girl-v2.sc3d.yml",
+      "source_blob": "99f7903ff6e77e42119273667c696f357971e552",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "quest-girl-v3",
+      "kind": "model",
+      "category": "general",
+      "title": "quest girl",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/quest-girl-v3.sc3d.yml",
+      "source_blob": "58ed4cc0451f6b58619d728050b280fef6b91f93",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "quest-girl-v4",
+      "kind": "model",
+      "category": "general",
+      "title": "quest girl",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/quest-girl-v4.sc3d.yml",
+      "source_blob": "9f2eb19cda78ff7a686250dfc451496c1addb0bd",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "quest-girl-v5",
+      "kind": "model",
+      "category": "general",
+      "title": "quest girl",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/quest-girl-v5.sc3d.yml",
+      "source_blob": "605136e6ff900330ca386459400aff8ab72c2d29",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "quest-girl-v6",
+      "kind": "model",
+      "category": "general",
+      "title": "quest girl",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/quest-girl-v6.sc3d.yml",
+      "source_blob": "cfd260991adf906e42aaa8589e1f2096c71eaeb9",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "quest-girl-v7",
+      "kind": "model",
+      "category": "general",
+      "title": "quest girl",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/quest-girl-v7.sc3d.yml",
+      "source_blob": "81aca18adfc08135ba8eb6db1395b2715f22e97f",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-runner-rug-v1",
+      "kind": "model",
+      "category": "rugs",
+      "title": "runner rug",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/rugs/block-chibi-runner-rug-v1.sc3d.yml",
+      "source_blob": "e284f2221ec8fe48f4be828c3b9a93465c6834ef",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-small-bedside-rug-v1",
+      "kind": "model",
+      "category": "rugs",
+      "title": "small bedside rug",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/rugs/block-chibi-small-bedside-rug-v1.sc3d.yml",
+      "source_blob": "442aab43a28602d791fc74798657ab4a615fbd63",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-wide-area-rug-v1",
+      "kind": "model",
+      "category": "rugs",
+      "title": "wide area rug",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/rugs/block-chibi-wide-area-rug-v1.sc3d.yml",
+      "source_blob": "259613da4b2ed3473e68c8022bfba264462ad309",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-two-seat-sofa-v1",
+      "kind": "model",
+      "category": "sofas",
+      "title": "two seat sofa",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/sofas/block-chibi-two-seat-sofa-v1.sc3d.yml",
+      "source_blob": "dde6d4bb75edb83e2f550297963ced234bbeb009",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-coffee-table-v1",
+      "kind": "model",
+      "category": "tables",
+      "title": "coffee table",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/tables/block-chibi-coffee-table-v1.sc3d.yml",
+      "source_blob": "5a8a2a47f398f49719f813395214c4c7307e79f6",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-doorway-opening-wall-v1",
+      "kind": "model",
+      "category": "walls",
+      "title": "doorway opening wall",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/walls/block-chibi-doorway-opening-wall-v1.sc3d.yml",
+      "source_blob": "ab4d4b06935d0e5e3f34c2421af7eb14e4dacb7e",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-solid-wall-panel-v1",
+      "kind": "model",
+      "category": "walls",
+      "title": "solid wall panel",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/walls/block-chibi-solid-wall-panel-v1.sc3d.yml",
+      "source_blob": "fb99c8ba0d842a461b585fde1cec7051d3797f4d",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-window-opening-wall-v1",
+      "kind": "model",
+      "category": "walls",
+      "title": "window opening wall",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/walls/block-chibi-window-opening-wall-v1.sc3d.yml",
+      "source_blob": "ac7eed638255b849624725527422a75deef2e8e9",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-square-four-pane-window-v1",
+      "kind": "model",
+      "category": "windows",
+      "title": "square four pane window",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/windows/block-chibi-square-four-pane-window-v1.sc3d.yml",
+      "source_blob": "53c0c62d0c3fe13af3782b9b3bf08a57196155d9",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-tall-two-pane-window-v1",
+      "kind": "model",
+      "category": "windows",
+      "title": "tall two pane window",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/windows/block-chibi-tall-two-pane-window-v1.sc3d.yml",
+      "source_blob": "3e16e0b31bcd26f2f304daf0eb8ef5dfb87ae4fb",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    },
+    {
+      "id": "block-chibi-wide-three-pane-window-v1",
+      "kind": "model",
+      "category": "windows",
+      "title": "wide three pane window",
+      "source_url": "https://github.com/sguzman/renderarium/blob/main/assets/constructive-3d/windows/block-chibi-wide-three-pane-window-v1.sc3d.yml",
+      "source_blob": "4c89cb813135be773996c475822a9106c9daab56",
+      "preview_url": null,
+      "review": "candidate-unreviewed"
+    }
+  ]
+}
