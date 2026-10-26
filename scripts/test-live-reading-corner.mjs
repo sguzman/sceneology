@@ -13,7 +13,7 @@ assert.equal(scene.instances.length,6);
 assert.equal(scene.omitted_parented_instances.length,2);
 assert.equal(scene.gallery_approved,false);
 assert.equal(scene.complete_room,false);
-const resources=["site/reading-corner-study.html","site/reading-corner-study.js","site/reading-corner-study-data.json","site/family-orbit-data.json","site/reading-corner-occupancy-data.json","site/reading-support-alignment.mjs","site/reading-lumbar-placement-data.json"];
+const resources=["site/reading-corner-study.html","site/reading-corner-study.js","site/reading-corner-study-data.json","site/family-orbit-data.json","site/reading-corner-occupancy-data.json","site/reading-support-alignment.mjs","site/reading-lumbar-placement-data.json","site/source-room-region-guide.mjs"];
 for(const relative of resources){
  let issue;
  for(let i=0;i<5;i++){
@@ -32,19 +32,24 @@ fs.mkdirSync(output,{recursive:true});
 const browser=process.env.CHROME_BIN||"google-chrome";
 const flags=["--headless=new","--no-sandbox","--disable-dev-shm-usage","--disable-background-networking","--no-first-run",
  "--window-size=1250,920","--virtual-time-budget=7000"];
-function sample(yaw){
+function sample(yaw,zones=false){
  const profile=fs.mkdtempSync(path.join(os.tmpdir(),"sceneology-reading-"));
  try{
   const url=new URL("site/reading-corner-study.html",base);
   url.searchParams.set("yaw",String(yaw));
+  if(zones)url.searchParams.set("zones","1");
   const result=spawnSync(browser,[...flags,"--user-data-dir="+profile,"--dump-dom",url.href],
    {encoding:"utf8",timeout:100000,maxBuffer:26*1024*1024});
   if(result.error||result.status!==0)throw Error("Reading Corner Chrome failed: "+String(result.error||result.stderr).slice(-650));
   const dom=result.stdout;
-  fs.writeFileSync(path.join(output,"reading-corner-"+yaw+".dom.html"),dom);
+  fs.writeFileSync(path.join(output,"reading-corner-"+yaw+(zones?"-zones":"")+".dom.html"),dom);
   const stage=dom.match(/<div[^>]*\bid="reading-stage"[^>]*>/)?.[0]||"";
   assert.ok(stage.includes('data-rendered="true"'),"Partial room did not render actual geometry");
   assert.ok(stage.includes('data-yaw="'+yaw+'"'),"Room camera angle ignored");
+  assert.ok(stage.includes('data-zone-count="'+(zones?4:0)+'"'),"Reading Corner source-zone count changed");
+  assert.ok(stage.includes('data-footprint="not-shown"'),"Reading Corner falsely acquired a sourced room outline");
+  assert.equal((dom.match(/data-zone-guide="/g)||[]).length,zones?4:0);
+  assert.equal((dom.match(/data-zone-label="/g)||[]).length,zones?4:0);
   const top=Number(stage.match(/data-viewport-top="(-?\d+)"/)?.[1]);
   assert.ok(Number.isFinite(top)&&top>50&&top<600,"Room visual stage pushed below desktop first viewport: "+top);
   assert.ok(!dom.includes("Unable to reconstruct research layout:"));
@@ -60,7 +65,8 @@ function sample(yaw){
   return {yaw,faces:faces.length,digest:crypto.createHash("sha256").update(faces.join("|")).digest("hex")};
  }finally{fs.rmSync(profile,{recursive:true,force:true});}
 }
-const first=sample(130),second=sample(-45);
+const first=sample(130),second=sample(-45),guided=sample(130,true);
+assert.ok(guided.faces>=first.faces,"Source zone guide removed furniture");
 const occupancyProfile=fs.mkdtempSync(path.join(os.tmpdir(),"sceneology-reading-occupancy-"));
 try{
  const url=new URL("site/reading-corner-study.html?yaw=130&occupancy=1",base);
