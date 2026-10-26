@@ -67,6 +67,7 @@ function geometryForPose(channels){
   const vertices=[[-bw/2,-h/2,-bd/2],[bw/2,-h/2,-bd/2],[bw/2,-h/2,bd/2],[-bw/2,-h/2,bd/2],
    [-tw/2,h/2,-td/2],[tw/2,h/2,-td/2],[tw/2,h/2,td/2],[-tw/2,h/2,td/2]]
    .map(v=>add(w.pos,mv(w.rotation,v)));
+  if(!vertices.every(p=>p.every(Number.isFinite)))throw Error("Nonfinite model vertices in "+part.id+" / "+JSON.stringify({world:w,geometry:g}));
   const material=model.materials[part.material];if(!material)throw Error("Unresolved material "+part.material);
   for(const indices of [[0,1,2,3],[0,4,5,1],[1,5,6,2],[2,6,7,3],[3,7,4,0],[4,7,6,5]]){
    const vs=indices.map(i=>vertices[i]);
@@ -89,6 +90,7 @@ function draw(){
   const minX=Math.min(...xs),maxX=Math.max(...xs),minY=Math.min(...ys),maxY=Math.max(...ys);
   // Fit using a static origin and added padding so the camera does not follow the animation.
   const scale=Math.min(485/(maxX-minX),600/(maxY-minY));
+  if(![minX,maxX,minY,maxY,scale].every(Number.isFinite))throw Error("Nonfinite projection bounds "+JSON.stringify({minX,maxX,minY,maxY,firstFace:faces[0]?.vs}));
   projection={scale,ox:360-(minX+maxX)*scale/2,oy:408-(minY+maxY)*scale/2};
  }
  faces.sort((a,b)=>a.depth-b.depth);
