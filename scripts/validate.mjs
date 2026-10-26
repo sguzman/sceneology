@@ -61,3 +61,4 @@ console.log(`Sceneology validation passed: ${library.records.length} technical r
 
 await import("./check-roadmap.mjs");
 await import("./check-ontology.mjs");
+await import("./publication-gate.mjs");
