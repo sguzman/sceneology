@@ -110,6 +110,60 @@
         "dependency_closure": "self-contained",
         "notes": "Reconstructed source with all embedded commentary stripped and the external animation dependency replaced; historical source references intentionally excluded."
       }
+    },
+    {
+      "id": "backyard-rain-wind-archival",
+      "title": "Backyard Rain and Wind — Archival Weather Study",
+      "kind": "effect",
+      "status": "experimental",
+      "summary": "Interactive rain, wind, weather presets and particles over the historical 181-part scene geometry.",
+      "path": "experiments/backyard-rain-wind-archival.html",
+      "viewer": "experiments/backyard-rain-wind-archival.html",
+      "rights": "original",
+      "limitations": "Archival 181-part geometry, not the subsequently corrected production source. Browser software WebGL2 verification is not physical GPU certification, visual acceptance, or exhaustive preset testing.",
+      "tags": [
+        "3d",
+        "webgl2",
+        "weather",
+        "archival",
+        "rain-wind"
+      ],
+      "provenance": {
+        "origin": "previously-public",
+        "public_source": "https://github.com/sguzman/renderarium/blob/main/experiments/interactive-weather/backyard-rain-wind-2026-10-13.html",
+        "source_blob": "2bac25b77ddcc30aeb405a70d0c841600f83eda7",
+        "reviewed_on": "2026-10-26",
+        "rights_basis": "owner-controlled-original-implementation",
+        "dependency_closure": "self-contained",
+        "notes": "Previously public single-file effects experiment. Original technical content kept except historical acceptance wording."
+      }
+    },
+    {
+      "id": "backyard-snow-archival",
+      "title": "Backyard Snow — Archival Weather Study",
+      "kind": "effect",
+      "status": "experimental",
+      "summary": "Interactive snowfall, wind, accumulation and visual effects over the historical 181-part scene geometry.",
+      "path": "experiments/backyard-snow-archival.html",
+      "viewer": "experiments/backyard-snow-archival.html",
+      "rights": "original",
+      "limitations": "Archival 181-part geometry, not the subsequently corrected production source. Browser software WebGL2 verification is not physical GPU certification, visual acceptance, or exhaustive preset testing.",
+      "tags": [
+        "3d",
+        "webgl2",
+        "weather",
+        "archival",
+        "snow"
+      ],
+      "provenance": {
+        "origin": "previously-public",
+        "public_source": "https://github.com/sguzman/renderarium/blob/main/experiments/interactive-weather/backyard-snow-2026-10-14.html",
+        "source_blob": "4312a9a8ddbddda5bee3b3604fde1104bef1b4fd",
+        "reviewed_on": "2026-10-26",
+        "rights_basis": "owner-controlled-original-implementation",
+        "dependency_closure": "self-contained",
+        "notes": "Previously public single-file effects experiment. Original technical content kept except historical acceptance wording."
+      }
     }
   ]
 }
