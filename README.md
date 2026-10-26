@@ -55,4 +55,6 @@ The [live exhibition](https://sguzman.github.io/sceneology/) currently features 
 
 Four additional historically accepted room compositions have been migrated as **source-only YAML** into `scenes/composition-sources/`. Their asset references are not yet rebuilt into standalone website viewers, so none is falsely exhibited. A [four-room spatial review](https://sguzman.github.io/sceneology/site/room-recovery.html) shows exact source zones and placement anchors, not fabricated model geometry. Failed studies remain preserved in the technical catalog but not featured.
 
+The independent [30-model visual review](https://sguzman.github.io/sceneology/site/family-review.html) preserves accepted source geometry across ten specimen categories but does not approve their reconstructed appearance. The [four-room source review](https://sguzman.github.io/sceneology/site/room-recovery.html) shows authored layouts while original model bindings remain unresolved (22/24 asset aliases now have at least one source candidate staged, none bound).
+
 The [weighted roadmap](docs/roadmap.json) closes the *bounded public foundation and functioning-exhibition milestone*, **not every possible historical asset migration**. Ongoing source and visual-quality decisions continue independently.
