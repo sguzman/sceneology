@@ -1,0 +1,92 @@
+{
+  "schema_version": 1,
+  "id": "interactive-orb-two-d",
+  "title": "Clickable orb visibility",
+  "summary": "Declarative interaction test with no runtime bound.",
+  "dimension": "2d",
+  "units": "px",
+  "frame": {
+    "width": 200,
+    "height": 150
+  },
+  "elements": [
+    {
+      "id": "panel",
+      "role": "environment",
+      "shape": "rectangle",
+      "transform": {
+        "position": [
+          10,
+          10
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "opacity": 1,
+        "visible": true
+      },
+      "size": [
+        180,
+        130
+      ],
+      "color": "#1b3040"
+    },
+    {
+      "id": "orb",
+      "role": "object",
+      "shape": "ellipse",
+      "transform": {
+        "position": [
+          85,
+          60
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "opacity": 1,
+        "visible": true
+      },
+      "size": [
+        30,
+        30
+      ],
+      "color": "#f5ac66"
+    }
+  ],
+  "relations": [
+    {
+      "subject_id": "orb",
+      "predicate": "inside",
+      "object_id": "panel"
+    }
+  ],
+  "constraints": [],
+  "presentation": {
+    "background": "#111a26",
+    "draw_order": [
+      "panel",
+      "orb"
+    ],
+    "style": {
+      "name": "contrast-test"
+    }
+  },
+  "inputs": [
+    {
+      "event": "click",
+      "trigger": "orb",
+      "target_id": "orb",
+      "action": "toggle-visibility"
+    }
+  ],
+  "realization": {
+    "kind": "declarative-only",
+    "engine": "none",
+    "assets": [],
+    "notes": "Interaction has not been implemented or browser-tested."
+  }
+}
