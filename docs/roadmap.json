@@ -186,8 +186,13 @@
         {
           "id": "M03",
           "points": 4,
-          "status": "todo",
-          "evidence": []
+          "status": "done",
+          "evidence": [
+            "experiments/backyard-outline-inverted-hull-rejected.html",
+            "experiments/backyard-outline-screen-space-v2.html",
+            "experiments/OUTLINE-STUDIES.md",
+            "docs/RELEASE-EVIDENCE.md"
+          ]
         },
         {
           "id": "M04",
@@ -248,8 +253,13 @@
         {
           "id": "Q02",
           "points": 3,
-          "status": "todo",
-          "evidence": []
+          "status": "done",
+          "evidence": [
+            "scripts/validate.mjs",
+            "scripts/publication-gate.mjs",
+            "ontology/schemas/record-v1.schema.json",
+            "docs/RELEASE-EVIDENCE.md"
+          ]
         },
         {
           "id": "Q03",
