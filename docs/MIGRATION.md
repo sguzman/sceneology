@@ -27,7 +27,7 @@ Scoring is a selection aid, not a release authorization.
 
 ## Where review information belongs
 
-The complete per-file source inventory, source references, internal reviews, and rejected or unresolved cases **stay in nonpublic working records**. Do not add those records to this repository.
+A machine-readable [screening decision schema](migration-intake.schema.json) defines fail-closed intake records; **populated private reviews must never be committed here**. The complete per-file source inventory, source references, internal reviews, and rejected or unresolved cases **stay in nonpublic working records**. Do not add those records to this repository.
 
 A selected artifact receives a new, independent public identity and, where relevant, a public-safe attribution/provenance statement. Do not transplant another repository's commit history. Review each proposed public diff and commit message before pushing, including scripts, comments, media metadata, tests and generated website output.
 
