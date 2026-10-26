@@ -1,0 +1,83 @@
+format: scenarium-constructive-3d
+version: "0.1"
+
+units: meters
+
+coordinates:
+  handedness: right
+  up: y
+  forward: -z
+
+requires:
+  - core.primitives
+  - core.rigid-hierarchy
+
+materials:
+  rose:
+    role: blanket-textile
+    base_color: "#d7869f"
+    roughness: 0.99
+  rose_light:
+    role: blanket-textile-accent
+    base_color: "#efb4c5"
+    roughness: 0.99
+  rose_dark:
+    role: blanket-textile-shadow
+    base_color: "#b96884"
+    roughness: 0.99
+  cream:
+    role: blanket-textile
+    base_color: "#f0dfcf"
+    roughness: 0.99
+
+asset:
+  id: sceneology-bed-cover-proposal-001
+  name: Sceneology Bed Cover Reconstruction Proposal 001
+  kind: prop
+  root: root
+  tags: [blanket, block-chibi-room, bed-cover, reconstruction-proposal, not-original-v1.3]
+
+parts:
+  root: {role: blanket-root, parent: null, articulation: static}
+
+  top_panel:
+    role: blanket-cover-panel
+    parent: root
+    geometry: {kind: cuboid, size: [1.38, 0.040, 1.16]}
+    material: rose
+    transform: {translate: [0.0, 0.020, 0.0]}
+
+  foot_drop:
+    role: blanket-edge-drape
+    parent: root
+    geometry: {kind: cuboid, size: [1.38, 0.48, 0.040]}
+    material: rose
+    transform: {translate: [0.0, -0.240, -0.600]}
+
+  fold_band:
+    role: blanket-fold-accent
+    parent: root
+    geometry: {kind: cuboid, size: [1.26, 0.018, 0.12]}
+    material: rose_light
+    transform: {translate: [0.0, 0.049, 0.43]}
+
+extensions:
+  taria:
+    object_grammar: blanket@0.1
+    style_grammar: block-chibi-room@0.1
+    realization_grammar: block-chibi-room::blanket@0.1
+    specimen_intent: bed-cover-blanket
+    support_contract:
+      top_panel_support_plane_y: 0.0
+      foot_edge_z: -0.58
+    render_shading: flat
+    evaluation_status: unreviewed-sceneology-reconstruction-proposal
+
+  sceneology:
+    proposal_only: true
+    original_accepted_v1_3_claim: false
+    replaces_missing_original: false
+    target_alias: "accepted:block-chibi-room::blanket/bed-cover-v1.3"
+    source_v1_blob: "2712f1eaaca55062f093b691c5d503fd3a7fb3f7"
+    proposed_change: "unify original dark foot-panel material with rose main cover; retain lighter fold"
+    pending: [source_fidelity_review, support_contact_review, visual_approval]

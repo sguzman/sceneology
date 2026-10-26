@@ -69,7 +69,7 @@ function parseMaterials(source){
  }
  return table;
 }
-function projectArtifact(source,identity,minimumFaces=8){
+export function projectArtifact(source,identity,minimumFaces=8){
  const parts=parseParts(source),materials=parseMaterials(source);
  const transforms=new Map();
  function world(id,visiting=new Set()){

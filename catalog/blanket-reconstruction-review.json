@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "domain": "unapproved-bed-cover-reconstruction-comparison",
+  "original_accepted_artifact_recovered": false,
+  "artwork_approved": false,
+  "allowed_in_showcase": false,
+  "reference": {
+    "path": "models/source-archives/block-chibi-bed-cover-blanket-v1.sc3d.yml",
+    "sha": "2712f1eaaca55062f093b691c5d503fd3a7fb3f7",
+    "source_verdict": "awaiting-family-review",
+    "source_is_original_accepted_v1_3": false
+  },
+  "proposal": {
+    "path": "models/proposals/sceneology-bed-cover-proposal-001.sc3d.yml",
+    "sha": "40c39694ff1b26d3253b943163b5a446f1c33032",
+    "kind": "newly-authored-model-reconstruction-proposal",
+    "source_is_original_accepted_v1_3": false,
+    "visual_approval": false
+  },
+  "target_alias": "accepted:block-chibi-room::blanket/bed-cover-v1.3",
+  "scope": "Source-derived technical comparison of an unaccepted v1 precedent and a new material-only foot-piece proposal. It does not recover exact accepted v1.3 geometry or complete any room."
+}

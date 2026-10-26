@@ -1,0 +1,36 @@
+import assert from "node:assert/strict";
+import fs from "node:fs";
+import path from "node:path";
+const root=path.resolve(import.meta.dirname,"..");
+const get=p=>fs.readFileSync(path.join(root,p),"utf8");
+const m=JSON.parse(get("catalog/blanket-reconstruction-review.json"));
+const target=JSON.parse(get("catalog/room-blanket-target.json"));
+const showcase=JSON.parse(get("catalog/showcase.json"));
+const family=JSON.parse(get("catalog/accepted-family-sources.json"));
+assert.equal(m.target_alias,target.requested_asset_alias);
+assert.equal(m.original_accepted_artifact_recovered,false);
+assert.equal(m.artwork_approved,false);
+assert.equal(m.allowed_in_showcase,false);
+assert.equal(m.reference.source_is_original_accepted_v1_3,false);
+assert.equal(m.proposal.source_is_original_accepted_v1_3,false);
+assert.equal(m.proposal.visual_approval,false);
+const original=get(m.reference.path),proposal=get(m.proposal.path);
+assert.match(original,/evaluation_status: awaiting-family-review/);
+assert.match(proposal,/evaluation_status: unreviewed-sceneology-reconstruction-proposal/);
+assert.match(proposal,/original_accepted_v1_3_claim: false/);
+const section=(src,key)=>src.split("\n  "+key+":\n")[1]?.split(/\n  [a-z_]+:\n/)[0];
+const oldFoot=section(original,"foot_drop"),newFoot=section(proposal,"foot_drop");
+assert.ok(oldFoot&&newFoot);
+assert.match(oldFoot,/\bmaterial: rose_dark\b/);
+assert.match(newFoot,/\bmaterial: rose\b/);
+assert.doesNotMatch(newFoot,/\bmaterial: rose_dark\b/);
+assert.match(section(original,"fold_band"),/\bmaterial: rose_light\b/);
+assert.match(section(proposal,"fold_band"),/\bmaterial: rose_light\b/);
+assert.ok(!showcase.approved_ids.some(x=>x.includes("blanket")||x.includes("bed-cover-proposal")));
+assert.ok(!family.items.some(x=>x.public_path===m.proposal.path||x.public_path===m.reference.path));
+for(const item of ["reference","proposal"]){
+ const svg=get("site/blanket-previews/"+item+".svg");
+ assert.ok(svg.startsWith("<svg")&&(svg.match(/<polygon /g)||[]).length>=3);
+ assert.ok(!/<(?:script|foreignObject|image)\b|https?:\/\//i.test(svg.replace('xmlns="http://www.w3.org/2000/svg"',"")));
+}
+console.log("Sceneology bed-cover comparison passed: material-only derivative, lighter fold retained, no fabricated acceptance or substitution.");
