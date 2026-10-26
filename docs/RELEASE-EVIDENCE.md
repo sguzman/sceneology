@@ -36,3 +36,9 @@ The first-draw tests do not establish that every viewer control or input works. 
 
 [2D Chrome run 40345170051](https://github.com/sguzman/sceneology/actions/runs/40345170051) passed with the screened standalone SVG study and locally authored timeline sampler. The test checks actual DOM scene/clone construction, sampled articulation changes, a blink keyframe, a stage bounding box within the mobile viewport, and a captured PNG. This establishes a technically functioning animated vector specimen, **not successful natural movement, pixel parity with an earlier engine, or gallery approval**. The source remains a documented visual-quality failure.
 
+
+## Live keyboard, mobile layout and gallery link checks
+
+[Live Pages run 40345913473](https://github.com/sguzman/sceneology/actions/runs/40345913473) passed the real Chrome DevTools protocol test after the published site was fetched from its HTTPS URL. The first Tab focused the `Skip to main content` link, Enter moved focus to `main-content`, and the 390-pixel mobile viewport had exactly 390 pixels of document scroll width (no horizontal overflow). A live mobile framebuffer was captured. Desktop and mobile smoke, six exact-content deployed resources, synthetic-gallery image success/fallback, curated empty-state behavior, and published source paths were independently exercised in prior passing workflows.
+
+These checks **do not** measure real-user web performance or prove subjective layout quality, screen-reader effectiveness, or actual future exhibit-image availability. Every newly approved gallery image and viewer still needs release-specific testing before exhibition.
