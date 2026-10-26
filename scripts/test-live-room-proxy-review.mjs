@@ -21,7 +21,13 @@ assert.equal(bedding.eligible_only_if_source_embedded_pillow_and_blanket_hidden,
 assert.equal(bedding.all_original_room_binding_unknown,true);
 assert.equal(bedding.original_blanket_v1_3_still_missing,true);
 assert.equal(bedding.showcase_approved,false);
-const resources=["site/room-proxy-review.html","site/room-proxy-review.js","site/room-proxy-review-data.json","site/family-orbit-data.json","site/room-variant-reduction.json","site/source-room-region-guide.mjs","site/room-attachment-fit-audit.json","site/bed-pillow-placement-research.json"];
+const support=JSON.parse(fs.readFileSync(path.join(root,"site/desk-attachment-compatibility.json"),"utf8"));
+assert.equal(support.all_alias_bindings_unapproved,true);
+assert.equal(support.staged_book.cover_material,"pink");
+assert.equal(support.desks.length,3);
+assert.ok(support.desks.every(x=>x.cover_can_fit_without_overhang===false));
+assert.equal(support.lamps.length,2);
+const resources=["site/room-proxy-review.html","site/room-proxy-review.js","site/room-proxy-review-data.json","site/family-orbit-data.json","site/room-variant-reduction.json","site/source-room-region-guide.mjs","site/room-attachment-fit-audit.json","site/bed-pillow-placement-research.json","site/desk-attachment-compatibility.json"];
 for(const relative of resources){
  let failure;
  for(let attempt=0;attempt<5;attempt++){
