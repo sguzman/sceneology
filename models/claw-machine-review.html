@@ -1,0 +1,137 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Scenarium · Miniature Claw Arcade</title>
+<style>*{box-sizing:border-box}:root{color-scheme:dark;font-family:system-ui,sans-serif}body{margin:0;background:#162b39;color:#eff8f1}
+main{height:100vh;min-height:560px;display:grid;grid-template-rows:auto minmax(350px,1fr) auto}
+header{background:#284758;padding:12px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px}
+nav{display:flex;gap:6px;flex-wrap:wrap;align-items:center}button{background:#365f67;border:1px solid #81a6a0;border-radius:7px;color:white;font:12px system-ui;padding:8px 11px;cursor:pointer}
+button.primary{background:#a64f70}button:hover{filter:brightness(1.15)}button:disabled{opacity:.42;cursor:default}
+small{font-size:11px;color:#bddada}.screen{position:relative;background:#142f40;overflow:hidden}canvas{width:100%;height:100%;display:block;cursor:grab;touch-action:none}
+#status{position:absolute;left:12px;bottom:12px;pointer-events:none;background:#142d3ce0;border:1px solid #6a919c;padding:8px 10px;border-radius:7px;font:12px system-ui}
+footer{background:#284758;padding:10px 12px;font-size:11px;color:#c4d9d9}
+</style></head><body><main><header><div><strong>Miniature Prize Claw 🎁</strong><div><small>137 source SC3D meshes · 8 articulated GPU groups</small></div></div>
+<nav><button class="primary" id="play">▶ Play round</button><button id="left">←</button><button id="right">→</button><button id="back">↑</button><button id="forward">↓</button><button id="drop">Lower claw</button><button id="grip">Close grip</button><button id="reset">Reset</button><button id="view">Reset view</button></nav></header>
+<section class="screen" id="stage"><canvas id="cv"></canvas><div id="status">Ready · Orbit by dragging · Zoom by scrolling</div></section>
+<footer>Real source-derived geometry · Scripted prize grab, not physical rigid-body simulation · WebGL depth testing</footer>
+</main><script>
+(()=>{
+const MODEL=[["b",[[2.23,0.22,1.64],[0,0.125,0],[0,0,0]],"#1a3146",0],["b",[[2.3,0.045,1.69],[0,0.246,0],[0,0,0]],"#d7e7e8",0],["c",[0.105,0.08,20,[-0.92,-0.02,-0.65],[0,0,0]],"#2a3940",0],["c",[0.105,0.08,20,[-0.92,-0.02,0.65],[0,0,0]],"#2a3940",0],["c",[0.105,0.08,20,[0.92,-0.02,-0.65],[0,0,0]],"#2a3940",0],["c",[0.105,0.08,20,[0.92,-0.02,0.65],[0,0,0]],"#2a3940",0],["b",[[1.38,0.31,0.12],[-0.39,0.425,-0.784],[0,0,0]],"#e67f84",0],["b",[[0.18,0.31,0.12],[0.99,0.425,-0.784],[0,0,0]],"#e67f84",0],["b",[[0.58,0.062,0.12],[0.6,0.614,-0.784],[0,0,0]],"#8e3f55",0],["b",[[0.026,0.31,0.028],[0.3,0.425,-0.865],[0,0,0]],"#ecc36f",0],["b",[[0.026,0.31,0.028],[0.9,0.425,-0.865],[0,0,0]],"#ecc36f",0],["b",[[0.6,0.026,0.028],[0.6,0.579,-0.865],[0,0,0]],"#ecc36f",0],["b",[[1.36,0.03,0.015],[-0.39,0.57,-0.852],[0,0,0]],"#ecc36f",0],["b",[[0.155,0.03,0.015],[0.985,0.57,-0.852],[0,0,0]],"#ecc36f",0],["b",[[1.245,0.1,1.34],[-0.3125,0.725,0.03],[0,0,0]],"#f7f0df",0],["b",[[0.055,0.1,1.34],[0.9075,0.725,0.03],[0,0,0]],"#f7f0df",0],["b",[[0.57,0.1,0.87],[0.595,0.725,0.265],[0,0,0]],"#f7f0df",0],["b",[[0.035,0.35,0.44],[0.2925,0.495,-0.415],[0,0,0]],"#364f64",0],["b",[[0.035,0.35,0.44],[0.8975,0.495,-0.415],[0,0,0]],"#364f64",0],["b",[[0.57,0.35,0.037],[0.595,0.495,-0.164],[0,0,0]],"#1a3146",0],["b",[[0.53,0.23,0.012],[0.595,0.41,-0.192],[0,0,0]],"#182736",0],["b",[[0.018,0.014,0.46],[0.312,0.782,-0.41],[0,0,0]],"#ecc36f",0],["b",[[0.018,0.014,0.46],[0.879,0.782,-0.41],[0,0,0]],"#ecc36f",0],["b",[[0.57,0.014,0.022],[0.595,0.782,-0.176],[0,0,0]],"#ecc36f",0],["b",[[1.24,0.045,0.06],[-0.33,0.774,-0.65],[0,0,0]],"#6bdfc8",0],["b",[[0.06,0.045,0.06],[0.92,0.774,-0.65],[0,0,0]],"#6bdfc8",0],["b",[[1.94,1.3,0.072],[0,1.424,0.685],[0,0,0]],"#90d6ed",0],["b",[[1.58,0.055,0.02],[0,1.94,0.637],[0,0,0]],"#f7f0df",0],["b",[[0.057,0.075,0.016],[-0.75,1.76,0.637],[0,0,0]],"#d4c5f9",0],["b",[[0.057,0.075,0.016],[-0.613,1.79627,0.637],[0,0,0]],"#6bdfc8",0],["b",[[0.057,0.075,0.016],[-0.476,1.81453,0.637],[0,0,0]],"#d4c5f9",0],["b",[[0.057,0.075,0.016],[-0.339,1.80573,0.637],[0,0,0]],"#6bdfc8",0],["b",[[0.057,0.075,0.016],[-0.202,1.77422,0.637],[0,0,0]],"#d4c5f9",0],["b",[[0.057,0.075,0.016],[-0.065,1.73566,0.637],[0,0,0]],"#6bdfc8",0],["b",[[0.057,0.075,0.016],[0.072,1.70918,0.637],[0,0,0]],"#d4c5f9",0],["b",[[0.057,0.075,0.016],[0.209,1.70793,0.637],[0,0,0]],"#6bdfc8",0],["b",[[0.057,0.075,0.016],[0.346,1.73252,0.637],[0,0,0]],"#d4c5f9",0],["b",[[0.057,0.075,0.016],[0.483,1.77076,0.637],[0,0,0]],"#6bdfc8",0],["b",[[0.057,0.075,0.016],[0.62,1.80365,0.637],[0,0,0]],"#d4c5f9",0],["b",[[0.057,0.075,0.016],[0.757,1.81488,0.637],[0,0,0]],"#6bdfc8",0],["b",[[0.12,0.52,1.52],[-1.04,0.51,0],[0,0,0]],"#8e3f55",0],["b",[[0.12,0.52,1.52],[1.04,0.51,0],[0,0,0]],"#8e3f55",0],["b",[[0.087,1.41,0.09],[-0.955,1.48,-0.655],[0,0,0]],"#f7f0df",0],["b",[[0.11,0.075,0.11],[-0.955,2.185,-0.655],[0,0,0]],"#d7e7e8",0],["b",[[0.087,1.41,0.09],[-0.955,1.48,0.655],[0,0,0]],"#f7f0df",0],["b",[[0.11,0.075,0.11],[-0.955,2.185,0.655],[0,0,0]],"#d7e7e8",0],["b",[[0.087,1.41,0.09],[0.955,1.48,-0.655],[0,0,0]],"#f7f0df",0],["b",[[0.11,0.075,0.11],[0.955,2.185,-0.655],[0,0,0]],"#d7e7e8",0],["b",[[0.087,1.41,0.09],[0.955,1.48,0.655],[0,0,0]],"#f7f0df",0],["b",[[0.11,0.075,0.11],[0.955,2.185,0.655],[0,0,0]],"#d7e7e8",0],["b",[[2.07,0.074,0.078],[0,2.177,-0.66],[0,0,0]],"#d7e7e8",0],["b",[[2.04,0.065,0.073],[0,0.784,-0.66],[0,0,0]],"#d7e7e8",0],["b",[[2.07,0.074,0.078],[0,2.177,0.66],[0,0,0]],"#d7e7e8",0],["b",[[2.04,0.065,0.073],[0,0.784,0.66],[0,0,0]],"#d7e7e8",0],["b",[[0.078,0.065,1.36],[-0.956,2.175,0],[0,0,0]],"#d7e7e8",0],["b",[[0.075,0.063,1.36],[-0.956,0.787,0],[0,0,0]],"#d7e7e8",0],["b",[[0.078,0.065,1.36],[0.956,2.175,0],[0,0,0]],"#d7e7e8",0],["b",[[0.075,0.063,1.36],[0.956,0.787,0],[0,0,0]],"#d7e7e8",0],["b",[[2.24,0.34,1.62],[0,2.35,0],[0,0,0]],"#e67f84",0],["b",[[2.13,0.047,0.07],[0,2.455,-0.828],[0,0,0]],"#ecc36f",0],["b",[[1.38,0.19,0.021],[0,2.375,-0.823],[0,0,0]],"#f7f0df",0],["b",[[0.065,0.067,0.012],[-0.45,2.375,-0.838],[0,0,0]],"#8e3f55",0],["b",[[0.065,0.067,0.012],[-0.338,2.375,-0.838],[0,0,0]],"#41a9b9",0],["b",[[0.065,0.067,0.012],[-0.226,2.375,-0.838],[0,0,0]],"#ecc36f",0],["b",[[0.065,0.067,0.012],[-0.114,2.375,-0.838],[0,0,0]],"#8e3f55",0],["b",[[0.065,0.067,0.012],[-0.002,2.375,-0.838],[0,0,0]],"#41a9b9",0],["b",[[0.065,0.067,0.012],[0.11,2.375,-0.838],[0,0,0]],"#ecc36f",0],["b",[[0.065,0.067,0.012],[0.222,2.375,-0.838],[0,0,0]],"#8e3f55",0],["b",[[0.065,0.067,0.012],[0.334,2.375,-0.838],[0,0,0]],"#41a9b9",0],["b",[[0.065,0.067,0.012],[0.446,2.375,-0.838],[0,0,0]],"#ecc36f",0],["c",[0.032,0.055,20,[-0.87,2.54,-0.55],[0,0,0]],"#6bdfc8",0],["c",[0.032,0.055,20,[-0.75,2.54,-0.55],[0,0,0]],"#6bdfc8",0],["c",[0.032,0.055,20,[-0.63,2.54,-0.55],[0,0,0]],"#6bdfc8",0],["c",[0.032,0.055,20,[0.87,2.54,-0.55],[0,0,0]],"#6bdfc8",0],["c",[0.032,0.055,20,[0.75,2.54,-0.55],[0,0,0]],"#6bdfc8",0],["c",[0.032,0.055,20,[0.63,2.54,-0.55],[0,0,0]],"#6bdfc8",0],["b",[[1.85,0.074,1.36],[0,2.138,0],[0,0,0]],"#1a3146",0],["b",[[0.066,0.064,1.1],[-0.7,2.055,0.04],[0,0,0]],"#d7e7e8",0],["b",[[0.066,0.064,1.1],[0.7,2.055,0.04],[0,0,0]],"#d7e7e8",0],["b",[[1.57,0.07,0.087],[0,2.057,-0.09],[0,0,0]],"#364f64",0],["b",[[0.31,0.13,0.29],[0,1.978,-0.06],[0,0,0]],"#6bdfc8",1],["b",[[0.25,0.035,0.24],[0,2.06,-0.06],[0,0,0]],"#d7e7e8",1],["c",[0.078,0.105,20,[0,1.902,-0.06],[0,0,0]],"#364f64",1],["c",[0.026,0.28,20,[0,1.739,-0.06],[0,0,0]],"#d7e7e8",2],["c",[0.122,0.17,20,[0,1.51,-0.06],[0,0,0]],"#364f64",2],["c",[0.095,0.034,20,[0,1.422,-0.06],[0,0,0]],"#ecc36f",2],["b",[[0.095,0.09,0.1],[-0.1,1.464,-0.06],[0,0,0]],"#d7e7e8",2],["b",[[0.095,0.09,0.1],[0.1,1.464,-0.06],[0,0,0]],"#d7e7e8",2],["b",[[0.074,0.19,0.08],[-0.116,1.37,-0.06],[0,0,0]],"#d7e7e8",3],["b",[[0.08,0.17,0.09],[-0.178,1.205,-0.07],[0,0,-19]],"#ecc36f",3],["b",[[0.076,0.07,0.086],[-0.218,1.105,-0.079],[0,0,0]],"#2a3940",3],["b",[[0.074,0.19,0.08],[0.116,1.37,-0.06],[0,0,0]],"#d7e7e8",4],["b",[[0.08,0.17,0.09],[0.178,1.205,-0.07],[0,0,19]],"#ecc36f",4],["b",[[0.076,0.07,0.086],[0.218,1.105,-0.079],[0,0,0]],"#2a3940",4],["c",[0.058,0.22,20,[0,1.21,-0.155],[12,0,0]],"#d7e7e8",2],["c",[0.115,0.135,20,[-0.68,0.857,0.27],[0,0,0]],"#b4a2ec",0],["c",[0.105,0.06,20,[-0.68,0.941,0.27],[0,0,0]],"#f7f0df",0],["b",[[0.17,0.026,0.15],[-0.68,0.903,0.27],[0,0,0]],"#ecc36f",0],["c",[0.115,0.135,20,[-0.08,0.857,0.28],[0,0,0]],"#41a9b9",0],["c",[0.105,0.06,20,[-0.08,0.941,0.28],[0,0,0]],"#f7f0df",0],["b",[[0.17,0.026,0.15],[-0.08,0.903,0.28],[0,0,0]],"#ecc36f",0],["c",[0.115,0.135,20,[0.53,0.857,0.23],[0,0,0]],"#f2b995",0],["c",[0.105,0.06,20,[0.53,0.941,0.23],[0,0,0]],"#f7f0df",0],["b",[[0.17,0.026,0.15],[0.53,0.903,0.23],[0,0,0]],"#ecc36f",0],["c",[0.115,0.135,20,[0.8,0.857,0.4],[0,0,0]],"#ffb8be",0],["c",[0.105,0.06,20,[0.8,0.941,0.4],[0,0,0]],"#f7f0df",0],["b",[[0.17,0.026,0.15],[0.8,0.903,0.4],[0,0,0]],"#ecc36f",0],["c",[0.115,0.135,20,[-0.04,0.857,-0.29],[0,0,0]],"#fbe392",0],["c",[0.105,0.06,20,[-0.04,0.941,-0.29],[0,0,0]],"#f7f0df",0],["b",[[0.17,0.026,0.15],[-0.04,0.903,-0.29],[0,0,0]],"#ecc36f",0],["c",[0.115,0.135,20,[0.24,0.857,-0.1],[0,0,0]],"#6bdfc8",0],["c",[0.105,0.06,20,[0.24,0.941,-0.1],[0,0,0]],"#f7f0df",0],["b",[[0.17,0.026,0.15],[0.24,0.903,-0.1],[0,0,0]],"#ecc36f",0],["c",[0.127,0.146,20,[-0.38,0.859,-0.15],[0,0,0]],"#d4c5f9",5],["c",[0.116,0.06,20,[-0.38,0.943,-0.15],[0,0,0]],"#f7f0df",5],["b",[[0.19,0.026,0.15],[-0.38,0.908,-0.15],[0,0,0]],"#e67f84",5],["b",[[0.045,0.23,0.3],[0.315,0.391,-0.775],[0,0,0]],"#364f64",0],["b",[[0.045,0.23,0.3],[0.875,0.391,-0.775],[0,0,0]],"#364f64",0],["b",[[0.43,0.045,0.32],[0.595,0.277,-0.798],[0,0,0]],"#1a3146",0],["b",[[0.53,0.028,0.033],[0.595,0.267,-0.945],[0,0,0]],"#ecc36f",0],["b",[[0.38,0.163,0.026],[0.595,0.416,-0.894],[0,0,0]],"#90d6ed",6],["b",[[0.15,0.025,0.025],[0.595,0.416,-0.926],[0,0,0]],"#d7e7e8",6],["b",[[1.01,0.12,0.29],[-0.32,0.511,-0.854],[0,0,0]],"#f7f0df",0],["c",[0.124,0.042,20,[-0.52,0.596,-0.845],[0,0,0]],"#364f64",0],["c",[0.027,0.19,20,[-0.52,0.691,-0.845],[0,0,0]],"#d7e7e8",0],["c",[0.092,0.11,20,[-0.52,0.819,-0.845],[0,0,0]],"#e67f84",0],["c",[0.112,0.046,20,[-0.17,0.608,-0.845],[0,0,0]],"#ecc36f",0],["c",[0.077,0.055,20,[-0.17,0.633,-0.845],[0,0,0]],"#6bdfc8",0],["b",[[0.18,0.2,0.025],[0.17,0.427,-0.859],[0,0,0]],"#364f64",0],["b",[[0.025,0.11,0.011],[0.17,0.429,-0.876],[0,0,0]],"#182736",0],["b",[[0.28,0.08,0.024],[-0.62,0.407,-0.856],[0,0,0]],"#1a3146",0],["b",[[0.028,0.028,0.012],[-0.72,0.409,-0.875],[0,0,0]],"#ecc36f",7],["b",[[0.028,0.028,0.012],[-0.682,0.409,-0.875],[0,0,0]],"#6bdfc8",7],["b",[[0.028,0.028,0.012],[-0.644,0.409,-0.875],[0,0,0]],"#ecc36f",7],["b",[[0.028,0.028,0.012],[-0.606,0.409,-0.875],[0,0,0]],"#6bdfc8",7],["b",[[0.028,0.028,0.012],[-0.568,0.409,-0.875],[0,0,0]],"#ecc36f",7],["b",[[0.028,0.028,0.012],[-0.53,0.409,-0.875],[0,0,0]],"#6bdfc8",7]];
+const MINI_CLAW_ROUND_SECONDS=8.5;
+const MINI_CLAW_MAX_DROP=.24;
+const clamp=(x,a,b)=>Math.min(b,Math.max(a,x));
+const blend=(a,b,k)=>a+(b-a)*clamp(k,0,1);
+const ease=k=>{const x=clamp(k,0,1);return x*x*(3-2*x);};
+function between(t,start,end){return ease((t-start)/(end-start));}
+function miniatureClawPose({mode="idle",time=0,x=0,z=0,down=0,grip=0}={}){
+ if(![time,x,z,down,grip].every(Number.isFinite))throw new RangeError("Finite claw state required");
+ if(!["idle","round","won"].includes(mode))throw new RangeError("Invalid claw mode");
+ const mx=clamp(x,-.58,.58),mz=clamp(z,-.34,.34);
+ if(mode==="idle")return {mode,time,x:mx,z:mz,down:clamp(down,0,MINI_CLAW_MAX_DROP),grip:clamp(grip,0,1),
+   prizeX:-.38,prizeY:0,prizeZ:0,doorAngle:0,status:"READY",won:false};
+ if(mode==="won"||time>=MINI_CLAW_ROUND_SECONDS)return {mode:"won",time:MINI_CLAW_ROUND_SECONDS,x:.57,z:-.34,down:0,grip:0,
+   prizeX:.595,prizeY:-.4865,prizeZ:-.63,doorAngle:.95,status:"PRIZE WON!",won:true};
+
+ const cx=time<1.0?blend(0,-.38,between(time,0,1.0)):time<4.15?-.38:
+   blend(-.38,.595,between(time,4.15,5.8));
+ const cz=time<1.0?blend(0,-.15,between(time,0,1.0)):time<4.15?-.15:
+   blend(-.15,-.34,between(time,4.15,5.8));
+ let height=time<1.0?0:time<2.10?blend(0,.24,between(time,1,2.1)):
+   time<3.10?.24:time<4.15?blend(.24,0,between(time,3.1,4.15)):
+   time<5.8?0:time<6.45?blend(0,.12,between(time,5.8,6.45)):
+   blend(.12,0,between(time,6.8,7.8));
+ const gripping=time<2.35?0:time<2.9?between(time,2.35,2.9):time<5.90?1:
+   1-between(time,5.90,6.30);
+
+
+
+ let px=-.38,py=0,pz=0;
+ if(time>=2.9&&time<6.35){
+   px=cx;
+   pz=cz+.15-.08*between(time,4.15,5.8);
+   py=blend(0,.30,between(time,3.08,4.15));
+ }
+ if(time>=6.35){
+   const downThroughHole=between(time,6.35,7.30);
+   const forwardInCavity=between(time,7.30,8.15);
+   px=.595;
+   py=time<7.30?blend(.30,-.41,downThroughHole):blend(-.41,-.4865,forwardInCavity);
+   pz=time<7.30?-.27:blend(-.27,-.63,forwardInCavity);
+ }
+ const doorAngle=.95*between(time,7.1,7.5);
+ const status=time<2.35?"POSITIONING":time<3.10?"GRABBING":
+   time<6.35?"CARRYING":time<7.30?"DROPPING THROUGH HOLE":"COLLECTING";
+ return {mode:"round",time,x:cx,z:cz,down:height,grip:gripping,
+   prizeX:px,prizeY:py,prizeZ:pz,doorAngle,status,won:false};
+}
+
+const canvas=document.getElementById('cv'),stage=document.getElementById('stage'),status=document.getElementById('status'),B=id=>document.getElementById(id);
+try{
+const gl=canvas.getContext('webgl2',{depth:true,alpha:false,antialias:true})||canvas.getContext('webgl',{depth:true,alpha:false,antialias:true});
+if(!gl){status.textContent='GPU 3D is unavailable. No slow CPU fallback.';return;}
+const add=(a,b)=>a.map((v,i)=>v+b[i]),sub=(a,b)=>a.map((v,i)=>v-b[i]),mul=(a,s)=>a.map(v=>v*s),cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]],unit=a=>mul(a,1/(Math.hypot(...a)||1));
+const faces=[[0,2,1],[0,3,2],[4,5,6],[4,6,7],[0,1,5],[0,5,4],[1,2,6],[1,6,5],[2,3,7],[2,7,6],[3,0,4],[3,4,7]];
+const batches=Array.from({length:8},()=>[]);
+function rot(v,d){let [x,y,z]=v,[rx,ry,rz]=d.map(q=>q*Math.PI/180);let c=Math.cos(rx),s=Math.sin(rx);[y,z]=[c*y-s*z,s*y+c*z];c=Math.cos(ry);s=Math.sin(ry);[x,z]=[c*x+s*z,-s*x+c*y];c=Math.cos(rz);s=Math.sin(rz);return[c*x-s*y,s*x+c*y,z];}
+function emit(tri,col,g){const rgb=[1,3,5].map(i=>parseInt(col.slice(i,i+2),16)/255);for(const t of tri){const n=unit(cross(sub(t[1],t[0]),sub(t[2],t[0])));for(const p of t)batches[g].push(...p,...n,...rgb);}}
+function cube(s,t,r,col,g){const[x,y,z]=s.map(v=>v/2),verts=[[-x,-y,-z],[x,-y,-z],[x,y,-z],[-x,y,-z],[-x,-y,z],[x,-y,z],[x,y,z],[-x,y,z]].map(p=>add(rot(p,r),t));emit(faces.map(f=>f.map(i=>verts[i])),col,g);}
+function cyl(rad,h,n,t,r,col,g){let tri=[],p=(x,y,z)=>add(rot([x,y,z],r),t);for(let i=0;i<n;i++){const a=2*Math.PI*i/n,b=2*Math.PI*(i+1)/n,A=p(rad*Math.cos(a),-h/2,rad*Math.sin(a)),Q=p(rad*Math.cos(b),-h/2,rad*Math.sin(b)),R=p(rad*Math.cos(b),h/2,rad*Math.sin(b)),D=p(rad*Math.cos(a),h/2,rad*Math.sin(a));tri.push([A,R,Q],[A,D,R],[p(0,h/2,0),R,D],[p(0,-h/2,0),A,Q]);}emit(tri,col,g);}
+for(const[k,a,c,g]of MODEL){if(k==='b')cube(...a,c,g);else cyl(...a,c,g);}
+let len=batches.reduce((s,b)=>s+b.length,0),bufferData=new Float32Array(len),offset=0,ranges=[];
+for(const b of batches){ranges.push([offset/9,b.length/9]);bufferData.set(b,offset);offset+=b.length;}
+const VS=`precision highp float;
+attribute vec3 p,n,col;uniform vec3 eye,right,up,forward;
+uniform float focal,aspect,craneX,craneZ,dropDepth,grip,prizeX,prizeY,prizeZ,doorAngle;
+uniform int group;varying vec3 color;varying float light;
+vec3 rz(vec3 q,float a){float c=cos(a),s=sin(a);return vec3(c*q.x-s*q.y,s*q.x+c*q.y,q.z);}
+vec3 rx(vec3 q,float a){float c=cos(a),s=sin(a);return vec3(q.x,c*q.y-s*q.z,s*q.y+c*q.z);}
+void main(){vec3 v=p,N=n;
+if(group==3||group==4){
+ vec3 hinge=vec3(group==3?-.092:.092,1.47,-.06);
+ float a=group==3?.24*grip:-.24*grip;
+ v=hinge+rz(v-hinge,a);N=rz(N,a);
+}
+if(group>=1&&group<=4){v.x+=craneX;v.z+=craneZ;}
+if(group>=2&&group<=4)v.y-=dropDepth;
+if(group==5){v.x+=prizeX+.38;v.y+=prizeY;v.z+=prizeZ;}
+if(group==6){vec3 hinge=vec3(.595,.566,-.894);v=hinge+rx(v-hinge,doorAngle);}
+vec3 delta=v-eye;float z=dot(delta,forward);
+gl_Position=vec4(dot(delta,right)*focal/aspect,dot(delta,up)*focal,1.002002*z-.2002,z);
+color=col;light=.43+.63*max(0.,dot(normalize(N),normalize(vec3(-.55,.86,-.61))));
+}`;
+const FS=`precision mediump float;varying vec3 color;varying float light;void main(){gl_FragColor=vec4(min(vec3(1.),color*light),1.);}`;
+const shader=(kind,s)=>{let h=gl.createShader(kind);gl.shaderSource(h,s);gl.compileShader(h);if(!gl.getShaderParameter(h,gl.COMPILE_STATUS))throw Error(gl.getShaderInfoLog(h));return h;};
+const prog=gl.createProgram();gl.attachShader(prog,shader(gl.VERTEX_SHADER,VS));gl.attachShader(prog,shader(gl.FRAGMENT_SHADER,FS));gl.linkProgram(prog);if(!gl.getProgramParameter(prog,gl.LINK_STATUS))throw Error(gl.getProgramInfoLog(prog));
+gl.useProgram(prog);const gpu=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,gpu);gl.bufferData(gl.ARRAY_BUFFER,bufferData,gl.STATIC_DRAW);
+for(const [name,index] of [['p',0],['n',3],['col',6]]){const loc=gl.getAttribLocation(prog,name);gl.enableVertexAttribArray(loc);gl.vertexAttribPointer(loc,3,gl.FLOAT,false,36,index*4);}
+const U={};for(const id of ['eye','right','up','forward','focal','aspect','craneX','craneZ','dropDepth','grip','prizeX','prizeY','prizeZ','doorAngle','group'])U[id]=gl.getUniformLocation(prog,id);
+let mode='idle',time=0,x=0,z=0,down=0,grip=0,last=null,az=.55,el=.25,dist=5.20,drag=false,mouse=[0,0],active=true;
+const setButton=(id,callback)=>B(id).addEventListener('click',callback);
+setButton('play',()=>{if(mode==='round')return;mode='round';time=0;last=null;});
+for(const[id,dx,dz]of[['left',-.12,0],['right',.12,0],['back',0,.12],['forward',0,-.12]])setButton(id,()=>{if(mode!=='idle')return;x=clamp(x+dx,-.58,.58);z=clamp(z+dz,-.34,.34);});
+setButton('drop',()=>{if(mode!=='idle')return;down=down?.0:.24;});
+setButton('grip',()=>{if(mode!=='idle')return;grip=grip?0:1;});
+setButton('reset',()=>{mode='idle';time=0;x=0;z=0;down=0;grip=0;last=null;});
+setButton('view',()=>{az=.55;el=.25;dist=5.20;});
+canvas.onpointerdown=e=>{drag=true;mouse=[e.clientX,e.clientY];canvas.setPointerCapture?.(e.pointerId);};
+canvas.onpointerup=canvas.onpointercancel=()=>drag=false;
+canvas.onpointermove=e=>{if(!drag)return;az+=(e.clientX-mouse[0])*.008;el=clamp(el+(e.clientY-mouse[1])*.007,-.38,1.15);mouse=[e.clientX,e.clientY];};
+canvas.addEventListener('wheel',e=>{e.preventDefault();dist=clamp(dist*Math.exp(e.deltaY*.001),3.2,8);},{passive:false});
+canvas.addEventListener('webglcontextlost',e=>{e.preventDefault();active=false;status.textContent='GPU context lost. Reopen preview.';});
+function draw(now){if(!active||!stage.isConnected)return;requestAnimationFrame(draw);
+ if(last===null)last=now;let dt=clamp((now-last)/1000,0,.075);last=now;
+ if(document.visibilityState==='hidden')return;
+ if(mode==='round'){time=Math.min(8.5,time+dt);if(time>=8.5)mode='won';}
+ const pose=miniatureClawPose({mode,time,x,z,down,grip});
+ const ratio=Math.min(1.7,window.devicePixelRatio||1),w=Math.max(1,Math.floor(stage.clientWidth*ratio)),h=Math.max(1,Math.floor(stage.clientHeight*ratio));
+ if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h;}
+ gl.viewport(0,0,w,h);gl.enable(gl.DEPTH_TEST);gl.depthFunc(gl.LEQUAL);gl.disable(gl.BLEND);gl.clearColor(.065,.151,.200,1);gl.clearDepth(1);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
+ const target=[0,1.25,0],eye=[dist*Math.sin(az)*Math.cos(el),1.25+dist*Math.sin(el),-dist*Math.cos(az)*Math.cos(el)],forward=unit(sub(target,eye)),right=unit(cross([0,1,0],forward)),up=unit(cross(forward,right));
+ for(const [name,value]of[['eye',eye],['right',right],['up',up],['forward',forward]])gl.uniform3fv(U[name],value);
+ for(const [name,value]of[['focal',1.73],['aspect',w/h],['craneX',pose.x],['craneZ',pose.z],['dropDepth',pose.down],['grip',pose.grip],['prizeX',pose.prizeX],['prizeY',pose.prizeY],['prizeZ',pose.prizeZ],['doorAngle',pose.doorAngle]])gl.uniform1f(U[name],value);
+ for(let g=0;g<8;g++){gl.uniform1i(U.group,g);gl.drawArrays(gl.TRIANGLES,ranges[g][0],ranges[g][1]);}
+ status.textContent=pose.status+' · '+(pose.won?'Collect your lavender prize!':'Drag to orbit · Wheel to zoom');
+ B('drop').textContent=down>0?'Raise claw':'Lower claw';B('grip').textContent=grip?'Open grip':'Close grip';
+ B('play').disabled=mode==='round';
+}
+requestAnimationFrame(draw);
+}catch(e){status.textContent='GPU preview error: '+String(e?.message||e);}
+})();
+</script></body></html>
