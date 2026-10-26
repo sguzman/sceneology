@@ -1,6 +1,8 @@
 import {analyzeProxyGeometry} from "./room-geometry-audit.mjs";
 const stage=document.getElementById("reading-stage");
 const clearance=document.getElementById("reading-clearance");
+const showCharacter=document.getElementById("reading-show-character");
+const characterNotice=document.getElementById("reading-character-notice");
 const status=document.getElementById("reading-status");
 const yaw=document.getElementById("reading-yaw");
 const elevation=document.getElementById("reading-elevation");
@@ -15,7 +17,7 @@ function shade(hex,factor){
  const n=parseInt(hex.slice(1),16);
  return "#"+[n>>16,n>>8&255,n&255].map(x=>Math.min(255,Math.max(0,Math.round(x*factor+7))).toString(16).padStart(2,"0")).join("");
 }
-let room=null,library=null;
+let room=null,library=null,occupancy=null;
 function draw(){
  if(!room||!library)return;
  const yawDeg=Number(yaw.value),elevationDeg=Number(elevation.value);
@@ -25,7 +27,12 @@ function draw(){
  const right=unit([-camera[2],0,camera[0]]),up=unit(cross(right,camera));
  const light=unit([.48,.92,-.34]);
  const visible=[];
- for(const instance of room.instances){
+ const characterShown=Boolean(showCharacter.checked&&occupancy);
+ const drawn=characterShown?[...room.instances,{
+  id:"quest-girl",model_key:occupancy.model.key,model_sha:occupancy.model.source_sha,
+  translate:occupancy.authored_character.translate,yaw_deg:occupancy.authored_character.yaw_deg
+ }]:room.instances;
+ for(const instance of drawn){
   const model=library.get(instance.model_key);
   if(!model||model.source_sha!==instance.model_sha)throw Error("Unmatched source family binding");
   const theta=instance.yaw_deg*Math.PI/180,c=Math.cos(theta),s=Math.sin(theta);
@@ -63,8 +70,9 @@ function draw(){
  stage.innerHTML=shapes.join("");
  stage.dataset.rendered="true";stage.dataset.faceCount=String(visible.length);
  stage.dataset.yaw=String(yawDeg);stage.dataset.elevation=String(elevationDeg);
+ stage.dataset.occupancy=characterShown?"research-candidate":"hidden";
  caption.textContent="Six authored positions · "+room.omitted_parented_instances.length+" deliberately omitted attachments · camera "+yawDeg+"° / "+elevationDeg+"°";
- const audit=analyzeProxyGeometry(room.instances,library);
+ const audit=analyzeProxyGeometry(drawn,library);
  clearance.dataset.candidates=String(audit.total_candidate_pairs);
  clearance.dataset.status="technical-only";
  const heading=document.createElement("strong");
@@ -80,19 +88,32 @@ function draw(){
   const li=document.createElement("li");li.textContent="No overlapping proxy AABBs. Original room collision clearance remains uncertified.";list.append(li);
  }
  clearance.replaceChildren(heading,explanation,list);
+ if(characterShown){
+  characterNotice.textContent="Character: original authored position "+
+    occupancy.authored_character.translate.join(", ")+" · yaw "+
+    occupancy.authored_character.yaw_deg+"°. Source character bottom versus proxy rug top: "+
+    occupancy.comparison.signed_character_bottom_minus_rug_top+
+    " source units. This is not verified contact, clipping clearance, scale fidelity, or an approved occupancy scene.";
+ }else{
+  characterNotice.textContent="Character-occupancy candidate hidden by default; its historical visual verdict is still pending.";
+ }
 }
 try{
- const [mr,fr]=await Promise.all([
+ const [mr,fr,cr]=await Promise.all([
   fetch("./reading-corner-study-data.json",{cache:"no-cache"}),
-  fetch("./family-orbit-data.json",{cache:"no-cache"})
+  fetch("./family-orbit-data.json",{cache:"no-cache"}),
+  fetch("./reading-corner-occupancy-data.json",{cache:"no-cache"})
  ]);
- if(!mr.ok||!fr.ok)throw Error("Technical geometry not available");
- room=await mr.json();const modelData=await fr.json();
+ if(!mr.ok||!fr.ok||!cr.ok)throw Error("Technical geometry not available");
+ room=await mr.json();const modelData=await fr.json();occupancy=await cr.json();
  if(room.instances?.length!==6||room.omitted_parented_instances?.length!==2||
     room.rendering_is_original_accepted!==false||room.gallery_approved!==false||
-    room.complete_room!==false||modelData.models?.length!==30)
+    room.complete_room!==false||modelData.models?.length!==30||
+    occupancy.historical_occupancy_proof_status!=="human-review-candidate"||
+    occupancy.occupancy_approved!==false||occupancy.stage_contact_certified!==false||
+    occupancy.showcase_approved!==false||occupancy.model.key!=="quest-girl-v7")
   throw Error("Room completeness or approval boundary changed");
- library=new Map(modelData.models.map(x=>[x.key,x]));
+ library=new Map([...modelData.models,occupancy.model].map(x=>[x.key,x]));
  attachments.replaceChildren(...room.omitted_parented_instances.map(item=>{
   const li=document.createElement("li");
   li.dataset.omittedInstance=item.id;
@@ -102,6 +123,8 @@ try{
  const params=new URLSearchParams(location.search);
  const preferred=Number(params.get("yaw"));
  if(params.has("yaw")&&Number.isFinite(preferred)&&preferred>=-180&&preferred<=180)yaw.value=String(preferred);
+ showCharacter.checked=params.get("occupancy")==="1";
+ showCharacter.addEventListener("change",draw);
  for(const input of [yaw,elevation])input.addEventListener("input",draw);
  draw();
  status.textContent="Partial source-derived geometry ready · no claim of canonical room fidelity";

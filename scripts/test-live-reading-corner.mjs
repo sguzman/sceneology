@@ -13,7 +13,7 @@ assert.equal(scene.instances.length,6);
 assert.equal(scene.omitted_parented_instances.length,2);
 assert.equal(scene.gallery_approved,false);
 assert.equal(scene.complete_room,false);
-const resources=["site/reading-corner-study.html","site/reading-corner-study.js","site/reading-corner-study-data.json","site/family-orbit-data.json"];
+const resources=["site/reading-corner-study.html","site/reading-corner-study.js","site/reading-corner-study-data.json","site/family-orbit-data.json","site/reading-corner-occupancy-data.json"];
 for(const relative of resources){
  let issue;
  for(let i=0;i<5;i++){
@@ -59,6 +59,21 @@ function sample(yaw){
  }finally{fs.rmSync(profile,{recursive:true,force:true});}
 }
 const first=sample(130),second=sample(-45);
+const occupancyProfile=fs.mkdtempSync(path.join(os.tmpdir(),"sceneology-reading-occupancy-"));
+try{
+ const url=new URL("site/reading-corner-study.html?yaw=130&occupancy=1",base);
+ const visit=spawnSync(browser,[...flags,"--user-data-dir="+occupancyProfile,"--dump-dom",url.href],
+  {encoding:"utf8",timeout:100000,maxBuffer:32*1024*1024});
+ if(visit.error||visit.status!==0)throw Error("Static character occupancy Chrome failed");
+ const dom=visit.stdout;
+ fs.writeFileSync(path.join(output,"reading-corner-occupancy.dom.html"),dom);
+ const stage=dom.match(/<div[^>]*\bid="reading-stage"[^>]*>/)?.[0]||"";
+ assert.ok(stage.includes('data-occupancy="research-candidate"'),"Source-authored occupancy toggle did not render");
+ assert.ok(dom.includes('data-instance="quest-girl"'),"Accepted static character geometry was not incorporated");
+ assert.ok(dom.includes("not verified contact"),"Missing source support warning");
+ const unique=new Set([...dom.matchAll(/data-instance="([^"]+)"/g)].map(x=>x[1]));
+ assert.ok(unique.has("quest-girl")&&unique.has("chair")&&unique.has("rug"));
+}finally{fs.rmSync(occupancyProfile,{recursive:true,force:true});}
 assert.notEqual(first.digest,second.digest,"Camera rotation did not change source-composition geometry");
 const shotProfile=fs.mkdtempSync(path.join(os.tmpdir(),"sceneology-reading-shot-"));
 try{
