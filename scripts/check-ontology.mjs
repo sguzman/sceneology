@@ -87,5 +87,28 @@ const sceneFiles=["static-2d.scene.json","animated-2d.scene.json","static-3d.sce
 for(const name of sceneFiles)checkScene(load("ontology/examples/"+name));
 checkEntity(load("ontology/examples/reusable-entity.json"));
 checkExperiment(load("ontology/examples/failed-experiment.json"));
-await import("./test-ontology-negative.mjs");
+// Negative controls guard the checks themselves: malformed data must fail.
+const original=load("ontology/examples/animated-2d.scene.json");
+const mutators=[
+ x=>{x.elements[1].id=x.elements[0].id;},
+ x=>{x.relations[0].object_id="missing";},
+ x=>{x.elements[0].parent_id="leaf";},
+ x=>{x.elements[0].transform.position=[0,0,0];},
+ x=>{x.presentation.draw_order=["stem"];},
+ x=>{x.timeline.tracks[0].keyframes[1].time_seconds=0;},
+ x=>{x.timeline.tracks[0].keyframes[1].time_seconds=3;},
+ x=>{x.elements[0].shape="box";},
+ x=>{x.timeline.tracks[1].keyframes[0].value=5;},
+ x=>{x.unknown_property=true;}
+];
+for(const mutate of mutators){
+ const sample=structuredClone(original);mutate(sample);
+ assert.throws(()=>checkScene(sample));
+}
+const invalidExperiment=load("ontology/examples/failed-experiment.json");
+invalidExperiment.observations=[];
+assert.throws(()=>checkExperiment(invalidExperiment));
+const invalidEntity=load("ontology/examples/reusable-entity.json");
+invalidEntity.dimensions=["4d"];
+assert.throws(()=>checkEntity(invalidEntity));
 console.log("Sceneology ontology verified: 6 positive fixtures and semantic negative controls.");
