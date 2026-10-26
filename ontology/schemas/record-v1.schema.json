@@ -4,7 +4,6 @@
   "title": "Sceneology public technical record v1",
   "description": "Technical catalog metadata; status does not imply owner gallery approval.",
   "type": "object",
-        "character",
   "additionalProperties": false,
   "required": [
     "id",
@@ -29,6 +28,7 @@
       "enum": [
         "scene",
         "object",
+        "character",
         "experiment",
         "effect",
         "animation",
