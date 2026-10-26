@@ -51,8 +51,8 @@ MIT; see [LICENSE](LICENSE). Third-party works, when admitted later, require the
 
 ## Current collection (October 26, 2026)
 
-The [live exhibition](https://sguzman.github.io/sceneology/) currently features **21 source-backed works**: seven previously accepted block-chibi environments, thirteen positive-review mechanical/PC models, and the accepted static Quest Girl v7 character. The interactive [model browser](https://sguzman.github.io/sceneology/site/models.html) also indexes **127 source versions grouped into 90 model families** for research; being indexed there is not gallery approval.
+The [live exhibition](https://sguzman.github.io/sceneology/) currently features **24 source-backed works**: seven previously accepted block-chibi environments, sixteen positive-review models and objects, and the accepted static Quest Girl v7 character. The interactive [model browser](https://sguzman.github.io/sceneology/site/models.html) also indexes **127 source versions grouped into 90 model families** for research; being indexed there is not gallery approval.
 
-Four additional historically accepted room compositions have been migrated as **source-only YAML** into `scenes/composition-sources/`. Their asset references are not yet rebuilt into standalone website viewers, so none is falsely exhibited. Failed studies remain preserved in the technical catalog but not featured.
+Four additional historically accepted room compositions have been migrated as **source-only YAML** into `scenes/composition-sources/`. Their asset references are not yet rebuilt into standalone website viewers, so none is falsely exhibited. A [four-room spatial review](https://sguzman.github.io/sceneology/site/room-recovery.html) shows exact source zones and placement anchors, not fabricated model geometry. Failed studies remain preserved in the technical catalog but not featured.
 
 The [weighted roadmap](docs/roadmap.json) closes the *bounded public foundation and functioning-exhibition milestone*, **not every possible historical asset migration**. Ongoing source and visual-quality decisions continue independently.

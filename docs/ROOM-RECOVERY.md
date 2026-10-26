@@ -26,3 +26,9 @@ A faithful reconstruction must preserve scene-layout transforms, furniture geome
 Only after each selected asset file and its transitive implementation needs pass privacy, redistribution and visual compatibility review can a scene be rendered, compared, and proposed for the public gallery. Until then these four compositions remain research/source archives with no invented screenshots.
 
 This report is tied to exact scene bytes and a public asset-tree revision. If either changes, re-run `scripts/check-room-aliases.mjs` and re-triage before a migration.
+
+## Source-pinned spatial diagnostics (not reconstructed scene renderings)
+
+The [four-room technical review](https://sguzman.github.io/sceneology/site/room-recovery.html) draws only original source zones, explicitly authored object anchors and parent-relation labels. The builder validates source Git blobs first. Where the source omits room dimensions, diagram boundaries are fitted to zones and anchors; **that frame is not a fabricated room wall**.
+
+The diagnostics aid exact placement recovery but do **not** establish object geometry, model dimensions, render fidelity, visual approval, or completed room migration. All 24 aliases remain unbound, including those with only one current source candidate. The generated diagrams are checked in CI and tested after live deployment.
