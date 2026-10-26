@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sguzman.github.io/sceneology/ontology/schemas/representation-map-v1.schema.json",
+  "title": "Sceneology scene representation binding v1",
+  "description": "A declared mapping from canonical scene elements into renderer-specific nodes. Does not prove a renderer ran or that output was visually approved.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "id",
+    "scene_id",
+    "scene_dimension",
+    "target",
+    "coordinate_conversion",
+    "status",
+    "bindings",
+    "unsupported_features"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*$"
+    },
+    "scene_id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*$"
+    },
+    "scene_dimension": {
+      "enum": [
+        "2d",
+        "3d"
+      ]
+    },
+    "target": {
+      "enum": [
+        "svg",
+        "canvas2d",
+        "dom-css",
+        "webgl",
+        "threejs",
+        "static-raster"
+      ]
+    },
+    "coordinate_conversion": {
+      "enum": [
+        "identity",
+        "top-left-px-to-svg",
+        "world-to-clip"
+      ]
+    },
+    "status": {
+      "enum": [
+        "declared",
+        "implemented",
+        "verified"
+      ]
+    },
+    "bindings": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "element_id",
+          "target_id",
+          "representation"
+        ],
+        "properties": {
+          "element_id": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]*$"
+          },
+          "target_id": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]*$"
+          },
+          "representation": {
+            "enum": [
+              "node",
+              "path",
+              "shape",
+              "image",
+              "mesh"
+            ]
+          }
+        }
+      }
+    },
+    "unsupported_features": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "audio",
+          "input",
+          "timeline",
+          "lighting",
+          "effects",
+          "3d-rotation"
+        ]
+      }
+    },
+    "notes": {
+      "type": "string"
+    }
+  }
+}
