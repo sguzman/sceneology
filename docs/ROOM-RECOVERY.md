@@ -108,3 +108,9 @@ The [Reading Corner viewer](https://sguzman.github.io/sceneology/site/reading-co
 Each of the four historically accepted room descriptions still declares an `on_bookshelf` **shelf-books** relation without a standalone transform. Crucially, the three publicly staged, source-pinned corrected bookshelf family variants already contain **embedded book shapes** (three books in the low-wide or narrow variant; four in the tall variant). Simply adding an independent shelf-book model at guessed coordinates could duplicate books or intersect the built-in geometry.
 
 The [machine-generated embedded-content audit](https://sguzman.github.io/sceneology/site/room-shelf-content-audit.json) cross-checks all four exact original room blobs, all three candidate bookshelf blobs and the rendered part IDs. It identifies potential duplicate content, not an exact historical binding or proof that an embedded model fulfills the original external `shelf-books` semantics. All four original relations therefore remain unresolved until original attachment interpretation or a separately reviewed replacement is available.
+
+## Source zones inside research 3D views (not a wall or floor)
+
+Both room research viewers now offer source-authored 2D X/Z planning-zone guides directly over the furniture proxies. Four rooms declare 17 total zone rectangles: five Cozy Bedroom zones and four each for Study Corner, Sleep Room and Reading Corner. Only Cozy Bedroom explicitly declares a 6 × 5 original architectural footprint, so the visual guide shows that outline there and *no inferred walls or footprint* for the other three rooms.
+
+The optional [three-room zones](https://sguzman.github.io/sceneology/site/room-proxy-review.html?zones=1) and [Reading Corner zones](https://sguzman.github.io/sceneology/site/reading-corner-study.html?zones=1) are planning diagnostics, not physical walkable-floor geometry, collision clearance, exact renderer fidelity, or gallery approval.

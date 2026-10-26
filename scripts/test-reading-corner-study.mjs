@@ -14,6 +14,10 @@ assert.equal(room.model_variants_are_original_room_bindings,false);
 assert.equal(room.gallery_approved,false);
 assert.equal(room.complete_room,false);
 assert.equal(room.floor_walls_lighting_reconstructed,false);
+assert.equal(room.region_guide.zones.length,4);
+assert.equal(room.region_guide.source_room_footprint,null);
+assert.equal(room.region_guide.footprint_only_if_explicit,false);
+assert.equal(room.region_guide.architectural_shell_reconstructed,false);
 assert.equal(room.instances.length,6);
 assert.deepEqual(room.omitted_parented_instances.map(x=>x.id),["lumbar-pillow","shelf-books"]);
 for(const attachment of room.omitted_parented_instances){

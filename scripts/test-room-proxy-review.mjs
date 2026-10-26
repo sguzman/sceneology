@@ -25,6 +25,13 @@ for(const room of data.rooms){
  assert.equal(room.source_composition_historically_accepted,true);
  assert.equal(room.renderer_aesthetic_accepted,false);
  assert.equal(room.substituted_unrecovered_blanket,false);
+ const region=room.region_guide;
+ assert.equal(region.architectural_shell_reconstructed,false);
+ assert.equal(region.zone_volumes_reconstructed,false);
+ assert.equal(region.placement_or_clearance_certified,false);
+ assert.equal(region.zones.length,room.id==="cozy-bedroom-study-v1.3"?5:4);
+ assert.deepEqual(region.source_room_footprint,room.id==="cozy-bedroom-study-v1.3"?[6,5]:null);
+ for(const zone of region.zones)assert.equal(zone.source_exact,true);
  assert.equal(room.placed.length+room.omitted_parented.length,room.total_original_instances);
  assert.ok(!gallery.approved_ids.includes(room.id));
  for(const item of room.placed){
