@@ -1,0 +1,57 @@
+format: scenarium-constructive-3d
+version: "0.1"
+units: meters
+coordinates: {handedness: right, up: y, forward: "-z"}
+requires: [core.primitives, core.rigid-hierarchy]
+
+asset:
+  id: dual-120mm-front-fan-snap-carrier-v1
+  name: Two-Fan Folded Steel Front Carrier (For Approved Case and Fan) v1
+  kind: prop
+  root: root
+  tags: [desktop-pc, fan-carrier, 120mm, two-fan-array, folded-steel, screwless-retention, preserved-original-fan, preserved-original-chassis, mechanical-integration]
+
+materials:
+  steel: {role: steel, base_color: "#5a6b74", roughness: 0.62, metalness: 0.57}
+  graphite: {role: graphite, base_color: "#283641", roughness: 0.74, metalness: 0.38}
+  edge: {role: edge, base_color: "#90a2ab", roughness: 0.49, metalness: 0.65}
+  spring: {role: spring, base_color: "#a6b3bb", roughness: 0.42, metalness: 0.62}
+  rubber: {role: rubber, base_color: "#1c282f", roughness: 0.96, metalness: 0.03}
+
+parts:
+  root: {"role":"two-unit-integrated-folded-steel-snap-fit-fan-carrier-no-modification-of-approved-hardware","parent":null,"articulation":"static","transform":{"translate":[0,0,0]}}
+  folded_vertical_web_left: {"role":"continuous-side-channel-captures-two-120mm-frames-without-obstructing-open-airflow","parent":"root","geometry":{"kind":"cuboid","size":[0.08,2.66,0.292]},"material":"graphite","transform":{"translate":[-0.63,0,0]}}
+  front_chassis_load_flange_left: {"role":"front-flange-contact-face-braces-original-solid-chassis-tabs-without-invented-screw-holes","parent":"root","geometry":{"kind":"cuboid","size":[0.116,2.66,0.065]},"material":"steel","transform":{"translate":[-0.63,0,-0.164]}}
+  forward_fan_shell_return_left: {"role":"front-return-flange-retains-both-fan-frames-axially","parent":"root","geometry":{"kind":"cuboid","size":[0.111,2.65,0.061]},"material":"edge","transform":{"translate":[-0.63,0,-0.134]}}
+  rear_fan_shell_return_left: {"role":"rear-return-flange-keeps-fan-frame-in-channel-under-extraction-load","parent":"root","geometry":{"kind":"cuboid","size":[0.111,2.65,0.061]},"material":"steel","transform":{"translate":[-0.63,0,0.136]}}
+  outer_snap_web_left_0: {"role":"spring-steel-wrap-around-clamp-on-chassis-existing-126mm-mount-boss","parent":"root","geometry":{"kind":"cuboid","size":[0.063,0.126,0.135]},"material":"spring","transform":{"translate":[-0.677,-1.255,-0.2]}}
+  forward_snap_hook_left_0: {"role":"formed-spring-retaining-tooth-around-full-thickness-chassis-mount-boss","parent":"root","geometry":{"kind":"cuboid","size":[0.106,0.12,0.04]},"material":"spring","transform":{"translate":[-0.63,-1.255,-0.247]}}
+  snap_edge_grip_left_0: {"role":"elastomer-compression-landing-on-existing-chassis-mount-tab","parent":"root","geometry":{"kind":"cuboid","size":[0.045,0.106,0.028]},"material":"rubber","transform":{"translate":[-0.621,-1.255,-0.204]}}
+  outer_snap_web_left_1: {"role":"spring-steel-wrap-around-clamp-on-chassis-existing-126mm-mount-boss","parent":"root","geometry":{"kind":"cuboid","size":[0.063,0.126,0.135]},"material":"spring","transform":{"translate":[-0.677,0,-0.2]}}
+  forward_snap_hook_left_1: {"role":"formed-spring-retaining-tooth-around-full-thickness-chassis-mount-boss","parent":"root","geometry":{"kind":"cuboid","size":[0.106,0.12,0.04]},"material":"spring","transform":{"translate":[-0.63,0,-0.247]}}
+  snap_edge_grip_left_1: {"role":"elastomer-compression-landing-on-existing-chassis-mount-tab","parent":"root","geometry":{"kind":"cuboid","size":[0.045,0.106,0.028]},"material":"rubber","transform":{"translate":[-0.621,0,-0.204]}}
+  outer_snap_web_left_2: {"role":"spring-steel-wrap-around-clamp-on-chassis-existing-126mm-mount-boss","parent":"root","geometry":{"kind":"cuboid","size":[0.063,0.126,0.135]},"material":"spring","transform":{"translate":[-0.677,1.255,-0.2]}}
+  forward_snap_hook_left_2: {"role":"formed-spring-retaining-tooth-around-full-thickness-chassis-mount-boss","parent":"root","geometry":{"kind":"cuboid","size":[0.106,0.12,0.04]},"material":"spring","transform":{"translate":[-0.63,1.255,-0.247]}}
+  snap_edge_grip_left_2: {"role":"elastomer-compression-landing-on-existing-chassis-mount-tab","parent":"root","geometry":{"kind":"cuboid","size":[0.045,0.106,0.028]},"material":"rubber","transform":{"translate":[-0.621,1.255,-0.204]}}
+  fan_shell_grip_left_0_low: {"role":"short-elastomer-pressure-heel-runs-on-molded-outer-frame-not-screw-hole","parent":"root","geometry":{"kind":"cuboid","size":[0.065,0.138,0.081]},"material":"rubber","transform":{"translate":[-0.596,-1.105,0.1]}}
+  fan_shell_grip_left_0_high: {"role":"short-elastomer-pressure-heel-runs-on-molded-outer-frame-not-screw-hole","parent":"root","geometry":{"kind":"cuboid","size":[0.065,0.138,0.081]},"material":"rubber","transform":{"translate":[-0.596,-0.145,0.1]}}
+  fan_shell_grip_left_1_low: {"role":"short-elastomer-pressure-heel-runs-on-molded-outer-frame-not-screw-hole","parent":"root","geometry":{"kind":"cuboid","size":[0.065,0.138,0.081]},"material":"rubber","transform":{"translate":[-0.596,0.145,0.1]}}
+  fan_shell_grip_left_1_high: {"role":"short-elastomer-pressure-heel-runs-on-molded-outer-frame-not-screw-hole","parent":"root","geometry":{"kind":"cuboid","size":[0.065,0.138,0.081]},"material":"rubber","transform":{"translate":[-0.596,1.105,0.1]}}
+  folded_vertical_web_right: {"role":"continuous-side-channel-captures-two-120mm-frames-without-obstructing-open-airflow","parent":"root","geometry":{"kind":"cuboid","size":[0.08,2.66,0.292]},"material":"graphite","transform":{"translate":[0.63,0,0]}}
+  front_chassis_load_flange_right: {"role":"front-flange-contact-face-braces-original-solid-chassis-tabs-without-invented-screw-holes","parent":"root","geometry":{"kind":"cuboid","size":[0.116,2.66,0.065]},"material":"steel","transform":{"translate":[0.63,0,-0.164]}}
+  forward_fan_shell_return_right: {"role":"front-return-flange-retains-both-fan-frames-axially","parent":"root","geometry":{"kind":"cuboid","size":[0.111,2.65,0.061]},"material":"edge","transform":{"translate":[0.63,0,-0.134]}}
+  rear_fan_shell_return_right: {"role":"rear-return-flange-keeps-fan-frame-in-channel-under-extraction-load","parent":"root","geometry":{"kind":"cuboid","size":[0.111,2.65,0.061]},"material":"steel","transform":{"translate":[0.63,0,0.136]}}
+  outer_snap_web_right_0: {"role":"spring-steel-wrap-around-clamp-on-chassis-existing-126mm-mount-boss","parent":"root","geometry":{"kind":"cuboid","size":[0.063,0.126,0.135]},"material":"spring","transform":{"translate":[0.677,-1.255,-0.2]}}
+  forward_snap_hook_right_0: {"role":"formed-spring-retaining-tooth-around-full-thickness-chassis-mount-boss","parent":"root","geometry":{"kind":"cuboid","size":[0.106,0.12,0.04]},"material":"spring","transform":{"translate":[0.63,-1.255,-0.247]}}
+  snap_edge_grip_right_0: {"role":"elastomer-compression-landing-on-existing-chassis-mount-tab","parent":"root","geometry":{"kind":"cuboid","size":[0.045,0.106,0.028]},"material":"rubber","transform":{"translate":[0.621,-1.255,-0.204]}}
+  outer_snap_web_right_1: {"role":"spring-steel-wrap-around-clamp-on-chassis-existing-126mm-mount-boss","parent":"root","geometry":{"kind":"cuboid","size":[0.063,0.126,0.135]},"material":"spring","transform":{"translate":[0.677,0,-0.2]}}
+  forward_snap_hook_right_1: {"role":"formed-spring-retaining-tooth-around-full-thickness-chassis-mount-boss","parent":"root","geometry":{"kind":"cuboid","size":[0.106,0.12,0.04]},"material":"spring","transform":{"translate":[0.63,0,-0.247]}}
+  snap_edge_grip_right_1: {"role":"elastomer-compression-landing-on-existing-chassis-mount-tab","parent":"root","geometry":{"kind":"cuboid","size":[0.045,0.106,0.028]},"material":"rubber","transform":{"translate":[0.621,0,-0.204]}}
+  outer_snap_web_right_2: {"role":"spring-steel-wrap-around-clamp-on-chassis-existing-126mm-mount-boss","parent":"root","geometry":{"kind":"cuboid","size":[0.063,0.126,0.135]},"material":"spring","transform":{"translate":[0.677,1.255,-0.2]}}
+  forward_snap_hook_right_2: {"role":"formed-spring-retaining-tooth-around-full-thickness-chassis-mount-boss","parent":"root","geometry":{"kind":"cuboid","size":[0.106,0.12,0.04]},"material":"spring","transform":{"translate":[0.63,1.255,-0.247]}}
+  snap_edge_grip_right_2: {"role":"elastomer-compression-landing-on-existing-chassis-mount-tab","parent":"root","geometry":{"kind":"cuboid","size":[0.045,0.106,0.028]},"material":"rubber","transform":{"translate":[0.621,1.255,-0.204]}}
+  fan_shell_grip_right_0_low: {"role":"short-elastomer-pressure-heel-runs-on-molded-outer-frame-not-screw-hole","parent":"root","geometry":{"kind":"cuboid","size":[0.065,0.138,0.081]},"material":"rubber","transform":{"translate":[0.596,-1.105,0.1]}}
+  fan_shell_grip_right_0_high: {"role":"short-elastomer-pressure-heel-runs-on-molded-outer-frame-not-screw-hole","parent":"root","geometry":{"kind":"cuboid","size":[0.065,0.138,0.081]},"material":"rubber","transform":{"translate":[0.596,-0.145,0.1]}}
+  fan_shell_grip_right_1_low: {"role":"short-elastomer-pressure-heel-runs-on-molded-outer-frame-not-screw-hole","parent":"root","geometry":{"kind":"cuboid","size":[0.065,0.138,0.081]},"material":"rubber","transform":{"translate":[0.596,0.145,0.1]}}
+  fan_shell_grip_right_1_high: {"role":"short-elastomer-pressure-heel-runs-on-molded-outer-frame-not-screw-hole","parent":"root","geometry":{"kind":"cuboid","size":[0.065,0.138,0.081]},"material":"rubber","transform":{"translate":[0.596,1.105,0.1]}}
+  integrated_upper_cross_member: {"role":"continuous-overhead-folded-transverse-tie-outside-both-fan-silhouettes","parent":"root","geometry":{"kind":"cuboid","size":[1.33,0.048,0.075]},"material":"graphite","transform":{"translate":[0,1.323,-0.174]}}

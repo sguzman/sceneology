@@ -520,6 +520,36 @@
       "assets_class": "owner-authored-standalone-WebGL-PC-cable-study",
       "review_summary": "Screened embedded source and real headless Chrome render passed; no external runtime/media; narrow human acceptance recorded with visual imperfections.",
       "limitations": "Not visually approved as a polished standalone showcase card; no source viewer or hardware parity inferred."
+    },
+    {
+      "id": "dual-fan-snap-carrier",
+      "path": "models/source-archives/dual-fan-snap-carrier.sc3d.yml",
+      "git_blob_sha": "48003ad2c38fe5898cf2a35bc702af1314489e8f",
+      "kind": "object",
+      "technical_status": "archived",
+      "rights": "original",
+      "source_origin": "cleared-transfer",
+      "source_blob": null,
+      "required_local_files": [],
+      "external_resources": [],
+      "assets_class": "constructive-3d-source-only",
+      "review_summary": "Exact accepted source bytes from owner-controlled historical PC component; no executable render artifact or private review discussion copied.",
+      "limitations": "The SC3D text has unresolved public rendering/assembly transitive dependencies and must not be auto-exhibited."
+    },
+    {
+      "id": "dual-front-fan-pwm-harness",
+      "path": "models/source-archives/dual-front-fan-pwm-harness.sc3d.yml",
+      "git_blob_sha": "4d982b64df0441b9ae6b48fd662ab2af6e7f66a0",
+      "kind": "object",
+      "technical_status": "archived",
+      "rights": "original",
+      "source_origin": "cleared-transfer",
+      "source_blob": null,
+      "required_local_files": [],
+      "external_resources": [],
+      "assets_class": "constructive-3d-source-only",
+      "review_summary": "Exact accepted source bytes from owner-controlled historical PC component; no executable render artifact or private review discussion copied.",
+      "limitations": "The SC3D text has unresolved public rendering/assembly transitive dependencies and must not be auto-exhibited."
     }
   ]
 }

@@ -875,6 +875,52 @@
         "dependency_closure": "self-contained",
         "notes": "Browser-generated screenshot was actually inspected; source study admitted but excluded from exhibition on visual-quality grounds."
       }
+    },
+    {
+      "id": "dual-fan-snap-carrier",
+      "title": "Dual-Fan Front Snap Carrier",
+      "kind": "object",
+      "status": "archived",
+      "summary": "Previously accepted source-authored mechanical PC component preserved as exact constructive geometry. Independent standalone showcase viewer and thumbnail still pending.",
+      "path": "models/source-archives/dual-fan-snap-carrier.sc3d.yml",
+      "rights": "original",
+      "limitations": "Source-only SC3D asset references external accepted PC assembly context. It is not a runtime-closed interactive gallery work; no screenshot or new approval is claimed.",
+      "tags": [
+        "pc",
+        "source-archive",
+        "reviewed-source",
+        "constructive-3d"
+      ],
+      "provenance": {
+        "origin": "cleared-transfer",
+        "reviewed_on": "2026-10-26",
+        "rights_basis": "Original owner-controlled SC3D source with exact Git blob and explicitly accepted scoped review",
+        "dependency_closure": "self-contained",
+        "notes": "Self-contained source text only; transitive material, renderer, motion and assembly dependencies remain pending for visual exhibit."
+      }
+    },
+    {
+      "id": "dual-front-fan-pwm-harness",
+      "title": "Dual Front-Fan PWM Harness",
+      "kind": "object",
+      "status": "archived",
+      "summary": "Previously accepted source-authored mechanical PC component preserved as exact constructive geometry. Independent standalone showcase viewer and thumbnail still pending.",
+      "path": "models/source-archives/dual-front-fan-pwm-harness.sc3d.yml",
+      "rights": "original",
+      "limitations": "Source-only SC3D asset references external accepted PC assembly context. It is not a runtime-closed interactive gallery work; no screenshot or new approval is claimed.",
+      "tags": [
+        "pc",
+        "source-archive",
+        "reviewed-source",
+        "constructive-3d"
+      ],
+      "provenance": {
+        "origin": "cleared-transfer",
+        "reviewed_on": "2026-10-26",
+        "rights_basis": "Original owner-controlled SC3D source with exact Git blob and explicitly accepted scoped review",
+        "dependency_closure": "self-contained",
+        "notes": "Self-contained source text only; transitive material, renderer, motion and assembly dependencies remain pending for visual exhibit."
+      }
     }
   ]
 }
