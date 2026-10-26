@@ -90,7 +90,7 @@ const occupancyScreenshotProfile=fs.mkdtempSync(path.join(os.tmpdir(),"sceneolog
 try{
  const pngPath=path.join(output,"reading-corner-quest-girl-candidate.png");
  const url=new URL("site/reading-corner-study.html?yaw=130&occupancy=1",base).href;
- const chromeShot=spawnSync(browser,[...flags,"--user-data-dir="+occupancyScreenshotProfile,"--screenshot="+pngPath,url],
+ const chromeShot=spawnSync(browser,[...flags,"--window-size=1250,1460","--user-data-dir="+occupancyScreenshotProfile,"--screenshot="+pngPath,url],
   {encoding:"utf8",timeout:100000});
  if(chromeShot.error||chromeShot.status!==0)throw Error("Quest Girl occupancy screenshot failed "+String(chromeShot.error||chromeShot.stderr).slice(-250));
  const png=fs.readFileSync(pngPath);
