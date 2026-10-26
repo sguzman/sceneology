@@ -475,6 +475,36 @@
       "assets_class": "semantic-scene-source-only",
       "review_summary": "A source-only acceptance-marked YAML scene specification. No user-private evaluation remarks, external media or binary assets transferred.",
       "limitations": "Self-contained metadata text, not transitive runtime closure: all referenced accepted SC3D asset families require future renderer/asset QA before visual exhibition."
+    },
+    {
+      "id": "approved-model-power-supply",
+      "path": "models/power-supply-review.html",
+      "git_blob_sha": "cf72d465e1d3a9912d6939a8a27c0e2c95348fd9",
+      "kind": "object",
+      "technical_status": "archived",
+      "rights": "original",
+      "source_origin": "cleared-transfer",
+      "source_blob": null,
+      "required_local_files": [],
+      "external_resources": [],
+      "assets_class": "self-contained-authored-WebGL-PC-model",
+      "review_summary": "Accepted historical PC component with exact source SHA and real Chrome-rendered screenshot; no private source chat imported.",
+      "limitations": "Screenshots and appearance approval do not validate fabrication, pinouts, electrical operation or assembled-system compatibility."
+    },
+    {
+      "id": "approved-model-pc-chassis",
+      "path": "models/pc-chassis-review.html",
+      "git_blob_sha": "ff3dc5ac23bd6d4e21922035ce14fd33a5b74ce8",
+      "kind": "object",
+      "technical_status": "archived",
+      "rights": "original",
+      "source_origin": "cleared-transfer",
+      "source_blob": null,
+      "required_local_files": [],
+      "external_resources": [],
+      "assets_class": "self-contained-authored-WebGL-PC-model",
+      "review_summary": "Accepted historical PC component with exact source SHA and real Chrome-rendered screenshot; no private source chat imported.",
+      "limitations": "Screenshots and appearance approval do not validate fabrication, pinouts, electrical operation or assembled-system compatibility."
     }
   ]
 }

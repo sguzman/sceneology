@@ -800,6 +800,56 @@
         "dependency_closure": "self-contained",
         "notes": "The standalone YAML text is self-contained as historical documentation only; asset_ref names point to separately versioned source families. No runnable dependency closure or new artistic approval is claimed."
       }
+    },
+    {
+      "id": "approved-model-power-supply",
+      "title": "Modular ATX Power Supply",
+      "kind": "object",
+      "status": "archived",
+      "summary": "Previously accepted standalone modular PSU, with authored 282-mesh casing, visible fan grille and connector wells.",
+      "path": "models/power-supply-review.html",
+      "viewer": "models/power-supply-review.html",
+      "thumbnail": "site/model-previews/power-supply.png",
+      "rights": "original",
+      "limitations": "The user accepted a particular source-reviewed design; visible CI software-WebGL screenshot verifies its current standalone viewer but does not establish mechanical/electrical conformity or every control.",
+      "tags": [
+        "object",
+        "constructive-3d",
+        "PC",
+        "previously-owner-liked"
+      ],
+      "provenance": {
+        "origin": "cleared-transfer",
+        "reviewed_on": "2026-10-26",
+        "rights_basis": "Owner-authored constructive PC model with recorded scoped human visual acceptance",
+        "dependency_closure": "self-contained",
+        "notes": "Only accepted final source variation admitted; earlier unsuitable revisions not promoted. Browser screenshot inspected; no external media."
+      }
+    },
+    {
+      "id": "approved-model-pc-chassis",
+      "title": "Ventilated PC Mid-Tower",
+      "kind": "object",
+      "status": "archived",
+      "summary": "Previously accepted corrected 443-mesh mid-tower chassis with real openings and removable panel.",
+      "path": "models/pc-chassis-review.html",
+      "viewer": "models/pc-chassis-review.html",
+      "thumbnail": "site/model-previews/pc-chassis.png",
+      "rights": "original",
+      "limitations": "The user accepted a particular source-reviewed design; visible CI software-WebGL screenshot verifies its current standalone viewer but does not establish mechanical/electrical conformity or every control.",
+      "tags": [
+        "object",
+        "constructive-3d",
+        "PC",
+        "previously-owner-liked"
+      ],
+      "provenance": {
+        "origin": "cleared-transfer",
+        "reviewed_on": "2026-10-26",
+        "rights_basis": "Owner-authored constructive PC model with recorded scoped human visual acceptance",
+        "dependency_closure": "self-contained",
+        "notes": "Only accepted final source variation admitted; earlier unsuitable revisions not promoted. Browser screenshot inspected; no external media."
+      }
     }
   ]
 }
