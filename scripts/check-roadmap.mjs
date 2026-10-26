@@ -6,6 +6,10 @@ const root = path.resolve(import.meta.dirname, "..");
 const read = rel => fs.readFileSync(path.join(root, rel), "utf8");
 const ledger = JSON.parse(read("docs/roadmap.json"));
 const roadmap = read("docs/ROADMAP.md");
+const intakeSchema = JSON.parse(read("docs/migration-intake.schema.json"));
+assert.equal(intakeSchema.type, "object");
+assert.equal(intakeSchema.properties?.disposition?.enum?.includes("admit"), true);
+assert.ok(intakeSchema.allOf?.length, "Missing fail-closed public admission condition");
 
 assert.equal(ledger.schema_version, 1);
 assert.equal(ledger.project, "sceneology");
@@ -58,7 +62,7 @@ for (const id of baselineIds) {
   baseline += task.points;
 }
 assert.ok(baseline <= earned);
-for (const rel of ["docs/MIGRATION.md", "docs/PUBLICATION.md"]) {
+for (const rel of ["docs/MIGRATION.md", "docs/PUBLICATION.md", "docs/migration-intake.schema.json"]) {
   assert.ok(fs.statSync(path.join(root, rel), { throwIfNoEntry: false })?.isFile());
 }
 console.log(`Sceneology roadmap: ${baseline}% -> ${earned}% (+${earned - baseline} percentage points); ${ids.size} weighted tasks.`);
