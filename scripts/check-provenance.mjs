@@ -19,7 +19,7 @@ const shaFor=p=>{
   return crypto.createHash("sha1").update(Buffer.from("blob "+bytes.length+"\0")).update(bytes).digest("hex");
 };
 const validPath=p=>typeof p==="string" &&
-  /^(?:scenes|source-scenes|experiments|assets|runtime|tools)\/[a-zA-Z0-9._/-]+$/.test(p) &&
+  /^(?:scenes|source-scenes|models|experiments|assets|runtime|tools)\/[a-zA-Z0-9._/-]+$/.test(p) &&
   !p.split("/").some(x=>!x||x==="."||x==="..");
 let localDependencies=0;
 for(const record of library.records){

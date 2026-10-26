@@ -7,6 +7,11 @@
     "block-chibi-office-v1",
     "block-chibi-backyard-v1",
     "block-chibi-garage-v1",
-    "block-chibi-factory-v1"
+    "block-chibi-factory-v1",
+    "approved-model-projector",
+    "approved-model-drone",
+    "approved-model-cpu-cooler",
+    "approved-model-graphics-card",
+    "approved-model-motherboard"
   ]
 }

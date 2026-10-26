@@ -3,7 +3,7 @@ import path from "node:path";
 import assert from "node:assert/strict";
 
 const root=path.resolve(import.meta.dirname,"..");
-const roots=[".github","catalog","scenes","experiments","assets","runtime","tools","site","ontology","docs","scripts","tests","index.html","README.md","AGENTS.md","CONSTITUTION.md","LICENSE",".gitignore"];
+const roots=[".github","catalog","scenes","models","experiments","assets","runtime","tools","site","ontology","docs","scripts","tests","index.html","README.md","AGENTS.md","CONSTITUTION.md","LICENSE",".gitignore"];
 const extensions=new Set([".html",".js",".mjs",".json",".md",".yml",".yaml",".css",".svg"]);
 const patterns=[
  {id:"private-key-header",regex:/-----BEGIN (?:OPENSSH|RSA|EC|DSA)? ?PRIVATE KEY-----/},

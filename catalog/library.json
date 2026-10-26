@@ -353,6 +353,131 @@
         "source_blob": "2a40f271a50dc22a1fe94a6dfb42cf3648a55efa",
         "notes": "Source geometry migrated byte-identically. Gallery choice grounded in owner's prior explicit scene visual acceptance and current request to show liked work; static preview is independently generated."
       }
+    },
+    {
+      "id": "approved-model-projector",
+      "title": "Vintage Film Projector",
+      "kind": "object",
+      "status": "archived",
+      "summary": "Owner-liked standalone mechanical film projector.",
+      "path": "models/projector-review.html",
+      "viewer": "models/projector-review.html",
+      "thumbnail": "site/model-previews/projector.png",
+      "rights": "original",
+      "limitations": "Owner previously liked the model. Browser screenshot passed headless software-renderer smoke; real GPU parity and all controls are not certified.",
+      "tags": [
+        "3d",
+        "model",
+        "object",
+        "previously-owner-liked"
+      ],
+      "provenance": {
+        "origin": "cleared-transfer",
+        "reviewed_on": "2026-10-26",
+        "rights_basis": "Owner-authored source and standalone viewer reviewed for public release",
+        "dependency_closure": "self-contained",
+        "notes": "Public transfer strips incidental source comments and has no network libraries or private history; historical approval must not be confused with engine parity."
+      }
+    },
+    {
+      "id": "approved-model-drone",
+      "title": "Survey Drone",
+      "kind": "object",
+      "status": "archived",
+      "summary": "Owner-liked stylized survey drone.",
+      "path": "models/drone-review.html",
+      "viewer": "models/drone-review.html",
+      "thumbnail": "site/model-previews/drone.png",
+      "rights": "original",
+      "limitations": "Owner previously liked the model. Browser screenshot passed headless software-renderer smoke; real GPU parity and all controls are not certified.",
+      "tags": [
+        "3d",
+        "model",
+        "object",
+        "previously-owner-liked"
+      ],
+      "provenance": {
+        "origin": "cleared-transfer",
+        "reviewed_on": "2026-10-26",
+        "rights_basis": "Owner-authored source and standalone viewer reviewed for public release",
+        "dependency_closure": "self-contained",
+        "notes": "Public transfer strips incidental source comments and has no network libraries or private history; historical approval must not be confused with engine parity."
+      }
+    },
+    {
+      "id": "approved-model-cpu-cooler",
+      "title": "CPU Tower Air Cooler",
+      "kind": "object",
+      "status": "archived",
+      "summary": "Owner-liked cooler and fan model.",
+      "path": "models/cpu-cooler-review.html",
+      "viewer": "models/cpu-cooler-review.html",
+      "thumbnail": "site/model-previews/cpu-cooler.png",
+      "rights": "original",
+      "limitations": "Owner previously liked the model. Browser screenshot passed headless software-renderer smoke; real GPU parity and all controls are not certified.",
+      "tags": [
+        "3d",
+        "model",
+        "object",
+        "previously-owner-liked"
+      ],
+      "provenance": {
+        "origin": "cleared-transfer",
+        "reviewed_on": "2026-10-26",
+        "rights_basis": "Owner-authored source and standalone viewer reviewed for public release",
+        "dependency_closure": "self-contained",
+        "notes": "Public transfer strips incidental source comments and has no network libraries or private history; historical approval must not be confused with engine parity."
+      }
+    },
+    {
+      "id": "approved-model-graphics-card",
+      "title": "Dual-Fan Graphics Card",
+      "kind": "object",
+      "status": "archived",
+      "summary": "Owner-liked interactive graphics-card model.",
+      "path": "models/graphics-card-review.html",
+      "viewer": "models/graphics-card-review.html",
+      "thumbnail": "site/model-previews/graphics-card.png",
+      "rights": "original",
+      "limitations": "Owner previously liked the model. Browser screenshot passed headless software-renderer smoke; real GPU parity and all controls are not certified.",
+      "tags": [
+        "3d",
+        "model",
+        "object",
+        "previously-owner-liked"
+      ],
+      "provenance": {
+        "origin": "cleared-transfer",
+        "reviewed_on": "2026-10-26",
+        "rights_basis": "Owner-authored source and standalone viewer reviewed for public release",
+        "dependency_closure": "self-contained",
+        "notes": "Public transfer strips incidental source comments and has no network libraries or private history; historical approval must not be confused with engine parity."
+      }
+    },
+    {
+      "id": "approved-model-motherboard",
+      "title": "ATX Motherboard",
+      "kind": "object",
+      "status": "archived",
+      "summary": "Owner-liked motherboard with sockets, slots, and mechanical details.",
+      "path": "models/motherboard-review.html",
+      "viewer": "models/motherboard-review.html",
+      "thumbnail": "site/model-previews/motherboard.png",
+      "rights": "original",
+      "limitations": "Owner previously liked the model. Browser screenshot passed headless software-renderer smoke; real GPU parity and all controls are not certified.",
+      "tags": [
+        "3d",
+        "model",
+        "object",
+        "previously-owner-liked"
+      ],
+      "provenance": {
+        "origin": "cleared-transfer",
+        "reviewed_on": "2026-10-26",
+        "rights_basis": "Owner-authored source and standalone viewer reviewed for public release",
+        "dependency_closure": "self-contained",
+        "notes": "Public transfer strips incidental source comments and has no network libraries or private history; historical approval must not be confused with engine parity."
+      }
     }
   ]
 }
