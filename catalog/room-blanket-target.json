@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "domain": "accepted-bed-cover-v1.3-reconstruction-target",
+  "requested_asset_alias": "accepted:block-chibi-room::blanket/bed-cover-v1.3",
+  "original_source_recovered": false,
+  "reconstructed_geometry_approved": false,
+  "exhibition_approval": false,
+  "existing_unaccepted_predecessor": {
+    "alias": "accepted:block-chibi-room::blanket/bed-cover",
+    "path": "assets/constructive-3d/blankets/block-chibi-bed-cover-blanket-v1.sc3d.yml",
+    "blob_sha": "2712f1eaaca55062f093b691c5d503fd3a7fb3f7"
+  },
+  "accepted_constraints": [
+    "preserve_lighter_top_fold",
+    "forbid_confusing_extra_dark_foot_piece",
+    "preserve_bed_cover_read_and_support_without_clipping"
+  ],
+  "evidence_scenes": [
+    {
+      "path": "scenes/composition-sources/sleep-room-v1.scene.yml",
+      "blob_sha": "4a270a30c2a071a0ea353220814e0e5236d45141"
+    }
+  ],
+  "next_gate": "Recover exact v1.3 geometry or author an explicitly labeled reconstruction proposal, verify shape/support and appearance independently; no silent v1 fallback or source-identity claim."
+}

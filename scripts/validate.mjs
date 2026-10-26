@@ -78,6 +78,7 @@ await import("./check-curation.mjs");
 await import("./test-rigid-transforms.mjs");
 
 await import("./check-room-aliases.mjs");
+await import("./check-room-blanket-target.mjs");
 
 await import("./build-room-diagnostics.mjs");
 await import("./test-room-diagnostics.mjs");
