@@ -7,6 +7,8 @@ import {pathToFileURL} from "node:url";
 const root=path.resolve(import.meta.dirname,"..");
 const dest=path.join(root,"artifacts","model-candidates");
 fs.mkdirSync(dest,{recursive:true});
+const published=path.join(root,"site","model-previews");
+fs.mkdirSync(published,{recursive:true});
 const names=["clock","projector","drone","cpu-cooler","graphics-card","motherboard"];
 const chrome=process.env.CHROME_BIN||"google-chrome";
 const flags=["--headless=new","--no-sandbox","--disable-dev-shm-usage","--enable-webgl","--enable-unsafe-swiftshader",
@@ -33,6 +35,7 @@ for(const name of names){
   const bytes=fs.readFileSync(png);
   if(bytes.length<7000||bytes.subarray(0,8).toString("hex")!=="89504e470d0a1a0a")throw Error("Invalid screenshot bytes");
   result.status="passed";result.capture_bytes=bytes.length;result.png=name+".png";
+  if(name!=="clock")fs.copyFileSync(png,path.join(published,name+".png"));
  }catch(e){result.status="failed";result.error=String(e.message||e);failed=true;}
  finally{fs.rmSync(profile,{recursive:true,force:true});fs.rmSync(profile+"-image",{recursive:true,force:true});}
  report.models.push(result);
