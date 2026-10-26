@@ -156,8 +156,14 @@
         {
           "id": "O04",
           "points": 4,
-          "status": "todo",
-          "evidence": []
+          "status": "done",
+          "evidence": [
+            "ontology/examples/animated-2d.scene.json",
+            "ontology/examples/legacy-static-2d-v0.json",
+            "scripts/test-ontology-roundtrip.mjs",
+            "scripts/migrate-scene-v0.mjs",
+            "ontology/SCHEMA-VERSIONS.md"
+          ]
         }
       ]
     },
@@ -264,8 +270,13 @@
         {
           "id": "Q03",
           "points": 2,
-          "status": "todo",
-          "evidence": []
+          "status": "done",
+          "evidence": [
+            ".github/workflows/browser-smoke.yml",
+            ".github/workflows/pages.yml",
+            "scripts/test-live-site.mjs",
+            "docs/RELEASE-EVIDENCE.md"
+          ]
         }
       ]
     }
