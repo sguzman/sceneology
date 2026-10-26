@@ -1,0 +1,156 @@
+format: scenarium-sc3d-scene
+version: "0.1"
+
+id: block-chibi-cozy-bedroom-study-v1.3
+status: accepted
+archetype: taria:cozy-bedroom-study@0.4
+composition_grammar: taria:sc3d-scene-composition@0.1
+room_grammar: taria:block-chibi-room-grammar@0.4
+
+coordinates:
+  handedness: right
+  up: y
+  forward: -z
+
+room:
+  footprint: [6.0, 5.0]
+  topology: open-front-diorama
+  shell:
+    floor:
+      material_family: warm-wood
+    walls:
+      - id: back-wall
+        side: back
+      - id: left-wall
+        side: left
+
+zones:
+  - id: sleep
+    center: [-1.70, 0.75]
+    size: [2.10, 2.70]
+  - id: study
+    center: [1.45, 1.35]
+    size: [2.40, 1.70]
+  - id: storage
+    center: [2.35, 1.90]
+    size: [1.10, 1.20]
+  - id: character-stage
+    center: [0.00, -0.75]
+    size: [2.20, 1.70]
+  - id: circulation
+    center: [0.00, 0.15]
+    size: [1.40, 3.20]
+
+instances:
+  - id: bed
+    asset_ref: accepted:block-chibi-room::bed
+    zone: sleep
+    transform: {translate: [-1.65, 0.0, 0.75], rotate_y_deg: 0}
+    anchors: [on_floor, against_back_wall]
+
+  - id: bed-pillow
+    asset_ref: accepted:block-chibi-room::pillow/bed
+    zone: sleep
+    parent_relation: on_bed
+    anchors: [on_surface]
+    orientation: head_side
+
+  - id: bed-blanket
+    asset_ref: accepted:block-chibi-room::blanket/bed-cover
+    zone: sleep
+    parent_relation: on_bed
+    anchors: [on_surface]
+
+  - id: window
+    asset_ref: accepted:block-chibi-room::window
+    zone: display
+    transform: {translate: [-1.65, 1.55, 2.42], rotate_y_deg: 0}
+    anchors: [on_back_wall, above_bed_zone]
+
+  - id: desk
+    asset_ref: accepted:block-chibi-room::desk
+    zone: study
+    transform: {translate: [1.10, 0.0, 1.72], rotate_y_deg: 0}
+    anchors: [on_floor, against_back_wall]
+
+  - id: chair
+    asset_ref: accepted:block-chibi-room::chair
+    zone: study
+    transform: {translate: [1.10, 0.0, 0.90], rotate_y_deg: 180}
+    anchors: [on_floor, facing_desk]
+
+  - id: table-lamp
+    asset_ref: accepted:block-chibi-room::lamp/table
+    zone: study
+    parent_relation: on_desk
+    anchors: [on_surface]
+    orientation: work_surface
+
+  - id: desk-book
+    asset_ref: accepted:block-chibi-room::book/closed
+    zone: study
+    parent_relation: on_desk
+    anchors: [on_surface]
+    realization:
+      count: 1
+      color: muted_blue
+      full_closed_volume: true
+      visible_page_edge: true
+      open_book_variant_used: false
+
+  - id: bookshelf
+    asset_ref: accepted:block-chibi-room::bookshelf
+    zone: storage
+    transform: {translate: [2.35, 0.0, 2.05], rotate_y_deg: 0}
+    anchors: [on_floor, against_back_wall]
+
+  - id: shelf-books
+    asset_ref: accepted:block-chibi-room::book/upright
+    zone: storage
+    parent_relation: on_bookshelf
+    anchors: [on_surface]
+
+  - id: snake-plant
+    asset_ref: accepted:block-chibi-room::snake-plant
+    zone: display
+    transform: {translate: [-2.45, 0.0, -1.15], rotate_y_deg: 0}
+    anchors: [on_floor, near_left_wall, perimeter_anchor]
+
+  - id: rug
+    asset_ref: accepted:block-chibi-room::rug/area
+    zone: character-stage
+    transform: {translate: [0.0, 0.0, -0.78], rotate_y_deg: 0}
+    anchors: [on_floor, centered_on_character_stage]
+
+clearance_contract:
+  central_character_stage:
+    must_remain_open: true
+  chair_desk:
+    approach_clearance_required: true
+  bed_side:
+    access_clearance_required: true
+  bookshelf_front:
+    access_clearance_required: true
+  circulation:
+    must_connect_front_to_back: true
+
+review:
+  beauty_camera: perspective_three_quarter
+  debug:
+    show_zones: optional
+    show_anchors: optional
+    show_instance_bounds: optional
+  shadows:
+    geometry_verdict_independent_of_known_shadow_renderer_issue: true
+
+revision:
+  predecessor: block-chibi-cozy-bedroom-study-v1.1
+  scope: desk-book-only
+  room_layout_changed: false
+  changes:
+    - replace_ambiguous_desk_book_with_one_complete_closed_book
+    - preserve_all_furniture_positions
+    - preserve_all_scene_zones
+  note:
+    - open_book_variant_not_solved_in_this_scene
+    - closed_book_fallback_human_accepted

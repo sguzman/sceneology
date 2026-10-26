@@ -415,6 +415,66 @@
       "assets_class": "author-controlled-self-contained-WebGL-model",
       "review_summary": "Owner-authored historical constructive model with scoped positive review and successfully captured independent Chrome screenshot, no external assets.",
       "limitations": "Scoped prior acceptance does not imply byte-level visual parity across distinct viewers or hardware performance."
+    },
+    {
+      "id": "archived-cozy-bedroom-study-v1-3",
+      "path": "scenes/composition-sources/cozy-bedroom-study-v1.3.scene.yml",
+      "git_blob_sha": "1af345e9252b2c3611a1c4a93e2d1c4204de2b0f",
+      "kind": "scene",
+      "technical_status": "archived",
+      "rights": "original",
+      "source_origin": "cleared-transfer",
+      "source_blob": null,
+      "required_local_files": [],
+      "external_resources": [],
+      "assets_class": "semantic-scene-source-only",
+      "review_summary": "A source-only acceptance-marked YAML scene specification. No user-private evaluation remarks, external media or binary assets transferred.",
+      "limitations": "Self-contained metadata text, not transitive runtime closure: all referenced accepted SC3D asset families require future renderer/asset QA before visual exhibition."
+    },
+    {
+      "id": "archived-study-corner-v1-1",
+      "path": "scenes/composition-sources/study-corner-v1.1.scene.yml",
+      "git_blob_sha": "3219a4c9e0e67298d6b0ceb6f67fd168b87a4ae1",
+      "kind": "scene",
+      "technical_status": "archived",
+      "rights": "original",
+      "source_origin": "cleared-transfer",
+      "source_blob": null,
+      "required_local_files": [],
+      "external_resources": [],
+      "assets_class": "semantic-scene-source-only",
+      "review_summary": "A source-only acceptance-marked YAML scene specification. No user-private evaluation remarks, external media or binary assets transferred.",
+      "limitations": "Self-contained metadata text, not transitive runtime closure: all referenced accepted SC3D asset families require future renderer/asset QA before visual exhibition."
+    },
+    {
+      "id": "archived-sleep-room-v1",
+      "path": "scenes/composition-sources/sleep-room-v1.scene.yml",
+      "git_blob_sha": "4a270a30c2a071a0ea353220814e0e5236d45141",
+      "kind": "scene",
+      "technical_status": "archived",
+      "rights": "original",
+      "source_origin": "cleared-transfer",
+      "source_blob": null,
+      "required_local_files": [],
+      "external_resources": [],
+      "assets_class": "semantic-scene-source-only",
+      "review_summary": "A source-only acceptance-marked YAML scene specification. No user-private evaluation remarks, external media or binary assets transferred.",
+      "limitations": "Self-contained metadata text, not transitive runtime closure: all referenced accepted SC3D asset families require future renderer/asset QA before visual exhibition."
+    },
+    {
+      "id": "archived-reading-corner-v1-1",
+      "path": "scenes/composition-sources/reading-corner-v1.1.scene.yml",
+      "git_blob_sha": "89d925c4a78393331bd5c8921398fea880c21034",
+      "kind": "scene",
+      "technical_status": "archived",
+      "rights": "original",
+      "source_origin": "cleared-transfer",
+      "source_blob": null,
+      "required_local_files": [],
+      "external_resources": [],
+      "assets_class": "semantic-scene-source-only",
+      "review_summary": "A source-only acceptance-marked YAML scene specification. No user-private evaluation remarks, external media or binary assets transferred.",
+      "limitations": "Self-contained metadata text, not transitive runtime closure: all referenced accepted SC3D asset families require future renderer/asset QA before visual exhibition."
     }
   ]
 }

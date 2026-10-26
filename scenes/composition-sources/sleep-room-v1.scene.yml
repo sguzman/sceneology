@@ -1,0 +1,136 @@
+format: scenarium-sc3d-scene
+version: "0.1"
+
+id: block-chibi-sleep-room-v1
+status: accepted
+scene_type: integrated-composition-proof
+style_family: block-chibi-room
+style_target: pokemon-quest-like-cozy-interior
+composition_grammar: taria:sc3d-scene-composition@0.1
+room_grammar: taria:block-chibi-room-grammar@0.4
+
+provenance:
+  predecessor_scene: block-chibi-study-corner-v1.1
+  predecessor_status: accepted
+  carryover_policy:
+    - reuse_accepted_assets_when_possible
+    - do_not_reopen_solved_geometry_without_regression
+    - preserve_final_bed_pillow_contract
+    - preserve_accepted_blanket_realization
+
+composition_intent:
+  primary_read:
+    - cute
+    - cozy
+    - restful
+    - bedroom
+    - uncluttered
+  forbidden_reads:
+    - study-primary
+    - storage-room
+    - cluttered-furniture-showcase
+    - bed-floating-in-empty-box
+
+zones:
+  - id: sleep
+    role: primary
+    center: [-0.55, 1.05]
+    size: [2.75, 2.60]
+    required_contents: [bed, pillow, blanket]
+  - id: display
+    role: secondary
+    center: [-1.35, 1.75]
+    size: [1.70, 1.10]
+    required_contents: [window, plant]
+  - id: storage
+    role: tertiary
+    center: [2.15, 1.55]
+    size: [1.15, 1.55]
+    required_contents: [bookshelf, shelf-books]
+  - id: bedside-stage
+    role: preserved-open-space
+    center: [0.20, -0.85]
+    size: [2.60, 1.55]
+    required_contents: [rug, open-floor-area]
+
+instances:
+  - id: bed
+    asset_ref: accepted:block-chibi-room::bed/family-v1
+    zone: sleep
+    transform: {translate: [-0.60, 0.0, 0.85], rotate_y_deg: 0}
+    anchors: [on_floor, against_back_wall]
+
+  - id: pillow
+    asset_ref: accepted:block-chibi-room::pillow/bed
+    zone: sleep
+    parent_relation: on_bed
+    anchors: [on_surface, head_side]
+    realization:
+      preserve_final_bed_pillow: true
+
+  - id: blanket
+    asset_ref: accepted:block-chibi-room::blanket/bed-cover-v1.3
+    zone: sleep
+    parent_relation: on_bed
+    anchors: [on_surface]
+    realization:
+      preserve_lighter_top_fold: true
+      dark_foot_piece_forbidden: true
+
+  - id: window
+    asset_ref: accepted:block-chibi-room::window/family-v1
+    zone: display
+    transform: {translate: [-1.15, 1.62, 2.42], rotate_y_deg: 0}
+    anchors: [on_back_wall, above_sleep_zone]
+
+  - id: plant
+    asset_ref: accepted:block-chibi-room::plant/snake-plant-v1
+    zone: display
+    transform: {translate: [-2.25, 0.0, 1.60], rotate_y_deg: 0}
+    anchors: [on_floor, perimeter, near_left_wall]
+
+  - id: bookshelf
+    asset_ref: accepted:block-chibi-room::bookshelf/family-v1.1
+    zone: storage
+    transform: {translate: [2.25, 0.0, 1.85], rotate_y_deg: 0}
+    anchors: [on_floor, against_back_wall]
+
+  - id: shelf-books
+    asset_ref: accepted:block-chibi-room::book/family-v1
+    zone: storage
+    parent_relation: on_bookshelf
+    anchors: [on_surface]
+
+  - id: rug
+    asset_ref: accepted:block-chibi-room::rug/family-v1
+    zone: bedside-stage
+    transform: {translate: [0.25, 0.0, -0.92], rotate_y_deg: 0}
+    anchors: [on_floor, foreground, bedside_access]
+
+clearance_contract:
+  bedside_access:
+    must_remain_open: true
+  bed_front:
+    must_not_be_blocked: true
+  bookshelf_front:
+    access_clearance_required: true
+  plant:
+    must_not_clip_bed_or_wall: true
+  circulation:
+    must_connect_front_to_bedside: true
+
+review:
+  beauty_camera: perspective_three_quarter
+  qa_cameras: [orthographic_front, orthographic_top]
+  debug:
+    show_zones: optional
+    show_instance_bounds: optional
+  known_renderer_issue:
+    thin_wall_shadow_behavior_deferred: true
+
+final_human_acceptance:
+  reviewed_at: 2026-10-05
+  result: passed
+  human_notes:
+    - scene_looks_very_cute
+    - no_blocking_composition_or_geometry_defects_reported

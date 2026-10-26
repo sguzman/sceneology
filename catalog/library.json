@@ -704,6 +704,102 @@
         "dependency_closure": "self-contained",
         "notes": "Individually screened standalone preview; positive visual assessment backed by historical review; generated headless Chrome thumbnail verified. No private review language copied."
       }
+    },
+    {
+      "id": "archived-cozy-bedroom-study-v1-3",
+      "title": "Cozy Bedroom & Study v1.3",
+      "kind": "scene",
+      "status": "archived",
+      "summary": "Previously accepted semantic environment composition recovered as authored source. Visual presentation awaits exact renderer and transitive asset reconstruction.",
+      "path": "scenes/composition-sources/cozy-bedroom-study-v1.3.scene.yml",
+      "rights": "original",
+      "limitations": "This is a source-only composition manifest, NOT a complete executable scene or gallery exhibit. Referenced asset families are not necessarily bundled; no thumbnail is invented.",
+      "tags": [
+        "scene",
+        "environment",
+        "source-archive",
+        "accepted-composition",
+        "awaiting-visual-reconstruction"
+      ],
+      "provenance": {
+        "origin": "cleared-transfer",
+        "reviewed_on": "2026-10-26",
+        "rights_basis": "Owner-authored acceptance-marked semantic scene composition, screened for public metadata safety",
+        "dependency_closure": "self-contained",
+        "notes": "The standalone YAML text is self-contained as historical documentation only; asset_ref names point to separately versioned source families. No runnable dependency closure or new artistic approval is claimed."
+      }
+    },
+    {
+      "id": "archived-study-corner-v1-1",
+      "title": "Study Corner v1.1",
+      "kind": "scene",
+      "status": "archived",
+      "summary": "Previously accepted semantic environment composition recovered as authored source. Visual presentation awaits exact renderer and transitive asset reconstruction.",
+      "path": "scenes/composition-sources/study-corner-v1.1.scene.yml",
+      "rights": "original",
+      "limitations": "This is a source-only composition manifest, NOT a complete executable scene or gallery exhibit. Referenced asset families are not necessarily bundled; no thumbnail is invented.",
+      "tags": [
+        "scene",
+        "environment",
+        "source-archive",
+        "accepted-composition",
+        "awaiting-visual-reconstruction"
+      ],
+      "provenance": {
+        "origin": "cleared-transfer",
+        "reviewed_on": "2026-10-26",
+        "rights_basis": "Owner-authored acceptance-marked semantic scene composition, screened for public metadata safety",
+        "dependency_closure": "self-contained",
+        "notes": "The standalone YAML text is self-contained as historical documentation only; asset_ref names point to separately versioned source families. No runnable dependency closure or new artistic approval is claimed."
+      }
+    },
+    {
+      "id": "archived-sleep-room-v1",
+      "title": "Sleep Room v1",
+      "kind": "scene",
+      "status": "archived",
+      "summary": "Previously accepted semantic environment composition recovered as authored source. Visual presentation awaits exact renderer and transitive asset reconstruction.",
+      "path": "scenes/composition-sources/sleep-room-v1.scene.yml",
+      "rights": "original",
+      "limitations": "This is a source-only composition manifest, NOT a complete executable scene or gallery exhibit. Referenced asset families are not necessarily bundled; no thumbnail is invented.",
+      "tags": [
+        "scene",
+        "environment",
+        "source-archive",
+        "accepted-composition",
+        "awaiting-visual-reconstruction"
+      ],
+      "provenance": {
+        "origin": "cleared-transfer",
+        "reviewed_on": "2026-10-26",
+        "rights_basis": "Owner-authored acceptance-marked semantic scene composition, screened for public metadata safety",
+        "dependency_closure": "self-contained",
+        "notes": "The standalone YAML text is self-contained as historical documentation only; asset_ref names point to separately versioned source families. No runnable dependency closure or new artistic approval is claimed."
+      }
+    },
+    {
+      "id": "archived-reading-corner-v1-1",
+      "title": "Reading Corner v1.1",
+      "kind": "scene",
+      "status": "archived",
+      "summary": "Previously accepted semantic environment composition recovered as authored source. Visual presentation awaits exact renderer and transitive asset reconstruction.",
+      "path": "scenes/composition-sources/reading-corner-v1.1.scene.yml",
+      "rights": "original",
+      "limitations": "This is a source-only composition manifest, NOT a complete executable scene or gallery exhibit. Referenced asset families are not necessarily bundled; no thumbnail is invented.",
+      "tags": [
+        "scene",
+        "environment",
+        "source-archive",
+        "accepted-composition",
+        "awaiting-visual-reconstruction"
+      ],
+      "provenance": {
+        "origin": "cleared-transfer",
+        "reviewed_on": "2026-10-26",
+        "rights_basis": "Owner-authored acceptance-marked semantic scene composition, screened for public metadata safety",
+        "dependency_closure": "self-contained",
+        "notes": "The standalone YAML text is self-contained as historical documentation only; asset_ref names point to separately versioned source families. No runnable dependency closure or new artistic approval is claimed."
+      }
     }
   ]
 }

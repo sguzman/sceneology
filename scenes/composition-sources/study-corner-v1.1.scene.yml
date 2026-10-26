@@ -1,0 +1,172 @@
+format: scenarium-sc3d-scene
+version: "0.1"
+
+id: block-chibi-study-corner-v1.1
+status: accepted
+scene_type: integrated-composition-proof
+style_family: block-chibi-room
+style_target: pokemon-quest-like-cozy-interior
+composition_grammar: taria:sc3d-scene-composition@0.1
+room_grammar: taria:block-chibi-room-grammar@0.4
+
+provenance:
+  predecessor_scene: block-chibi-cozy-bedroom-study-v1.3
+  predecessor_status: accepted
+  carryover_policy:
+    - reuse_accepted_assets_when_possible
+    - do_not_reopen_solved_geometry_without_regression
+    - open_book_variant_not_required
+    - closed_book_fallback_allowed
+
+composition_intent:
+  primary_read:
+    - cute
+    - cozy
+    - quiet
+    - study-oriented
+    - compact
+  forbidden_reads:
+    - bedroom-primary
+    - storage-room
+    - cluttered-random-furniture
+    - empty-stage-with-props
+    - broken-book-read
+
+zones:
+  - id: study
+    role: primary
+    center: [1.15, 1.25]
+    size: [2.30, 1.70]
+    required_contents: [desk, chair, lamp, desk-book]
+  - id: storage
+    role: secondary
+    center: [-2.15, 1.50]
+    size: [1.25, 1.70]
+    required_contents: [bookshelf, shelf-books]
+  - id: display
+    role: secondary
+    center: [-0.65, 1.65]
+    size: [1.40, 1.20]
+    required_contents: [window, plant]
+  - id: character-stage
+    role: preserved-open-space
+    center: [0.05, -0.80]
+    size: [2.45, 1.65]
+    required_contents: [rug, open-floor-area]
+
+instances:
+  - id: desk
+    asset_ref: accepted:block-chibi-room::desk/family-v1
+    zone: study
+    transform: {translate: [1.20, 0.0, 1.75], rotate_y_deg: 0}
+    anchors: [on_floor, against_back_wall, near_window]
+
+  - id: chair
+    asset_ref: accepted:block-chibi-room::chair/family-v1
+    zone: study
+    transform: {translate: [1.20, 0.0, 0.85], rotate_y_deg: 180}
+    anchors: [on_floor, facing_desk]
+
+  - id: lamp
+    asset_ref: accepted:block-chibi-room::lamp/family-v1.2/table
+    zone: study
+    parent_relation: on_desk
+    anchors: [on_surface, desk_owned]
+    realization:
+      lamp_on: true
+      warm_glow: true
+
+  - id: desk-book
+    asset_ref: accepted:block-chibi-room::book/closed
+    zone: study
+    parent_relation: on_desk
+    anchors: [on_surface]
+    realization:
+      count: 1
+      color: muted_blue
+      full_closed_volume: true
+      visible_page_edge: true
+      open_book_variant_used: false
+
+  - id: bookshelf
+    asset_ref: accepted:block-chibi-room::bookshelf/family-v1.1
+    zone: storage
+    transform: {translate: [-2.30, 0.0, 1.95], rotate_y_deg: 0}
+    anchors: [on_floor, against_left_wall]
+
+  - id: shelf-books
+    asset_ref: accepted:block-chibi-room::book/family-v1
+    zone: storage
+    parent_relation: on_bookshelf
+    anchors: [on_surface]
+
+  - id: window
+    asset_ref: accepted:block-chibi-room::window/family-v1
+    zone: display
+    transform: {translate: [-0.55, 1.55, 2.42], rotate_y_deg: 0}
+    anchors: [on_back_wall]
+
+  - id: plant
+    asset_ref: accepted:block-chibi-room::plant/snake-plant-v1
+    zone: display
+    transform: {translate: [-1.25, 0.0, 1.72], rotate_y_deg: 0}
+    anchors: [on_floor, near_wall, perimeter]
+
+  - id: rug
+    asset_ref: accepted:block-chibi-room::rug/family-v1
+    zone: character-stage
+    transform: {translate: [0.0, 0.0, -0.82], rotate_y_deg: 0}
+    anchors: [on_floor, foreground, open-space-support]
+
+clearance_contract:
+  character_stage:
+    must_remain_open: true
+  chair_desk:
+    approach_clearance_required: true
+  bookshelf_front:
+    access_clearance_required: true
+  circulation:
+    must_connect_front_to_back: true
+  plant:
+    must_not_clip_desk_or_bookshelf: true
+
+review:
+  beauty_camera: perspective_three_quarter
+  qa_cameras: [orthographic_front, orthographic_top]
+  debug:
+    show_zones: optional
+    show_instance_bounds: optional
+  known_renderer_issue:
+    thin_wall_shadow_behavior_deferred: true
+
+revision:
+  predecessor: block-chibi-study-corner-v1
+  scope: surgical-integrity-repair
+  composition_changed: false
+  repairs:
+    desk_book:
+      - separate page block, covers, and spine into non-overlapping solids
+      - preserve single closed muted-blue book
+    bookshelf:
+      - shorten shelf boards to terminate inside the side posts
+      - remove shelf/post structural intersections
+    snake_plant:
+      - move all leaf bases to the soil surface
+      - keep leaf bases inside planter opening
+    lamp:
+      - parent local PointLight to the lamp transform hierarchy
+      - require glow to move and rotate with the lamp and scene
+  preserve:
+    - accepted_layout
+    - accepted_palette
+    - accepted_object_positions
+    - open_character_stage
+
+final_human_acceptance:
+  reviewed_at: 2026-10-05
+  result: passed
+  notes:
+    - scene_is_finished
+    - scene_is_cute
+    - repaired_version_is_much_better
+    - desk_book_reads_album_like_but_is_non_blocking

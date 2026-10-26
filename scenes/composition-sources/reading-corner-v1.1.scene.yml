@@ -1,0 +1,164 @@
+format: scenarium-sc3d-scene
+version: "0.1"
+
+id: block-chibi-reading-corner-v1.1
+status: accepted
+scene_type: integrated-composition-proof
+style_family: block-chibi-room
+style_target: pokemon-quest-like-cozy-interior
+composition_grammar: taria:sc3d-scene-composition@0.1
+room_grammar: taria:block-chibi-room-grammar@0.4
+
+provenance:
+  predecessor_scene: block-chibi-sleep-room-v1
+  predecessor_status: accepted
+  carryover_policy:
+    - reuse_accepted_assets_when_possible
+    - preserve_final_upright_lumbar_pillow_contract
+    - preserve_repaired_bookshelf_clearance_rule
+    - preserve_repaired_snake_plant_container_rule
+    - bind_local_light_to_lamp_transform
+
+composition_intent:
+  primary_read:
+    - cute
+    - cozy
+    - quiet
+    - reading-nook
+    - compact
+  forbidden_reads:
+    - study-desk
+    - bedroom
+    - random-storage-cluster
+    - crowded-furniture-display
+
+zones:
+  - id: reading
+    role: primary
+    center: [0.10, 0.55]
+    size: [2.30, 2.00]
+    required_contents: [chair, lumbar-pillow, floor-lamp]
+  - id: storage
+    role: secondary
+    center: [2.10, 1.50]
+    size: [1.25, 1.65]
+    required_contents: [bookshelf, shelf-books]
+  - id: display
+    role: secondary
+    center: [-1.45, 1.55]
+    size: [1.70, 1.40]
+    required_contents: [window, plant]
+  - id: character-stage
+    role: preserved-open-space
+    center: [0.15, -1.05]
+    size: [2.55, 1.45]
+    required_contents: [rug, open-floor-area]
+
+instances:
+  - id: chair
+    asset_ref: accepted:block-chibi-room::chair/family-v1
+    zone: reading
+    transform: {translate: [0.10, 0.0, 1.55], rotate_y_deg: 180}
+    anchors: [on_floor, faces_open_room]
+
+  - id: lumbar-pillow
+    asset_ref: accepted:block-chibi-room::pillow/lumbar
+    zone: reading
+    parent_relation: on_chair
+    anchors: [on_seat, against_backrest]
+    realization:
+      upright: true
+      accent_face_outward: true
+      plain_rear_face_touches_backrest: true
+      bottom_supported_by_seat: true
+      no_support_penetration: true
+
+  - id: floor-lamp
+    asset_ref: accepted:block-chibi-room::lamp/family-v1.2/floor
+    zone: reading
+    transform: {translate: [-0.78, 0.0, 1.55], rotate_y_deg: 0}
+    anchors: [on_floor, beside_chair]
+    realization:
+      lamp_on: true
+      warm_glow: true
+      local_light_transform_bound: true
+
+  - id: bookshelf
+    asset_ref: accepted:block-chibi-room::bookshelf/family-v1.1
+    zone: storage
+    transform: {translate: [2.20, 0.0, 1.90], rotate_y_deg: 0}
+    anchors: [on_floor, against_back_wall]
+    realization:
+      shelf_boards_terminate_inside_posts: true
+
+  - id: shelf-books
+    asset_ref: accepted:block-chibi-room::book/family-v1
+    zone: storage
+    parent_relation: on_bookshelf
+    anchors: [on_surface]
+
+  - id: window
+    asset_ref: accepted:block-chibi-room::window/family-v1
+    zone: display
+    transform: {translate: [-1.20, 1.62, 2.42], rotate_y_deg: 0}
+    anchors: [on_back_wall]
+
+  - id: plant
+    asset_ref: accepted:block-chibi-room::plant/snake-plant-v1
+    zone: display
+    transform: {translate: [-2.20, 0.0, 1.25], rotate_y_deg: 0}
+    anchors: [on_floor, near_left_wall, perimeter]
+    realization:
+      leaf_bases_begin_at_soil_surface: true
+      leaf_bases_inside_planter_opening: true
+
+  - id: rug
+    asset_ref: accepted:block-chibi-room::rug/family-v1
+    zone: character-stage
+    transform: {translate: [0.15, 0.0, -0.98], rotate_y_deg: 0}
+    anchors: [on_floor, foreground, open-space-support]
+
+clearance_contract:
+  chair:
+    approach_clearance_required: true
+  lamp:
+    must_not_clip_chair: true
+  bookshelf_front:
+    access_clearance_required: true
+  character_stage:
+    must_remain_open: true
+  circulation:
+    must_connect_front_to_reading_cluster: true
+
+review:
+  beauty_camera: perspective_three_quarter
+  qa_cameras: [orthographic_front, orthographic_top]
+  debug:
+    show_zones: optional
+    show_instance_bounds: optional
+  known_renderer_issue:
+    thin_wall_shadow_behavior_deferred: true
+
+revision:
+  predecessor: block-chibi-reading-corner-v1
+  scope: chair-orientation-only
+  preserve_all_other_scene_elements: true
+  repairs:
+    - move_chair_toward_back_wall_perimeter
+    - rotate_chair_to_face_open_room_and_rug
+    - move_floor_lamp_with_reading_cluster
+  intended_read:
+    chair_back: toward_back_wall
+    sitter_face: toward_open_room
+    reading_cluster: perimeter_anchored
+
+
+human_review:
+  result: passed
+  blocking_repairs_required: false
+  accepted_observations:
+    - chair_reads_as_naturally_perimeter_anchored
+    - sitter_faces_open_room_and_rug
+    - floor_lamp_remains_coherent_with_reading_cluster
+    - preserved_scene_elements_remain_accepted
+    - no_blocking_clipping_or_orientation_defect_reported
