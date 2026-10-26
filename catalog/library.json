@@ -27,6 +27,44 @@
         "rights_basis": "owner-controlled-original-implementation",
         "dependency_closure": "self-contained"
       }
+    },
+    {
+      "id": "backyard-outline-inverted-hull-rejected",
+      "title": "Backyard Inverted-Hull Outline — Rejected Study",
+      "kind": "experiment",
+      "status": "failed",
+      "summary": "Preserved rejected geometry-shell outline technique using archived 181-part WebGL2 scene data.",
+      "path": "experiments/backyard-outline-inverted-hull-rejected.html",
+      "viewer": "experiments/backyard-outline-inverted-hull-rejected.html",
+      "rights": "original",
+      "limitations": "Artistic technique rejected; runtime viability is a separate question. Historical geometry; not a corrected production scene or approved exhibition.",
+      "tags": [
+        "3d",
+        "webgl2",
+        "shader",
+        "outline",
+        "failed",
+        "archival"
+      ]
+    },
+    {
+      "id": "backyard-outline-screen-space-v2",
+      "title": "Backyard Screen-Space Outlines — Experimental Follow-Up",
+      "kind": "experiment",
+      "status": "experimental",
+      "summary": "Follow-up depth/normal-buffer outline experiment against the archived 181-part WebGL2 scene.",
+      "path": "experiments/backyard-outline-screen-space-v2.html",
+      "viewer": "experiments/backyard-outline-screen-space-v2.html",
+      "rights": "original",
+      "limitations": "Experimental alternative, not accepted as a production effect; archived geometry, no comparative benchmark or gallery approval.",
+      "tags": [
+        "3d",
+        "webgl2",
+        "shader",
+        "outline",
+        "experimental",
+        "archival"
+      ]
     }
   ]
 }
