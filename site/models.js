@@ -19,8 +19,8 @@ try {
  for(const id of showcase.approved_ids){
   const entry=byId.get(id);
   if(!entry||entry.kind!=="object"||entry.status==="failed")continue;
-  if(!/^models\\/[a-z0-9._/-]+\\.html$/.test(entry.viewer)||
-     !/^site\\/model-previews\\/[a-z0-9._-]+\\.png$/.test(entry.thumbnail))continue;
+  if(!/^models\/[a-z0-9._/-]+\.html$/.test(entry.viewer)||
+     !/^site\/model-previews\/[a-z0-9._-]+\.png$/.test(entry.thumbnail))continue;
   const card=mark("article","model featured");
   const image=document.createElement("img");
   image.src="../"+entry.thumbnail;image.alt="Real browser capture of "+entry.title;
