@@ -1,0 +1,541 @@
+{
+  "schema_version": 1,
+  "as_of": "2026-10-26",
+  "domain": "accepted-room-composition-source-recovery",
+  "source_repository": "sguzman/renderarium",
+  "source_revision_tree": "595d8aeddccae01da42d63a5c2f704564389cc46",
+  "publication_boundary": "Candidate filenames and blob IDs are public, but these do not establish visual equivalence, family acceptance, or redistribution of other unreviewed materials. No room viewer or image is approved based on this manifest.",
+  "scenes": [
+    {
+      "id": "cozy-bedroom-study-v1.3",
+      "path": "scenes/composition-sources/cozy-bedroom-study-v1.3.scene.yml",
+      "blob_sha": "1af345e9252b2c3611a1c4a93e2d1c4204de2b0f",
+      "instance_references": 12
+    },
+    {
+      "id": "study-corner-v1.1",
+      "path": "scenes/composition-sources/study-corner-v1.1.scene.yml",
+      "blob_sha": "3219a4c9e0e67298d6b0ceb6f67fd168b87a4ae1",
+      "instance_references": 9
+    },
+    {
+      "id": "sleep-room-v1",
+      "path": "scenes/composition-sources/sleep-room-v1.scene.yml",
+      "blob_sha": "4a270a30c2a071a0ea353220814e0e5236d45141",
+      "instance_references": 8
+    },
+    {
+      "id": "reading-corner-v1.1",
+      "path": "scenes/composition-sources/reading-corner-v1.1.scene.yml",
+      "blob_sha": "89d925c4a78393331bd5c8921398fea880c21034",
+      "instance_references": 8
+    }
+  ],
+  "alias_count": 24,
+  "occurrence_count": 37,
+  "aliases": [
+    {
+      "alias": "accepted:block-chibi-room::bed",
+      "occurrences": 1,
+      "candidate_count": 3,
+      "status": "ambiguous-many-candidates",
+      "explicit_version": false,
+      "candidates": [
+        {
+          "path": "assets/constructive-3d/beds/block-chibi-compact-cozy-bed-v1.sc3d.yml",
+          "blob_sha": "0a590ebf6649fdae8d7ac56653622b51cb0381ed"
+        },
+        {
+          "path": "assets/constructive-3d/beds/block-chibi-simple-study-bed-v1.sc3d.yml",
+          "blob_sha": "276e003196878910c602f2c4507db3b16e3c7df8"
+        },
+        {
+          "path": "assets/constructive-3d/beds/block-chibi-wide-cute-bed-v1.sc3d.yml",
+          "blob_sha": "ae1c6ab02c08fb5daa653ee5727ec134d3f61280"
+        }
+      ],
+      "selected_binding": null,
+      "release_admitted": false
+    },
+    {
+      "alias": "accepted:block-chibi-room::bed/family-v1",
+      "occurrences": 1,
+      "candidate_count": 3,
+      "status": "ambiguous-many-candidates",
+      "explicit_version": true,
+      "candidates": [
+        {
+          "path": "assets/constructive-3d/beds/block-chibi-compact-cozy-bed-v1.sc3d.yml",
+          "blob_sha": "0a590ebf6649fdae8d7ac56653622b51cb0381ed"
+        },
+        {
+          "path": "assets/constructive-3d/beds/block-chibi-simple-study-bed-v1.sc3d.yml",
+          "blob_sha": "276e003196878910c602f2c4507db3b16e3c7df8"
+        },
+        {
+          "path": "assets/constructive-3d/beds/block-chibi-wide-cute-bed-v1.sc3d.yml",
+          "blob_sha": "ae1c6ab02c08fb5daa653ee5727ec134d3f61280"
+        }
+      ],
+      "selected_binding": null,
+      "release_admitted": false
+    },
+    {
+      "alias": "accepted:block-chibi-room::blanket/bed-cover",
+      "occurrences": 1,
+      "candidate_count": 1,
+      "status": "single-candidate-not-certified",
+      "explicit_version": false,
+      "candidates": [
+        {
+          "path": "assets/constructive-3d/blankets/block-chibi-bed-cover-blanket-v1.sc3d.yml",
+          "blob_sha": "2712f1eaaca55062f093b691c5d503fd3a7fb3f7"
+        }
+      ],
+      "selected_binding": null,
+      "release_admitted": false
+    },
+    {
+      "alias": "accepted:block-chibi-room::blanket/bed-cover-v1.3",
+      "occurrences": 1,
+      "candidate_count": 0,
+      "status": "unresolved-no-version-match",
+      "explicit_version": true,
+      "candidates": [],
+      "selected_binding": null,
+      "release_admitted": false
+    },
+    {
+      "alias": "accepted:block-chibi-room::book/closed",
+      "occurrences": 2,
+      "candidate_count": 1,
+      "status": "single-candidate-not-certified",
+      "explicit_version": false,
+      "candidates": [
+        {
+          "path": "assets/constructive-3d/books/block-chibi-closed-desk-book-v1.sc3d.yml",
+          "blob_sha": "835f6f2e63ebcdef4e141aa8874aafc1cec91bc6"
+        }
+      ],
+      "selected_binding": null,
+      "release_admitted": false
+    },
+    {
+      "alias": "accepted:block-chibi-room::book/family-v1",
+      "occurrences": 3,
+      "candidate_count": 3,
+      "status": "ambiguous-many-candidates",
+      "explicit_version": true,
+      "candidates": [
+        {
+          "path": "assets/constructive-3d/books/block-chibi-closed-desk-book-v1.sc3d.yml",
+          "blob_sha": "835f6f2e63ebcdef4e141aa8874aafc1cec91bc6"
+        },
+        {
+          "path": "assets/constructive-3d/books/block-chibi-open-reading-book-v1.sc3d.yml",
+          "blob_sha": "6e36e31b5b15f34a1627a75a6a84f9a913f2ca05"
+        },
+        {
+          "path": "assets/constructive-3d/books/block-chibi-upright-shelf-book-v1.sc3d.yml",
+          "blob_sha": "5aa3b9fd5d8dd52a01b5bf471826ade45c7bb643"
+        }
+      ],
+      "selected_binding": null,
+      "release_admitted": false
+    },
+    {
+      "alias": "accepted:block-chibi-room::book/upright",
+      "occurrences": 1,
+      "candidate_count": 1,
+      "status": "single-candidate-not-certified",
+      "explicit_version": false,
+      "candidates": [
+        {
+          "path": "assets/constructive-3d/books/block-chibi-upright-shelf-book-v1.sc3d.yml",
+          "blob_sha": "5aa3b9fd5d8dd52a01b5bf471826ade45c7bb643"
+        }
+      ],
+      "selected_binding": null,
+      "release_admitted": false
+    },
+    {
+      "alias": "accepted:block-chibi-room::bookshelf",
+      "occurrences": 1,
+      "candidate_count": 6,
+      "status": "ambiguous-many-candidates",
+      "explicit_version": false,
+      "candidates": [
+        {
+          "path": "assets/constructive-3d/bookshelves/block-chibi-low-wide-bookshelf-v1.1.sc3d.yml",
+          "blob_sha": "f639c7094ce76dd26e74bd40bc8e6b9e36ae7b45"
+        },
+        {
+          "path": "assets/constructive-3d/bookshelves/block-chibi-low-wide-bookshelf-v1.sc3d.yml",
+          "blob_sha": "536834832e5cdd92df34c1583221a985538f0ef9"
+        },
+        {
+          "path": "assets/constructive-3d/bookshelves/block-chibi-narrow-bookcase-v1.1.sc3d.yml",
+          "blob_sha": "71c8ac66793c18cf61cec9313e460e6bb7195062"
+        },
+        {
+          "path": "assets/constructive-3d/bookshelves/block-chibi-narrow-bookcase-v1.sc3d.yml",
+          "blob_sha": "7b44bdfdb6cea876d2608b5d37759cfb7378bbb5"
+        },
+        {
+          "path": "assets/constructive-3d/bookshelves/block-chibi-tall-bookcase-v1.1.sc3d.yml",
+          "blob_sha": "3a3564445fd1eaefb013b29c3d1727e7c79008b0"
+        },
+        {
+          "path": "assets/constructive-3d/bookshelves/block-chibi-tall-bookcase-v1.sc3d.yml",
+          "blob_sha": "173e5faf1c5f98e35e5d2dda63fa2a132b4cdadd"
+        }
+      ],
+      "selected_binding": null,
+      "release_admitted": false
+    },
+    {
+      "alias": "accepted:block-chibi-room::bookshelf/family-v1.1",
+      "occurrences": 3,
+      "candidate_count": 3,
+      "status": "ambiguous-many-candidates",
+      "explicit_version": true,
+      "candidates": [
+        {
+          "path": "assets/constructive-3d/bookshelves/block-chibi-low-wide-bookshelf-v1.1.sc3d.yml",
+          "blob_sha": "f639c7094ce76dd26e74bd40bc8e6b9e36ae7b45"
+        },
+        {
+          "path": "assets/constructive-3d/bookshelves/block-chibi-narrow-bookcase-v1.1.sc3d.yml",
+          "blob_sha": "71c8ac66793c18cf61cec9313e460e6bb7195062"
+        },
+        {
+          "path": "assets/constructive-3d/bookshelves/block-chibi-tall-bookcase-v1.1.sc3d.yml",
+          "blob_sha": "3a3564445fd1eaefb013b29c3d1727e7c79008b0"
+        }
+      ],
+      "selected_binding": null,
+      "release_admitted": false
+    },
+    {
+      "alias": "accepted:block-chibi-room::chair",
+      "occurrences": 1,
+      "candidate_count": 3,
+      "status": "ambiguous-many-candidates",
+      "explicit_version": false,
+      "candidates": [
+        {
+          "path": "assets/constructive-3d/chairs/block-chibi-compact-chair-v1.sc3d.yml",
+          "blob_sha": "498bd7ce61fe2d83fe555ab129ef18b34870aa40"
+        },
+        {
+          "path": "assets/constructive-3d/chairs/block-chibi-study-chair-v1.sc3d.yml",
+          "blob_sha": "51b044f91609700f602789e67bb11a1b3dff1cc9"
+        },
+        {
+          "path": "assets/constructive-3d/chairs/block-chibi-wide-cute-chair-v1.sc3d.yml",
+          "blob_sha": "a97ee954f000356f56b7e63ca07280002029d2d6"
+        }
+      ],
+      "selected_binding": null,
+      "release_admitted": false
+    },
+    {
+      "alias": "accepted:block-chibi-room::chair/family-v1",
+      "occurrences": 2,
+      "candidate_count": 3,
+      "status": "ambiguous-many-candidates",
+      "explicit_version": true,
+      "candidates": [
+        {
+          "path": "assets/constructive-3d/chairs/block-chibi-compact-chair-v1.sc3d.yml",
+          "blob_sha": "498bd7ce61fe2d83fe555ab129ef18b34870aa40"
+        },
+        {
+          "path": "assets/constructive-3d/chairs/block-chibi-study-chair-v1.sc3d.yml",
+          "blob_sha": "51b044f91609700f602789e67bb11a1b3dff1cc9"
+        },
+        {
+          "path": "assets/constructive-3d/chairs/block-chibi-wide-cute-chair-v1.sc3d.yml",
+          "blob_sha": "a97ee954f000356f56b7e63ca07280002029d2d6"
+        }
+      ],
+      "selected_binding": null,
+      "release_admitted": false
+    },
+    {
+      "alias": "accepted:block-chibi-room::desk",
+      "occurrences": 1,
+      "candidate_count": 3,
+      "status": "ambiguous-many-candidates",
+      "explicit_version": false,
+      "candidates": [
+        {
+          "path": "assets/constructive-3d/desks/block-chibi-compact-hutch-desk-v1.sc3d.yml",
+          "blob_sha": "20b84286350c40e98a197e200abc234fa739092d"
+        },
+        {
+          "path": "assets/constructive-3d/desks/block-chibi-simple-study-desk-v1.sc3d.yml",
+          "blob_sha": "c065d4c7c1dac97d0fe0d5161a0512cb7cd2f654"
+        },
+        {
+          "path": "assets/constructive-3d/desks/block-chibi-wide-writing-desk-v1.sc3d.yml",
+          "blob_sha": "46859ad081caaf4ddb4bf972296c4b62482b6d4a"
+        }
+      ],
+      "selected_binding": null,
+      "release_admitted": false
+    },
+    {
+      "alias": "accepted:block-chibi-room::desk/family-v1",
+      "occurrences": 1,
+      "candidate_count": 3,
+      "status": "ambiguous-many-candidates",
+      "explicit_version": true,
+      "candidates": [
+        {
+          "path": "assets/constructive-3d/desks/block-chibi-compact-hutch-desk-v1.sc3d.yml",
+          "blob_sha": "20b84286350c40e98a197e200abc234fa739092d"
+        },
+        {
+          "path": "assets/constructive-3d/desks/block-chibi-simple-study-desk-v1.sc3d.yml",
+          "blob_sha": "c065d4c7c1dac97d0fe0d5161a0512cb7cd2f654"
+        },
+        {
+          "path": "assets/constructive-3d/desks/block-chibi-wide-writing-desk-v1.sc3d.yml",
+          "blob_sha": "46859ad081caaf4ddb4bf972296c4b62482b6d4a"
+        }
+      ],
+      "selected_binding": null,
+      "release_admitted": false
+    },
+    {
+      "alias": "accepted:block-chibi-room::lamp/family-v1.2/floor",
+      "occurrences": 1,
+      "candidate_count": 1,
+      "status": "single-candidate-not-certified",
+      "explicit_version": true,
+      "candidates": [
+        {
+          "path": "assets/constructive-3d/lamps/block-chibi-tall-floor-lamp-v1.2.sc3d.yml",
+          "blob_sha": "c22982dbe2d3a7c46c5c3fc18805961dbbbdc879"
+        }
+      ],
+      "selected_binding": null,
+      "release_admitted": false
+    },
+    {
+      "alias": "accepted:block-chibi-room::lamp/family-v1.2/table",
+      "occurrences": 1,
+      "candidate_count": 2,
+      "status": "ambiguous-many-candidates",
+      "explicit_version": true,
+      "candidates": [
+        {
+          "path": "assets/constructive-3d/lamps/block-chibi-cozy-table-lamp-v1.2.sc3d.yml",
+          "blob_sha": "93a5f29be20fc22335082f26852464456863a4b0"
+        },
+        {
+          "path": "assets/constructive-3d/lamps/block-chibi-task-lamp-v1.2.sc3d.yml",
+          "blob_sha": "6a03a0885b1c64a0a2abe5ddc4155358e2873a3d"
+        }
+      ],
+      "selected_binding": null,
+      "release_admitted": false
+    },
+    {
+      "alias": "accepted:block-chibi-room::lamp/table",
+      "occurrences": 1,
+      "candidate_count": 6,
+      "status": "ambiguous-many-candidates",
+      "explicit_version": false,
+      "candidates": [
+        {
+          "path": "assets/constructive-3d/lamps/block-chibi-cozy-table-lamp-v1.1.sc3d.yml",
+          "blob_sha": "dce1b720e85af122ef053d2bbb557a692e28b217"
+        },
+        {
+          "path": "assets/constructive-3d/lamps/block-chibi-cozy-table-lamp-v1.2.sc3d.yml",
+          "blob_sha": "93a5f29be20fc22335082f26852464456863a4b0"
+        },
+        {
+          "path": "assets/constructive-3d/lamps/block-chibi-cozy-table-lamp-v1.sc3d.yml",
+          "blob_sha": "c99639455ba758a95066f62d009901343841f7f5"
+        },
+        {
+          "path": "assets/constructive-3d/lamps/block-chibi-task-lamp-v1.1.sc3d.yml",
+          "blob_sha": "6c6849a9bc2b324ef5443ee664d0712b886a9d84"
+        },
+        {
+          "path": "assets/constructive-3d/lamps/block-chibi-task-lamp-v1.2.sc3d.yml",
+          "blob_sha": "6a03a0885b1c64a0a2abe5ddc4155358e2873a3d"
+        },
+        {
+          "path": "assets/constructive-3d/lamps/block-chibi-task-lamp-v1.sc3d.yml",
+          "blob_sha": "0192ffbe5f4d5743236b08193fcad6bddec05fce"
+        }
+      ],
+      "selected_binding": null,
+      "release_admitted": false
+    },
+    {
+      "alias": "accepted:block-chibi-room::pillow/bed",
+      "occurrences": 2,
+      "candidate_count": 1,
+      "status": "single-candidate-not-certified",
+      "explicit_version": false,
+      "candidates": [
+        {
+          "path": "assets/constructive-3d/pillows/block-chibi-bed-pillow-v1.sc3d.yml",
+          "blob_sha": "e6d4b03d89b53b48cb605dd587f532937a05e263"
+        }
+      ],
+      "selected_binding": null,
+      "release_admitted": false
+    },
+    {
+      "alias": "accepted:block-chibi-room::pillow/lumbar",
+      "occurrences": 1,
+      "candidate_count": 1,
+      "status": "single-candidate-not-certified",
+      "explicit_version": false,
+      "candidates": [
+        {
+          "path": "assets/constructive-3d/pillows/block-chibi-lumbar-pillow-v1.sc3d.yml",
+          "blob_sha": "8e2eab0bea9f68f22025e93042cfeaf7b04e471b"
+        }
+      ],
+      "selected_binding": null,
+      "release_admitted": false
+    },
+    {
+      "alias": "accepted:block-chibi-room::plant/snake-plant-v1",
+      "occurrences": 3,
+      "candidate_count": 3,
+      "status": "ambiguous-many-candidates",
+      "explicit_version": true,
+      "candidates": [
+        {
+          "path": "assets/constructive-3d/plants/block-chibi-medium-snake-plant-v1.sc3d.yml",
+          "blob_sha": "c3a3078aa779270929d5053510b0bc38b0c47366"
+        },
+        {
+          "path": "assets/constructive-3d/plants/block-chibi-small-snake-plant-v1.sc3d.yml",
+          "blob_sha": "ad4417537c801847cc4dc4046f307865bb512bf2"
+        },
+        {
+          "path": "assets/constructive-3d/plants/block-chibi-tall-snake-plant-v1.sc3d.yml",
+          "blob_sha": "ebca01a9ededc1b11211ef181f0297f88fa56abf"
+        }
+      ],
+      "selected_binding": null,
+      "release_admitted": false
+    },
+    {
+      "alias": "accepted:block-chibi-room::rug/area",
+      "occurrences": 1,
+      "candidate_count": 1,
+      "status": "single-candidate-not-certified",
+      "explicit_version": false,
+      "candidates": [
+        {
+          "path": "assets/constructive-3d/rugs/block-chibi-wide-area-rug-v1.sc3d.yml",
+          "blob_sha": "259613da4b2ed3473e68c8022bfba264462ad309"
+        }
+      ],
+      "selected_binding": null,
+      "release_admitted": false
+    },
+    {
+      "alias": "accepted:block-chibi-room::rug/family-v1",
+      "occurrences": 3,
+      "candidate_count": 3,
+      "status": "ambiguous-many-candidates",
+      "explicit_version": true,
+      "candidates": [
+        {
+          "path": "assets/constructive-3d/rugs/block-chibi-runner-rug-v1.sc3d.yml",
+          "blob_sha": "e284f2221ec8fe48f4be828c3b9a93465c6834ef"
+        },
+        {
+          "path": "assets/constructive-3d/rugs/block-chibi-small-bedside-rug-v1.sc3d.yml",
+          "blob_sha": "442aab43a28602d791fc74798657ab4a615fbd63"
+        },
+        {
+          "path": "assets/constructive-3d/rugs/block-chibi-wide-area-rug-v1.sc3d.yml",
+          "blob_sha": "259613da4b2ed3473e68c8022bfba264462ad309"
+        }
+      ],
+      "selected_binding": null,
+      "release_admitted": false
+    },
+    {
+      "alias": "accepted:block-chibi-room::snake-plant",
+      "occurrences": 1,
+      "candidate_count": 3,
+      "status": "ambiguous-many-candidates",
+      "explicit_version": false,
+      "candidates": [
+        {
+          "path": "assets/constructive-3d/plants/block-chibi-medium-snake-plant-v1.sc3d.yml",
+          "blob_sha": "c3a3078aa779270929d5053510b0bc38b0c47366"
+        },
+        {
+          "path": "assets/constructive-3d/plants/block-chibi-small-snake-plant-v1.sc3d.yml",
+          "blob_sha": "ad4417537c801847cc4dc4046f307865bb512bf2"
+        },
+        {
+          "path": "assets/constructive-3d/plants/block-chibi-tall-snake-plant-v1.sc3d.yml",
+          "blob_sha": "ebca01a9ededc1b11211ef181f0297f88fa56abf"
+        }
+      ],
+      "selected_binding": null,
+      "release_admitted": false
+    },
+    {
+      "alias": "accepted:block-chibi-room::window",
+      "occurrences": 1,
+      "candidate_count": 3,
+      "status": "ambiguous-many-candidates",
+      "explicit_version": false,
+      "candidates": [
+        {
+          "path": "assets/constructive-3d/windows/block-chibi-square-four-pane-window-v1.sc3d.yml",
+          "blob_sha": "53c0c62d0c3fe13af3782b9b3bf08a57196155d9"
+        },
+        {
+          "path": "assets/constructive-3d/windows/block-chibi-tall-two-pane-window-v1.sc3d.yml",
+          "blob_sha": "3e16e0b31bcd26f2f304daf0eb8ef5dfb87ae4fb"
+        },
+        {
+          "path": "assets/constructive-3d/windows/block-chibi-wide-three-pane-window-v1.sc3d.yml",
+          "blob_sha": "4c89cb813135be773996c475822a9106c9daab56"
+        }
+      ],
+      "selected_binding": null,
+      "release_admitted": false
+    },
+    {
+      "alias": "accepted:block-chibi-room::window/family-v1",
+      "occurrences": 3,
+      "candidate_count": 3,
+      "status": "ambiguous-many-candidates",
+      "explicit_version": true,
+      "candidates": [
+        {
+          "path": "assets/constructive-3d/windows/block-chibi-square-four-pane-window-v1.sc3d.yml",
+          "blob_sha": "53c0c62d0c3fe13af3782b9b3bf08a57196155d9"
+        },
+        {
+          "path": "assets/constructive-3d/windows/block-chibi-tall-two-pane-window-v1.sc3d.yml",
+          "blob_sha": "3e16e0b31bcd26f2f304daf0eb8ef5dfb87ae4fb"
+        },
+        {
+          "path": "assets/constructive-3d/windows/block-chibi-wide-three-pane-window-v1.sc3d.yml",
+          "blob_sha": "4c89cb813135be773996c475822a9106c9daab56"
+        }
+      ],
+      "selected_binding": null,
+      "release_admitted": false
+    }
+  ]
+}

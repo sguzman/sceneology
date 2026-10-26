@@ -73,3 +73,5 @@ await import("./check-provenance.mjs");
 await import("./check-inline-geometry.mjs");
 
 await import("./check-curation.mjs");
+
+await import("./check-room-aliases.mjs");
