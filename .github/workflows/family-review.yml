@@ -1,0 +1,34 @@
+name: Review previously accepted family source previews
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'models/families/**'
+      - 'catalog/accepted-family-sources.json'
+      - 'scripts/build-family-previews.mjs'
+      - 'scripts/test-family-previews.mjs'
+      - '.github/workflows/family-review.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  family-previews:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Generate source-bound previews
+        run: node scripts/build-family-previews.mjs
+      - name: Capture actual SVG browser output
+        run: node scripts/test-family-previews.mjs
+      - name: Preserve nine screenshots for human visual QA
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sceneology-accepted-family-review
+          path: artifacts/accepted-family-review/
+          if-no-files-found: warn
+          retention-days: 30
