@@ -478,6 +478,131 @@
         "dependency_closure": "self-contained",
         "notes": "Public transfer strips incidental source comments and has no network libraries or private history; historical approval must not be confused with engine parity."
       }
+    },
+    {
+      "id": "approved-model-desk-fan",
+      "title": "Vintage Desk Fan",
+      "kind": "object",
+      "status": "archived",
+      "summary": "Previously accepted tabletop fan in the block-chibi mechanical style.",
+      "path": "models/desk-fan-review.html",
+      "viewer": "models/desk-fan-review.html",
+      "thumbnail": "site/model-previews/desk-fan.png",
+      "rights": "original",
+      "limitations": "Earlier positive visual review scoped to this model or good-enough repair; standalone browser capture is software-rendered and does not prove full interactive/canonical runtime parity.",
+      "tags": [
+        "object",
+        "model",
+        "3d",
+        "previously-accepted"
+      ],
+      "provenance": {
+        "origin": "cleared-transfer",
+        "reviewed_on": "2026-10-26",
+        "rights_basis": "Owner-authored constructive model with documented human acceptance for its reviewed appearance",
+        "dependency_closure": "self-contained",
+        "notes": "Screened standalone viewer copied without private commentary. Actual browser screenshot verified against source implementation; review scope retained."
+      }
+    },
+    {
+      "id": "approved-model-gramophone",
+      "title": "Gramophone",
+      "kind": "object",
+      "status": "archived",
+      "summary": "Previously accepted gramophone with a stylized brass horn and record mechanism.",
+      "path": "models/gramophone-review.html",
+      "viewer": "models/gramophone-review.html",
+      "thumbnail": "site/model-previews/gramophone.png",
+      "rights": "original",
+      "limitations": "Earlier positive visual review scoped to this model or good-enough repair; standalone browser capture is software-rendered and does not prove full interactive/canonical runtime parity.",
+      "tags": [
+        "object",
+        "model",
+        "3d",
+        "previously-accepted"
+      ],
+      "provenance": {
+        "origin": "cleared-transfer",
+        "reviewed_on": "2026-10-26",
+        "rights_basis": "Owner-authored constructive model with documented human acceptance for its reviewed appearance",
+        "dependency_closure": "self-contained",
+        "notes": "Screened standalone viewer copied without private commentary. Actual browser screenshot verified against source implementation; review scope retained."
+      }
+    },
+    {
+      "id": "approved-model-rotary-telephone",
+      "title": "Rotary Telephone",
+      "kind": "object",
+      "status": "archived",
+      "summary": "Previously liked stylized rotary telephone with interactive dial and controls.",
+      "path": "models/rotary-telephone-review.html",
+      "viewer": "models/rotary-telephone-review.html",
+      "thumbnail": "site/model-previews/rotary-telephone.png",
+      "rights": "original",
+      "limitations": "Earlier positive visual review scoped to this model or good-enough repair; standalone browser capture is software-rendered and does not prove full interactive/canonical runtime parity.",
+      "tags": [
+        "object",
+        "model",
+        "3d",
+        "previously-accepted"
+      ],
+      "provenance": {
+        "origin": "cleared-transfer",
+        "reviewed_on": "2026-10-26",
+        "rights_basis": "Owner-authored constructive model with documented human acceptance for its reviewed appearance",
+        "dependency_closure": "self-contained",
+        "notes": "Screened standalone viewer copied without private commentary. Actual browser screenshot verified against source implementation; review scope retained."
+      }
+    },
+    {
+      "id": "approved-model-sewing-machine",
+      "title": "Vintage Sewing Machine",
+      "kind": "object",
+      "status": "archived",
+      "summary": "Previously accepted sewing machine with source-authored controls and detailed mechanical parts.",
+      "path": "models/sewing-machine-review.html",
+      "viewer": "models/sewing-machine-review.html",
+      "thumbnail": "site/model-previews/sewing-machine.png",
+      "rights": "original",
+      "limitations": "Earlier positive visual review scoped to this model or good-enough repair; standalone browser capture is software-rendered and does not prove full interactive/canonical runtime parity.",
+      "tags": [
+        "object",
+        "model",
+        "3d",
+        "previously-accepted"
+      ],
+      "provenance": {
+        "origin": "cleared-transfer",
+        "reviewed_on": "2026-10-26",
+        "rights_basis": "Owner-authored constructive model with documented human acceptance for its reviewed appearance",
+        "dependency_closure": "self-contained",
+        "notes": "Screened standalone viewer copied without private commentary. Actual browser screenshot verified against source implementation; review scope retained."
+      }
+    },
+    {
+      "id": "approved-model-typewriter",
+      "title": "Mechanical Typewriter",
+      "kind": "object",
+      "status": "archived",
+      "summary": "Previously accepted as good enough after a scoped key-geometry correction.",
+      "path": "models/typewriter-review.html",
+      "viewer": "models/typewriter-review.html",
+      "thumbnail": "site/model-previews/typewriter.png",
+      "rights": "original",
+      "limitations": "Earlier positive visual review scoped to this model or good-enough repair; standalone browser capture is software-rendered and does not prove full interactive/canonical runtime parity.",
+      "tags": [
+        "object",
+        "model",
+        "3d",
+        "previously-accepted"
+      ],
+      "provenance": {
+        "origin": "cleared-transfer",
+        "reviewed_on": "2026-10-26",
+        "rights_basis": "Owner-authored constructive model with documented human acceptance for its reviewed appearance",
+        "dependency_closure": "self-contained",
+        "notes": "Screened standalone viewer copied without private commentary. Actual browser screenshot verified against source implementation; review scope retained."
+      }
     }
   ]
 }

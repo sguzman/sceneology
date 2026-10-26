@@ -12,6 +12,11 @@
     "approved-model-drone",
     "approved-model-cpu-cooler",
     "approved-model-graphics-card",
-    "approved-model-motherboard"
+    "approved-model-motherboard",
+    "approved-model-desk-fan",
+    "approved-model-gramophone",
+    "approved-model-rotary-telephone",
+    "approved-model-sewing-machine",
+    "approved-model-typewriter"
   ]
 }
