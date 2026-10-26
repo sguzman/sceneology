@@ -1,4 +1,5 @@
 import {analyzeProxyGeometry} from "./room-geometry-audit.mjs";
+import {sourceZonePolygons,renderZoneGuide} from "./source-room-region-guide.mjs";
 const stage=document.getElementById("proxy-stage");
 const clearance=document.getElementById("proxy-clearance");
 const reductionsList=document.getElementById("proxy-reductions");
@@ -7,6 +8,7 @@ const variantList=document.getElementById("proxy-variants");
 const attachmentList=document.getElementById("proxy-attachments");
 const yawInput=document.getElementById("proxy-yaw");
 const elevationInput=document.getElementById("proxy-elevation");
+const zonesInput=document.getElementById("proxy-zones");
 const counter=document.getElementById("proxy-count");
 const status=document.getElementById("proxy-status");
 const label=s=>s.split("-").map(word=>word.slice(0,1).toUpperCase()+word.slice(1)).join(" ");
@@ -49,7 +51,9 @@ function render(){
   }
  }
  if(!faces.length)throw Error("No visible proxy surfaces");
- const all=faces.flatMap(f=>f.points),xs=all.map(p=>p[0]),ys=all.map(p=>p[1]);
+ const sourceZones=zonesInput.checked?sourceZonePolygons(current.region_guide):[];
+ const zoneCoordinates=sourceZones.flatMap(region=>region.vertices.map(v=>[dot(v,right),-dot(v,up)]));
+ const all=[...faces.flatMap(f=>f.points),...zoneCoordinates],xs=all.map(p=>p[0]),ys=all.map(p=>p[1]);
  const loX=Math.min(...xs),hiX=Math.max(...xs),loY=Math.min(...ys),hiY=Math.max(...ys);
  const scale=Math.min(830/Math.max(.0001,hiX-loX),510/Math.max(.0001,hiY-loY));
  const ox=480-(loX+hiX)*scale/2,oy=320-(loY+hiY)*scale/2;
@@ -60,6 +64,7 @@ function render(){
   if(/NaN|Infinity/.test(points))throw Error("Nonfinite room projection");
   svg.push('<polygon data-instance="'+f.instance+'" points="'+points+'" fill="'+f.color+'" stroke="'+f.stroke+'" stroke-width=".7"/>');
  }
+ if(sourceZones.length)svg.push(renderZoneGuide(sourceZones,v=>[ox+dot(v,right)*scale,oy-dot(v,up)*scale]));
  svg.push("</svg>");
  stage.innerHTML=svg.join("");
  stage.dataset.room=current.id;
@@ -67,6 +72,8 @@ function render(){
  stage.dataset.faces=String(faces.length);
  stage.dataset.yaw=String(yaw);
  stage.dataset.variantChoices=String([...chosen].length);
+ stage.dataset.zoneCount=String(sourceZones.filter(z=>z.kind==="zone-only").length);
+ stage.dataset.footprint=sourceZones.some(z=>z.kind==="explicit-footprint")?"original-source-only":"not-shown";
  counter.textContent=current.placed.length+" placed furniture proxies · "+current.omitted_parented.length+" parent-attached objects deliberately omitted · yaw "+yaw+"°";
  const geometry=current.placed.map(item=>{
   const key=chosen.get(item.id)||item.default_model_key;
@@ -196,5 +203,7 @@ try{
  roomSelect.addEventListener("change",chooseRoom);
  yawInput.addEventListener("input",onRender);
  elevationInput.addEventListener("input",onRender);
+ zonesInput.checked=query.get("zones")==="1";
+ zonesInput.addEventListener("change",onRender);
  chooseRoom();
 }catch(error){status.textContent="Unable to show research room: "+error.message;console.error("Sceneology room proxy:",error);}

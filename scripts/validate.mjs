@@ -91,6 +91,7 @@ await import("./test-reading-corner-study.mjs");
 await import("./build-room-proxy-review.mjs");
 await import("./test-room-proxy-review.mjs");
 await import("./test-room-source-zones.mjs");
+await import("./test-source-room-region-guide.mjs");
 await import("./build-room-clearance-audit.mjs");
 await import("./test-room-clearance-audit.mjs");
 await import("./test-reading-support-alignment.mjs");

@@ -1,4 +1,5 @@
 import {analyzeProxyGeometry} from "./room-geometry-audit.mjs";
+import {sourceZonePolygons,renderZoneGuide} from "./source-room-region-guide.mjs";
 const stage=document.getElementById("reading-stage");
 const clearance=document.getElementById("reading-clearance");
 const showCharacter=document.getElementById("reading-show-character");
@@ -9,6 +10,7 @@ const characterNotice=document.getElementById("reading-character-notice");
 const status=document.getElementById("reading-status");
 const yaw=document.getElementById("reading-yaw");
 const elevation=document.getElementById("reading-elevation");
+const zonesInput=document.getElementById("reading-zones");
 const caption=document.getElementById("reading-label");
 const attachments=document.getElementById("reading-attachments");
 const add=(a,b)=>a.map((v,i)=>v+b[i]),sub=(a,b)=>a.map((v,i)=>v-b[i]);
@@ -69,7 +71,9 @@ function draw(){
   }
  }
  if(!visible.length)throw Error("No visible reconstructed surfaces");
- const points=visible.flatMap(x=>x.points),xs=points.map(p=>p[0]),ys=points.map(p=>p[1]);
+ const sourceZones=zonesInput.checked?sourceZonePolygons(room.region_guide):[];
+ const zonePositions=sourceZones.flatMap(zone=>zone.vertices.map(v=>[dot(v,right),-dot(v,up)]));
+ const points=[...visible.flatMap(x=>x.points),...zonePositions],xs=points.map(p=>p[0]),ys=points.map(p=>p[1]);
  const xMin=Math.min(...xs),xMax=Math.max(...xs),yMin=Math.min(...ys),yMax=Math.max(...ys);
  const scale=Math.min(835/Math.max(.001,xMax-xMin),505/Math.max(.001,yMax-yMin));
  const ox=480-(xMin+xMax)*scale/2,oy=320-(yMin+yMax)*scale/2;
@@ -81,12 +85,15 @@ function draw(){
   if(vertices.includes("NaN"))throw Error("Bad projection");
   shapes.push('<polygon data-instance="'+f.instance+'" points="'+vertices+'" fill="'+f.fill+'" stroke="'+f.outline+'" stroke-width=".7" stroke-linejoin="round"/>');
  }
+ if(sourceZones.length)shapes.push(renderZoneGuide(sourceZones,v=>[ox+dot(v,right)*scale,oy-dot(v,up)*scale]));
  shapes.push("</svg>");
  stage.innerHTML=shapes.join("");
  stage.dataset.rendered="true";stage.dataset.faceCount=String(visible.length);
  stage.dataset.yaw=String(yawDeg);stage.dataset.elevation=String(elevationDeg);
  stage.dataset.viewportTop=String(Math.round(stage.getBoundingClientRect().top));
  stage.dataset.occupancy=characterShown?"research-candidate":"hidden";
+ stage.dataset.zoneCount=String(sourceZones.filter(z=>z.kind==="zone-only").length);
+ stage.dataset.footprint=sourceZones.some(z=>z.kind==="explicit-footprint")?"original-source-only":"not-shown";
  stage.dataset.pillow=pillowShown?"seat-back-proposal":"hidden";
  stage.dataset.pillowOverhang=pillowShown?String(lumbar.candidate_support.horizontal_pillow_overhang_each_side):"none";
  stage.dataset.support=aligned?"alignment-proposal":characterShown?"authored-unaligned":"hidden";
@@ -161,6 +168,8 @@ try{
  const params=new URLSearchParams(location.search);
  const preferred=Number(params.get("yaw"));
  if(params.has("yaw")&&Number.isFinite(preferred)&&preferred>=-180&&preferred<=180)yaw.value=String(preferred);
+ zonesInput.checked=params.get("zones")==="1";
+ zonesInput.addEventListener("change",draw);
  showPillow.checked=params.get("pillow")==="1";
  showPillow.addEventListener("change",draw);
  showCharacter.checked=params.get("occupancy")==="1";
