@@ -25,7 +25,7 @@ for(const name of names){
   if(dom.error||dom.status!==0)throw Error("DOM render failed "+String(dom.error||dom.stderr).slice(-600));
   fs.writeFileSync(path.join(dest,name+".dom.html"),dom.stdout||"");
   if(!dom.stdout.includes("<canvas"))throw Error("No rendered canvas element");
-  const visibleDom=dom.stdout.replace(/<script\\b[^>]*>[\\s\\S]*?<\\/script>/gi,"").replace(/<style\\b[^>]*>[\\s\\S]*?<\\/style>/gi,"");
+  const visibleDom=dom.stdout.replace(/<script[^>]*>[^]*?<\/script>/gi,"").replace(/<style[^>]*>[^]*?<\/style>/gi,"");
   if(/WebGL(?:2)? (?:unavailable|unsupported)|shader compile failed|runtime error/i.test(visibleDom))throw Error("Viewer reports WebGL failure");
   const png=path.join(dest,name+".png");
   const capture=spawnSync(chrome,[...flags,"--user-data-dir="+profile+"-image","--screenshot="+png,uri],{encoding:"utf8",timeout:100000});
