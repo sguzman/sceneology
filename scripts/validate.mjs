@@ -109,6 +109,8 @@ await import("./build-room-shelf-content-audit.mjs");
 await import("./test-room-shelf-content-audit.mjs");
 await import("./build-room-attachment-fit-audit.mjs");
 await import("./test-room-attachment-fit-audit.mjs");
+await import("./build-bed-pillow-placement-research.mjs");
+await import("./test-bed-pillow-placement-research.mjs");
 
 await import("./build-room-diagnostics.mjs");
 await import("./test-room-diagnostics.mjs");
