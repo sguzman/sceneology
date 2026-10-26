@@ -1,6 +1,7 @@
 const stage=document.getElementById("proxy-stage");
 const roomSelect=document.getElementById("proxy-room");
 const variantList=document.getElementById("proxy-variants");
+const attachmentList=document.getElementById("proxy-attachments");
 const yawInput=document.getElementById("proxy-yaw");
 const elevationInput=document.getElementById("proxy-elevation");
 const counter=document.getElementById("proxy-count");
@@ -104,6 +105,13 @@ function chooseRoom(){
   group.append(descriptor,picker,provenance);controls.push(group);
  }
  variantList.replaceChildren(...controls);
+ const attachments=current.omitted_parented.map(item=>{
+  const li=document.createElement("li");
+  li.dataset.omittedInstance=item.id;
+  li.textContent=label(item.id)+" → "+label(item.parent_instance)+" ("+item.parent_relation+"); placement unknown";
+  return li;
+ });
+ attachmentList.replaceChildren(...attachments);
  onRender();
  status.textContent="Source coordinate fidelity checked. Model identities are proxies; zero original room bindings certified.";
 }

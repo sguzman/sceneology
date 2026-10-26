@@ -40,7 +40,10 @@ for(const scene of manifest.scenes.filter(x=>Object.hasOwn(counts,x.id))){
   const transform=section.match(/transform:\s*\{\s*translate:\s*\[([^\]]+)\]\s*,\s*rotate_y_deg:\s*(-?(?:\d+\.?\d*|\.\d+))\s*\}/);
   if(!transform){
    assert.ok(relation,"Missing source position and parent relation for "+id);
-   parented.push({id,alias,parent_relation:relation,placement_unknown:true});
+   const parentInstance=relation.startsWith("on_")?relation.slice(3):null;
+   assert.ok(parentInstance&&/^[a-z][a-z0-9-]*$/.test(parentInstance),"Unrecognized authored parent relation "+relation);
+   parented.push({id,alias,parent_relation:relation,parent_instance:parentInstance,
+    relation_resolved_to_source_instance:true,placement_unknown:true});
    continue;
   }
   assert.equal(relation,undefined,"Explicit source placement unexpectedly also parent-relative "+id);
@@ -63,6 +66,10 @@ for(const scene of manifest.scenes.filter(x=>Object.hasOwn(counts,x.id))){
     choices,selected_binding_certified:false});
  }
  assert.deepEqual([placed.length,parented.length],counts[scene.id],"Position census changed "+scene.id);
+ for(const attachment of parented){
+  assert.ok(placed.some(item=>item.id===attachment.parent_instance),
+   "Attachment parent lacks source-provided world position "+attachment.id);
+ }
  result.rooms.push({id:scene.id,source_scene:scene.path,source_sha:scene.blob_sha,
   source_composition_historically_accepted:true,renderer_aesthetic_accepted:false,
   placed,omitted_parented:parented,total_original_instances:scene.instance_references,

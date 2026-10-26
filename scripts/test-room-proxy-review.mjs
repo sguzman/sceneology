@@ -46,7 +46,10 @@ for(const room of data.rooms){
  for(const item of room.omitted_parented){
   assert.equal(item.placement_unknown,true);
   assert.ok(item.parent_relation);
-  assert.ok(!("translate" in item));
+  assert.equal(item.parent_relation,"on_"+item.parent_instance);
+  assert.equal(item.relation_resolved_to_source_instance,true);
+  assert.ok(room.placed.some(p=>p.id===item.parent_instance),"Relationship is not grounded in a placed source object");
+  assert.ok(!("translate" in item)&&!("yaw_deg" in item));
  }
  placed+=room.placed.length;unplaced+=room.omitted_parented.length;
 }

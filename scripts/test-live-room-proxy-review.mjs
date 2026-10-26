@@ -56,6 +56,8 @@ function snapshot(id,yaw,variant=null){
   const expected=data.rooms.find(r=>r.id===id);
   assert.ok(expected);
   assert.equal((dom.match(/class="proxy-choice"/g)||[]).length,expected.placed.length);
+  assert.equal((dom.match(/data-omitted-instance="/g)||[]).length,expected.omitted_parented.length);
+  for(const item of expected.omitted_parented)assert.ok(dom.includes('data-omitted-instance="'+item.id+'"'),"Missing unresolved attachment "+item.id);
   if(variant){
    assert.ok(tag.includes('data-variant-choices="1"'),"Variant from URL was not selected");
    // DOM .value can change without changing serialized <option selected> attributes.
