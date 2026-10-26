@@ -1,7 +1,9 @@
-# Sceneology — bounded migration MVP completion
+# Sceneology — migration-readiness release (historical checkpoint)
+
+> **Current status correction (October 26, 2026):** This document records the earlier *migration-readiness* release, not fulfillment of the user's requested public showcase. With no owner-approved scene and zero exhibited works, the active [roadmap](roadmap.json) correctly reads **97/100**. The final 3-point showcase gate is blocked until an actual preferred scene is explicitly selected, given a real approved thumbnail/card and verified live. No exhibition has been approved.
 
 **Review date:** October 26, 2026  
-**What "100%" measures:** the 100 weighted points in [this specific migration MVP roadmap](roadmap.json), **not** the completion of all future Sceneology research, every possible imported source, or the selection of artworks for exhibition.
+**Historical interpretation:** the earlier 100% measured preparation for owner curation, not the requested final outcome. The current acceptance ledger is 97/100, because the real public gallery is still empty.
 
 ## Delivered and verified
 
@@ -20,7 +22,7 @@
 
 ## Curation acceptance and zero approved exhibits
 
-Roadmap G03 is accepted as **curation readiness and actual presentation of real candidates**, not as an assertion that the owner reviewed, liked or approved any particular work. The contract explicitly permits an empty showcase until the owner decides. The reviewed candidate set and first-render screenshots were produced in [this successful GitHub Actions run](https://github.com/sguzman/sceneology/actions/runs/40352006822), which uploaded the `sceneology-owner-review-contact-sheet` review artifact. Open its `index.html` to compare the four actual captures and follow the live viewer links. The real `catalog/showcase.json` still contains zero approved IDs.
+Roadmap G03 was initially accepted as **curation readiness and actual presentation of real candidates**. That classification has been **reopened** because the original user goal included having liked work displayed on the public website. The review infrastructure is ready, but owner selection and a real gallery card are still outstanding. The contract explicitly permits an empty showcase until the owner decides. The reviewed candidate set and first-render screenshots were produced in [this successful GitHub Actions run](https://github.com/sguzman/sceneology/actions/runs/40352006822), which uploaded the `sceneology-owner-review-contact-sheet` review artifact. Open its `index.html` to compare the four actual captures and follow the live viewer links. The real `catalog/showcase.json` still contains zero approved IDs.
 
 **No scene is automatically promoted as a reward for a passed technical test.** Historical artistic failures remain accessible in the technical repository and are excluded from the proposed exhibition shortlist. If the owner later chooses an artwork, that choice opens a distinct release action: capture an exact real thumbnail, approve the card, update the allowlist and test the resulting live exhibit.
 
@@ -37,4 +39,4 @@ Roadmap G03 is accepted as **curation readiness and actual presentation of real 
 
 Keep the source libraries, completed and failed studies, and future 2D/3D experiments versioned independently. New private source bytes require a new content-level admission review before the first public commit. Never import private histories, confidential expressions or third-party materials without redistribution rights. Always keep the curated showcase controlled by explicit per-work owner permission.
 
-This document closes the **bounded public-migration MVP**, not the larger creative mission. Later scene development, additional selected migrations, more refined ontology, and owner gallery approvals can proceed as new evidence-backed goals without retroactively inflating or falsifying this baseline.
+This document records completion of the **migration-readiness release**, not completion of the public showcase or larger creative mission. Later scene development, additional selected migrations, more refined ontology, and owner gallery approvals can proceed as new evidence-backed goals without retroactively inflating or falsifying this baseline.
