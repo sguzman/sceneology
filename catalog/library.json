@@ -1,4 +1,24 @@
 {
   "schema_version": 1,
-  "records": []
+  "records": [
+    {
+      "id": "backyard-daynight-legacy-webgl2",
+      "title": "Backyard Day/Night — Historical WebGL2 Study",
+      "kind": "experiment",
+      "status": "archived",
+      "summary": "A self-contained, interactive WebGL2 day/night experiment preserving an earlier 181-part scene snapshot, before a later geometry correction.",
+      "path": "experiments/backyard-daynight-legacy-webgl2.html",
+      "viewer": "experiments/backyard-daynight-legacy-webgl2.html",
+      "rights": "original",
+      "limitations": "Historical 181-part snapshot, not the corrected 179-part production source. WebGL2 is required; physical GPU identity, cross-backend parity and new human artistic review are not established.",
+      "tags": [
+        "3d",
+        "webgl2",
+        "lighting",
+        "daynight",
+        "archival",
+        "source-screened"
+      ]
+    }
+  ]
 }
