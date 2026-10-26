@@ -25,7 +25,7 @@ const sub=(a,b)=>a.map((v,i)=>v-b[i]);
 const dot=(a,b)=>a.reduce((s,v,i)=>s+v*b[i],0);
 const cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];
 const unit=a=>{const n=Math.hypot(...a);assert.ok(n>0);return a.map(v=>v/n);};
-function parseParts(source){
+export function parseParts(source){
  const raw=source.slice(source.indexOf("\nparts:\n")+7);
  assert.ok(raw.length>0&&source.includes("\nparts:\n"),"No parts section");
  const end=raw.search(/^\S[^\n]*:\s*$/m);
@@ -57,7 +57,7 @@ function parseParts(source){
  }
  return parts;
 }
-function parseMaterials(source){
+export function parseMaterials(source){
  const chunk=source.split("\nmaterials:\n")[1]?.split("\nasset:\n")[0];
  assert.ok(chunk,"No material table");
  const names=[...chunk.matchAll(/^  ([a-z][a-z0-9_]*):\s*$/gm)];

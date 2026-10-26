@@ -17,7 +17,12 @@ function make(record){
  source.textContent="Inspect original public model source";
  source.href="https://github.com/sguzman/renderarium/blob/main/"+record.source_path;
  source.target="_blank";source.rel="noopener noreferrer";
- contents.append(heading,status,source);card.append(figure,contents);
+  const orbit=document.createElement("a");
+ orbit.textContent="Inspect source geometry from different angles";
+ orbit.href="./family-orbit.html?model="+encodeURIComponent(record.key);
+ orbit.style.display="block";
+ orbit.style.marginTop="10px";
+ contents.append(heading,status,source,orbit);card.append(figure,contents);
  return card;
 }
 try{

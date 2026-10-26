@@ -1,0 +1,19 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Constructive model orbit review · Sceneology</title><meta name="description" content="Inspect 30 original-source constructive models from multiple camera angles before aesthetic curation.">
+<link rel="stylesheet" href="./style.css">
+<style>main{padding-top:45px}.orbit-layout{display:grid;grid-template-columns:minmax(0,1fr) 275px;gap:20px}.orbit-stage{background:#e8eff1;border:1px solid var(--stroke);border-radius:14px;overflow:hidden;cursor:grab;touch-action:none;user-select:none}.orbit-stage:active{cursor:grabbing}.orbit-stage svg{display:block;width:100%;height:auto}.controls{background:var(--surface);border:1px solid var(--stroke);padding:20px;border-radius:14px}.controls label{display:block;font-weight:650;margin:14px 0 6px}.controls select,.controls input{width:100%;font:inherit}.controls select{color:var(--fg);background:var(--surface);padding:9px;border:1px solid var(--stroke);border-radius:8px}.small{color:var(--muted);font-size:.89rem}.orbit-info{max-width:75ch}@media(max-width:750px){.orbit-layout{grid-template-columns:1fr}}h1{font-size:clamp(2.2rem,6vw,4.2rem)}</style>
+<script type="module" src="./family-orbit.js"></script></head>
+<body><a class="skip-link" href="#main-content">Skip to main content</a>
+<header><nav class="wrap" aria-label="Main navigation"><a class="brand" href="../">Sceneology</a><div class="navlinks"><a href="./family-review.html">30-model comparison</a><a href="../#gallery-section">Approved gallery</a></div></nav></header>
+<main class="wrap" id="main-content"><p class="eyebrow">Technical inspection · no gallery approval</p>
+<h1>Orbit constructive models</h1><p class="lead orbit-info">Rotate and inspect original-source models from multiple camera angles. Geometry is built from pinned constructive source primitives, not stock illustrations. This alternate orthographic renderer is <strong>not an approved reproduction</strong> of the original perspective, materials or lighting.</p>
+<div class="orbit-layout">
+<div><div class="orbit-stage" id="orbit-stage" aria-label="Source-derived 3D model inspection stage"></div><p class="small" id="orbit-angles"></p></div>
+<div class="controls"><label for="orbit-model">Model</label><select id="orbit-model"></select>
+<label for="orbit-yaw">Horizontal orbit</label><input type="range" id="orbit-yaw" min="-180" max="180" value="130" step="1">
+<label for="orbit-elevation">Elevation</label><input type="range" id="orbit-elevation" min="5" max="85" value="35" step="1">
+<label for="orbit-zoom">Zoom</label><input type="range" id="orbit-zoom" min="60" max="145" value="100" step="5">
+<p class="small">Drag the stage or adjust the sliders. The original materials and parented geometry are preserved, but this renderer omits source-specific lights and physical room contact.</p>
+<p class="small" id="orbit-status" aria-live="polite">Loading verified source models…</p></div></div>
+<p class="small">No artwork is automatically featured. See the <a href="./family-review.html">30-model static comparison</a> and inspect the original source files before selecting any new gallery works.</p></main>
+<footer><div class="wrap">Sceneology · source-bound model research · separate from curated artwork</div></footer></body></html>
