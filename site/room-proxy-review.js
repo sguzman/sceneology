@@ -81,6 +81,11 @@ function chooseRoom(){
    picker.append(option);
   }
   picker.value=item.default_model_key;
+  const requestedVariant=new URLSearchParams(location.search).get("variant-"+item.id);
+  if(item.choices.some(choice=>choice.key===requestedVariant)){
+   picker.value=requestedVariant;
+   chosen.set(item.id,requestedVariant);
+  }
   picker.addEventListener("change",()=>{
    if(!item.choices.some(x=>x.key===picker.value))throw Error("Unsupported proxy variant");
    chosen.set(item.id,picker.value);onRender();
