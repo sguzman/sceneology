@@ -113,6 +113,19 @@ try{
  const png=fs.readFileSync(pngPath);
  assert.ok(png.length>8500&&png.subarray(0,8).toString("hex")==="89504e470d0a1a0a","Invalid research occupancy PNG");
 }finally{fs.rmSync(occupancyScreenshotProfile,{recursive:true,force:true});}
+const proposedScreenshotProfile=fs.mkdtempSync(path.join(os.tmpdir(),"sceneology-occupancy-aligned-screen-"));
+try{
+ const pngPath=path.join(output,"reading-corner-shoe-alignment-proposal.png");
+ const url=new URL("site/reading-corner-study.html?yaw=130&occupancy=1&support=1",base).href;
+ const capture=spawnSync(browser,[...flags,"--window-size=1250,1460","--user-data-dir="+proposedScreenshotProfile,
+  "--screenshot="+pngPath,url],{encoding:"utf8",timeout:100000});
+ if(capture.error||capture.status!==0)throw Error("Optional shoe alignment capture failed");
+ const png=fs.readFileSync(pngPath);
+ assert.ok(png.length>8500&&png.subarray(0,8).toString("hex")==="89504e470d0a1a0a","Bad aligned occupancy screenshot");
+ const baseline=fs.readFileSync(path.join(output,"reading-corner-quest-girl-candidate.png"));
+ assert.notEqual(crypto.createHash("sha256").update(baseline).digest("hex"),
+  crypto.createHash("sha256").update(png).digest("hex"),"Aligned image cannot be identical to source pose image");
+}finally{fs.rmSync(proposedScreenshotProfile,{recursive:true,force:true});}
 const report={schema_version:1,status:"passed",artwork_approved:false,original_accepted_room_render:false,
  partial_placed_instances:6,unplaced_instances:2,source_shoe_gap:-.99,
  opt_in_support_offset:.99,original_occupancy_transform_preserved:true,cameras:[first,second]};
