@@ -1,0 +1,30 @@
+{
+  "schema_version": 0,
+  "id": "legacy-panel-example",
+  "title": "Legacy panel fixture",
+  "canvas": {
+    "width": 200,
+    "height": 120,
+    "background": "#e6ebec"
+  },
+  "shapes": [
+    {
+      "id": "panel",
+      "type": "rectangle",
+      "x": 20,
+      "y": 25,
+      "width": 80,
+      "height": 40,
+      "fill": "#4e786a"
+    },
+    {
+      "id": "orb",
+      "type": "ellipse",
+      "x": 130,
+      "y": 25,
+      "width": 28,
+      "height": 28,
+      "fill": "#e2a65c"
+    }
+  ]
+}
