@@ -25,6 +25,14 @@ A renderer bug previously omitted the underside of box shapes; that face is now 
 
 The [source manifest](../catalog/accepted-family-sources.json) records each source path, pinned blob, prior approval scope and **false** new-renderer approval state. The [generator](../scripts/build-family-previews.mjs) verifies every source blob and makes self-contained SVG files; the [screenshot workflow](../.github/workflows/family-review.yml) runs real Chrome for all 30. The [live browser check](../scripts/test-live-family-review.mjs) independently verifies page cards and deployed image byte equality.
 
+## Actual Chrome screenshot inspection (October 26, 2026)
+
+I inspected the 30 PNG captures produced by the real browser workflow, not just file-presence or DOM assertions. The beds, chairs, desks, book states and pillow bodies show distinguishable source-derived geometry. The three named snake plants read as potted, upright forms, but much of their multi-blade source geometry overlaps in the fixed isometric preview; this image alone does **not** demonstrate the earlier full morphological read. The task lamp now exposes its downward emitter, yet its projected silhouette remains angular and not clearly equivalent to the original accepted viewer.
+
+The three rugs are distinguishable and now omit the generic detached oval shadow which had suggested unsupported floor clearance. However, a stand-alone rug image cannot establish room-floor contact, thickness, or original perspective lighting. The window panes can be counted, but wall integration is not demonstrated by an isolated window.
+
+These are reviewer observations on **new technical illustrations**, not reversals of historical acceptance or new approval of their appearance. All 30 remain review-only.
+
 ## Non-negotiable boundaries
 
 1. **Historical acceptance:** the older source family was liked; this does not automatically approve a new renderer.
