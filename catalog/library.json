@@ -18,7 +18,15 @@
         "daynight",
         "archival",
         "source-screened"
-      ]
+      ],
+      "provenance": {
+        "origin": "previously-public",
+        "public_source": "https://github.com/sguzman/renderarium/blob/main/experiments/interactive-weather/backyard-daynight-2026-10-14.html",
+        "source_blob": "dbebe23f8de97b398dd49013bca6358ac10d2284",
+        "reviewed_on": "2026-10-26",
+        "rights_basis": "owner-controlled-original-implementation",
+        "dependency_closure": "self-contained"
+      }
     }
   ]
 }
