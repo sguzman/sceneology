@@ -83,6 +83,33 @@
         "dependency_closure": "self-contained",
         "notes": "Source text matches the public source except the visible archival status label; unapproved experimental alternative."
       }
+    },
+    {
+      "id": "mirror-vector-motion-study",
+      "title": "Mirror Character — Archived 2D Vector Motion",
+      "kind": "animation",
+      "status": "failed",
+      "summary": "Editable 2D SVG character/bedroom composition with reflected rig and seekable motion; historical visual-quality failure preserved.",
+      "path": "scenes/mirror-vector-motion-study.html",
+      "viewer": "scenes/mirror-vector-motion-study.html",
+      "rights": "original",
+      "limitations": "Previously rejected organic-motion/visual-fidelity result. Ported to a lightweight self-contained timeline sampler with approximate easing, not exact engine parity or artistic acceptance.",
+      "tags": [
+        "2d",
+        "vector",
+        "animation",
+        "rigging",
+        "reflection",
+        "failed",
+        "archival"
+      ],
+      "provenance": {
+        "origin": "cleared-transfer",
+        "reviewed_on": "2026-10-26",
+        "rights_basis": "owner-authored-original-svg-and-rewritten-animation-code",
+        "dependency_closure": "self-contained",
+        "notes": "Reconstructed source with all embedded commentary stripped and the external animation dependency replaced; historical source references intentionally excluded."
+      }
     }
   ]
 }

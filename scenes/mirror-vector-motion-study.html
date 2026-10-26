@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Archival 2D Character Motion — Sceneology</title>
+  <meta name="description" content="Experimental SVG character scene with self-contained motion; not selected for the curated gallery.">
+  <style>
+    html,body{margin:0;background:#171424;width:100%;height:100%;overflow:hidden}
+    body{display:grid;place-items:center;font-family:Georgia,serif}
+    #stage{
+      position:relative;
+      width:min(100vw, 56.25vh);height:min(100vh, 177.7778vw);aspect-ratio:9/16;overflow:hidden;
+      background:
+        radial-gradient(circle at 22% 14%,rgba(255,213,167,.28),transparent 28%),
+        linear-gradient(180deg,#726b9a 0%,#565477 23%,#36384f 58%,#27293e 100%);
+      transform-origin:center;
+    }
+    svg{display:block;width:100%;height:100%}
+    .rig-node{transform-box:fill-box;transform-origin:center}
+    .soft{filter:url(#softGlow)}
+    .mote{filter:url(#moteGlow)}
+    .pixel-grid{
+      position:absolute;inset:0;pointer-events:none;opacity:.08;mix-blend-mode:soft-light;
+      background-image:
+        linear-gradient(rgba(255,255,255,.17) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.12) 1px,transparent 1px);
+      background-size:6px 6px;
+    }
+    .vignette{
+      position:absolute;inset:0;pointer-events:none;
+      box-shadow:inset 0 0 180px rgba(20,18,35,.48);
+    }
+  </style>
+</head>
+<body>
+<div id="stage"
+  data-composition-id="princess-mirror-001"
+  data-start="0"
+  data-duration="8"
+  data-width="1080"
+  data-height="1920">
+
+<svg id="scene" viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg" aria-label="A princess quietly studies herself in a mirror">
+  <defs>
+    <linearGradient id="wall" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#7e7295"/>
+      <stop offset=".56" stop-color="#5f5a78"/>
+      <stop offset="1" stop-color="#45455f"/>
+    </linearGradient>
+    <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#473c53"/>
+      <stop offset="1" stop-color="#292737"/>
+    </linearGradient>
+    <linearGradient id="dressMain" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f5e9dc"/>
+      <stop offset=".55" stop-color="#e5d5da"/>
+      <stop offset="1" stop-color="#c9b9cf"/>
+    </linearGradient>
+    <linearGradient id="dressBlue" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#68729a"/>
+      <stop offset="1" stop-color="#424c78"/>
+    </linearGradient>
+    <linearGradient id="hair" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#34273f"/>
+      <stop offset=".55" stop-color="#4a3047"/>
+      <stop offset="1" stop-color="#6b4456"/>
+    </linearGradient>
+    <linearGradient id="skin" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffd9c9"/>
+      <stop offset="1" stop-color="#efbcae"/>
+    </linearGradient>
+    <linearGradient id="mirrorGlass" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#b8b6c7" stop-opacity=".63"/>
+      <stop offset=".4" stop-color="#67677f" stop-opacity=".34"/>
+      <stop offset="1" stop-color="#292f48" stop-opacity=".58"/>
+    </linearGradient>
+    <radialGradient id="sunGlow">
+      <stop offset="0" stop-color="#ffdca7" stop-opacity=".95"/>
+      <stop offset=".42" stop-color="#ffbe8f" stop-opacity=".38"/>
+      <stop offset="1" stop-color="#ff9a7b" stop-opacity="0"/>
+    </radialGradient>
+
+    <filter id="softGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="moteGlow" x="-200%" y="-200%" width="500%" height="500%">
+      <feGaussianBlur stdDeviation="8" result="b"/>
+      <feColorMatrix in="b" type="matrix"
+        values="1 0 0 0 .25  0 .8 0 0 .18  0 0 .55 0 .05  0 0 0 1 0" result="c"/>
+      <feMerge><feMergeNode in="c"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <clipPath id="mirrorClip">
+      <path d="M704 323 Q816 250 928 323 L928 1420 Q815 1498 704 1420 Z"/>
+    </clipPath>
+
+    <pattern id="wallpaper" width="92" height="92" patternUnits="userSpaceOnUse">
+      <circle cx="46" cy="46" r="2.7" fill="#b9aec7" opacity=".28"/>
+      <path d="M46 20 C36 34 35 42 46 47 C57 42 56 34 46 20Z" fill="#b3a6c2" opacity=".12"/>
+      <path d="M20 46 C34 36 42 35 47 46 C42 57 34 56 20 46Z" fill="#b3a6c2" opacity=".12"/>
+      <path d="M72 46 C58 36 50 35 45 46 C50 57 58 56 72 46Z" fill="#b3a6c2" opacity=".12"/>
+      <path d="M46 72 C36 58 35 50 46 45 C57 50 56 58 46 72Z" fill="#b3a6c2" opacity=".12"/>
+    </pattern>
+  </defs>
+
+  
+  <rect width="1080" height="1510" fill="url(#wall)"/>
+  <rect width="1080" height="1510" fill="url(#wallpaper)"/>
+  <rect y="1510" width="1080" height="410" fill="url(#floor)"/>
+  <path d="M0 1510 H1080" stroke="#9c7b77" stroke-width="12" opacity=".45"/>
+
+  
+  <g opacity=".96">
+    <rect x="70" y="175" width="360" height="710" rx="20" fill="#2b2940" stroke="#ad8791" stroke-width="18"/>
+    <rect x="90" y="195" width="320" height="670" rx="10" fill="#d99390"/>
+    <rect x="90" y="195" width="320" height="670" rx="10" fill="url(#sunGlow)" opacity=".86"/>
+    <path d="M250 195 V865 M90 510 H410" stroke="#4d4053" stroke-width="14" opacity=".86"/>
+    <path d="M95 737 C158 691 211 724 266 671 C323 618 360 640 406 601 V866 H94Z" fill="#61536f" opacity=".72"/>
+    <circle cx="178" cy="314" r="180" fill="url(#sunGlow)"/>
+  </g>
+
+  
+  <g>
+    <rect x="55" y="1190" width="420" height="270" rx="34" fill="#403b55"/>
+    <path d="M55 1190 Q255 1115 475 1190 V1374 Q254 1322 55 1378Z" fill="#aaa1bd"/>
+    <path d="M70 1220 Q240 1161 460 1218 V1327 Q245 1285 70 1333Z" fill="#7e7999" opacity=".58"/>
+    <rect x="110" y="1115" width="185" height="115" rx="38" fill="#d3c4cc" transform="rotate(-7 110 1115)"/>
+  </g>
+
+  
+  <g>
+    <ellipse cx="533" cy="1308" rx="100" ry="35" fill="#6e5360"/>
+    <path d="M475 1310 L493 1548 H570 L588 1310Z" fill="#4b3747"/>
+    <rect x="492" y="1195" width="84" height="104" rx="12" fill="#d1b798"/>
+    <path d="M500 1212 H568 V1284 H500Z" fill="#42506f"/>
+    <circle cx="534" cy="1248" r="25" fill="#f4c67c" opacity=".75"/>
+  </g>
+
+  
+  <ellipse cx="530" cy="1680" rx="400" ry="145" fill="#8b778f" opacity=".34"/>
+  <ellipse cx="530" cy="1680" rx="310" ry="105" fill="none" stroke="#b79bb0" stroke-width="12" opacity=".25"/>
+
+  
+  <g id="mirror">
+    <path d="M665 286 Q815 166 967 286 L970 1470 Q815 1588 662 1470 Z"
+      fill="#6b4e5f" stroke="#c49b77" stroke-width="22"/>
+    <path d="M704 323 Q816 250 928 323 L928 1420 Q815 1498 704 1420 Z"
+      fill="url(#mirrorGlass)" stroke="#e3bf8a" stroke-width="8"/>
+    <path d="M705 351 Q807 294 920 348" fill="none" stroke="#fff3d7" stroke-width="7" opacity=".28"/>
+    <path d="M680 300 Q626 356 650 445 M950 300 Q1003 356 980 445"
+      fill="none" stroke="#d9b27d" stroke-width="16" stroke-linecap="round"/>
+    <circle cx="674" cy="279" r="17" fill="#e4bb7f"/>
+    <circle cx="958" cy="279" r="17" fill="#e4bb7f"/>
+    <g id="mirror-reflection" clip-path="url(#mirrorClip)" opacity=".48"></g>
+    <path d="M735 368 L894 315" stroke="#fff" stroke-width="20" opacity=".07"/>
+  </g>
+
+  
+  <g>
+    <rect x="734" y="1477" width="260" height="250" rx="15" fill="#493646"/>
+    <rect x="755" y="1510" width="218" height="80" rx="10" fill="#5b4050"/>
+    <rect x="755" y="1607" width="218" height="80" rx="10" fill="#5b4050"/>
+    <circle cx="864" cy="1550" r="7" fill="#d2a86e"/>
+    <circle cx="864" cy="1647" r="7" fill="#d2a86e"/>
+  </g>
+
+  
+  <g id="princess-rig" data-rig="rig:tender-princess-v0" transform="translate(120 465)">
+    
+    <g class="rig-node hair-main" data-rig-node="hair_main">
+      <path d="M300 175 C205 198 184 328 214 462 C239 577 321 599 399 541
+               C469 489 480 359 437 250 C408 178 358 157 300 175Z"
+            fill="url(#hair)"/>
+    </g>
+
+    <g class="rig-node ponytail-base" data-rig-node="ponytail_base">
+      <path d="M236 214 C138 190 82 227 78 296 C74 354 123 390 185 367
+               C145 427 149 485 196 519 C248 556 309 525 325 475
+               C275 421 274 328 301 255Z"
+            fill="url(#hair)"/>
+      <path d="M165 248 C106 273 94 322 124 361 C151 395 198 384 222 351"
+            fill="none" stroke="#8b5d72" stroke-width="14" stroke-linecap="round" opacity=".54"/>
+    </g>
+    <g class="rig-node ponytail-mid" data-rig-node="ponytail_mid">
+      <path d="M122 348 C53 404 54 492 110 528 C154 556 207 532 225 492
+               C188 468 169 420 177 381Z"
+            fill="#513348"/>
+    </g>
+    <g class="rig-node ponytail-tip" data-rig-node="ponytail_tip">
+      <path d="M100 504 C43 551 44 621 92 650 C134 677 177 653 191 614
+               C149 592 135 553 141 528Z"
+            fill="#432d42"/>
+    </g>
+
+    
+    <g class="rig-node torso" data-rig-node="torso">
+      <path d="M293 555 C238 561 208 622 213 735 L221 982
+               C308 1014 443 1010 521 979 L520 729 C520 619 462 558 404 552Z"
+            fill="url(#dressMain)" stroke="#a891a7" stroke-width="7"/>
+      <path d="M302 581 Q359 629 418 579 L454 704 Q360 748 267 704Z"
+            fill="url(#dressBlue)" opacity=".95"/>
+      <path d="M331 590 L360 637 L390 590" fill="none" stroke="#eac58d" stroke-width="9" stroke-linecap="round"/>
+      <ellipse cx="360" cy="644" rx="17" ry="17" fill="#d7af72"/>
+    </g>
+
+    
+    <g class="rig-node skirt" data-rig-node="skirt">
+      <path d="M231 808 C157 1008 126 1240 102 1457
+               C237 1525 491 1533 641 1457
+               C622 1230 574 1009 507 809
+               C428 852 310 851 231 808Z"
+            fill="url(#dressMain)" stroke="#a891a7" stroke-width="7"/>
+      <path d="M203 968 C313 1023 472 1022 557 968
+               L598 1346 C456 1400 250 1393 136 1341Z"
+            fill="#6b7299" opacity=".86"/>
+      <path d="M171 1050 C283 1100 460 1101 581 1046" fill="none" stroke="#e8d4d7" stroke-width="24" opacity=".88"/>
+      <path d="M139 1338 C261 1412 474 1418 603 1345" fill="none" stroke="#f6e8dc" stroke-width="30"/>
+      <g class="rig-node skirt-trim" data-rig-node="skirt_trim">
+        <path d="M144 1371 C259 1439 477 1443 598 1375" fill="none" stroke="#c8a8bb" stroke-width="18" stroke-dasharray="18 12"/>
+      </g>
+      <g opacity=".8">
+        <circle cx="214" cy="1128" r="11" fill="#e8c387"/>
+        <circle cx="315" cy="1200" r="10" fill="#e8c387"/>
+        <circle cx="462" cy="1112" r="11" fill="#e8c387"/>
+        <circle cx="526" cy="1260" r="9" fill="#e8c387"/>
+      </g>
+    </g>
+
+    
+    <g class="rig-node ribbon-left" data-rig-node="ribbon_left">
+      <path d="M325 777 C269 731 229 739 237 790 C243 830 282 839 330 808Z" fill="#475179"/>
+      <path d="M320 801 C282 849 281 900 319 920 L350 817Z" fill="#3d466d"/>
+    </g>
+    <g class="rig-node ribbon-right" data-rig-node="ribbon_right">
+      <path d="M393 776 C451 730 493 739 483 791 C477 831 437 840 389 808Z" fill="#475179"/>
+      <path d="M397 802 C438 850 439 901 399 922 L369 817Z" fill="#3d466d"/>
+    </g>
+    <circle cx="360" cy="795" r="24" fill="#d8b57c"/>
+
+    
+    <g class="rig-node upper-arm-left" data-rig-node="upper_arm_left">
+      <path d="M242 646 C189 656 158 703 165 773 C171 828 206 856 248 835
+               C280 819 293 771 284 720 C277 681 267 650 242 646Z"
+            fill="url(#dressMain)" stroke="#aa95aa" stroke-width="7"/>
+    </g>
+    <g class="rig-node forearm-left" data-rig-node="forearm_left">
+      <path d="M205 788 C179 809 171 861 193 908 C216 958 270 972 300 938
+               C327 907 310 862 276 821Z"
+            fill="url(#dressMain)" stroke="#aa95aa" stroke-width="7"/>
+    </g>
+    <g class="rig-node hand-left" data-rig-node="hand_left">
+      <path d="M279 922 C303 908 329 917 338 939 C347 961 330 982 309 983
+               C290 983 274 963 279 922Z" fill="url(#skin)"/>
+      <path d="M303 928 l13 27 M294 934 l6 28 M286 943 l1 21"
+            stroke="#d99f97" stroke-width="4" stroke-linecap="round" fill="none" opacity=".8"/>
+    </g>
+
+    
+    <g class="rig-node upper-arm-right" data-rig-node="upper_arm_right">
+      <path d="M476 646 C527 662 553 709 546 777 C540 828 507 850 469 829
+               C441 813 431 767 438 720 C443 681 452 652 476 646Z"
+            fill="url(#dressMain)" stroke="#aa95aa" stroke-width="7"/>
+    </g>
+    <g class="rig-node forearm-right" data-rig-node="forearm_right">
+      <path d="M505 793 C531 820 532 870 508 914 C485 955 439 958 416 925
+               C395 894 409 852 442 818Z"
+            fill="url(#dressMain)" stroke="#aa95aa" stroke-width="7"/>
+    </g>
+    <g class="rig-node hand-right" data-rig-node="hand_right">
+      <path d="M416 911 C394 906 375 921 374 943 C374 964 392 979 411 976
+               C432 973 444 949 436 929 C431 918 424 913 416 911Z" fill="url(#skin)"/>
+      <path d="M404 919 l-8 27 M414 921 l-2 28 M423 927 l4 22"
+            stroke="#d99f97" stroke-width="4" stroke-linecap="round" fill="none" opacity=".8"/>
+    </g>
+
+    
+    <path d="M330 518 H392 V580 H330Z" fill="url(#skin)"/>
+
+    
+    <g class="rig-node head" data-rig-node="head">
+      <ellipse cx="360" cy="420" rx="129" ry="145" fill="url(#skin)"/>
+      <path d="M252 406 C245 307 305 244 380 248 C468 252 491 326 474 419
+               C451 343 398 306 334 311 C302 314 274 344 252 406Z" fill="url(#hair)"/>
+      <path d="M280 294 C332 224 433 237 467 314 C433 296 395 293 356 302
+               C328 309 304 318 280 294Z" fill="#3c2940"/>
+      
+      <path class="brow-left" d="M296 406 Q326 388 347 405" stroke="#674052" stroke-width="8" fill="none" stroke-linecap="round"/>
+      <path class="brow-right" d="M381 403 Q414 386 437 405" stroke="#674052" stroke-width="8" fill="none" stroke-linecap="round"/>
+      
+      <g class="rig-node eyes" data-rig-node="eyes">
+        <ellipse cx="326" cy="442" rx="24" ry="31" fill="#fff8f3"/>
+        <ellipse cx="410" cy="440" rx="24" ry="31" fill="#fff8f3"/>
+        <ellipse class="iris-left" cx="332" cy="447" rx="13" ry="20" fill="#6d5364"/>
+        <ellipse class="iris-right" cx="416" cy="445" rx="13" ry="20" fill="#6d5364"/>
+        <circle cx="337" cy="439" r="5" fill="#fff"/>
+        <circle cx="421" cy="437" r="5" fill="#fff"/>
+      </g>
+      <path class="mouth" d="M351 500 Q362 508 374 500" stroke="#c67e82" stroke-width="5" fill="none" stroke-linecap="round"/>
+      <ellipse cx="286" cy="479" rx="27" ry="12" fill="#e99f9f" opacity=".18"/>
+      <ellipse cx="438" cy="477" rx="27" ry="12" fill="#e99f9f" opacity=".18"/>
+    </g>
+
+    
+    <g class="rig-node ponytail-bow" data-rig-node="ponytail_bow">
+      <path d="M234 250 C183 219 160 236 168 270 C175 298 205 300 239 278Z" fill="#e4d2d3"/>
+      <path d="M242 249 C285 213 315 230 307 269 C301 298 273 305 237 280Z" fill="#d6c0ca"/>
+      <circle cx="238" cy="264" r="15" fill="#d9b177"/>
+    </g>
+  </g>
+
+  
+  <g class="motes" opacity=".72">
+    <circle class="mote mote-a" cx="900" cy="601" r="7" fill="#ffe4a6"/>
+    <rect class="mote mote-b" x="850" y="535" width="10" height="10" fill="#ffd8a0" transform="rotate(45 855 540)"/>
+    <circle class="mote mote-c" cx="947" cy="703" r="5" fill="#ffe8ba"/>
+  </g>
+
+  
+  <path d="M0 1770 C260 1695 800 1713 1080 1788 V1920 H0Z" fill="#1d1b2a" opacity=".35"/>
+</svg>
+
+<div class="pixel-grid"></div>
+<div class="vignette"></div>
+
+<script src="../runtime/timeline-lite.js"></script>
+<script>
+(() => {
+  const rig = document.querySelector("#princess-rig");
+  const mirrorMount = document.querySelector("#mirror-reflection");
+  const reflection = rig.cloneNode(true);
+  reflection.removeAttribute("id");
+  reflection.setAttribute("data-reflection-of", "rig:tender-princess-v0");
+  reflection.setAttribute("transform", "translate(1040 520) scale(-0.62 0.62)");
+  mirrorMount.appendChild(reflection);
+
+  const all = selector => [
+    ...rig.querySelectorAll(selector),
+    ...reflection.querySelectorAll(selector)
+  ];
+
+  const main = selector => rig.querySelector(selector);
+  const reflected = selector => reflection.querySelector(selector);
+
+  const tl = sceneTimeline.timeline({ paused: true, defaults: { ease: "power2.inOut" } });
+  sceneTimeline.set(all(".head"), { transformOrigin: "50% 74%" });
+  sceneTimeline.set(all(".eyes"), { transformOrigin: "50% 50%" });
+  sceneTimeline.set(all(".ponytail-base"), { transformOrigin: "79% 22%" });
+  sceneTimeline.set(all(".ponytail-mid"), { transformOrigin: "74% 20%" });
+  sceneTimeline.set(all(".ponytail-tip"), { transformOrigin: "72% 14%" });
+  sceneTimeline.set(all(".ribbon-left"), { transformOrigin: "85% 30%" });
+  sceneTimeline.set(all(".ribbon-right"), { transformOrigin: "15% 30%" });
+  sceneTimeline.set(all(".skirt"), { transformOrigin: "50% 5%" });
+  sceneTimeline.set(all(".skirt-trim"), { transformOrigin: "50% 20%" });
+  sceneTimeline.set(all(".torso"), { transformOrigin: "50% 80%" });
+  sceneTimeline.set(all(".hand-right"), { transformOrigin: "60% 20%" });
+  sceneTimeline.set(all(".forearm-right"), { transformOrigin: "50% 15%" });
+  tl.to(all(".torso"), { y: -4, duration: 1.4 }, 0.4)
+    .to(all(".torso"), { y: 0, duration: 1.4 }, 1.8)
+    .to(all(".torso"), { y: -3, duration: 1.2 }, 4.6)
+    .to(all(".torso"), { y: 0, duration: 1.2 }, 5.8);
+  tl.to(all(".eyes"), { x: 8, duration: 0.36, ease: "power1.out" }, 1.28)
+    .to(all(".brow-left"), { y: -3, rotation: -2, duration: 0.34 }, 1.30)
+    .to(all(".brow-right"), { y: -2, rotation: 2, duration: 0.34 }, 1.30)
+    .to(all(".head"), { rotation: 2.4, x: 4, duration: 0.72, ease: "power2.out" }, 1.72);
+  tl.to(all(".ponytail-base"), { rotation: -4.4, duration: 0.52, ease: "power2.out" }, 1.93)
+    .to(all(".ponytail-mid"), { rotation: -7.2, duration: 0.62, ease: "power2.out" }, 2.02)
+    .to(all(".ponytail-tip"), { rotation: -9.5, duration: 0.72, ease: "power2.out" }, 2.08)
+    .to(all(".ponytail-base"), { rotation: -1.1, duration: 0.72 }, 2.52)
+    .to(all(".ponytail-mid"), { rotation: 1.8, duration: 0.82 }, 2.62)
+    .to(all(".ponytail-tip"), { rotation: 3.4, duration: 0.94 }, 2.66)
+    .to(all(".ponytail-mid"), { rotation: 0, duration: 0.72 }, 3.46)
+    .to(all(".ponytail-tip"), { rotation: 0, duration: 0.84 }, 3.58);
+  tl.to(all(".forearm-right"), { rotation: -4, x: -4, y: 3, duration: 0.62 }, 2.35)
+    .to(all(".hand-right"), { rotation: -8, x: -8, y: 5, duration: 0.55 }, 2.45)
+    .to(all(".skirt"), { rotation: -0.8, x: -2, duration: 0.75 }, 2.62)
+    .to(all(".skirt-trim"), { rotation: 1.4, duration: 0.72 }, 2.82)
+    .to(all(".ribbon-left"), { rotation: 3.8, duration: 0.60 }, 2.70)
+    .to(all(".ribbon-right"), { rotation: -3.2, duration: 0.60 }, 2.72)
+    .to(all(".skirt-trim"), { rotation: 0, duration: 0.92 }, 3.54)
+    .to(all(".ribbon-left"), { rotation: 0, duration: 0.82 }, 3.50)
+    .to(all(".ribbon-right"), { rotation: 0, duration: 0.82 }, 3.52);
+  const blinkTargets = [
+    main(".eyes"),
+    reflected(".eyes")
+  ];
+  tl.to(blinkTargets, { scaleY: 0.08, duration: 0.09, ease: "power1.in" }, 4.54)
+    .to(blinkTargets, { scaleY: 1, duration: 0.12, ease: "power1.out" }, 4.63);
+  tl.to(".mote-a", { y: -18, x: 6, opacity: 0.25, duration: 2.4, ease: "sine.inOut" }, 1.0)
+    .to(".mote-b", { y: 12, x: -7, opacity: 0.35, duration: 2.7, ease: "sine.inOut" }, 1.3)
+    .to(".mote-c", { y: -10, x: -4, opacity: 0.25, duration: 2.6, ease: "sine.inOut" }, 1.2);
+  tl.to(all(".head"), { rotation: 0, x: 0, duration: 0.85 }, 6.45)
+    .to(all(".eyes"), { x: 0, duration: 0.58 }, 6.72)
+    .to(all(".brow-left"), { y: 0, rotation: 0, duration: 0.55 }, 6.70)
+    .to(all(".brow-right"), { y: 0, rotation: 0, duration: 0.55 }, 6.70)
+    .to(all(".forearm-right"), { rotation: 0, x: 0, y: 0, duration: 0.78 }, 6.45)
+    .to(all(".hand-right"), { rotation: 0, x: 0, y: 0, duration: 0.72 }, 6.50)
+    .to(all(".skirt"), { rotation: 0, x: 0, duration: 0.84 }, 6.42);
+
+  window.sceneologyTimeline = tl;
+  tl.repeat(-1).play(0);
+})();
+</script>
+</div>
+</body>
+</html>
