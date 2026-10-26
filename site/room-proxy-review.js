@@ -1,6 +1,7 @@
 import {analyzeProxyGeometry} from "./room-geometry-audit.mjs";
 const stage=document.getElementById("proxy-stage");
 const clearance=document.getElementById("proxy-clearance");
+const reductionsList=document.getElementById("proxy-reductions");
 const roomSelect=document.getElementById("proxy-room");
 const variantList=document.getElementById("proxy-variants");
 const attachmentList=document.getElementById("proxy-attachments");
@@ -19,7 +20,7 @@ const shade=(hex,factor)=>{
  const value=parseInt(hex.slice(1),16);
  return "#"+[value>>16,value>>8&255,value&255].map(x=>Math.min(255,Math.max(0,Math.round(x*factor+7))).toString(16).padStart(2,"0")).join("");
 };
-let rooms=[],library=null,current=null;
+let rooms=[],library=null,current=null,variantReductions=null;
 const chosen=new Map();
 function render(){
  if(!current||!library)return;
@@ -132,6 +133,28 @@ function chooseRoom(){
   group.append(descriptor,picker,provenance);controls.push(group);
  }
  variantList.replaceChildren(...controls);
+ const suggestions=variantReductions?.rooms.find(r=>r.id===current.id)?.one_change_reductions||[];
+ const advice=suggestions.map(item=>{
+  const li=document.createElement("li");
+  li.dataset.reduction=item.instance;
+  li.dataset.model=item.to_key;
+  const link=document.createElement("a");
+  const url=new URL("./room-proxy-review.html",location.href);
+  url.searchParams.set("room",current.id);
+  url.searchParams.set("yaw",yawInput.value);
+  url.searchParams.set("variant-"+item.instance,item.to_key);
+  link.href=url.href;
+  link.textContent=label(item.instance)+": "+label(item.from_key)+" → "+label(item.to_key);
+  const note=document.createElement("span");
+  note.textContent=" ("+item.default_possible_pairs+" → "+item.alternative_possible_pairs+" proxy AABB warnings; not original-binding evidence)";
+  li.append(link,note);return li;
+ });
+ reductionsList.replaceChildren(...advice);
+ if(!suggestions.length){
+  const li=document.createElement("li");
+  li.textContent="No single-variant change reduces the default proxy's broad-phase overlap count.";
+  reductionsList.append(li);
+ }
  const attachments=current.omitted_parented.map(item=>{
   const li=document.createElement("li");
   li.dataset.omittedInstance=item.id;
@@ -143,12 +166,18 @@ function chooseRoom(){
  status.textContent="Source coordinate fidelity checked. Model identities are proxies; zero original room bindings certified.";
 }
 try{
- const [roomsResponse,modelResponse]=await Promise.all([
+ const [roomsResponse,modelResponse,reductionsResponse]=await Promise.all([
   fetch("./room-proxy-review-data.json",{cache:"no-cache"}),
-  fetch("./family-orbit-data.json",{cache:"no-cache"})
+  fetch("./family-orbit-data.json",{cache:"no-cache"}),
+  fetch("./room-variant-reduction.json",{cache:"no-cache"})
  ]);
- if(!roomsResponse.ok||!modelResponse.ok)throw Error("Room source data is not available");
+ if(!roomsResponse.ok||!modelResponse.ok||!reductionsResponse.ok)throw Error("Room source data is not available");
  const data=await roomsResponse.json(),modelData=await modelResponse.json();
+ variantReductions=await reductionsResponse.json();
+ if(variantReductions.schema_version!==1||variantReductions.rooms?.length!==3||
+    variantReductions.automatic_source_binding!==false||
+    variantReductions.original_historical_variants_inferred!==false||
+    variantReductions.artistic_approval!==false)throw Error("Research source-variant evidence boundary changed");
  if(data.schema_version!==1||data.rooms?.length!==3||data.review_only!==true||
     data.showcase_approved!==false||data.source_model_bindings_certified!==false||
     data.historical_scene_geometry_original!==false||modelData.models?.length!==30||

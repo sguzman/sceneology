@@ -15,7 +15,7 @@ assert.equal(data.source_model_bindings_certified,false);
 assert.equal(data.showcase_approved,false);
 assert.equal(data.rooms.length,3);
 assert.equal(gallery.approved_ids.length,24);
-const resources=["site/room-proxy-review.html","site/room-proxy-review.js","site/room-proxy-review-data.json","site/family-orbit-data.json"];
+const resources=["site/room-proxy-review.html","site/room-proxy-review.js","site/room-proxy-review-data.json","site/family-orbit-data.json","site/room-variant-reduction.json"];
 for(const relative of resources){
  let failure;
  for(let attempt=0;attempt<5;attempt++){
@@ -60,6 +60,10 @@ function snapshot(id,yaw,variant=null){
   const expected=data.rooms.find(r=>r.id===id);
   assert.ok(expected);
   assert.equal((dom.match(/class="proxy-choice"/g)||[]).length,expected.placed.length);
+  const reductions=JSON.parse(fs.readFileSync(path.join(root,"site/room-variant-reduction.json"),"utf8"));
+  const expectedReductions=reductions.rooms.find(r=>r.id===id).one_change_reductions;
+  assert.equal((dom.match(/data-reduction="/g)||[]).length,expectedReductions.length);
+  assert.ok(dom.includes("not original-binding evidence")||expectedReductions.length===0,"Missing research-only alternative warning");
   assert.equal((dom.match(/data-omitted-instance="/g)||[]).length,expected.omitted_parented.length);
   for(const item of expected.omitted_parented)assert.ok(dom.includes('data-omitted-instance="'+item.id+'"'),"Missing unresolved attachment "+item.id);
   if(variant){
