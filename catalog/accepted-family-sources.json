@@ -6,9 +6,13 @@
   "source_family_reviews": [
     "block-chibi-bed-family-v1",
     "block-chibi-bookshelf-family-v1.1",
-    "block-chibi-lamp-family-v1.2"
+    "block-chibi-lamp-family-v1.2",
+    "block-chibi-chair-family-v1",
+    "block-chibi-desk-family-v1",
+    "block-chibi-rug-family-v1",
+    "block-chibi-window-family-v1"
   ],
-  "scope": "Exact source copies of 9 historically visually accepted model family members; newly constructed previews must be independently reviewed before gallery selection.",
+  "scope": "Exact source copies of 21 models from seven historically owner-accepted families; new SVG presentations must be independently reviewed before gallery selection.",
   "items": [
     {
       "key": "simple-study-bed",
@@ -96,6 +100,126 @@
       "source_path": "assets/constructive-3d/lamps/block-chibi-task-lamp-v1.2.sc3d.yml",
       "public_path": "models/families/block-chibi-task-lamp-v1.2.sc3d.yml",
       "sha": "6a03a0885b1c64a0a2abe5ddc4155358e2873a3d",
+      "source_acceptance": "owner-accepted-family",
+      "new_renderer_visual_approval": false,
+      "selection_status": "source-staged-not-in-gallery"
+    },
+    {
+      "key": "compact-chair",
+      "family": "chairs",
+      "source_path": "assets/constructive-3d/chairs/block-chibi-compact-chair-v1.sc3d.yml",
+      "public_path": "models/families/block-chibi-compact-chair-v1.sc3d.yml",
+      "sha": "498bd7ce61fe2d83fe555ab129ef18b34870aa40",
+      "source_acceptance": "owner-accepted-family",
+      "new_renderer_visual_approval": false,
+      "selection_status": "source-staged-not-in-gallery"
+    },
+    {
+      "key": "study-chair",
+      "family": "chairs",
+      "source_path": "assets/constructive-3d/chairs/block-chibi-study-chair-v1.sc3d.yml",
+      "public_path": "models/families/block-chibi-study-chair-v1.sc3d.yml",
+      "sha": "51b044f91609700f602789e67bb11a1b3dff1cc9",
+      "source_acceptance": "owner-accepted-family",
+      "new_renderer_visual_approval": false,
+      "selection_status": "source-staged-not-in-gallery"
+    },
+    {
+      "key": "wide-cute-chair",
+      "family": "chairs",
+      "source_path": "assets/constructive-3d/chairs/block-chibi-wide-cute-chair-v1.sc3d.yml",
+      "public_path": "models/families/block-chibi-wide-cute-chair-v1.sc3d.yml",
+      "sha": "a97ee954f000356f56b7e63ca07280002029d2d6",
+      "source_acceptance": "owner-accepted-family",
+      "new_renderer_visual_approval": false,
+      "selection_status": "source-staged-not-in-gallery"
+    },
+    {
+      "key": "compact-hutch-desk",
+      "family": "desks",
+      "source_path": "assets/constructive-3d/desks/block-chibi-compact-hutch-desk-v1.sc3d.yml",
+      "public_path": "models/families/block-chibi-compact-hutch-desk-v1.sc3d.yml",
+      "sha": "20b84286350c40e98a197e200abc234fa739092d",
+      "source_acceptance": "owner-accepted-family",
+      "new_renderer_visual_approval": false,
+      "selection_status": "source-staged-not-in-gallery"
+    },
+    {
+      "key": "simple-study-desk",
+      "family": "desks",
+      "source_path": "assets/constructive-3d/desks/block-chibi-simple-study-desk-v1.sc3d.yml",
+      "public_path": "models/families/block-chibi-simple-study-desk-v1.sc3d.yml",
+      "sha": "c065d4c7c1dac97d0fe0d5161a0512cb7cd2f654",
+      "source_acceptance": "owner-accepted-family",
+      "new_renderer_visual_approval": false,
+      "selection_status": "source-staged-not-in-gallery"
+    },
+    {
+      "key": "wide-writing-desk",
+      "family": "desks",
+      "source_path": "assets/constructive-3d/desks/block-chibi-wide-writing-desk-v1.sc3d.yml",
+      "public_path": "models/families/block-chibi-wide-writing-desk-v1.sc3d.yml",
+      "sha": "46859ad081caaf4ddb4bf972296c4b62482b6d4a",
+      "source_acceptance": "owner-accepted-family",
+      "new_renderer_visual_approval": false,
+      "selection_status": "source-staged-not-in-gallery"
+    },
+    {
+      "key": "runner-rug",
+      "family": "rugs",
+      "source_path": "assets/constructive-3d/rugs/block-chibi-runner-rug-v1.sc3d.yml",
+      "public_path": "models/families/block-chibi-runner-rug-v1.sc3d.yml",
+      "sha": "e284f2221ec8fe48f4be828c3b9a93465c6834ef",
+      "source_acceptance": "owner-accepted-family",
+      "new_renderer_visual_approval": false,
+      "selection_status": "source-staged-not-in-gallery"
+    },
+    {
+      "key": "small-bedside-rug",
+      "family": "rugs",
+      "source_path": "assets/constructive-3d/rugs/block-chibi-small-bedside-rug-v1.sc3d.yml",
+      "public_path": "models/families/block-chibi-small-bedside-rug-v1.sc3d.yml",
+      "sha": "442aab43a28602d791fc74798657ab4a615fbd63",
+      "source_acceptance": "owner-accepted-family",
+      "new_renderer_visual_approval": false,
+      "selection_status": "source-staged-not-in-gallery"
+    },
+    {
+      "key": "wide-area-rug",
+      "family": "rugs",
+      "source_path": "assets/constructive-3d/rugs/block-chibi-wide-area-rug-v1.sc3d.yml",
+      "public_path": "models/families/block-chibi-wide-area-rug-v1.sc3d.yml",
+      "sha": "259613da4b2ed3473e68c8022bfba264462ad309",
+      "source_acceptance": "owner-accepted-family",
+      "new_renderer_visual_approval": false,
+      "selection_status": "source-staged-not-in-gallery"
+    },
+    {
+      "key": "square-four-pane-window",
+      "family": "windows",
+      "source_path": "assets/constructive-3d/windows/block-chibi-square-four-pane-window-v1.sc3d.yml",
+      "public_path": "models/families/block-chibi-square-four-pane-window-v1.sc3d.yml",
+      "sha": "53c0c62d0c3fe13af3782b9b3bf08a57196155d9",
+      "source_acceptance": "owner-accepted-family",
+      "new_renderer_visual_approval": false,
+      "selection_status": "source-staged-not-in-gallery"
+    },
+    {
+      "key": "tall-two-pane-window",
+      "family": "windows",
+      "source_path": "assets/constructive-3d/windows/block-chibi-tall-two-pane-window-v1.sc3d.yml",
+      "public_path": "models/families/block-chibi-tall-two-pane-window-v1.sc3d.yml",
+      "sha": "3e16e0b31bcd26f2f304daf0eb8ef5dfb87ae4fb",
+      "source_acceptance": "owner-accepted-family",
+      "new_renderer_visual_approval": false,
+      "selection_status": "source-staged-not-in-gallery"
+    },
+    {
+      "key": "wide-three-pane-window",
+      "family": "windows",
+      "source_path": "assets/constructive-3d/windows/block-chibi-wide-three-pane-window-v1.sc3d.yml",
+      "public_path": "models/families/block-chibi-wide-three-pane-window-v1.sc3d.yml",
+      "sha": "4c89cb813135be773996c475822a9106c9daab56",
       "source_acceptance": "owner-accepted-family",
       "new_renderer_visual_approval": false,
       "selection_status": "source-staged-not-in-gallery"

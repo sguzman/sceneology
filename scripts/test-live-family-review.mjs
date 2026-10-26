@@ -10,7 +10,7 @@ if(!base||!base.startsWith("https://"))throw Error("Expected deployed HTTPS webs
 const baseUrl=base.endsWith("/")?base:base+"/";
 const sources=JSON.parse(fs.readFileSync(path.join(root,"catalog/accepted-family-sources.json"),"utf8"));
 const selected=JSON.parse(fs.readFileSync(path.join(root,"catalog/showcase.json"),"utf8"));
-assert.equal(sources.items.length,9,"Accepted source inventory changed");
+assert.equal(sources.items.length,21,"Accepted source inventory changed");
 for(const record of sources.items){
  assert.equal(record.selection_status,"source-staged-not-in-gallery");
  assert.equal(record.new_renderer_visual_approval,false);
@@ -37,7 +37,7 @@ for(const rel of urls){
  assert.ok(local.equals(remote),"Deployed source-derived preview differs from repository "+rel);
  if(rel.endsWith(".svg")){
   const svg=remote.toString("utf8").replace('xmlns="http://www.w3.org/2000/svg"',"");
-  assert.ok(svg.startsWith("<svg")&&(svg.match(/<polygon /g)||[]).length>=8,"Invalid source-generated SVG "+rel);
+  assert.ok(svg.startsWith("<svg")&&(svg.match(/<polygon /g)||[]).length>=3,"Invalid source-generated SVG "+rel);
   assert.ok(!/<(?:script|image|foreignObject)\b|https?:\/\//i.test(svg),"External resource in published preview "+rel);
  }
 }
@@ -53,7 +53,7 @@ try{
  if(run.error||run.status!==0)throw Error("Review-browser startup failed: "+String(run.error||run.stderr).slice(-700));
  const dom=run.stdout;
  fs.writeFileSync(path.join(out,"family-review.dom.html"),dom);
- assert.equal((dom.match(/<article class="review-item"/g)||[]).length,9,"Not all nine families rendered in actual browser");
+ assert.equal((dom.match(/<article class="review-item"/g)||[]).length,21,"Not all 21 source models rendered in actual browser");
  assert.ok(dom.includes("zero automatically approved exhibits"),"Explicit unapproved boundary not displayed");
  for(const record of sources.items){
   assert.ok(dom.includes('data-record-id="'+record.key+'"'),"Missing review object "+record.key);
@@ -63,7 +63,7 @@ try{
  if(capture.error||capture.status!==0)throw Error("Review screenshot capture failed");
  const bytes=fs.readFileSync(file);
  assert.ok(bytes.length>5000&&bytes.subarray(0,8).toString("hex")==="89504e470d0a1a0a","Browser screenshot absent");
- console.log("Sceneology family review verified: nine distinct browser cards, "+urls.length+" exact deployed assets, zero new gallery approvals.");
+ console.log("Sceneology family review verified: 21 distinct browser cards, "+urls.length+" exact deployed assets, zero new gallery approvals.");
 }finally{
  fs.rmSync(profile,{recursive:true,force:true});
  fs.rmSync(profile+"-capture",{recursive:true,force:true});

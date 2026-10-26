@@ -24,7 +24,7 @@ try{
  const response=await fetch("../catalog/accepted-family-sources.json",{cache:"no-cache"});
  if(!response.ok)throw Error("Source family catalog unavailable");
  const data=await response.json();
- if(data.schema_version!==1||!Array.isArray(data.items)||data.items.length!==9)throw Error("Unexpected family catalog");
+ if(data.schema_version!==1||!Array.isArray(data.items)||data.items.length!==21)throw Error("Unexpected family catalog");
  if(data.items.some(r=>r.selection_status!=="source-staged-not-in-gallery"||r.new_renderer_visual_approval!==false))throw Error("Visual approval status unexpectedly changed");
  const cards=data.items.map(make);
  const draw=()=>{

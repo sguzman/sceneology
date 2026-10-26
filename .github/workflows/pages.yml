@@ -48,7 +48,7 @@ jobs:
         env:
           SCENEOLOGY_SITE_URL: ${{ steps.deployment.outputs.page_url }}
         run: node scripts/test-live-model-collection.mjs
-      - name: Verify nine accepted-source review previews without gallery promotion
+      - name: Verify 21 accepted-source review previews without gallery promotion
         env:
           SCENEOLOGY_SITE_URL: ${{ steps.deployment.outputs.page_url }}
         run: node scripts/test-live-family-review.mjs

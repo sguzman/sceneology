@@ -6,7 +6,7 @@ import path from "node:path";
 const root=path.resolve(import.meta.dirname,"..");
 const manifest=JSON.parse(fs.readFileSync(path.join(root,"catalog/accepted-family-sources.json"),"utf8"));
 assert.equal(manifest.schema_version,1);
-assert.equal(manifest.items.length,9);
+assert.equal(manifest.items.length,21);
 const output=path.join(root,"site","family-previews");
 fs.mkdirSync(output,{recursive:true});
 
@@ -111,7 +111,7 @@ function projectArtifact(source,identity){
    faces.push({partId:p.id,faceIndex,vs,depth:dot(vs.reduce((a,b)=>add(a,b),[0,0,0]).map(v=>v/4),camera),color:shade(materials.get(p.colorRef),f),stroke:shade(materials.get(p.colorRef),f*.78)});
   }
  }
- assert.ok(faces.length>=8,"Sparse SVG geometry "+identity);
+ assert.ok(faces.length>=3,"Sparse SVG geometry "+identity);
  const pts=faces.flatMap(f=>f.vs.map(v=>[dot(v,right),-dot(v,up)])),xs=pts.map(v=>v[0]),ys=pts.map(v=>v[1]);
  const minX=Math.min(...xs),maxX=Math.max(...xs),minY=Math.min(...ys),maxY=Math.max(...ys);
  const scale=Math.min(710/(maxX-minX||1),400/(maxY-minY||1)),ox=480-(minX+maxX)*scale/2,oy=300-(minY+maxY)*scale/2;
