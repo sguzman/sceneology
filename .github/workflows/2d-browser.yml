@@ -1,0 +1,32 @@
+name: Verify archival 2D character motion
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'scenes/mirror-vector-motion-study.html'
+      - 'runtime/timeline-lite.js'
+      - 'scripts/test-2d-browser.mjs'
+      - '.github/workflows/2d-browser.yml'
+  workflow_dispatch:
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: google-chrome --version
+      - name: Inspect live vector rig and sampled animation in Chrome
+        run: node scripts/test-2d-browser.mjs
+      - name: Save browser diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sceneology-vector-motion-browser-evidence
+          path: artifacts/2d-browser/
+          if-no-files-found: warn
+          retention-days: 7
