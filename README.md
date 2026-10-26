@@ -29,6 +29,7 @@ The project is bootstrapped without importing any existing private project mater
 
 - [🗺️ Evidence-weighted roadmap](docs/ROADMAP.md) — bounded completion gates, source-cohort priorities, migration waves and end-of-session reporting.
 - [🛡️ Source-admission policy](docs/MIGRATION.md) — file-by-file screening, confidentiality, licensing, provenance, failure retention and separation from artistic approval.
+- [Private intake decision schema](docs/migration-intake.schema.json) — structural contract for unpublished screening records; do not commit populated private records.
 - [Machine-readable progress ledger](docs/roadmap.json) — weighted tasks, supporting file evidence, measured baseline and current score.
 
 Initial source-family reconnaissance is complete, but **no historical artifact has been admitted or copied**. Detailed source inventories and rejected or unresolved material remain outside this public repository. Gallery approvals are never inferred from technical admission; unsuccessful scenes are not featured.
