@@ -1,0 +1,170 @@
+{
+  "schema_version": 1,
+  "id": "quest-girl-v7-basic-motions-v0.2",
+  "source_format": "scenarium-motion-set",
+  "source_git_blob": "7de22184f2bdd384ca3ca7a5bc35432d34db0c10",
+  "source_publication": "sanitized-technical-projection-not-an-exact-source-copy",
+  "character_id": "quest-girl-v7",
+  "character_source_blob": "81aca18adfc08135ba8eb6db1395b2715f22e97f",
+  "source_acceptance": "passed-functional-baseline",
+  "artistic_approval": false,
+  "motion_style_final": false,
+  "sampled_semantics": "Source amplitude and frequency values preserved; sine uses zero phase. Smoothstep interpolation is per keyframe interval. These explicit playback choices are technical approximations where source omits phase convention.",
+  "clips": [
+    {
+      "id": "idle-soft",
+      "duration_seconds": 4.8,
+      "loop": true,
+      "channels": [
+        {
+          "id": "root_y",
+          "target": "root.frame.position.y",
+          "part": "root",
+          "property": "position",
+          "axis": "y",
+          "waveform": "sine",
+          "amplitude": 0.008,
+          "frequency_hz": 0.21
+        },
+        {
+          "id": "left_arm_micro_sway_deg",
+          "target": "sleeve_left.pivot.rotation.z",
+          "part": "sleeve_left",
+          "property": "rotation",
+          "axis": "z",
+          "waveform": "sine",
+          "amplitude": 1.2,
+          "frequency_hz": 0.18
+        },
+        {
+          "id": "right_arm_micro_sway_deg",
+          "target": "sleeve_right.pivot.rotation.z",
+          "part": "sleeve_right",
+          "property": "rotation",
+          "axis": "z",
+          "waveform": "sine_opposed",
+          "amplitude": 1.2,
+          "frequency_hz": 0.18
+        }
+      ]
+    },
+    {
+      "id": "look-around",
+      "duration_seconds": 8,
+      "loop": true,
+      "channels": [
+        {
+          "id": "head_yaw_deg",
+          "target": "head.pivot.rotation.y",
+          "part": "head",
+          "property": "rotation",
+          "axis": "y",
+          "waveform": "keyframes_smoothstep",
+          "keyframes": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              2,
+              -10
+            ],
+            [
+              3,
+              -10
+            ],
+            [
+              4,
+              0
+            ],
+            [
+              5,
+              10
+            ],
+            [
+              6,
+              10
+            ],
+            [
+              7,
+              0
+            ],
+            [
+              8,
+              0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "small-wave",
+      "duration_seconds": 3.2,
+      "loop": true,
+      "channels": [
+        {
+          "id": "right_arm_raise_deg",
+          "target": "sleeve_right.pivot.rotation.z",
+          "part": "sleeve_right",
+          "property": "rotation",
+          "axis": "z",
+          "waveform": "biased_sine",
+          "base_delta_deg": 42,
+          "amplitude": 7,
+          "frequency_hz": 0.72
+        }
+      ]
+    },
+    {
+      "id": "step-in-place",
+      "duration_seconds": 2.8,
+      "loop": true,
+      "channels": [
+        {
+          "id": "left_leg_pitch_deg",
+          "target": "leg_left.pivot.rotation.x",
+          "part": "leg_left",
+          "property": "rotation",
+          "axis": "x",
+          "waveform": "sine",
+          "amplitude": 8,
+          "frequency_hz": 0.36
+        },
+        {
+          "id": "right_leg_pitch_deg",
+          "target": "leg_right.pivot.rotation.x",
+          "part": "leg_right",
+          "property": "rotation",
+          "axis": "x",
+          "waveform": "sine_opposed",
+          "amplitude": 8,
+          "frequency_hz": 0.36
+        },
+        {
+          "id": "left_arm_swing_deg",
+          "target": "sleeve_left.pivot.rotation.x",
+          "part": "sleeve_left",
+          "property": "rotation",
+          "axis": "x",
+          "waveform": "sine_opposed",
+          "amplitude": 5,
+          "frequency_hz": 0.36
+        },
+        {
+          "id": "right_arm_swing_deg",
+          "target": "sleeve_right.pivot.rotation.x",
+          "part": "sleeve_right",
+          "property": "rotation",
+          "axis": "x",
+          "waveform": "sine",
+          "amplitude": 5,
+          "frequency_hz": 0.36
+        }
+      ]
+    }
+  ]
+}

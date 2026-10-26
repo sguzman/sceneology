@@ -76,6 +76,7 @@ await import("./check-inline-geometry.mjs");
 await import("./check-curation.mjs");
 
 await import("./test-rigid-transforms.mjs");
+await import("./test-quest-girl-motion.mjs");
 
 await import("./check-room-aliases.mjs");
 await import("./check-room-blanket-target.mjs");
