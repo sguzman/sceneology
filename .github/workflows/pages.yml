@@ -31,11 +31,15 @@ jobs:
       - name: Browser-check curated gallery behavior using synthetic records
         run: node scripts/test-site-gallery.mjs
       - uses: actions/configure-pages@v5
+      # Attempt-unique names make deploy-pages retries safe after an upstream 5xx.
       - uses: actions/upload-pages-artifact@v3
         with:
           path: .
+          name: github-pages-${{ github.run_id }}-${{ github.run_attempt }}
       - id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          artifact_name: github-pages-${{ github.run_id }}-${{ github.run_attempt }}
       - name: Verify live website assets and browser gallery
         env:
           SCENEOLOGY_SITE_URL: ${{ steps.deployment.outputs.page_url }}
@@ -92,7 +96,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: sceneology-live-pages-evidence
+          name: sceneology-live-pages-evidence-${{ github.run_attempt }}
           path: |
             artifacts/live-site/
             artifacts/model-site/
