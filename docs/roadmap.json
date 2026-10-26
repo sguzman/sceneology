@@ -281,7 +281,12 @@
             "catalog/showcase.json",
             "site/main.js",
             "scripts/test-site-gallery.mjs",
-            "scripts/test-live-site.mjs"
+            "scripts/test-live-site.mjs",
+            "docs/curation-candidates.json",
+            "scripts/check-curation.mjs",
+            "scripts/build-curation-review.mjs",
+            ".github/workflows/curation-review.yml",
+            "docs/MVP-RELEASE.md"
           ]
         },
         {
