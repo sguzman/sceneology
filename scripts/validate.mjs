@@ -76,3 +76,5 @@ await import("./check-inline-geometry.mjs");
 await import("./check-curation.mjs");
 
 await import("./check-room-aliases.mjs");
+
+await import("./check-character-variants.mjs");
