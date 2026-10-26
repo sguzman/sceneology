@@ -28,6 +28,8 @@ jobs:
           node-version: '22'
       - name: Validate gallery, ontology and migration roadmap
         run: node scripts/validate.mjs
+      - name: Browser-check curated gallery behavior using synthetic records
+        run: node scripts/test-site-gallery.mjs
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
