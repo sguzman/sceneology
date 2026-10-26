@@ -1,26 +1,32 @@
-# Source-accepted beds, bookshelves and lamps — visual review
+# Seven historically accepted model families — new visual review
 
-**Source status:** nine exact, revision-pinned publicly sourced constructive-3D models from previously owner-accepted families.  
-**New renderer status:** screenshots generated and source checksum verified; **new SVG presentations have not been individually artistically approved**.  
-**Gallery status:** no automatic promotion.
+**Source status:** 21 exact, revision-pinned, public constructive-3D model sources from seven historically owner-accepted families. Each original file is copied byte-for-byte from the pinned source tree and checked by its original Git blob SHA.
 
-[Open the public comparison page](https://sguzman.github.io/sceneology/site/family-review.html) to view all nine and filter by category. This technical review page is **separate** from the curated Sceneology home exhibition. It does not publish any new `catalog/showcase.json` approvals.
+**New rendering status:** source-derived SVGs and Chrome screenshot captures are technical reconstructions, not proven equivalents of the original accepted viewer.
 
-| Source family | Individual models | What the new screenshots visibly establish |
+**Exhibition status:** all 21 remain **outside** the curated Sceneology gallery until their new appearances are independently judged and explicitly selected.
+
+[Open the 21-model comparison page](https://sguzman.github.io/sceneology/site/family-review.html). Filter by category to compare source variants. This is a research review, not automatic artistic endorsement.
+
+| Family | 3 accepted source members | Reconstructed-preview review questions |
 | --- | --- | --- |
-| Beds | Simple Study Bed, Wide Cute Bed, Compact Cozy Bed | Three distinguishable bed compositions with consistent source-derived wood, mattress and bedding geometry |
-| Bookshelves | Low Wide Bookshelf, Narrow Bookcase, Tall Bookcase | Three differing shelves and bookcase proportions, with some visible shelving and colored book geometry |
-| Lamps | Cozy Table Lamp, Tall Floor Lamp, Task Lamp | Two clearly legible shade-and-stand designs; the task-lamp reconstruction is less legible and needs **additional visual comparison** before exhibition |
+| Beds | Simple Study, Wide Cute, Compact Cozy | Mattress, supports, bedding proportions, and source-defined orientation |
+| Bookshelves | Low Wide, Narrow, Tall | Shelf separation, book legibility, and shelf/body proportions |
+| Lamps | Cozy Table, Tall Floor, Task | Silhouette, glow/emitter orientation, and source-defined parent transform |
+| Chairs | Compact, Study, Wide Cute | Seat/back direction, four legs, and wide-chair cushion legibility |
+| Desks | Compact Hutch, Simple Study, Wide Writing | Leg support, work-surface clearance, and hutch/drawer silhouette |
+| Rugs | Runner, Small Bedside, Wide Area | Thinness, inset border or stripe, and floor contact (not physically simulated) |
+| Windows | Square Four-Pane, Tall Two-Pane, Wide Three-Pane | Pane divisions, frame depth, glazing, and required wall context |
 
-The screenshots are real automated Chrome captures of SVGs generated from nine exact source files, not invented stand-in product photos or renders. The [source record](../catalog/accepted-family-sources.json) lists each file, source Git blob hash, original acceptance scope and currently unapproved new renderer state.
+A renderer bug previously omitted the underside of box shapes; that face is now included so the rotated task-lamp light emitter can be represented. **This repairs the technical omission only:** the task-lamp composition still requires visual review. For flat rugs, a valid source-derived image can contain only a few visible polygons; a low polygon count alone is not a visual-quality verdict.
 
-The [build script](../scripts/build-family-previews.mjs) checks original source hashes, parses supported constructive primitives and writes self-contained `site/family-previews/*.svg` outputs. The [browser QA](../scripts/test-family-previews.mjs) captured all nine as PNGs in GitHub Actions. The [live deployment check](../scripts/test-live-family-review.mjs) also requires all nine matching public SVGs and cards on GitHub Pages. None of these technical checks is a substitute for the owner's visual judgment.
+The [source manifest](../catalog/accepted-family-sources.json) records each source path, pinned blob, prior approval scope and **false** new-renderer approval state. The [generator](../scripts/build-family-previews.mjs) verifies every source blob and makes self-contained SVG files; the [screenshot workflow](../.github/workflows/family-review.yml) runs real Chrome for all 21. The [live browser check](../scripts/test-live-family-review.mjs) independently verifies page cards and deployed image byte equality.
 
-## Separate decisions
+## Non-negotiable boundaries
 
-1. **Source provenance:** accepted historical model-family source, frozen at known bytes.
-2. **Representation:** a new isometric/orthographic source-derived SVG interpretation, not guaranteed equivalent to the original renderer.
-3. **Curation:** pending owner judgment of the *new visible output*. Historically accepted geometry does not automatically approve a visibly different presentation.
-4. **Exhibition:** only after a confirmed desired card, source-backed thumbnail and deployed viewer are verified; a negative judgment leaves the family in technical research.
+1. **Historical acceptance:** the older source family was liked; this does not automatically approve a new renderer.
+2. **Representation:** isometric/orthographic constructive SVGs can differ from the original perspective material/shadow viewer, especially for thin rugs, glazing, and light emitters.
+3. **Curation:** owner approval applies to a *specific current visible exhibit*, not merely a specimen name or file path.
+4. **Publication:** these review assets are technical and public, but do not modify `catalog/showcase.json`. Rejected plant-morphology attempts, broken clocks and rejected character revisions are not smuggled into this accepted-family list.
 
-Rejected or unreviewed studies are not imported into the curated gallery. The existing selected exhibition remains intact.
+The approved exhibition remains independent: [current collection](CURRENT-COLLECTION.md).
