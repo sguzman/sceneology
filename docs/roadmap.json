@@ -81,8 +81,11 @@
         {
           "id": "A02",
           "points": 5,
-          "status": "todo",
-          "evidence": []
+          "status": "done",
+          "evidence": [
+            "docs/VARIANTS.md",
+            "docs/SOURCE-CENSUS.md"
+          ]
         },
         {
           "id": "A03",
