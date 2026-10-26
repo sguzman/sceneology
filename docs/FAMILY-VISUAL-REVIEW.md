@@ -41,3 +41,7 @@ These are reviewer observations on **new technical illustrations**, not reversal
 4. **Publication:** these review assets are technical and public, but do not modify `catalog/showcase.json`. Rejected plant-morphology attempts, broken clocks and rejected character revisions are not smuggled into this accepted-family list.
 
 The approved exhibition remains independent: [current collection](CURRENT-COLLECTION.md).
+
+## Multi-angle technical geometry inspection
+
+The [30-model orbit review](https://sguzman.github.io/sceneology/site/family-orbit.html) now projects all source-defined cuboids and tapered boxes from multiple angles. Source files are checked against the original pinned Git blobs before the viewer data is generated. It supports choosing models, yaw, elevation, zoom and pointer dragging; the browser release checks distinct model and camera combinations. **These are reconstructed orthographic views, not automatically approved reproductions of original perspective renderings.** No source changes or gallery approvals are inferred.
