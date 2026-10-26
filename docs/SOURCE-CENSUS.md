@@ -26,4 +26,4 @@ Inventory entries identify source/cohort, revision or blob identity, size, and i
 
 Publication rule: do not add private inventory entries, raw source paths, internal review notes, or unreviewed assets to Sceneology. Technical failures may qualify after safety and rights review, but are not automatic gallery features.
 
-See the [roadmap](ROADMAP.md), [source variant reconciliation](VARIANTS.md), and [migration gates](MIGRATION.md).
+See the [admission decisions](ADMISSION-DECISIONS.md), [roadmap](ROADMAP.md), [source variant reconciliation](VARIANTS.md), and [migration gates](MIGRATION.md).
