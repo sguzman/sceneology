@@ -27,3 +27,12 @@ All three experiments are recorded in `catalog/library.json` with technical stat
 The first-draw tests do not establish that every viewer control or input works. HTML viewers were sourced from already-public implementations with documented original blob identifiers and narrowly modified on-screen archival labels. Their source code contains self-contained shader/geometry payloads, and release review found no referenced external media/CDNs or copied nonpublic discussion. Automated screening is a supplement to manual source review.
 
 **Next release evidence:** exercise keyboard navigation and reader-facing links, inspect responsive output rather than relying only on PNG existence, and maintain source-to-deployment parity after subsequent content changes. The user alone chooses future gallery exhibits.
+
+## Curated gallery browser integration
+
+[Gallery integration and Pages run 40343658219](https://github.com/sguzman/sceneology/actions/runs/40343658219) passed a real Chrome integration test using **synthetic, ephemeral approval records served only inside the test**. It confirmed two selected works render, a missing image falls back without substituting fictional artwork, technical status and public-safe source metadata are displayed, an empty allowlist remains empty, and a failed technical record is rejected when maliciously placed into an approval list. Real `catalog/showcase.json` stays unchanged.
+
+## Reconstructed 2D vector-motion study
+
+[2D Chrome run 40345170051](https://github.com/sguzman/sceneology/actions/runs/40345170051) passed with the screened standalone SVG study and locally authored timeline sampler. The test checks actual DOM scene/clone construction, sampled articulation changes, a blink keyframe, a stage bounding box within the mobile viewport, and a captured PNG. This establishes a technically functioning animated vector specimen, **not successful natural movement, pixel parity with an earlier engine, or gallery approval**. The source remains a documented visual-quality failure.
+
