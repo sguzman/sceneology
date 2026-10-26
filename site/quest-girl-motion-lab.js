@@ -26,6 +26,8 @@ const shade=(hex,factor)=>{
  return "#"+[n>>16,n>>8&255,n&255].map(x=>Math.min(255,Math.max(0,Math.round(x*factor+6))).toString(16).padStart(2,"0")).join("");
 };
 let model,motions,clip,playing=true,elapsed=0,lastTimestamp=null,projection=null;
+let sceneSvg=null;
+const faceNodes=[];
 function geometryForPose(channels){
  const parts=new Map(model.parts.map(p=>[p.id,p]));
  const cache=new Map();
@@ -95,15 +97,35 @@ function draw(){
  }
  faces.sort((a,b)=>a.depth-b.depth);
  const {scale,ox,oy}=projection;
- const markup=['<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 820" role="img" aria-label="Animated technical Quest Girl v7 rigid character preview">',
- '<rect width="720" height="820" fill="#dce1e7"/>',
- '<ellipse cx="360" cy="722" rx="205" ry="29" fill="#59616b" opacity=".10"/>'];
- for(const f of faces){
-  const points=f.vs.map(v=>(ox+dot(v,right)*scale).toFixed(1)+","+(oy-dot(v,up)*scale).toFixed(1)).join(" ");
-  markup.push('<polygon points="'+points+'" fill="'+f.fill+'" stroke="'+f.stroke+'" stroke-width=".65" stroke-linejoin="round"/>');
+ // Reuse stable SVG nodes across frames rather than rebuilding the entire DOM at 60 Hz.
+ // This preserves keyboard/screen-reader context and avoids repeated parsing allocations.
+ if(!sceneSvg){
+  sceneSvg=document.createElementNS("http://www.w3.org/2000/svg","svg");
+  sceneSvg.setAttribute("viewBox","0 0 720 820");
+  sceneSvg.setAttribute("role","img");
+  sceneSvg.setAttribute("aria-label","Animated technical Quest Girl v7 rigid character preview");
+  const bg=document.createElementNS("http://www.w3.org/2000/svg","rect");
+  Object.entries({width:"720",height:"820",fill:"#dce1e7"}).forEach(([k,v])=>bg.setAttribute(k,v));
+  const shadow=document.createElementNS("http://www.w3.org/2000/svg","ellipse");
+  Object.entries({cx:"360",cy:"722",rx:"205",ry:"29",fill:"#59616b",opacity:".10"}).forEach(([k,v])=>shadow.setAttribute(k,v));
+  sceneSvg.append(bg,shadow);
+  stage.replaceChildren(sceneSvg);
  }
- markup.push("</svg>");
- stage.innerHTML=markup.join("");
+ while(faceNodes.length<faces.length){
+  const polygon=document.createElementNS("http://www.w3.org/2000/svg","polygon");
+  polygon.setAttribute("stroke-width",".65");
+  polygon.setAttribute("stroke-linejoin","round");
+  sceneSvg.append(polygon);
+  faceNodes.push(polygon);
+ }
+ while(faceNodes.length>faces.length)faceNodes.pop().remove();
+ for(let i=0;i<faces.length;i++){
+  const face=faces[i],polygon=faceNodes[i];
+  const points=face.vs.map(v=>(ox+dot(v,right)*scale).toFixed(1)+","+(oy-dot(v,up)*scale).toFixed(1)).join(" ");
+  polygon.setAttribute("points",points);
+  polygon.setAttribute("fill",face.fill);
+  polygon.setAttribute("stroke",face.stroke);
+ }
  stage.dataset.clip=clip.id;stage.dataset.rendered="true";stage.dataset.frameTime=pose.seconds.toFixed(3);stage.dataset.channelSnapshot=JSON.stringify(pose.channels);
  seek.value=String(Math.round(1000*pose.seconds/clip.duration_seconds));
  clock.textContent=pose.seconds.toFixed(2)+" / "+clip.duration_seconds.toFixed(1)+" s";
