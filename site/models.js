@@ -5,6 +5,36 @@ const category=document.getElementById("model-category");
 const mark=(element,className,text)=>{
  const e=document.createElement(element);if(className)e.className=className;if(text!==undefined)e.textContent=text;return e;
 };
+const featured=document.getElementById("featured-models");
+try {
+ const [libraryResponse,showcaseResponse]=await Promise.all([
+  fetch("../catalog/library.json"),fetch("../catalog/showcase.json")
+ ]);
+ if(!libraryResponse.ok||!showcaseResponse.ok)throw Error("Featured records unavailable");
+ const [library,showcase]=await Promise.all([libraryResponse.json(),showcaseResponse.json()]);
+ if(!Array.isArray(library.records)||!Array.isArray(showcase.approved_ids))throw Error("Unexpected gallery format");
+ const byId=new Map(library.records.map(record=>[record.id,record]));
+ const fragment=document.createDocumentFragment();
+ let total=0;
+ for(const id of showcase.approved_ids){
+  const entry=byId.get(id);
+  if(!entry||entry.kind!=="object"||entry.status==="failed")continue;
+  if(!/^models\\/[a-z0-9._/-]+\\.html$/.test(entry.viewer)||
+     !/^site\\/model-previews\\/[a-z0-9._-]+\\.png$/.test(entry.thumbnail))continue;
+  const card=mark("article","model featured");
+  const image=document.createElement("img");
+  image.src="../"+entry.thumbnail;image.alt="Real browser capture of "+entry.title;
+  image.loading="lazy";image.decoding="async";
+  const title=mark("h3","",entry.title);
+  const link=mark("a","","Open interactive model");
+  link.href="../"+entry.viewer;
+  card.append(image,title,mark("p","",entry.summary),link,mark("p","status","Previously accepted model · source-backed"));
+  fragment.append(card);total++;
+ }
+ featured.replaceChildren(fragment);
+ if(!total)featured.append(mark("p","empty","No models have been selected for exhibition."));
+}catch(err){featured.replaceChildren(mark("p","empty","Featured models could not be loaded."));console.error(err);}
+
 try {
  const response=await fetch("../catalog/expanded-source-index.json");
  if(!response.ok)throw Error("Source index unavailable");
