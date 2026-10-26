@@ -3,7 +3,7 @@
 <meta name="description" content="Inspect original room placement coordinates with selectable, unapproved source-pinned model variants.">
 <link rel="stylesheet" href="./style.css">
 <style>
-main{padding-top:40px}.proxy-layout{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:22px}
+main{padding-top:22px}h1{font-size:clamp(2.1rem,4.4vw,3.6rem);line-height:1.06;max-width:24ch;margin:8px 0 14px}.proxy-layout{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:22px}
 .proxy-stage{background:#e8eff1;border:1px solid var(--stroke);border-radius:12px;overflow:hidden;min-width:0}
 .proxy-stage svg{display:block;width:100%;height:auto}.proxy-controls{background:var(--surface);padding:16px;border:1px solid var(--stroke);border-radius:12px}
 .proxy-controls select,.proxy-controls input{width:100%;font:inherit}.proxy-controls select{color:var(--fg);background:var(--surface);padding:7px;border:1px solid var(--stroke);border-radius:7px}
@@ -15,8 +15,7 @@ main{padding-top:40px}.proxy-layout{display:grid;grid-template-columns:minmax(0,
 <header><nav class="wrap" aria-label="Main navigation"><a class="brand" href="../">Sceneology</a><div class="navlinks"><a href="./room-recovery.html">Four original layouts</a><a href="../#gallery-section">Approved gallery</a></div></nav></header>
 <main class="wrap" id="main-content"><p class="eyebrow">Room source investigation · not an accepted rendering</p>
 <h1>Three partial room studies</h1>
-<p class="lead">Inspect explicitly authored furniture positions from Cozy Bedroom, Study Corner and Sleep Room. These models are <strong>technical proxies</strong>: every model comes from an original SHA-pinned public source file, but the selected variants are not certified as the exact variants in the historically accepted room.</p>
-<p class="source-warning"><strong>Missing objects are deliberately omitted.</strong> Parent-attached decorations do not have independent placement transforms in the source. The accepted blanket v1.3 is also unrecovered. No walls, floor shell, local lights, collision clearance or original-renderer parity are claimed. Changing a model selection here does not approve or bind it.</p>
+<p class="lead" style="max-width:76ch;margin-bottom:12px">Explore source-authored placements with selectable, SHA-pinned <strong>technical model proxies</strong>. These are not certified original room bindings or approved room renders.</p>
 <div class="proxy-layout">
 <div><div class="proxy-stage" id="proxy-stage" aria-label="Partial source-derived room model projection"></div><p class="source-note" id="proxy-count"></p><p id="proxy-status" class="source-note" aria-live="polite">Loading source-pinned room geometry…</p></div>
 <div class="proxy-controls">
@@ -26,5 +25,6 @@ main{padding-top:40px}.proxy-layout{display:grid;grid-template-columns:minmax(0,
 <h2>Research model variants</h2><p class="source-note">The first choice is an alphabetical default for inspection, never a reconstruction verdict.</p>
 <div id="proxy-variants"></div>
 </div></div>
+<p class="source-warning"><strong>Source limitation:</strong> Parent-attached objects without independent transforms are deliberately omitted, and the accepted blanket v1.3 is unrecovered. This viewer invents no walls, floor shell, lighting or certified original asset bindings. Changing a variant is research, not artistic approval.</p>
 <p class="source-note">Source data: <a href="./room-proxy-review-data.json">auditable room proxy manifest</a>. The <a href="./reading-corner-study.html">Reading Corner</a> has its own separate research reconstruction. None of these studies is part of the curated exhibition.</p>
 </main><footer><div class="wrap">Sceneology · Source-bound research, without automatic artistic approval</div></footer></body></html>
