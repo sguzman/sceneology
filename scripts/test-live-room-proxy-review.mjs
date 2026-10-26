@@ -65,7 +65,8 @@ function snapshot(id,yaw,variant=null,showZones=false,bareBed=false,pillowTrial=
    "New bedding appears without source-proposal boundary");
   assert.ok(tag.includes('data-embedded-bed="'+expectedBedState+'"'),"Technical bed source mask state incorrect");
   assert.ok(tag.includes('data-withheld-bed-faces="'+(bareBed&&id!=="study-corner-v1.1"?12:0)+'"'),"Source pillow/blanket face filter must suppress exactly two original parts");
-  if(bareBed)assert.ok(dom.includes("no replacement pillow or blanket has been placed"),"Experimental bed mask disclosure missing");
+  if(bareBed&&!pillowTrial)assert.ok(dom.includes("no replacement pillow or blanket has been placed"),"Bare-bed-only disclosure missing");
+  if(bareBed&&pillowTrial)assert.ok(dom.includes("original file and missing blanket remain unchanged"),"Separate pillow source-boundary disclosure missing");
   assert.ok(tag.includes('data-rendered="true"'),"Source proxies did not render");
   assert.ok(tag.includes('data-yaw="'+yaw+'"'),"Camera setting ignored");
   const guidedCount=showZones?(id==="cozy-bedroom-study-v1.3"?5:4):0;
