@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
+import {extractSourceRoomZones} from "./parse-room-source-zones.mjs";
 
 const root=path.resolve(import.meta.dirname,"..");
 const read=rel=>JSON.parse(fs.readFileSync(path.join(root,rel),"utf8"));
@@ -26,6 +27,7 @@ for(const scene of manifest.scenes.filter(x=>Object.hasOwn(counts,x.id))){
  assert.equal(sha(bytes),scene.blob_sha,"Historical room source mutated: "+scene.id);
  const text=bytes.toString("utf8");
  assert.match(text,/^status:\s*accepted\s*$/m);
+ const authoredRegions=extractSourceRoomZones(text);
  const body=text.split("\ninstances:\n")[1]?.split("\nclearance_contract:\n")[0];
  assert.ok(body,"Missing historical instances "+scene.id);
  const matches=[...body.matchAll(/^  - id:\s*([a-z][a-z0-9-]*)\s*$/gm)];
@@ -73,6 +75,7 @@ for(const scene of manifest.scenes.filter(x=>Object.hasOwn(counts,x.id))){
  result.rooms.push({id:scene.id,source_scene:scene.path,source_sha:scene.blob_sha,
   source_composition_historically_accepted:true,renderer_aesthetic_accepted:false,
   placed,omitted_parented:parented,total_original_instances:scene.instance_references,
+  region_guide:authoredRegions,
   substituted_unrecovered_blanket:false});
 }
 assert.equal(result.rooms.length,3);

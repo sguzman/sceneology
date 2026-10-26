@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import crypto from "node:crypto";
 import path from "node:path";
+import {extractSourceRoomZones} from "./parse-room-source-zones.mjs";
 const root=path.resolve(import.meta.dirname,"..");
 const original="scenes/composition-sources/reading-corner-v1.1.scene.yml";
 const originalSha="89d925c4a78393331bd5c8921398fea880c21034";
@@ -10,6 +11,7 @@ const hash=crypto.createHash("sha1").update(Buffer.from("blob "+sourceBytes.leng
 assert.equal(hash,originalSha,"Accepted reading-corner source changed");
 const yml=sourceBytes.toString("utf8");
 assert.match(yml,/^status: accepted$/m);
+const regionGuide=extractSourceRoomZones(yml);
 const orbit=JSON.parse(fs.readFileSync(path.join(root,"site/family-orbit-data.json"),"utf8"));
 assert.equal(orbit.models.length,30);
 assert.equal(orbit.automatic_gallery_approval,false);
@@ -56,6 +58,7 @@ const manifest={
  representative_asset_choices_from_separate_unapproved_occupancy_study:true,
  artistic_approval:false, gallery_approved:false,
  complete_room:false, floor_walls_lighting_reconstructed:false,
+ region_guide:regionGuide,
  instances:items,omitted_parented_instances:unpositioned
 };
 const out=path.join(root,"site/reading-corner-study-data.json");
