@@ -102,12 +102,13 @@ function projectArtifact(source,identity){
   const verts=[[-bw/2,-h/2,-bd/2],[bw/2,-h/2,-bd/2],[bw/2,-h/2,bd/2],[-bw/2,-h/2,bd/2],
     [-tw/2,h/2,-td/2],[tw/2,h/2,-td/2],[tw/2,h/2,td/2],[-tw/2,h/2,td/2]]
    .map(v=>{const w=world(p.id);return add(rotate(v,w.angles),w.position)});
-  for(const indices of [[0,4,5,1],[1,5,6,2],[2,6,7,3],[3,7,4,0],[4,7,6,5]]){
+  // Include the underside: a rotated lamp head can face the camera from below.
+  for(const [faceIndex,indices] of [[0,1,2,3],[0,4,5,1],[1,5,6,2],[2,6,7,3],[3,7,4,0],[4,7,6,5]].entries()){
    const vs=indices.map(i=>verts[i]);
    const normal=unit(cross(sub(vs[1],vs[0]),sub(vs[2],vs[0])));
    if(dot(normal,camera)<.08)continue;
    const f=.58+.42*Math.max(0,dot(normal,light));
-   faces.push({vs,depth:dot(vs.reduce((a,b)=>add(a,b),[0,0,0]).map(v=>v/4),camera),color:shade(materials.get(p.colorRef),f),stroke:shade(materials.get(p.colorRef),f*.78)});
+   faces.push({partId:p.id,faceIndex,vs,depth:dot(vs.reduce((a,b)=>add(a,b),[0,0,0]).map(v=>v/4),camera),color:shade(materials.get(p.colorRef),f),stroke:shade(materials.get(p.colorRef),f*.78)});
   }
  }
  assert.ok(faces.length>=8,"Sparse SVG geometry "+identity);
@@ -118,7 +119,7 @@ function projectArtifact(source,identity){
  const svg=['<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 640" role="img" aria-label="Source-derived '+identity+' preview">',
  '<defs><linearGradient id="bg" x2="0" y2="1"><stop stop-color="#edf2f2"/><stop offset="1" stop-color="#cfdbdc"/></linearGradient></defs>',
  '<rect width="960" height="640" fill="url(#bg)"/>','<ellipse cx="480" cy="535" rx="225" ry="27" fill="#778995" opacity=".12"/>'];
- for(const f of faces)svg.push('<polygon points="'+f.vs.map(v=>(ox+dot(v,right)*scale).toFixed(1)+","+(oy-dot(v,up)*scale).toFixed(1)).join(" ")+'" fill="'+f.color+'" stroke="'+f.stroke+'" stroke-width=".65" stroke-linejoin="round"/>');
+ for(const f of faces)svg.push('<polygon data-part="'+f.partId+'" data-face="'+f.faceIndex+'" points="'+f.vs.map(v=>(ox+dot(v,right)*scale).toFixed(1)+","+(oy-dot(v,up)*scale).toFixed(1)).join(" ")+'" fill="'+f.color+'" stroke="'+f.stroke+'" stroke-width=".65" stroke-linejoin="round"/>');
  svg.push("</svg>");
  return{svg:svg.join("\n")+"\n",polygons:faces.length,parts:[...parts.values()].filter(p=>p.geometry).length};
 }
@@ -128,6 +129,7 @@ for(const record of manifest.items){
  assert.equal(sourceSha,record.sha,"Family source modified without review: "+record.key);
  assert.equal(record.new_renderer_visual_approval,false,"New renderer was auto-approved");
  const result=projectArtifact(bytes.toString("utf8"),record.key);
+ if(record.key==="task-lamp")assert.match(result.svg,/<polygon data-part="emitter" data-face="0"/,"The task lamp's source-defined downward-facing emitter must be visible");
  const name=path.basename(record.public_path,".sc3d.yml")+".svg";
  fs.writeFileSync(path.join(output,name),result.svg);
  console.log(record.key+": "+result.parts+" authored shapes, "+result.polygons+" source-derived preview faces (review-only)");

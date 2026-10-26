@@ -17,6 +17,7 @@ for(const model of manifest.items){
  const source=fs.readFileSync(svg,"utf8");
  assert.ok(source.startsWith("<svg"),"Invalid SVG "+model.key);
  const polygons=(source.match(/<polygon /g)||[]).length;
+ if(model.key==="task-lamp")assert.match(source,/<polygon data-part="emitter" data-face="0"/,"Downward emitter face missing from task lamp preview");
  assert.ok(polygons>=8,"Sparse geometric preview "+model.key);
  const withoutSvgNamespace=source.replace('xmlns="http://www.w3.org/2000/svg"',"");
  assert.ok(!/<(?:image|foreignObject|script)\b|https?:\/\//i.test(withoutSvgNamespace),"External asset in generated review preview");
