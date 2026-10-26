@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "id": "step-versus-linear-toy",
+  "question": "Are step and linear interpolation mathematically identical at a midpoint?",
+  "hypothesis": "A step change from 0 to 1 and linear interpolation from 0 to 1 agree at the midpoint.",
+  "method": "Compare both interpolation definitions at t = 0.5 with endpoints 0 and 1, without running any renderer.",
+  "inputs": [
+    "t=0",
+    "t=0.5",
+    "t=1",
+    "start=0",
+    "end=1"
+  ],
+  "observations": [
+    {
+      "kind": "measurement",
+      "description": "By definition, step returns 0 before t=1 while linear interpolation returns 0.5 at t=0.5.",
+      "value": 0.5,
+      "unit": "linear-midpoint"
+    }
+  ],
+  "outcome": "The stated equivalence fails for the toy inputs; the mathematical outputs differ.",
+  "status": "failed",
+  "limitations": [
+    "Synthetic teaching fixture, not a claim about historical Sceneology research or a rendering test."
+  ],
+  "reproduction": {
+    "command": "Compare the two mathematical definitions at t=0.5",
+    "environment": "pen and paper",
+    "expected": "step=0, linear=0.5"
+  }
+}
