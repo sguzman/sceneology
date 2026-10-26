@@ -32,7 +32,9 @@ for(let i=0;i<starts.length;i++){
  if(!transform){
   const relation=text.match(/^\s*parent_relation:\s*(\S+)/m)?.[1];
   assert.ok(relation&&!Object.hasOwn(references,id),"Ambiguous position "+id);
-  unpositioned.push({id,alias,parent_relation:relation,geometry_omitted:true});
+  const parent=relation.startsWith("on_")?relation.slice(3):null;
+  assert.ok(parent&&/^[a-z][a-z0-9-]*$/.test(parent),"Unexpected parent semantic "+id);
+  unpositioned.push({id,alias,parent_relation:relation,parent_instance:parent,relation_resolved_to_source_instance:true,geometry_omitted:true});
   continue;
  }
  const translate=transform[1].split(",").map(Number);
@@ -44,6 +46,7 @@ for(let i=0;i<starts.length;i++){
 }
 assert.equal(items.length,6);
 assert.deepEqual(unpositioned.map(x=>x.id),["lumbar-pillow","shelf-books"]);
+for(const attachment of unpositioned)assert.ok(items.some(item=>item.id===attachment.parent_instance),"Unresolved source parent "+attachment.id);
 const manifest={
  schema_version:1,
  project:"sceneology",study:"reading-corner-explicit-placement-reconstruction",

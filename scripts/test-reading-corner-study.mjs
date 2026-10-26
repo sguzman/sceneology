@@ -16,6 +16,12 @@ assert.equal(room.complete_room,false);
 assert.equal(room.floor_walls_lighting_reconstructed,false);
 assert.equal(room.instances.length,6);
 assert.deepEqual(room.omitted_parented_instances.map(x=>x.id),["lumbar-pillow","shelf-books"]);
+for(const attachment of room.omitted_parented_instances){
+ assert.equal(attachment.parent_relation,"on_"+attachment.parent_instance);
+ assert.equal(attachment.relation_resolved_to_source_instance,true);
+ assert.ok(room.instances.some(item=>item.id===attachment.parent_instance));
+ assert.ok(!("translate" in attachment),"Unreviewed attachment acquired an invented position");
+}
 assert.equal(new Set(room.instances.map(x=>x.id)).size,6);
 for(const entry of room.instances){
  const model=byKey.get(entry.model_key);

@@ -3,6 +3,7 @@ const status=document.getElementById("reading-status");
 const yaw=document.getElementById("reading-yaw");
 const elevation=document.getElementById("reading-elevation");
 const caption=document.getElementById("reading-label");
+const attachments=document.getElementById("reading-attachments");
 const add=(a,b)=>a.map((v,i)=>v+b[i]),sub=(a,b)=>a.map((v,i)=>v-b[i]);
 const dot=(a,b)=>a.reduce((v,x,i)=>v+x*b[i],0);
 const cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];
@@ -74,6 +75,12 @@ try{
     room.complete_room!==false||modelData.models?.length!==30)
   throw Error("Room completeness or approval boundary changed");
  library=new Map(modelData.models.map(x=>[x.key,x]));
+ attachments.replaceChildren(...room.omitted_parented_instances.map(item=>{
+  const li=document.createElement("li");
+  li.dataset.omittedInstance=item.id;
+  li.textContent=item.id+" depends on "+item.parent_instance+" ("+item.parent_relation+"); exact placement unknown";
+  return li;
+ }));
  const params=new URLSearchParams(location.search);
  const preferred=Number(params.get("yaw"));
  if(params.has("yaw")&&Number.isFinite(preferred)&&preferred>=-180&&preferred<=180)yaw.value=String(preferred);
