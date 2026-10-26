@@ -2,11 +2,15 @@
 
 The public ontology describes what a scene and its parts **mean**, independently of any particular renderer.
 
-- [Scenes](SCENES.md) — meaning, composition, spatial and temporal structure, realizations.
+- [Scenes](SCENES.md) — starting scene vocabulary.
+- [Full human-readable v1 representation](REPRESENTATION.md) — dimension, spatial grammar, animation, interaction, effects, audio, experiments and evidence boundaries.
+- [Scene schema](schemas/scene-v1.schema.json), [entity schema](schemas/entity-v1.schema.json), [experiment schema](schemas/experiment-v1.schema.json) — versioned machine-readable definitions.
+- [Synthetic fixtures](examples/) — standalone 2D, motion, 3D, interaction, reusable entity, and failed-hypothesis examples.
+- [Semantic checker](../scripts/check-ontology.mjs) — reference, dimension and timeline integrity with negative controls.
 - [Experiments](EXPERIMENTS.md) — reproducible inquiry, outcomes and non-artistic quality statuses.
 - [Record schema](schemas/record-v1.schema.json) — initial machine-readable catalog record contract.
 
-This is a minimal **new public foundation**, not a claim that an existing private ontology has already been migrated. More specialized grammars (constructive 3D, rigging, effects, audio and others) will be integrated only after separate content screening and technical parity checks.
+This is a **new public foundation**, not a claim that existing private ontology has already been migrated or brought into semantic parity. More specialized grammars (constructive 3D, rigging, effects, audio and others) will be integrated only after separate content screening and technical parity checks.
 
 ## Separation of layers
 
