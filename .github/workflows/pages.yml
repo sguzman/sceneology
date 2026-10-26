@@ -56,6 +56,10 @@ jobs:
         env:
           SCENEOLOGY_SITE_URL: ${{ steps.deployment.outputs.page_url }}
         run: node scripts/test-live-room-diagnostics.mjs
+      - name: Verify bed-cover reconstruction comparison after deployment
+        env:
+          SCENEOLOGY_SITE_URL: ${{ steps.deployment.outputs.page_url }}
+        run: node scripts/test-live-blanket-review.mjs
       - name: Preserve website verification evidence
         if: always()
         uses: actions/upload-artifact@v4
@@ -66,5 +70,6 @@ jobs:
             artifacts/model-site/
             artifacts/live-family-review/
             artifacts/live-room-review/
+            artifacts/live-blanket-review/
           if-no-files-found: warn
           retention-days: 7
