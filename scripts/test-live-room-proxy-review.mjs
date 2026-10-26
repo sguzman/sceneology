@@ -67,7 +67,8 @@ function snapshot(id,yaw,variant=null,showZones=false){
   assert.equal((dom.match(/class="proxy-choice"/g)||[]).length,expected.placed.length);
   const expectedPolygons=guidedCount+(expectedFootprint==="original-source-only"?1:0);
   assert.equal((dom.match(/data-zone-guide="/g)||[]).length,expectedPolygons);
-  assert.equal((dom.match(/data-zone-label="/g)||[]).length,expectedPolygons);
+  assert.equal((dom.match(/data-zone-label="/g)||[]).length,0,"Source zone text is not allowed to cover geometry");
+  if(showZones)assert.ok(dom.includes("Source guides:"),"Zone names missing from unobstructed stage caption");
   const reductions=JSON.parse(fs.readFileSync(path.join(root,"site/room-variant-reduction.json"),"utf8"));
   const expectedReductions=reductions.rooms.find(r=>r.id===id).one_change_reductions;
   assert.equal((dom.match(/data-reduction="/g)||[]).length,expectedReductions.length);

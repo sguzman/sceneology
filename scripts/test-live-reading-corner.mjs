@@ -49,7 +49,8 @@ function sample(yaw,zones=false){
   assert.ok(stage.includes('data-zone-count="'+(zones?4:0)+'"'),"Reading Corner source-zone count changed");
   assert.ok(stage.includes('data-footprint="not-shown"'),"Reading Corner falsely acquired a sourced room outline");
   assert.equal((dom.match(/data-zone-guide="/g)||[]).length,zones?4:0);
-  assert.equal((dom.match(/data-zone-label="/g)||[]).length,zones?4:0);
+  assert.equal((dom.match(/data-zone-label="/g)||[]).length,0,"Source zone text should be below scene, not on models");
+  if(zones)assert.ok(dom.includes("Source guides:"),"Reading zone legend absent from caption");
   const top=Number(stage.match(/data-viewport-top="(-?\d+)"/)?.[1]);
   assert.ok(Number.isFinite(top)&&top>50&&top<600,"Room visual stage pushed below desktop first viewport: "+top);
   assert.ok(!dom.includes("Unable to reconstruct research layout:"));

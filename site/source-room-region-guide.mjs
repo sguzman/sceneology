@@ -37,12 +37,8 @@ export function renderZoneGuide(polygons,project){
   const fill=isFootprint?"none":"#61a8a1";
   const opacity=isFootprint?0:0.035;
   const stroke=isFootprint?"#426174":"#2d7d71";
-  const label=p.id.replace(/-/g," ");
-  const centroid=corners.reduce((p,v)=>[p[0]+v[0]/4,p[1]+v[1]/4],[0,0]);
-  return '<polygon data-zone-guide="'+p.id+'" points="'+points+'" fill="'+fill+
+  return '<polygon data-zone-guide="'+p.id+'" aria-label="Source-only planning guide '+p.id+'" points="'+points+'" fill="'+fill+
    '" fill-opacity="'+opacity+'" stroke="'+stroke+'" stroke-width="'+(isFootprint?2.1:1.5)+
-   '" stroke-dasharray="'+(isFootprint?"9 6":"6 5")+'"/>'+
-   '<text data-zone-label="'+p.id+'" x="'+centroid[0].toFixed(1)+'" y="'+centroid[1].toFixed(1)+
-   '" fill="#275e59" font-size="14" text-anchor="middle" font-family="sans-serif">'+label+"</text>";
+   '" stroke-dasharray="'+(isFootprint?"9 6":"6 5")+'"/>';
  }).join("");
 }

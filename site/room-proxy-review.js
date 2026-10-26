@@ -75,6 +75,8 @@ function render(){
  stage.dataset.zoneCount=String(sourceZones.filter(z=>z.kind==="zone-only").length);
  stage.dataset.footprint=sourceZones.some(z=>z.kind==="explicit-footprint")?"original-source-only":"not-shown";
  counter.textContent=current.placed.length+" placed furniture proxies · "+current.omitted_parented.length+" parent-attached objects deliberately omitted · yaw "+yaw+"°";
+ if(sourceZones.length)counter.textContent+=" · Source guides: "+current.region_guide.zones.map(z=>z.id.replaceAll("-"," ")).join(", ")+
+  (current.region_guide.source_room_footprint?" · source footprint "+current.region_guide.source_room_footprint.join(" × "):" · no source room footprint");
  const geometry=current.placed.map(item=>{
   const key=chosen.get(item.id)||item.default_model_key;
   const match=item.choices.find(c=>c.key===key);

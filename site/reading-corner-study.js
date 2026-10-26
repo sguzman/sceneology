@@ -99,6 +99,8 @@ function draw(){
  stage.dataset.support=aligned?"alignment-proposal":characterShown?"authored-unaligned":"hidden";
  stage.dataset.characterY=characterShown?String(characterTranslation[1]):"none";
  caption.textContent="Six authored positions · "+room.omitted_parented_instances.length+" deliberately omitted attachments · camera "+yawDeg+"° / "+elevationDeg+"°";
+ if(sourceZones.length)caption.textContent+=" · Source guides: "+room.region_guide.zones.map(z=>z.id.replaceAll("-"," ")).join(", ")+
+  " · no source room footprint";
  const audit=analyzeProxyGeometry(drawn,library);
  clearance.dataset.candidates=String(audit.total_candidate_pairs);
  clearance.dataset.status="technical-only";
