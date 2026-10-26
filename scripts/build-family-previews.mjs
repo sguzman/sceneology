@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
+import {localRigid,composeRigid,transformPoint} from "./rigid-transform.mjs";
 
 const root=path.resolve(import.meta.dirname,"..");
 const manifest=JSON.parse(fs.readFileSync(path.join(root,"catalog/accepted-family-sources.json"),"utf8"));
@@ -24,12 +25,6 @@ const sub=(a,b)=>a.map((v,i)=>v-b[i]);
 const dot=(a,b)=>a.reduce((s,v,i)=>s+v*b[i],0);
 const cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];
 const unit=a=>{const n=Math.hypot(...a);assert.ok(n>0);return a.map(v=>v/n);};
-function rotate(p,deg){
- const [rx,ry,rz]=deg.map(v=>v*Math.PI/180);let[x,y,z]=p;
- let c=Math.cos(rx),s=Math.sin(rx);[y,z]=[y*c-z*s,y*s+z*c];
- c=Math.cos(ry);s=Math.sin(ry);[x,z]=[x*c+z*s,-x*s+z*c];
- c=Math.cos(rz);s=Math.sin(rz);return[x*c-y*s,x*s+y*c,z];
-}
 function parseParts(source){
  const raw=source.slice(source.indexOf("\nparts:\n")+7);
  assert.ok(raw.length>0&&source.includes("\nparts:\n"),"No parts section");
@@ -81,11 +76,12 @@ function projectArtifact(source,identity,minimumFaces=8){
   if(transforms.has(id))return transforms.get(id);
   assert.ok(parts.has(id)&&!visiting.has(id),"Parent missing/cyclic: "+id);
   const p=parts.get(id);
-  let t={position:p.translate,angles:p.rotate};
+  // Rotation matrices compose in hierarchy order; Euler angles cannot simply be added.
+  const local=localRigid(p.translate,p.rotate);
+  let t=local;
   if(p.parent){
     const parent=world(p.parent,new Set([...visiting,id]));
-    // Apply child rotation and translation before the parent's transforms.
-    t={position:add(rotate(t.position,parent.angles),parent.position),angles:t.angles.map((x,i)=>x+parent.angles[i])};
+    t=composeRigid(parent,local);
   }
   transforms.set(id,t);return t;
  }
@@ -101,7 +97,7 @@ function projectArtifact(source,identity,minimumFaces=8){
   assert.ok([bw,bd,tw,td,h].every(x=>Number.isFinite(x)&&x>0),"Invalid primitive dimensions "+p.id);
   const verts=[[-bw/2,-h/2,-bd/2],[bw/2,-h/2,-bd/2],[bw/2,-h/2,bd/2],[-bw/2,-h/2,bd/2],
     [-tw/2,h/2,-td/2],[tw/2,h/2,-td/2],[tw/2,h/2,td/2],[-tw/2,h/2,td/2]]
-   .map(v=>{const w=world(p.id);return add(rotate(v,w.angles),w.position)});
+   .map(v=>transformPoint(world(p.id),v));
   // Include the underside: a rotated lamp head can face the camera from below.
   for(const [faceIndex,indices] of [[0,1,2,3],[0,4,5,1],[1,5,6,2],[2,6,7,3],[3,7,4,0],[4,7,6,5]].entries()){
    const vs=indices.map(i=>verts[i]);
