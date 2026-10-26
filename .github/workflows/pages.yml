@@ -76,6 +76,10 @@ jobs:
         env:
           SCENEOLOGY_SITE_URL: ${{ steps.deployment.outputs.page_url }}
         run: node scripts/test-live-family-orbit.mjs
+      - name: Verify partial Reading Corner reconstruction in Chrome
+        env:
+          SCENEOLOGY_SITE_URL: ${{ steps.deployment.outputs.page_url }}
+        run: node scripts/test-live-reading-corner.mjs
       - name: Preserve website verification evidence
         if: always()
         uses: actions/upload-artifact@v4
@@ -89,5 +93,6 @@ jobs:
             artifacts/live-blanket-review/
             artifacts/live-quest-girl-motion/
             artifacts/live-family-orbit/
+            artifacts/live-reading-corner/
           if-no-files-found: warn
           retention-days: 7
