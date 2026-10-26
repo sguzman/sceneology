@@ -8,7 +8,7 @@ Its domain spans 2D, 3D and hybrid scenes: composition, objects, spatial relatio
 
 **Technical repository:** Sceneology contains working implementation, prototypes, experiments, successes, failures, diagnostic reports, engineering queues, technical evaluations, tests, schemas and revision history. Failure is a legitimate research outcome; it does not disqualify material from the repository.
 
-**Curated website:** The public gallery at [sguzman.github.io/sceneology](https://sguzman.github.io/sceneology/) shows **only works explicitly selected and approved by the project owner**. A working implementation, passed test, or completed experiment is not approval for showcase inclusion. The gallery includes 21 previously reviewed works as of October 26, 2026, while unapproved and failed variants remain outside the exhibition.
+**Curated website:** The public gallery at [sguzman.github.io/sceneology](https://sguzman.github.io/sceneology/) shows **only works explicitly selected and approved by the project owner**. A working implementation, passed test, or completed experiment is not approval for showcase inclusion. The gallery contains a source-backed, owner-selected set of environments, individual models and a character; [its current inventory](docs/CURRENT-COLLECTION.md) is grounded in the live allowlist. Unapproved and failed variants remain outside the exhibition.
 
 This project is self-contained: public code, ontology, metadata, viewers and published exhibits must not require access to any nonpublic repository.
 

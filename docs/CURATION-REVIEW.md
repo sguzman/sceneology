@@ -1,6 +1,6 @@
 # 🖼️ Sceneology — owner curation review
 
-This page presents **real, playable technical candidates for your visual judgment**. It is *not* the public exhibition. Nothing on this page selects an item for the homepage gallery. The authoritative allowlist is still [showcase.json](../catalog/showcase.json), which has no approved IDs.
+This page presents **real, playable technical candidates for your visual judgment**. It is *not* the public exhibition. Nothing on this page selects an item for the homepage gallery. The authoritative allowlist is still [showcase.json](../catalog/showcase.json), which now records the separately approved public exhibits. This page documents an **earlier unapproved research-candidate review**, not the current exhibition.
 
 ## Technically available, not aesthetically endorsed
 
@@ -17,7 +17,7 @@ This page presents **real, playable technical candidates for your visual judgmen
 
 The [owner-review workflow run](https://github.com/sguzman/sceneology/actions/runs/40351750015) produced a GitHub Actions artifact named **sceneology-owner-review-contact-sheet**, with four real browser PNG captures, a responsive `index.html` comparison sheet, and a machine-readable review manifest. Download and open the artifact to compare the current results visually; it is a review bundle and **is not published in the Sceneology gallery**.
 
-The screenshots were rendered in automated Chrome software WebGL and verified by first-draw status. They do not replace using the interactive viewers or provide human approval. The gallery remains empty until an explicit owner selection, a genuine thumbnail, and a final approved card are established.
+The screenshots were rendered in automated Chrome software WebGL and verified by first-draw status. They do not replace using the interactive viewers or provide human approval. This earlier preview package did not itself grant approval; the currently approved works are recorded separately in [the current collection](CURRENT-COLLECTION.md).
 
 ## Selection procedure
 
@@ -32,4 +32,4 @@ The screenshots were rendered in automated Chrome software WebGL and verified by
 
 The six real HTML viewer files and the 2D runtime are checked for byte-exact HTTPS deployment in the Pages workflow. Four nonfailed candidates are linked above. Real WebGL2 browser screenshot smoke and test logs are recorded in [release evidence](RELEASE-EVIDENCE.md).
 
-There is deliberately no fictional placeholder artwork and no automatic thumbnail copied into the gallery. A genuine curated thumbnail is only necessary for an explicitly approved exhibit; the gallery remains empty until then.
+There is deliberately no fictional placeholder artwork and no automatic thumbnail copied into the gallery. A genuine curated thumbnail is only necessary for an explicitly approved exhibit; the current exhibition is managed separately from this historical review shortlist.
