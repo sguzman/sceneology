@@ -9,7 +9,9 @@ const root = path.resolve(import.meta.dirname, "..");
 const runs = [
   { id:"daynight", file:"experiments/backyard-daynight-legacy-webgl2.html", statusId:"dn-status", errorId:"dn-error", ready:"181 archived geometry parts" },
   { id:"rejected-outline", file:"experiments/backyard-outline-inverted-hull-rejected.html", statusId:"sl-status", errorId:"sl-error", ready:"181 archival parts" },
-  { id:"screen-outline", file:"experiments/backyard-outline-screen-space-v2.html", statusId:"sl-status", errorId:"sl-error", ready:"181 archival parts" }
+  { id:"screen-outline", file:"experiments/backyard-outline-screen-space-v2.html", statusId:"sl-status", errorId:"sl-error", ready:"181 archival parts" },
+  { id:"rain-wind", file:"experiments/backyard-rain-wind-archival.html", statusId:"rain-status", errorId:"rain-error", ready:"181 archival geometry parts" },
+  { id:"snow", file:"experiments/backyard-snow-archival.html", statusId:"snow-status", errorId:"snow-error", ready:"181 archival geometry parts" }
 ];
 const outDir = path.resolve(process.env.SCENEOLOGY_BROWSER_ARTIFACTS || path.join(root,"artifacts","browser-smoke"));
 fs.mkdirSync(outDir, { recursive:true });
