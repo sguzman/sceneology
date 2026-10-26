@@ -70,6 +70,7 @@ function draw(){
  stage.innerHTML=shapes.join("");
  stage.dataset.rendered="true";stage.dataset.faceCount=String(visible.length);
  stage.dataset.yaw=String(yawDeg);stage.dataset.elevation=String(elevationDeg);
+ stage.dataset.viewportTop=String(Math.round(stage.getBoundingClientRect().top));
  stage.dataset.occupancy=characterShown?"research-candidate":"hidden";
  caption.textContent="Six authored positions · "+room.omitted_parented_instances.length+" deliberately omitted attachments · camera "+yawDeg+"° / "+elevationDeg+"°";
  const audit=analyzeProxyGeometry(drawn,library);
