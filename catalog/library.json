@@ -45,7 +45,16 @@
         "outline",
         "failed",
         "archival"
-      ]
+      ],
+      "provenance": {
+        "origin": "previously-public",
+        "public_source": "https://github.com/sguzman/renderarium/blob/main/experiments/interactive-shaders/backyard-glsl-v1-rejected-inverted-hull-outline-2026-10-14.html",
+        "source_blob": "216ebee8a0f26e944e8db4e433657d5757b0820f",
+        "reviewed_on": "2026-10-26",
+        "rights_basis": "owner-controlled-original-implementation",
+        "dependency_closure": "self-contained",
+        "notes": "Source text matches the public source except the visible archival status label; failed artistic result not a runtime failure."
+      }
     },
     {
       "id": "backyard-outline-screen-space-v2",
@@ -64,7 +73,16 @@
         "outline",
         "experimental",
         "archival"
-      ]
+      ],
+      "provenance": {
+        "origin": "previously-public",
+        "public_source": "https://github.com/sguzman/renderarium/blob/main/experiments/interactive-shaders/backyard-glsl-v2-screen-space-outlines-2026-10-14.html",
+        "source_blob": "0e90e32b5af871f14090f2f31d4a9c6dd0263937",
+        "reviewed_on": "2026-10-26",
+        "rights_basis": "owner-controlled-original-implementation",
+        "dependency_closure": "self-contained",
+        "notes": "Source text matches the public source except the visible archival status label; unapproved experimental alternative."
+      }
     }
   ]
 }
