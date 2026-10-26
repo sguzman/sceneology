@@ -550,6 +550,21 @@
       "assets_class": "constructive-3d-source-only",
       "review_summary": "Exact accepted source bytes from owner-controlled historical PC component; no executable render artifact or private review discussion copied.",
       "limitations": "The SC3D text has unresolved public rendering/assembly transitive dependencies and must not be auto-exhibited."
+    },
+    {
+      "id": "approved-model-front-fan-carrier",
+      "path": "models/front-fan-carrier-review.html",
+      "git_blob_sha": "07e89ae3d8380e3b632b15e70766c059dc9e83a4",
+      "kind": "object",
+      "technical_status": "archived",
+      "rights": "original",
+      "source_origin": "cleared-transfer",
+      "source_blob": null,
+      "required_local_files": [],
+      "external_resources": [],
+      "assets_class": "self-contained-constructive-pc-assembly-viewer",
+      "review_summary": "Previously human accepted exact corrected two-fan carrier geometry (35 components) and its 515-mesh assembly context; standalone browser first draw and screenshot inspected, no external assets.",
+      "limitations": "The original crossbar-interference revision was rejected; this entry only covers the corrected scoped assembly, not manufacturing tolerances or all PC components."
     }
   ]
 }

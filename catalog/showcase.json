@@ -23,6 +23,7 @@
     "approved-model-desktop-cpu",
     "approved-model-claw-machine",
     "approved-model-power-supply",
-    "approved-model-pc-chassis"
+    "approved-model-pc-chassis",
+    "approved-model-front-fan-carrier"
   ]
 }

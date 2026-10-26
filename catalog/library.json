@@ -921,6 +921,32 @@
         "dependency_closure": "self-contained",
         "notes": "Self-contained source text only; transitive material, renderer, motion and assembly dependencies remain pending for visual exhibit."
       }
+    },
+    {
+      "id": "approved-model-front-fan-carrier",
+      "title": "Dual-Fan Front Snap Carrier",
+      "kind": "object",
+      "status": "archived",
+      "summary": "Previously accepted corrected 35-part snap carrier shown with two mounted 120 mm fans in the original front chassis assembly.",
+      "path": "models/front-fan-carrier-review.html",
+      "viewer": "models/front-fan-carrier-review.html",
+      "thumbnail": "site/model-previews/front-fan-carrier.png",
+      "rights": "original",
+      "limitations": "The user accepted the corrected carrier and its scoped assembly view, not the original obstructed variant or a manufacturing-ready design. Standalone viewer was browser-tested with software graphics; the full assembly does not constitute hardware fit certification.",
+      "tags": [
+        "3d",
+        "model",
+        "pc-assembly",
+        "owner-accepted",
+        "mechanical"
+      ],
+      "provenance": {
+        "origin": "cleared-transfer",
+        "reviewed_on": "2026-10-26",
+        "rights_basis": "Owner-authored corrected source and prior explicit acceptance of its 35-part design and 515-mesh assembly view",
+        "dependency_closure": "self-contained",
+        "notes": "Independent standalone 515-mesh browser viewer; corrected upper two-fan installation rather than the rejected crossbar design. Public card uses actual inspected Chrome image."
+      }
     }
   ]
 }
