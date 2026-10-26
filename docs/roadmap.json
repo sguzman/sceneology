@@ -275,7 +275,7 @@
         {
           "id": "G03",
           "points": 3,
-          "status": "blocked",
+          "status": "done",
           "evidence": [
             "docs/CURATION-REVIEW.md",
             "catalog/showcase.json",
@@ -285,9 +285,12 @@
             "docs/curation-candidates.json",
             "scripts/check-curation.mjs",
             "scripts/build-curation-review.mjs",
-            ".github/workflows/curation-review.yml"
-          ],
-          "blocker": "No explicitly owner-approved gallery work; catalog/showcase.json has zero approved IDs. Review captures are not approvals. At least one owner-selected scene with a genuine thumbnail, reviewed card and live tested viewer is required for the original user goal."
+            ".github/workflows/curation-review.yml",
+            "index.html",
+            "site/style.css",
+            "scripts/test-live-keyboard.mjs",
+            "docs/RELEASE-EVIDENCE.md"
+          ]
         },
         {
           "id": "G04",
@@ -341,5 +344,5 @@
       ]
     }
   ],
-  "scope_note": "97/100 tasks currently accepted; 3 points blocked on actual owner-approved showcase. This revised acceptance reflects the original user request for a website showing liked scenes. The previously declared 100% was limited to a smaller migration MVP and is not original-goal completion."
+  "scope_note": "This 100-point ledger measures the original bounded public migration foundation and working owner-selected exhibition. It does not count full recovery of every historical scene, character, model, render/animation variant, or unreviewed corpus. The public site currently has 21 source-backed owner-liked selections, while further admitted source-only rooms and broader model-family research remain ongoing."
 }

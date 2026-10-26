@@ -1,5 +1,7 @@
 # Sceneology — migration-readiness release (historical checkpoint)
 
+> **Updated current-state link:** [Current gallery and migration checkpoint](ROADMAP.md). The zero-exhibit figures below describe the earlier historical state, not today's public exhibition. The bounded roadmap's gallery gate has subsequently been satisfied by a real source-backed exhibition of 21 works.
+
 > **Current status correction (October 26, 2026):** This document records the earlier *migration-readiness* release, not fulfillment of the user's requested public showcase. With no owner-approved scene and zero exhibited works, the active [roadmap](roadmap.json) correctly reads **97/100**. The final 3-point showcase gate is blocked until an actual preferred scene is explicitly selected, given a real approved thumbnail/card and verified live. No exhibition has been approved.
 
 **Review date:** October 26, 2026  

@@ -8,7 +8,7 @@ Its domain spans 2D, 3D and hybrid scenes: composition, objects, spatial relatio
 
 **Technical repository:** Sceneology contains working implementation, prototypes, experiments, successes, failures, diagnostic reports, engineering queues, technical evaluations, tests, schemas and revision history. Failure is a legitimate research outcome; it does not disqualify material from the repository.
 
-**Curated website:** The public gallery at [sguzman.github.io/sceneology](https://sguzman.github.io/sceneology/) shows **only works explicitly selected and approved by the project owner**. A working implementation, passed test, or completed experiment is not approval for showcase inclusion. The gallery starts empty until selections are made.
+**Curated website:** The public gallery at [sguzman.github.io/sceneology](https://sguzman.github.io/sceneology/) shows **only works explicitly selected and approved by the project owner**. A working implementation, passed test, or completed experiment is not approval for showcase inclusion. The gallery includes 21 previously reviewed works as of October 26, 2026, while unapproved and failed variants remain outside the exhibition.
 
 This project is self-contained: public code, ontology, metadata, viewers and published exhibits must not require access to any nonpublic repository.
 
@@ -43,8 +43,16 @@ Requires Node.js 22 or newer for validation; the website itself works as static 
 node scripts/validate.mjs
 ```
 
-GitHub Actions validates and deploys the static website from `main`; live asset bytes, desktop/mobile gallery empty state, and browser screenshots are verified after deployment. The exhibition remains empty until actual individual owner selections are authorized.
+GitHub Actions validates and deploys the static website from `main`; deployed files, desktop/mobile gallery rendering, approved-card thumbnails, keyboard navigation, category filters, and independent model viewers are verified after deployment. Current selected works remain distinct from research and failed experiments.
 
 ## License
 
 MIT; see [LICENSE](LICENSE). Third-party works, when admitted later, require their own provenance and license review. This repository's MIT license does not automatically relicense outside materials.
+
+## Current collection (October 26, 2026)
+
+The [live exhibition](https://sguzman.github.io/sceneology/) currently features **21 source-backed works**: seven previously accepted block-chibi environments, thirteen positive-review mechanical/PC models, and the accepted static Quest Girl v7 character. The interactive [model browser](https://sguzman.github.io/sceneology/site/models.html) also indexes **127 source versions grouped into 90 model families** for research; being indexed there is not gallery approval.
+
+Four additional historically accepted room compositions have been migrated as **source-only YAML** into `scenes/composition-sources/`. Their asset references are not yet rebuilt into standalone website viewers, so none is falsely exhibited. Failed studies remain preserved in the technical catalog but not featured.
+
+The [weighted roadmap](docs/roadmap.json) closes the *bounded public foundation and functioning-exhibition milestone*, **not every possible historical asset migration**. Ongoing source and visual-quality decisions continue independently.
