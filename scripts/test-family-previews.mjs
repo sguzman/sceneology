@@ -18,7 +18,8 @@ for(const model of manifest.items){
  assert.ok(source.startsWith("<svg"),"Invalid SVG "+model.key);
  const polygons=(source.match(/<polygon /g)||[]).length;
  assert.ok(polygons>=8,"Sparse geometric preview "+model.key);
- assert.ok(!/<(?:image|foreignObject|script)\b|https?:\/\//i.test(source),"External asset in generated review preview");
+ const withoutSvgNamespace=source.replace('xmlns="http://www.w3.org/2000/svg"',"");
+ assert.ok(!/<(?:image|foreignObject|script)\b|https?:\/\//i.test(withoutSvgNamespace),"External asset in generated review preview");
  const file=path.join(destination,model.key+".png");
  const profile=fs.mkdtempSync(path.join(os.tmpdir(),"sceneology-family-"));
  try {
