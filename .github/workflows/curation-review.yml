@@ -1,0 +1,35 @@
+name: Create owner-only visual review contact sheet
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/curation-candidates.json'
+      - 'scripts/build-curation-review.mjs'
+      - 'catalog/library.json'
+      - 'catalog/showcase.json'
+      - 'experiments/*.html'
+      - '.github/workflows/curation-review.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  review-previews:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify release provenance and approval boundary
+        run: node scripts/validate.mjs
+      - name: Capture real scenes and produce owner review sheet
+        run: node scripts/build-curation-review.mjs
+      - name: Keep screenshots separate from curated live gallery
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sceneology-owner-review-contact-sheet
+          path: artifacts/curation-review/
+          if-no-files-found: warn
+          retention-days: 30
