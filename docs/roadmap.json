@@ -212,8 +212,15 @@
         {
           "id": "M04",
           "points": 4,
-          "status": "todo",
-          "evidence": []
+          "status": "done",
+          "evidence": [
+            "experiments/backyard-rain-wind-archival.html",
+            "experiments/backyard-snow-archival.html",
+            "experiments/WEATHER-STUDIES.md",
+            "catalog/library.json",
+            "scripts/test-webgl-browser.mjs",
+            "docs/RELEASE-EVIDENCE.md"
+          ]
         }
       ]
     },
