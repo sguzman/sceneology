@@ -1,0 +1,99 @@
+format: scenarium-sc3d-scene
+version: "0.1"
+
+id: block-chibi-reading-corner-occupancy-v1
+status: human-review-candidate
+scene_type: character-occupancy-proof
+style_family: block-chibi-room
+style_target: pokemon-quest-like-cozy-interior
+
+composition_grammar: taria:sc3d-scene-composition@0.2
+room_grammar: taria:block-chibi-room-grammar@0.5
+occupancy_grammar: taria:sc3d-character-occupancy@0.1
+
+provenance:
+  environment_predecessor: block-chibi-reading-corner-v1.1
+  environment_predecessor_status: accepted
+  character_asset: assets/constructive-3d/quest-girl-v7.sc3d.yml
+  character_status: accepted-static-character
+  carryover_policy:
+    - freeze_accepted_character_geometry
+    - freeze_accepted_reading_corner_composition
+    - change_only_character_occupancy_and_review_staging
+
+proof_intent:
+  primary:
+    - character_reads_as_physically_present_in_room
+    - character_scale_is_coherent_with_room
+    - character_occupies_preserved_stage_without_clutter
+    - character_is_visibly_supported
+    - character_does_not_intersect_major_furnishings
+    - accepted_face_readability_is_preserved
+  deferred:
+    - sitting
+    - chair_interaction
+    - locomotion
+    - expressive_motion_style
+
+character_stage:
+  center: [0.15, -1.05]
+  size: [2.55, 1.45]
+  support:
+    class: rug-covered-floor
+    support_plane_rule: topmost_walkable_covering
+    base_floor_y: 0.0
+    rug_counts_as_walkable_covering: true
+
+character:
+  id: quest-girl
+  asset_ref: accepted:quest-girl-v7
+  transform:
+    translate: [0.25, 0.0, -1.02]
+    rotate_y_deg: -8
+  support_relation:
+    interaction: standing
+    subject_anchor: supported_character_base
+    support_anchor: topmost_walkable_covering
+    contact_required: true
+  orientation:
+    role: neutral_character_stage_presentation
+    face_visibility_required: true
+  scale:
+    preserve_asset_scale: true
+    room_scale_coherence_required: true
+
+environment:
+  scene_ref: scenes/block-chibi-reading-corner-v1.1.scene.yml
+  representative_assets:
+    chair: assets/constructive-3d/chairs/block-chibi-wide-cute-chair-v1.sc3d.yml
+    lumbar-pillow: assets/constructive-3d/pillows/block-chibi-lumbar-pillow-v1.sc3d.yml
+    floor-lamp: assets/constructive-3d/lamps/block-chibi-tall-floor-lamp-v1.2.sc3d.yml
+    bookshelf: assets/constructive-3d/bookshelves/block-chibi-tall-bookcase-v1.1.sc3d.yml
+    window: assets/constructive-3d/windows/block-chibi-tall-two-pane-window-v1.sc3d.yml
+    plant: assets/constructive-3d/plants/block-chibi-tall-snake-plant-v1.sc3d.yml
+    rug: assets/constructive-3d/rugs/block-chibi-wide-area-rug-v1.sc3d.yml
+  note: >-
+    Representative family members are fixed for this occupancy proof so character placement
+    is reviewed against a deterministic realization of the already accepted composition.
+
+machine_checks:
+  - character_support_anchor_inside_character_stage
+  - character_base_contacts_topmost_walkable_covering
+  - no_character_major_furniture_intersection
+  - no_character_wall_intersection
+  - character_scale_unchanged
+  - environment_asset_transforms_unchanged_from_accepted_scene
+
+human_review:
+  questions:
+    - does_the_character_look_like_she_belongs_in_this_room
+    - does_her_scale_feel_right_against_the_chair_lamp_bookshelf_and_window
+    - do_her_feet_feel_planted_on_the_rug_instead_of_floating_or_sinking
+    - does_she_preserve_a_clear_reading_corner_and_circulation_path
+    - is_any_part_of_the_character_clipping_into_furniture_or_shell
+    - is_the_face_still_clear_and_cute_under_room_lighting
+  on_pass:
+    - accept_static_standing_occupancy_baseline
+    - advance_to_activity_approach_proof
+  on_fail:
+    - repair_occupancy_only_unless_character_geometry_regression_is_proven
