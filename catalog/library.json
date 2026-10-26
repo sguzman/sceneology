@@ -629,6 +629,81 @@
         "dependency_closure": "self-contained",
         "notes": "Only geometry, geometry colors, transforms and anchor structure migrated. Original private evaluation wording and source Git history excluded."
       }
+    },
+    {
+      "id": "approved-model-case-fan",
+      "title": "120 mm PWM Case Fan",
+      "kind": "object",
+      "status": "archived",
+      "summary": "Previously positively reviewed 120 mm axial case fan with source-authored spinning rotor.",
+      "path": "models/case-fan-review.html",
+      "viewer": "models/case-fan-review.html",
+      "thumbnail": "site/model-previews/case-fan.png",
+      "rights": "original",
+      "limitations": "The prior positive user review applies to a specifically reviewed in-chat visual source; the standalone HTML and current screenshot are related technical representations, not guaranteed pixel-identical. Hardware behavior and every interaction remain unverified.",
+      "tags": [
+        "object",
+        "model",
+        "constructive-3d",
+        "previously-approved"
+      ],
+      "provenance": {
+        "origin": "cleared-transfer",
+        "reviewed_on": "2026-10-26",
+        "rights_basis": "Original owner-controlled constructive model with positive scoped human review",
+        "dependency_closure": "self-contained",
+        "notes": "Individually screened standalone preview; positive visual assessment backed by historical review; generated headless Chrome thumbnail verified. No private review language copied."
+      }
+    },
+    {
+      "id": "approved-model-desktop-cpu",
+      "title": "Desktop LGA CPU",
+      "kind": "object",
+      "status": "archived",
+      "summary": "Previously accepted desktop processor design and refined die/heatspreader presentation.",
+      "path": "models/desktop-cpu-review.html",
+      "viewer": "models/desktop-cpu-review.html",
+      "thumbnail": "site/model-previews/desktop-cpu.png",
+      "rights": "original",
+      "limitations": "The prior positive user review applies to a specifically reviewed in-chat visual source; the standalone HTML and current screenshot are related technical representations, not guaranteed pixel-identical. Hardware behavior and every interaction remain unverified.",
+      "tags": [
+        "object",
+        "model",
+        "constructive-3d",
+        "previously-approved"
+      ],
+      "provenance": {
+        "origin": "cleared-transfer",
+        "reviewed_on": "2026-10-26",
+        "rights_basis": "Original owner-controlled constructive model with positive scoped human review",
+        "dependency_closure": "self-contained",
+        "notes": "Individually screened standalone preview; positive visual assessment backed by historical review; generated headless Chrome thumbnail verified. No private review language copied."
+      }
+    },
+    {
+      "id": "approved-model-claw-machine",
+      "title": "Miniature Claw Machine",
+      "kind": "object",
+      "status": "archived",
+      "summary": "Previously accepted miniature arcade claw machine with source-authored mechanics.",
+      "path": "models/claw-machine-review.html",
+      "viewer": "models/claw-machine-review.html",
+      "thumbnail": "site/model-previews/claw-machine.png",
+      "rights": "original",
+      "limitations": "The prior positive user review applies to a specifically reviewed in-chat visual source; the standalone HTML and current screenshot are related technical representations, not guaranteed pixel-identical. Hardware behavior and every interaction remain unverified.",
+      "tags": [
+        "object",
+        "model",
+        "constructive-3d",
+        "previously-approved"
+      ],
+      "provenance": {
+        "origin": "cleared-transfer",
+        "reviewed_on": "2026-10-26",
+        "rights_basis": "Original owner-controlled constructive model with positive scoped human review",
+        "dependency_closure": "self-contained",
+        "notes": "Individually screened standalone preview; positive visual assessment backed by historical review; generated headless Chrome thumbnail verified. No private review language copied."
+      }
     }
   ]
 }
