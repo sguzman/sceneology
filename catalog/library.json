@@ -850,6 +850,31 @@
         "dependency_closure": "self-contained",
         "notes": "Only accepted final source variation admitted; earlier unsuitable revisions not promoted. Browser screenshot inspected; no external media."
       }
+    },
+    {
+      "id": "atx-eps-power-cable-study",
+      "title": "ATX/EPS Cable Routing Study",
+      "kind": "object",
+      "status": "archived",
+      "summary": "Source-authored power-cable routing scene with context geometry and technically verified standalone WebGL viewer. Preserved for study, not featured as an aesthetic exhibit.",
+      "path": "models/atx-power-cables-review.html",
+      "viewer": "models/atx-power-cables-review.html",
+      "rights": "original",
+      "limitations": "Historical user review accepted a particular cable assembly with visible imperfections and revisions deferred. Current browser screenshot is sparse and visually incomplete as a showcase; do not infer an approved polished display.",
+      "tags": [
+        "3d",
+        "source-archive",
+        "pc-assembly",
+        "cables",
+        "technical-study"
+      ],
+      "provenance": {
+        "origin": "cleared-transfer",
+        "reviewed_on": "2026-10-26",
+        "rights_basis": "Owner-authored reviewed cable assembly with self-contained HTML viewer after removing source commentary",
+        "dependency_closure": "self-contained",
+        "notes": "Browser-generated screenshot was actually inspected; source study admitted but excluded from exhibition on visual-quality grounds."
+      }
     }
   ]
 }

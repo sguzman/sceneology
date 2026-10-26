@@ -505,6 +505,21 @@
       "assets_class": "self-contained-authored-WebGL-PC-model",
       "review_summary": "Accepted historical PC component with exact source SHA and real Chrome-rendered screenshot; no private source chat imported.",
       "limitations": "Screenshots and appearance approval do not validate fabrication, pinouts, electrical operation or assembled-system compatibility."
+    },
+    {
+      "id": "atx-eps-power-cable-study",
+      "path": "models/atx-power-cables-review.html",
+      "git_blob_sha": "8d23d196536e14d5cd736918b37ce7d6fc2729df",
+      "kind": "object",
+      "technical_status": "archived",
+      "rights": "original",
+      "source_origin": "cleared-transfer",
+      "source_blob": null,
+      "required_local_files": [],
+      "external_resources": [],
+      "assets_class": "owner-authored-standalone-WebGL-PC-cable-study",
+      "review_summary": "Screened embedded source and real headless Chrome render passed; no external runtime/media; narrow human acceptance recorded with visual imperfections.",
+      "limitations": "Not visually approved as a polished standalone showcase card; no source viewer or hardware parity inferred."
     }
   ]
 }
