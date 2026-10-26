@@ -947,6 +947,32 @@
         "dependency_closure": "self-contained",
         "notes": "Independent standalone 515-mesh browser viewer; corrected upper two-fan installation rather than the rejected crossbar design. Public card uses actual inspected Chrome image."
       }
+    },
+    {
+      "id": "quest-girl-v7-motion-v0-2",
+      "title": "Quest Girl v7 Motion v0.2 Functional Baseline",
+      "kind": "animation",
+      "status": "experimental",
+      "summary": "Sanitized numerical projection of the source-authored four-clip rigid-character motion baseline. Original motion functional tests passed; this new independent playback remains an unapproved visual research viewer.",
+      "path": "characters/quest-girl-motion-v0.2.json",
+      "viewer": "characters/quest-girl-motion.html",
+      "rights": "original",
+      "limitations": "Motion v0.2 has a historical functional pass, not aesthetic approval. The new playback uses explicit sine phase conventions and approximates wedge geometry as cuboids; no parity with the original source renderer is claimed.",
+      "tags": [
+        "character",
+        "motion",
+        "rigid-animation",
+        "functional-pass",
+        "review-only"
+      ],
+      "provenance": {
+        "origin": "cleared-transfer",
+        "reviewed_on": "2026-10-26",
+        "rights_basis": "Owner-authored private source motion set, numerically projected into a public-safe standalone data record after reviewing the technical clip content",
+        "dependency_closure": "self-contained",
+        "source_blob": "7de22184f2bdd384ca3ca7a5bc35432d34db0c10",
+        "notes": "Technical numerical and target projection only; original private prose and source paths were not copied. New viewer has independent live browser QA; no artistic approval inferred."
+      }
     }
   ]
 }

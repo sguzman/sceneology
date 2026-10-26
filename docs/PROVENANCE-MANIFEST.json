@@ -565,6 +565,21 @@
       "assets_class": "self-contained-constructive-pc-assembly-viewer",
       "review_summary": "Previously human accepted exact corrected two-fan carrier geometry (35 components) and its 515-mesh assembly context; standalone browser first draw and screenshot inspected, no external assets.",
       "limitations": "The original crossbar-interference revision was rejected; this entry only covers the corrected scoped assembly, not manufacturing tolerances or all PC components."
+    },
+    {
+      "id": "quest-girl-v7-motion-v0-2",
+      "path": "characters/quest-girl-motion-v0.2.json",
+      "git_blob_sha": "4aecc773ea286c8b399398b1e664389ba31c0865",
+      "kind": "animation",
+      "technical_status": "experimental",
+      "rights": "original",
+      "source_origin": "cleared-transfer",
+      "source_blob": "7de22184f2bdd384ca3ca7a5bc35432d34db0c10",
+      "required_local_files": [],
+      "external_resources": [],
+      "assets_class": "sanitized-authored-motion-parameters-and-hierarchical-targets",
+      "review_summary": "Four clip durations and authored channel parameters preserved; only numerical and generic technical status transferred. New player uses separately hosted source-backed static character geometry.",
+      "limitations": "Motion v0.2 has a historical functional pass, not aesthetic approval. The new playback uses explicit sine phase conventions and approximates wedge geometry as cuboids; no parity with the original source renderer is claimed."
     }
   ]
 }
