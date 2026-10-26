@@ -90,6 +90,8 @@ await import("./build-reading-corner-study.mjs");
 await import("./test-reading-corner-study.mjs");
 await import("./build-room-proxy-review.mjs");
 await import("./test-room-proxy-review.mjs");
+await import("./build-room-clearance-audit.mjs");
+await import("./test-room-clearance-audit.mjs");
 
 await import("./build-room-diagnostics.mjs");
 await import("./test-room-diagnostics.mjs");
