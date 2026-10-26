@@ -1,0 +1,30 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Accepted-room source proxy review · Sceneology</title>
+<meta name="description" content="Inspect original room placement coordinates with selectable, unapproved source-pinned model variants.">
+<link rel="stylesheet" href="./style.css">
+<style>
+main{padding-top:40px}.proxy-layout{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:22px}
+.proxy-stage{background:#e8eff1;border:1px solid var(--stroke);border-radius:12px;overflow:hidden;min-width:0}
+.proxy-stage svg{display:block;width:100%;height:auto}.proxy-controls{background:var(--surface);padding:16px;border:1px solid var(--stroke);border-radius:12px}
+.proxy-controls select,.proxy-controls input{width:100%;font:inherit}.proxy-controls select{color:var(--fg);background:var(--surface);padding:7px;border:1px solid var(--stroke);border-radius:7px}
+.proxy-controls label{display:block;margin:12px 0 5px;font-weight:650}.proxy-choice{padding:10px 0;border-bottom:1px solid var(--stroke)}.proxy-choice label{font-size:.88rem;margin:0 0 5px}
+.source-warning{padding:15px 19px;border-left:4px solid var(--accent);background:var(--accent-soft);max-width:85ch}.source-note{color:var(--muted);font-size:.91rem}
+@media(max-width:790px){.proxy-layout{grid-template-columns:1fr}}
+</style><script type="module" src="./room-proxy-review.js"></script></head>
+<body><a class="skip-link" href="#main-content">Skip to main content</a>
+<header><nav class="wrap" aria-label="Main navigation"><a class="brand" href="../">Sceneology</a><div class="navlinks"><a href="./room-recovery.html">Four original layouts</a><a href="../#gallery-section">Approved gallery</a></div></nav></header>
+<main class="wrap" id="main-content"><p class="eyebrow">Room source investigation · not an accepted rendering</p>
+<h1>Three partial room studies</h1>
+<p class="lead">Inspect explicitly authored furniture positions from Cozy Bedroom, Study Corner and Sleep Room. These models are <strong>technical proxies</strong>: every model comes from an original SHA-pinned public source file, but the selected variants are not certified as the exact variants in the historically accepted room.</p>
+<p class="source-warning"><strong>Missing objects are deliberately omitted.</strong> Parent-attached decorations do not have independent placement transforms in the source. The accepted blanket v1.3 is also unrecovered. No walls, floor shell, local lights, collision clearance or original-renderer parity are claimed. Changing a model selection here does not approve or bind it.</p>
+<div class="proxy-layout">
+<div><div class="proxy-stage" id="proxy-stage" aria-label="Partial source-derived room model projection"></div><p class="source-note" id="proxy-count"></p><p id="proxy-status" class="source-note" aria-live="polite">Loading source-pinned room geometry…</p></div>
+<div class="proxy-controls">
+<label for="proxy-room">Source composition</label><select id="proxy-room"></select>
+<label for="proxy-yaw">Horizontal camera angle</label><input type="range" id="proxy-yaw" min="-180" max="180" value="130" step="1">
+<label for="proxy-elevation">Camera elevation</label><input type="range" id="proxy-elevation" min="5" max="85" value="35" step="1">
+<h2>Research model variants</h2><p class="source-note">The first choice is an alphabetical default for inspection, never a reconstruction verdict.</p>
+<div id="proxy-variants"></div>
+</div></div>
+<p class="source-note">Source data: <a href="./room-proxy-review-data.json">auditable room proxy manifest</a>. The <a href="./reading-corner-study.html">Reading Corner</a> has its own separate research reconstruction. None of these studies is part of the curated exhibition.</p>
+</main><footer><div class="wrap">Sceneology · Source-bound research, without automatic artistic approval</div></footer></body></html>
