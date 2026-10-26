@@ -90,8 +90,13 @@
         {
           "id": "A03",
           "points": 6,
-          "status": "todo",
-          "evidence": []
+          "status": "done",
+          "evidence": [
+            "docs/ADMISSION-DECISIONS.md",
+            "docs/SOURCE-CENSUS.md",
+            "docs/VARIANTS.md",
+            "catalog/library.json"
+          ]
         }
       ]
     },
