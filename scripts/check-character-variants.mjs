@@ -20,8 +20,8 @@ for(const record of ledger.records){
  assert.ok(!ids.has(record.id),"Duplicate character version");
  ids.add(record.id);
  assert.ok(statuses.has(record.status),"Unknown acceptance state");
- assert.match(record.source,/^[a-z0-9./-]+\.((sc3d|scene)\.yml|json|yml)$/);
- assert.match(record.evidence,/^[a-z0-9./-]+\.(md|json)$/);
+ assert.match(record.source,/^[a-zA-Z0-9./-]+\.((sc3d|scene)\.yml|json|yml)$/);
+ assert.match(record.evidence,/^[a-zA-Z0-9./-]+\.(md|json)$/);
  assert.ok(!record.source.includes("..")&&!record.evidence.includes(".."));
  if(record.publication==="selected"){
   assert.equal(record.status,"accepted-static-character","Only fully accepted character may be selected");
