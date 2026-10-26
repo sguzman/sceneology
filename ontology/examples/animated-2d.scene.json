@@ -1,0 +1,146 @@
+{
+  "schema_version": 1,
+  "id": "animated-leaf-two-d",
+  "title": "Animated leaf movement",
+  "summary": "Synthetic keyframed motion fixture, not evidence of captured animation.",
+  "dimension": "2d",
+  "units": "px",
+  "frame": {
+    "width": 240,
+    "height": 180
+  },
+  "elements": [
+    {
+      "id": "stem",
+      "role": "environment",
+      "shape": "rectangle",
+      "transform": {
+        "position": [
+          112,
+          60
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "opacity": 1,
+        "visible": true
+      },
+      "size": [
+        8,
+        100
+      ],
+      "color": "#357348"
+    },
+    {
+      "id": "leaf",
+      "role": "object",
+      "shape": "ellipse",
+      "parent_id": "stem",
+      "transform": {
+        "position": [
+          40,
+          15
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "opacity": 1,
+        "visible": true
+      },
+      "size": [
+        38,
+        18
+      ],
+      "color": "#8cbf56"
+    }
+  ],
+  "relations": [
+    {
+      "subject_id": "leaf",
+      "predicate": "attached-to",
+      "object_id": "stem"
+    }
+  ],
+  "constraints": [
+    {
+      "kind": "within-frame",
+      "subject_id": "stem",
+      "required": true
+    }
+  ],
+  "presentation": {
+    "background": "#f0f5e5",
+    "draw_order": [
+      "stem",
+      "leaf"
+    ],
+    "style": {
+      "name": "flat-motion",
+      "palette": [
+        "#357348",
+        "#8cbf56"
+      ]
+    }
+  },
+  "timeline": {
+    "fps": 12,
+    "duration_seconds": 2,
+    "loop": true,
+    "tracks": [
+      {
+        "target_id": "leaf",
+        "property": "rotation",
+        "interpolation": "linear",
+        "keyframes": [
+          {
+            "time_seconds": 0,
+            "value": -15
+          },
+          {
+            "time_seconds": 1,
+            "value": 15
+          },
+          {
+            "time_seconds": 2,
+            "value": -15
+          }
+        ]
+      },
+      {
+        "target_id": "leaf",
+        "property": "opacity",
+        "interpolation": "step",
+        "keyframes": [
+          {
+            "time_seconds": 0,
+            "value": 1
+          },
+          {
+            "time_seconds": 2,
+            "value": 1
+          }
+        ]
+      }
+    ]
+  },
+  "effects": [
+    {
+      "id": "wind-sway",
+      "target_id": "leaf",
+      "kind": "wind",
+      "parameters": {
+        "strength": 0.25
+      }
+    }
+  ],
+  "realization": {
+    "kind": "declarative-only",
+    "engine": "none",
+    "assets": [],
+    "notes": "Motion declared, not executed."
+  }
+}
