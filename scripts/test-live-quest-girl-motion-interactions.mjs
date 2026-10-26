@@ -90,7 +90,8 @@ try{
     "return {clip:stage.dataset.clip,rendered:stage.dataset.rendered,seconds:Number(stage.dataset.frameTime),"+
     "polygons:stage.querySelectorAll('polygon').length,"+
     "shape:[...stage.querySelectorAll('polygon')].map(p=>p.getAttribute('points')).join('|'),"+
-    "control:document.getElementById('motion-toggle').textContent};"+
+    "control:document.getElementById('motion-toggle').textContent,"+
+    "channels:stage.dataset.channelSnapshot};"+
     "})()";
   const observed=await evaluate(expression);
   assert.equal(observed.clip,id);
@@ -107,7 +108,7 @@ try{
   if(start.shape_hash===other.shape_hash){
    report.debug={id:clip.id,zeroTime:start.seconds,sampleTime:other.seconds,shapeStart:start.shape.slice(0,120),shapeSample:other.shape.slice(0,120),zeroHash:start.shape_hash,sampleHash:other.shape_hash,polygonCount:start.polygons};
   }
-  assert.notEqual(start.shape_hash,other.shape_hash,"Visible pose did not change for "+clip.id);
+  assert.notEqual(start.shape_hash,other.shape_hash,"Visible pose did not change for "+clip.id+"; t0="+start.seconds+" pose0="+start.channels+"; t1="+other.seconds+" pose1="+other.channels+"; hash="+start.shape_hash);
   const captured=await rpc("Page.captureScreenshot",{format:"png",captureBeyondViewport:false});
   const image=Buffer.from(captured.data,"base64");
   assert.ok(image.length>5000&&image.subarray(0,8).toString("hex")==="89504e470d0a1a0a");

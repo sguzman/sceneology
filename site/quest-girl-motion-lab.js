@@ -102,7 +102,7 @@ function draw(){
  }
  markup.push("</svg>");
  stage.innerHTML=markup.join("");
- stage.dataset.clip=clip.id;stage.dataset.rendered="true";stage.dataset.frameTime=pose.seconds.toFixed(3);
+ stage.dataset.clip=clip.id;stage.dataset.rendered="true";stage.dataset.frameTime=pose.seconds.toFixed(3);stage.dataset.channelSnapshot=JSON.stringify(pose.channels);
  seek.value=String(Math.round(1000*pose.seconds/clip.duration_seconds));
  clock.textContent=pose.seconds.toFixed(2)+" / "+clip.duration_seconds.toFixed(1)+" s";
 }
