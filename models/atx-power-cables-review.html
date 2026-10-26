@@ -1,0 +1,213 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Scenarium ATX + EPS power cable review</title>
+<style>*{box-sizing:border-box}body{background:#0e1820;color:#e7eef3;font:13px system-ui,sans-serif;margin:0}header{padding:12px;background:#1b2b38}h1{font-size:16px;margin:0}small{font-size:11px;opacity:.8}#view{height:560px;min-height:350px;position:relative;background:radial-gradient(ellipse,#263f50,#0e1820 80%)}canvas{height:100%;width:100%;display:block;touch-action:none;cursor:grab}#status{position:absolute;bottom:8px;left:8px;background:#101f2cdd;padding:6px 9px;border-radius:6px;border:1px solid #637b8b;font-size:11px}nav{display:flex;flex-wrap:wrap;padding:9px;gap:6px}button{background:#293d4d;color:#eaf4f7;border:1px solid #658696;border-radius:8px;padding:8px 10px;cursor:pointer}button.active{background:#306f85;border-color:#9ac9d8}</style></head><body>
+<header><h1>PSU → ATX24 + CPU EPS8</h1><small>299 physical power-cable meshes, plus 150 real PSU / motherboard / chassis context meshes.</small></header>
+<div id="view"><canvas></canvas><div id="status">Building source model…</div></div>
+<nav><button data-view="whole" class="active">Assembly</button><button data-view="atx">24-pin header</button><button data-view="eps">CPU / EPS</button><button data-view="psu">PSU ports</button><button data-view="cross">Rear crossbar</button><button data-view="slot">Cable grommet</button><button data-show="0" class="active">ATX24</button><button data-show="1" class="active">EPS8</button><button data-show="3" class="active">Motherboard</button><button data-show="4" class="active">PSU</button><button data-show="5">Case</button></nav>
+<script>(()=>{
+"use strict";
+const canvas=document.querySelector("canvas"),status=document.getElementById("status");
+try{
+
+
+
+
+const POWER_CABLES_VERSION=1;
+const PSU_POSE=Object.freeze([-.64,.66,1.30]);
+const BOARD_POSE=Object.freeze([0,1.04,.84]);
+const ENDPOINTS=Object.freeze({
+ atx24:Object.freeze({
+   source:"modular_0_1_well",dest:"atx24_outer",
+   psuMouth:Object.freeze([-.64,.835,.597]),
+   boardMouth:Object.freeze([1.096,3.42125,.639]),
+   displayRim:"fictional-unbranded-24pin-connector",
+   meaning:"main-motherboard-supply"
+ }),
+ eps8:Object.freeze({
+   source:"modular_0_0_well",dest:"eps8_outer",
+   psuMouth:Object.freeze([-1.115,.835,.597]),
+   boardMouth:Object.freeze([-.8432,4.265,.642]),
+   displayRim:"fictional-unbranded-EPS8-connector",
+   meaning:"CPU-power-supply"
+ })
+});
+
+
+
+const POWER_ROUTES=Object.freeze({
+ atx24:Object.freeze([
+ [-.64,.835,.55],[-.64,.835,.44],[-.1,.86,.42],[.43,.88,.42],
+ [.43,.90,1.14],[.43,.90,1.85],[.43,1.05,2.145],
+ [.43,1.14,2.15],[.43,1.365,2.15],[.43,1.48,2.15],
+ [.43,1.55,1.57],[1.33,1.55,1.57],
+ [1.33,3.49,1.57],[1.33,3.49,.46],
+ [1.22,3.48,.46],[1.096,3.42125,.58]
+ ].map(Object.freeze)),
+ eps8:Object.freeze([
+ [-1.115,.835,.55],[-1.115,.84,.42],[-1.46,.87,.42],
+ [-1.46,.90,1.1],[-1.46,.95,1.85],[-1.46,1.05,2.145],
+ [-1.35,1.14,2.15],[-1.35,1.365,2.15],
+ [-1.35,1.50,2.15],[-1.35,2.52,1.55],
+ [-1.35,4.44,1.55],[-1.35,4.445,.47],
+ [-.95,4.445,.47],[-.8432,4.265,.58]
+ ].map(Object.freeze))
+});
+const CROSSBAR_THIN_SPANS=Object.freeze({atx24:7,eps8:6});
+const GROMMET_RIBBON_SPANS=Object.freeze({atx24:12});
+const SLEEVE_RADIUS=Object.freeze({atx24:.038,eps8:.022});
+function segmentPose(a,b){
+ const v=a.map((x,i)=>b[i]-x),length=Math.hypot(...v);
+ if(!(length>1e-6))throw Error("zero length power cable section");
+ return {length,
+   mid:a.map((x,i)=>(x+b[i])/2),
+   rotate_deg:[
+    Math.atan2(v[2],Math.hypot(v[0],v[1]))*180/Math.PI,
+    0,-Math.atan2(v[0],v[1])*180/Math.PI
+   ]
+ };
+}
+function pathLength(pts){return pts.slice(1).reduce((s,p,i)=>s+Math.hypot(...p.map((v,j)=>v-pts[i][j])),0);}
+function powerConnectionPlan(){
+ return Object.entries(POWER_ROUTES).map(([key,points])=>({
+ id:key,...ENDPOINTS[key],lengthSceneUnits:pathLength(points),
+ cableOuterRadius:SLEEVE_RADIUS[key],points
+ }));
+}
+
+
+
+
+
+const POWER_COLORS={
+ braid:"#263039",braid_ridge:"#53646c",
+ wire_a:"#161f27",wire_b:"#37454f",wire_c:"#687984",
+ insulator:"#0e161c",connector:"#222c34",lip:"#435560",
+ terminal:"#bf9a66",rubber:"#101a21"
+};
+const round=x=>Math.round(x*1e6)/1e6;
+function powerReviewMeshes(){
+ const m=[],add=(id,t,d,p,r,mat)=>m.push({id,t,d:d.map(round),p:p.map(round),r:r.map(round),color:POWER_COLORS[mat]});
+ const B=(id,d,p,mat)=>add(id,0,d,p,[0,0,0],mat);
+ const C=(id,rad,h,p,mat,rot=[0,0,0],n=12)=>add(id,1,[rad,h,n],p,rot,mat);
+ const T=(id,a,b,mat,rad,ext)=>{const p=segmentPose(a,b);C(id,rad,p.length+ext,p.mid,mat,p.rotate_deg);};
+ for(const [key,path] of Object.entries(POWER_ROUTES)){
+  const r=SLEEVE_RADIUS[key],span=CROSSBAR_THIN_SPANS[key],gspan=GROMMET_RIBBON_SPANS[key];
+  for(let k=0;k<path.length-1;k++)if(k!==span&&k!==gspan)
+   T(key+"_woven_sleeve_"+k,path[k],path[k+1],"braid",r,.022);
+  const a=path[span],b=path[span+1],n=key==="atx24"?24:8;
+  for(let i=0;i<n;i++){
+   const off=(i-(n-1)/2)*(key==="eps8"?.011:.010),color=["wire_a","wire_b","wire_c"][i%3];
+   const j=[a[0]+off,a[1]+.04,a[2]],k=[b[0]+off,b[1]-.04,b[2]];
+   T(key+"_rear_pass_spread_"+i,a,j,color,.007,.009);
+   T(key+"_rear_pass_"+i,j,k,color,.007,.010);
+   T(key+"_rear_pass_gather_"+i,k,b,color,.007,.009);
+  }
+  C(key+"_crossbar_bundle_collar_in",r*.93,.05,a,"rubber",[90,0,0],16);
+  C(key+"_crossbar_bundle_collar_out",r*.93,.05,b,"rubber",[90,0,0],16);
+  if(key==="atx24"){
+   const g=path[gspan],h=path[gspan+1];
+   for(let i=0;i<24;i++){
+    const dx=(i%6-2.5)*.0088,dy=(Math.floor(i/6)-1.5)*.020;
+    const out=[g[0]+dx,g[1]+dy,g[2]-.09],back=[h[0]+dx,h[1]+dy,h[2]+.09],mat=["wire_a","wire_b","wire_c"][i%3];
+    T("atx24_grommet_fanout_"+i,g,out,mat,.0075,.012);
+    T("atx24_grommet_channel_"+i,out,back,mat,.0075,.012);
+    T("atx24_grommet_fanin_"+i,back,h,mat,.0075,.012);
+   }
+   C("atx24_grommet_upstream_tie",.033,.036,g,"rubber",[90,0,0],16);
+   C("atx24_grommet_downstream_tie",.033,.036,h,"rubber",[90,0,0],16);
+  }
+  const src=ENDPOINTS[key].psuMouth,px=src[0],py=src[1];
+  B(key+"_psu_plug_body",[.286,.18,.030],[px,py,.535],"connector");
+  for(const side of [-1,1]){
+   const name=side<0?"left":"right";
+   B(key+"_psu_side_key_"+name,[.016,.143,.035],[px+side*.134,py,.55],"lip");
+   B(key+"_psu_top_bottom_"+(side<0?"low":"high"),[.252,.015,.030],[px,py+side*.083,.54],"lip");
+  }
+  for(let i=0;i<4;i++)
+   C(key+"_psu_terminal_"+i,.010,.027,
+    [px+(i%2-.5)*.104,py+(Math.floor(i/2)-.5)*.094,.593],"terminal",[90,0,0]);
+  C(key+"_psu_boot",r*.9,.078,[px,py,.515],"rubber",[90,0,0],16);
+  for(let i=0;i<4;i++)
+   C(key+"_psu_terminal_guide_"+i,.018,.068,
+    [px+(i%2-.5)*.104,py+(Math.floor(i/2)-.5)*.094,.567],"connector",[90,0,0]);
+  const end=ENDPOINTS[key].boardMouth,bx=end[0],by=end[1];
+  if(key==="atx24"){
+   B("atx24_board_plug_body",[.142,.742,.055],[bx,by,.555],"connector");
+   for(const side of [-1,1])
+    B("atx24_board_plug_side_rim_"+(side<0?"left":"right"),[.013,.748,.048],[bx+side*.074,by,.605],"lip");
+   for(let i=0;i<24;i++){
+    const x=bx+[-.0296,.0208][i%2],y=1.04+2.05625+.0575*Math.floor(i/2);
+    C("atx24_board_terminal_"+i,.009,.026,[x,y,.620],"terminal",[90,0,0]);
+    C("atx24_board_terminal_guide_"+i,.014,.056,[x,y,.594],"connector",[90,0,0]);
+   }
+  }else{
+   B("eps8_board_plug_body",[.278,.195,.055],[bx,by,.555],"connector");
+   for(const side of [-1,1])
+    B("eps8_board_plug_rim_"+(side<0?"left":"right"),[.012,.198,.043],[bx+side*.145,by,.575],"lip");
+   for(let i=0;i<8;i++){
+    const x=[-.948,-.8848,-.8216,-.7584][i%4],y=1.04+[3.17875,3.2575][Math.floor(i/4)];
+    C("eps8_board_terminal_"+i,.010,.026,[x,y,.612],"terminal",[90,0,0]);
+    C("eps8_board_terminal_guide_"+i,.017,.056,[x,y,.594],"connector",[90,0,0]);
+   }
+  }
+  C(key+"_board_strain_relief",r*.91,.064,[bx,by,.558],"rubber",[90,0,0],16);
+ }
+ if(m.length!==299)throw Error("PSU review geometry count "+m.length+" != 299");
+ return m;
+}
+
+
+
+
+const POWER_REVIEW_CONTEXT=[["board_laminate",0,2.44,3.05,0.055,0,2.865,0.84,0,0,0,"#202d30",3],["board_edge_outline_left",0,0.024,3.045,0.06,-1.213,2.865,0.84,0,0,0,"#111e22",3],["board_edge_outline_right",0,0.024,3.045,0.06,1.213,2.865,0.84,0,0,0,"#111e22",3],["board_edge_outline_top",0,2.435,0.03125,0.06,0,4.3825,0.84,0,0,0,"#111e22",3],["board_edge_outline_bottom",0,2.435,0.03125,0.06,0,1.3475,0.84,0,0,0,"#111e22",3],["rear_io_armor",0,0.228,2.0625,0.145,-1.085,3.33375,0.733,0,0,0,"#303c49",3],["rear_io_shield_inlay",0,0.18,2,0.02,-1.086,3.33375,0.643,0,0,0,"#273139",3],["left_vrm_heatsink",0,0.192,1.1,0.17,-0.7416,3.715,0.725,0,0,0,"#586c77",3],["top_vrm_heatsink",0,0.76,0.2375,0.19,-0.332,4.04375,0.707,0,0,0,"#586c77",3],["cpu_socket_substrate",0,0.544,0.56,0.055,-0.305,3.3825,0.725,0,0,0,"#15222a",3],["cpu_socket_metal_frame",0,0.492,0.5056,0.025,-0.305,3.3825,0.687,0,0,0,"#b6c7ca",3],["cpu_socket_interior",0,0.4216,0.42,0.019,-0.305,3.3825,0.664,0,0,0,"#273139",3],["cpu_socket_frame_side_left",0,0.0264,0.496,0.028,-0.545,3.3833,0.641,0,0,0,"#e0e9e8",3],["cpu_socket_frame_side_right",0,0.0264,0.496,0.028,-0.065,3.3833,0.641,0,0,0,"#e0e9e8",3],["cpu_socket_frame_top",0,0.496,0.0248,0.023,-0.305,3.6321,0.641,0,0,0,"#e0e9e8",3],["cpu_socket_frame_bottom",0,0.496,0.0248,0.023,-0.305,3.1321,0.641,0,0,0,"#e0e9e8",3],["socket_hinge_barrel",1,0.038,0.09,14,-0.588,3.124,0.637,0,0,90,"#586c77",3],["socket_lever_shaft",0,0.0256,0.488,0.035,-0.588,3.38,0.565,0,0,0,"#b6c7ca",3],["socket_lever_handle",0,0.0504,0.08,0.057,-0.588,3.6408,0.562,0,0,0,"#15222a",3],["dimm_0_lower_mold",0,0.0952,1.7,0.09,0.296,3.49,0.737,0,0,0,"#15222a",3],["dimm_0_top_latch",0,0.104,0.1275,0.1,0.296,4.325,0.717,0,0,0,"#f0ebd9",3],["dimm_0_bottom_latch",0,0.104,0.1275,0.1,0.296,2.62125,0.717,0,0,0,"#f0ebd9",3],["dimm_1_lower_mold",0,0.0952,1.7,0.09,0.4544,3.49,0.737,0,0,0,"#303c49",3],["dimm_1_top_latch",0,0.104,0.1275,0.1,0.4544,4.325,0.717,0,0,0,"#f0ebd9",3],["dimm_1_bottom_latch",0,0.104,0.1275,0.1,0.4544,2.62125,0.717,0,0,0,"#f0ebd9",3],["dimm_2_lower_mold",0,0.0952,1.7,0.09,0.6128,3.49,0.737,0,0,0,"#15222a",3],["dimm_2_top_latch",0,0.104,0.1275,0.1,0.6128,4.325,0.717,0,0,0,"#f0ebd9",3],["dimm_2_bottom_latch",0,0.104,0.1275,0.1,0.6128,2.62125,0.717,0,0,0,"#f0ebd9",3],["dimm_3_lower_mold",0,0.0952,1.7,0.09,0.7712,3.49,0.737,0,0,0,"#303c49",3],["dimm_3_top_latch",0,0.104,0.1275,0.1,0.7712,4.325,0.717,0,0,0,"#f0ebd9",3],["dimm_3_bottom_latch",0,0.104,0.1275,0.1,0.7712,2.62125,0.717,0,0,0,"#f0ebd9",3],["pcie_x16_outer",0,1.816,0.15625,0.114,-0.104,2.3425,0.739,0,0,0,"#15222a",3],["m2_heatsink_plate",0,0.736,0.175,0.055,-0.348,2.69625,0.619,0,0,0,"#586c77",3],["m2_heatshield_rib_0",0,0.02,0.14875,0.016,-0.632,2.69625,0.58,0,0,0,"#b6c7ca",3],["m2_heatshield_rib_1",0,0.02,0.14875,0.016,-0.5424,2.69625,0.58,0,0,0,"#b6c7ca",3],["m2_heatshield_rib_2",0,0.02,0.14875,0.016,-0.4528,2.69625,0.58,0,0,0,"#b6c7ca",3],["m2_heatshield_rib_3",0,0.02,0.14875,0.016,-0.3632,2.69625,0.58,0,0,0,"#b6c7ca",3],["m2_heatshield_rib_4",0,0.02,0.14875,0.016,-0.2736,2.69625,0.58,0,0,0,"#b6c7ca",3],["m2_heatshield_rib_5",0,0.02,0.14875,0.016,-0.184,2.69625,0.58,0,0,0,"#b6c7ca",3],["m2_heatshield_rib_6",0,0.02,0.14875,0.016,-0.0944,2.69625,0.58,0,0,0,"#b6c7ca",3],["chipset_heatsink",0,0.4,0.5375,0.12,0.592,1.80875,0.733,0,0,0,"#303c49",3],["atx24_outer",0,0.104,0.7375,0.16,1.096,3.42125,0.719,0,0,0,"#15222a",3],["eps8_outer",0,0.256,0.18125,0.16,-0.8432,4.265,0.722,0,0,0,"#15222a",3],["rear_io_sidevent_0",0,0.0744,0.0225,0.012,-1.12,2.5275,0.629,0,0,0,"#b6c7ca",3],["rear_io_sidevent_1",0,0.0744,0.0225,0.012,-1.12,2.6775,0.629,0,0,0,"#b6c7ca",3],["rear_io_sidevent_2",0,0.0744,0.0225,0.012,-1.12,2.8275,0.629,0,0,0,"#b6c7ca",3],["rear_io_sidevent_3",0,0.0744,0.0225,0.012,-1.12,2.9775,0.629,0,0,0,"#b6c7ca",3],["rear_io_sidevent_4",0,0.0744,0.0225,0.012,-1.12,3.1275,0.629,0,0,0,"#b6c7ca",3],["bottom_panel",0,1.478,0.02,1.378,-0.64,0.24,1.3,0,0,0,"#303a44",4],["side_wall_left",0,0.017,0.821,1.375,-1.381,0.66,1.3,0,0,0,"#303a44",4],["side_lower_fold_left",0,0.042,0.033,1.377,-1.363,0.257,1.3,0,0,0,"#53616b",4],["top_long_rail_left",0,0.146,0.023,1.393,-1.312,1.082,1.3,0,0,0,"#53616b",4],["top_side_inner_fold_left",0,0.028,0.024,1.18,-1.246,1.099,1.3,0,0,0,"#9ca9b0",4],["side_wall_right",0,0.017,0.821,1.375,0.101,0.66,1.3,0,0,0,"#303a44",4],["side_lower_fold_right",0,0.042,0.033,1.377,0.083,0.257,1.3,0,0,0,"#53616b",4],["top_long_rail_right",0,0.146,0.023,1.393,0.032,1.082,1.3,0,0,0,"#53616b",4],["top_side_inner_fold_right",0,0.028,0.024,1.18,-0.034,1.099,1.3,0,0,0,"#9ca9b0",4],["top_cross_rail_front",0,1.474,0.023,0.138,-0.64,1.082,0.675,0,0,0,"#53616b",4],["frontback_vertical_frame_front_l",0,0.08,0.814,0.028,-1.337,0.66,0.616,0,0,0,"#53616b",4],["frontback_vertical_frame_front_r",0,0.08,0.814,0.028,0.057,0.66,0.616,0,0,0,"#53616b",4],["frontback_top_frame_front",0,1.44,0.075,0.031,-0.64,1.047,0.616,0,0,0,"#53616b",4],["frontback_bottom_frame_front",0,1.44,0.075,0.031,-0.64,0.275,0.616,0,0,0,"#53616b",4],["top_cross_rail_rear",0,1.474,0.023,0.138,-0.64,1.082,1.925,0,0,0,"#53616b",4],["frontback_vertical_frame_rear_l",0,0.08,0.814,0.028,-1.337,0.66,1.984,0,0,0,"#53616b",4],["frontback_vertical_frame_rear_r",0,0.08,0.814,0.028,0.057,0.66,1.984,0,0,0,"#53616b",4],["frontback_top_frame_rear",0,1.44,0.075,0.031,-0.64,1.047,1.984,0,0,0,"#53616b",4],["frontback_bottom_frame_rear",0,1.44,0.075,0.031,-0.64,0.275,1.984,0,0,0,"#53616b",4],["fan_frame_ring_0",0,0.092,0.022,0.026,-0.64,1.11,1.867,0,0,0,"#9ca9b0",4],["fan_frame_ring_1",0,0.092,0.022,0.026,-0.5513,1.11,1.86002,0,9,0,"#9ca9b0",4],["fan_frame_ring_2",0,0.092,0.022,0.026,-0.46479,1.11,1.83925,0,18,0,"#9ca9b0",4],["fan_frame_ring_3",0,0.092,0.022,0.026,-0.38259,1.11,1.8052,0,27,0,"#9ca9b0",4],["fan_frame_ring_4",0,0.092,0.022,0.026,-0.30673,1.11,1.75871,0,36,0,"#9ca9b0",4],["fan_frame_ring_5",0,0.092,0.022,0.026,-0.23907,1.11,1.70093,0,45,0,"#9ca9b0",4],["fan_frame_ring_6",0,0.092,0.022,0.026,-0.18129,1.11,1.63327,0,54,0,"#9ca9b0",4],["fan_frame_ring_7",0,0.092,0.022,0.026,-0.1348,1.11,1.55741,0,63,0,"#9ca9b0",4],["fan_frame_ring_8",0,0.092,0.022,0.026,-0.10075,1.11,1.47521,0,72,0,"#9ca9b0",4],["fan_frame_ring_9",0,0.092,0.022,0.026,-0.07998,1.11,1.3887,0,81,0,"#9ca9b0",4],["fan_frame_ring_10",0,0.092,0.022,0.026,-0.073,1.11,1.3,0,90,0,"#9ca9b0",4],["fan_frame_ring_11",0,0.092,0.022,0.026,-0.07998,1.11,1.2113,0,99,0,"#9ca9b0",4],["fan_frame_ring_12",0,0.092,0.022,0.026,-0.10075,1.11,1.12479,0,108,0,"#9ca9b0",4],["fan_frame_ring_13",0,0.092,0.022,0.026,-0.1348,1.11,1.04259,0,117,0,"#9ca9b0",4],["fan_frame_ring_14",0,0.092,0.022,0.026,-0.18129,1.11,0.96673,0,126,0,"#9ca9b0",4],["fan_frame_ring_15",0,0.092,0.022,0.026,-0.23907,1.11,0.89907,0,135,0,"#9ca9b0",4],["fan_frame_ring_16",0,0.092,0.022,0.026,-0.30673,1.11,0.84129,0,144,0,"#9ca9b0",4],["fan_frame_ring_17",0,0.092,0.022,0.026,-0.38259,1.11,0.7948,0,153,0,"#9ca9b0",4],["fan_frame_ring_18",0,0.092,0.022,0.026,-0.46479,1.11,0.76075,0,162,0,"#9ca9b0",4],["fan_frame_ring_19",0,0.092,0.022,0.026,-0.5513,1.11,0.73998,0,171,0,"#9ca9b0",4],["fan_frame_ring_20",0,0.092,0.022,0.026,-0.64,1.11,0.733,0,180,0,"#9ca9b0",4],["fan_frame_ring_21",0,0.092,0.022,0.026,-0.7287,1.11,0.73998,0,189,0,"#9ca9b0",4],["fan_frame_ring_22",0,0.092,0.022,0.026,-0.81521,1.11,0.76075,0,198,0,"#9ca9b0",4],["fan_frame_ring_23",0,0.092,0.022,0.026,-0.89741,1.11,0.7948,0,207,0,"#9ca9b0",4],["fan_frame_ring_24",0,0.092,0.022,0.026,-0.97327,1.11,0.84129,0,216,0,"#9ca9b0",4],["fan_frame_ring_25",0,0.092,0.022,0.026,-1.04093,1.11,0.89907,0,225,0,"#9ca9b0",4],["fan_frame_ring_26",0,0.092,0.022,0.026,-1.09871,1.11,0.96673,0,234,0,"#9ca9b0",4],["fan_frame_ring_27",0,0.092,0.022,0.026,-1.1452,1.11,1.04259,0,243,0,"#9ca9b0",4],["fan_frame_ring_28",0,0.092,0.022,0.026,-1.17925,1.11,1.12479,0,252,0,"#9ca9b0",4],["fan_frame_ring_29",0,0.092,0.022,0.026,-1.20002,1.11,1.2113,0,261,0,"#9ca9b0",4],["fan_frame_ring_30",0,0.092,0.022,0.026,-1.207,1.11,1.3,0,270,0,"#9ca9b0",4],["fan_frame_ring_31",0,0.092,0.022,0.026,-1.20002,1.11,1.3887,0,279,0,"#9ca9b0",4],["fan_frame_ring_32",0,0.092,0.022,0.026,-1.17925,1.11,1.47521,0,288,0,"#9ca9b0",4],["fan_frame_ring_33",0,0.092,0.022,0.026,-1.1452,1.11,1.55741,0,297,0,"#9ca9b0",4],["fan_frame_ring_34",0,0.092,0.022,0.026,-1.09871,1.11,1.63327,0,306,0,"#9ca9b0",4],["fan_frame_ring_35",0,0.092,0.022,0.026,-1.04093,1.11,1.70093,0,315,0,"#9ca9b0",4],["fan_frame_ring_36",0,0.092,0.022,0.026,-0.97327,1.11,1.75871,0,324,0,"#9ca9b0",4],["fan_frame_ring_37",0,0.092,0.022,0.026,-0.89741,1.11,1.8052,0,333,0,"#9ca9b0",4],["fan_frame_ring_38",0,0.092,0.022,0.026,-0.81521,1.11,1.83925,0,342,0,"#9ca9b0",4],["fan_frame_ring_39",0,0.092,0.022,0.026,-0.7287,1.11,1.86002,0,351,0,"#9ca9b0",4],["modular_0_0_well",0,0.31,0.203,0.025,-1.115,0.835,0.629,0,0,0,"#080d12",4],["modular_0_0_frame_top",0,0.342,0.027,0.067,-1.115,0.9525,0.597,0,0,0,"#1c252d",4],["modular_0_0_frame_bottom",0,0.342,0.027,0.067,-1.115,0.7175,0.597,0,0,0,"#1c252d",4],["modular_0_0_frame_left",0,0.024,0.202,0.067,-1.286,0.835,0.597,0,0,0,"#1c252d",4],["modular_0_0_frame_right",0,0.024,0.202,0.067,-0.944,0.835,0.597,0,0,0,"#1c252d",4],["modular_0_0_contact_0",0,0.027,0.027,0.017,-1.167,0.788,0.604,0,0,0,"#e4c081",4],["modular_0_0_contact_1",0,0.027,0.027,0.017,-1.063,0.788,0.604,0,0,0,"#e4c081",4],["modular_0_0_contact_2",0,0.027,0.027,0.017,-1.167,0.882,0.604,0,0,0,"#e4c081",4],["modular_0_0_contact_3",0,0.027,0.027,0.017,-1.063,0.882,0.604,0,0,0,"#e4c081",4],["modular_0_0_key",0,0.04,0.03,0.04,-1.115,0.919,0.598,0,0,0,"#1c252d",4],["modular_0_1_well",0,0.31,0.203,0.025,-0.64,0.835,0.629,0,0,0,"#080d12",4],["modular_0_1_frame_top",0,0.342,0.027,0.067,-0.64,0.9525,0.597,0,0,0,"#1c252d",4],["modular_0_1_frame_bottom",0,0.342,0.027,0.067,-0.64,0.7175,0.597,0,0,0,"#1c252d",4],["modular_0_1_frame_left",0,0.024,0.202,0.067,-0.811,0.835,0.597,0,0,0,"#1c252d",4],["modular_0_1_frame_right",0,0.024,0.202,0.067,-0.469,0.835,0.597,0,0,0,"#1c252d",4],["modular_0_1_contact_0",0,0.027,0.027,0.017,-0.692,0.788,0.604,0,0,0,"#e4c081",4],["modular_0_1_contact_1",0,0.027,0.027,0.017,-0.588,0.788,0.604,0,0,0,"#e4c081",4],["modular_0_1_contact_2",0,0.027,0.027,0.017,-0.692,0.882,0.604,0,0,0,"#e4c081",4],["modular_0_1_contact_3",0,0.027,0.027,0.017,-0.588,0.882,0.604,0,0,0,"#e4c081",4],["modular_0_1_key",0,0.04,0.03,0.04,-0.64,0.919,0.598,0,0,0,"#1c252d",4],["floor_pan",0,3.14,0.07,4.27,0,0.175,0,0,0,0,"#263039",5],["vertical_chassis_post_l_front",0,0.09,4.28,0.11,-1.544,2.485,-2.115,0,0,0,"#495b65",5],["vertical_chassis_post_l_back",0,0.09,4.28,0.11,-1.544,2.485,2.115,0,0,0,"#495b65",5],["top_side_rail_l",0,0.13,0.074,4.26,-1.544,4.52,0,0,0,0,"#495b65",5],["vertical_chassis_post_r_front",0,0.09,4.28,0.11,1.544,2.485,-2.115,0,0,0,"#495b65",5],["vertical_chassis_post_r_back",0,0.09,4.28,0.11,1.544,2.485,2.115,0,0,0,"#495b65",5],["top_side_rail_r",0,0.13,0.074,4.26,1.544,4.52,0,0,0,0,"#495b65",5],["upper_crossbar_front",0,3.09,0.1,0.11,0,4.48,-2.09,0,0,0,"#495b65",5],["upper_crossbar_rear",0,3.09,0.1,0.11,0,4.48,2.09,0,0,0,"#495b65",5],["middle_crossbar_rear",0,3.1,0.049,0.073,0,1.24,2.09,0,0,0,"#495b65",5],["tray_mid_right",0,0.55,1.51,0.046,1.01,2.75,1.015,0,0,0,"#263039",5],["tray_side_bar",0,0.07,2.9,0.09,1.4,2.66,1.055,0,0,0,"#495b65",5],["cable_grommet_left_2",0,0.052,0.31,0.043,1.265,3.39,0.992,0,0,0,"#1d282e",5],["cable_grommet_right_2",0,0.052,0.31,0.043,1.425,3.39,0.992,0,0,0,"#1d282e",5],["cable_grommet_top_2",0,0.18,0.037,0.044,1.35,3.56,0.993,0,0,0,"#1d282e",5],["cable_grommet_bottom_2",0,0.18,0.037,0.044,1.35,3.22,0.993,0,0,0,"#1d282e",5],["psu_shroud_top_front",0,3.02,0.045,2.49,0,1.27,-0.885,0,0,0,"#263039",5],["psu_shroud_end_l",0,0.057,0.2,2.53,-1.47,1.155,-0.885,0,0,0,"#495b65",5],["psu_shroud_end_r",0,0.057,0.2,2.53,1.47,1.155,-0.885,0,0,0,"#495b65",5],["cable_channel_back_rail",0,0.092,3.05,0.16,1.47,2.61,1.52,0,0,0,"#495b65",5],["psu_shroud_rear_top",0,1.78,0.045,1.7,-0.64,1.27,1.225,0,0,0,"#263039",5],["rear_tray_lower_mount_arm_left",0,0.14,0.085,1.22,-1.48,1.28,1.555,0,0,0,"#263039",5],["rear_tray_upper_mount_arm_left",0,0.14,0.085,1.22,-1.48,4.07,1.555,0,0,0,"#263039",5]];
+
+const W=powerReviewMeshes(),palette=[...new Set([...W.map(x=>x.color),...POWER_REVIEW_CONTEXT.map(x=>x[11])])];
+const MODEL=[
+ ...W.map(x=>[x.t,...x.d,...x.p,...x.r,palette.indexOf(x.color),x.id.startsWith("atx24_")?0:1]),
+ ...POWER_REVIEW_CONTEXT.map(([id,t,a,b,c,x,y,z,rx,ry,rz,hex,g])=>[t,a,b,c,x,y,z,rx,ry,rz,palette.indexOf(hex),g])
+];
+if(MODEL.length!==449)throw Error("expected 449 source meshes, got "+MODEL.length);
+const gl=canvas.getContext("webgl2",{antialias:true})||canvas.getContext("webgl",{antialias:true});if(!gl)throw Error("WebGL unavailable");
+const VS=`attribute vec3 aP,aN,aC;uniform float uYaw,uPitch,uDist,uAspect;uniform vec3 uFocus;varying vec3 vN,vC;
+mat3 ry(float a){float c=cos(a),s=sin(a);return mat3(c,0.,-s,0.,1.,0.,s,0.,c);}
+mat3 rx(float a){float c=cos(a),s=sin(a);return mat3(1.,0.,0.,0.,c,s,0.,-s,c);}
+void main(){mat3 cam=rx(uPitch)*ry(uYaw);vec3 p=cam*(aP-uFocus);p.z-=uDist;vN=normalize(cam*aN);vC=aC;
+gl_Position=vec4(p.x*1.65/uAspect,p.y*1.65,-40.1/39.9*p.z-8./39.9,-p.z);}`;
+const FS=`precision mediump float;varying vec3 vN,vC;uniform float uHighlight;void main(){vec3 n=normalize(vN);float light=.43+.48*max(dot(n,normalize(vec3(-.6,.8,-.5))),0.)+.18*max(dot(n,normalize(vec3(.82,.25,.65))),0.);gl_FragColor=vec4(pow(vC,vec3(.86))*light*uHighlight+.025,1.);}`;
+const compile=(type,src)=>{const s=gl.createShader(type);gl.shaderSource(s,src);gl.compileShader(s);if(!gl.getShaderParameter(s,gl.COMPILE_STATUS))throw Error(gl.getShaderInfoLog(s));return s;};
+const pg=gl.createProgram();gl.attachShader(pg,compile(gl.VERTEX_SHADER,VS));gl.attachShader(pg,compile(gl.FRAGMENT_SHADER,FS));gl.linkProgram(pg);if(!gl.getProgramParameter(pg,gl.LINK_STATUS))throw Error(gl.getProgramInfoLog(pg));
+const attr=["aP","aN","aC"].map(n=>gl.getAttribLocation(pg,n)),U=Object.fromEntries(["uYaw","uPitch","uDist","uAspect","uFocus","uHighlight"].map(n=>[n,gl.getUniformLocation(pg,n)]));
+const buffers=Array.from({length:6},()=>[]);
+const rotate=([x,y,z],[aa,bb,cc])=>{let[a,b,c]=[aa,bb,cc].map(v=>v*Math.PI/180),C=Math.cos,S=Math.sin;
+let Y=y*C(a)-z*S(a),Z=y*S(a)+z*C(a);y=Y;z=Z;let X=x*C(b)+z*S(b);Z=-x*S(b)+z*C(b);x=X;z=Z;X=x*C(c)-y*S(c);Y=x*S(c)+y*C(c);return[X,Y,z];};
+const tri=(g,a,b,c,col)=>{const v=b.map((n,i)=>n-a[i]),w=c.map((n,i)=>n-a[i]),nn=[v[1]*w[2]-v[2]*w[1],v[2]*w[0]-v[0]*w[2],v[0]*w[1]-v[1]*w[0]],l=Math.hypot(...nn)||1;for(const p of [a,b,c])buffers[g].push(...p,...nn.map(n=>n/l),...col);};
+for(const row of MODEL){const [type,sx,sy,sz,x,y,z,ax,ay,az,mi,g]=row,color=[1,3,5].map(i=>parseInt(palette[mi].slice(i,i+2),16)/255),to=p=>rotate(p,[ax,ay,az]).map((v,i)=>v+[x,y,z][i]);
+ if(type===0){const a=sx/2,b=sy/2,c=sz/2,v=[[-a,-b,-c],[a,-b,-c],[a,b,-c],[-a,b,-c],[-a,-b,c],[a,-b,c],[a,b,c],[-a,b,c]].map(to);
+ for(const f of [[0,3,2,1],[4,5,6,7],[0,1,5,4],[3,7,6,2],[1,2,6,5],[0,4,7,3]]){tri(g,v[f[0]],v[f[1]],v[f[2]],color);tri(g,v[f[0]],v[f[2]],v[f[3]],color);}}
+ else for(let k=0;k<sz;k++){const a=k*2*Math.PI/sz,b=(k+1)*2*Math.PI/sz,p=to([sx*Math.cos(a),-sy/2,sx*Math.sin(a)]),q=to([sx*Math.cos(a),sy/2,sx*Math.sin(a)]),r=to([sx*Math.cos(b),-sy/2,sx*Math.sin(b)]),s=to([sx*Math.cos(b),sy/2,sx*Math.sin(b)]);
+ tri(g,p,r,s,color);tri(g,p,s,q,color);tri(g,to([0,sy/2,0]),q,s,color);tri(g,to([0,-sy/2,0]),r,p,color);}
+}
+const gpu=buffers.map(arr=>{const buffer=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,buffer);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(arr),gl.STATIC_DRAW);return{buffer,n:arr.length/9};});
+gl.enable(gl.DEPTH_TEST);gl.disable(gl.CULL_FACE);
+const visible=[true,true,false,true,true,false],presets={
+whole:[.50,.16,7.5,[0,2.45,.45]],
+atx:[.10,.12,3.5,[1.10,3.35,.52]],
+eps:[-.26,.18,3.4,[-.9,4.25,.48]],
+psu:[.37,.19,3.3,[-.75,.82,.72]],
+cross:[.45,.10,3.9,[-.2,1.28,2.09]],
+slot:[.15,.16,2.8,[1.32,3.46,1.02]]
+};
+let [yaw,pitch,dist,focus]=presets.whole;
+function draw(){const dpi=Math.min(1.5,window.devicePixelRatio||1),w=Math.max(1,Math.round(canvas.clientWidth*dpi)),h=Math.max(1,Math.round(canvas.clientHeight*dpi));if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h;}
+gl.viewport(0,0,w,h);gl.clearColor(.047,.072,.099,1);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);gl.useProgram(pg);gl.uniform1f(U.uYaw,yaw);gl.uniform1f(U.uPitch,pitch);gl.uniform1f(U.uDist,dist);gl.uniform1f(U.uAspect,w/h);gl.uniform3fv(U.uFocus,focus);
+for(let g=0;g<visible.length;g++)if(visible[g]&&gpu[g].n){gl.bindBuffer(gl.ARRAY_BUFFER,gpu[g].buffer);attr.forEach((a,i)=>{if(a>=0){gl.enableVertexAttribArray(a);gl.vertexAttribPointer(a,3,gl.FLOAT,false,36,i*12);}});gl.uniform1f(U.uHighlight,g<2?1.85:1);gl.drawArrays(gl.TRIANGLES,0,gpu[g].n);}
+}
+document.querySelectorAll("[data-view]").forEach(btn=>btn.onclick=()=>{[yaw,pitch,dist,focus]=presets[btn.dataset.view];document.querySelectorAll("[data-view]").forEach(x=>x.classList.toggle("active",x===btn));draw();});
+document.querySelectorAll("[data-show]").forEach(btn=>btn.onclick=()=>{const i=Number(btn.dataset.show);visible[i]=!visible[i];btn.classList.toggle("active",visible[i]);draw();});
+let pointer=null;canvas.addEventListener("pointerdown",e=>{pointer=[e.clientX,e.clientY];canvas.setPointerCapture(e.pointerId);});
+canvas.addEventListener("pointermove",e=>{if(!pointer)return;yaw+=(e.clientX-pointer[0])*.009;pitch=Math.max(-1.4,Math.min(1.4,pitch+(e.clientY-pointer[1])*.007));pointer=[e.clientX,e.clientY];draw();});
+["pointerup","pointercancel","lostpointercapture"].forEach(n=>canvas.addEventListener(n,()=>pointer=null));
+canvas.addEventListener("wheel",e=>{e.preventDefault();dist=Math.max(1.3,Math.min(16,dist*Math.exp(e.deltaY*.0009)));draw();},{passive:false});
+if(typeof ResizeObserver!=="undefined")new ResizeObserver(draw).observe(canvas);
+draw();status.textContent="449 source-derived meshes · 299 power-cable meshes · approved reference components unchanged";
+}catch(e){status.textContent="3D viewer error: "+(e&&e.message?e.message:String(e));}
+})();</script></body></html>
