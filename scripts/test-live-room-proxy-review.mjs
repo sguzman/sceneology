@@ -15,7 +15,7 @@ assert.equal(data.source_model_bindings_certified,false);
 assert.equal(data.showcase_approved,false);
 assert.equal(data.rooms.length,3);
 assert.equal(gallery.approved_ids.length,24);
-const resources=["site/room-proxy-review.html","site/room-proxy-review.js","site/room-proxy-review-data.json","site/family-orbit-data.json","site/room-variant-reduction.json"];
+const resources=["site/room-proxy-review.html","site/room-proxy-review.js","site/room-proxy-review-data.json","site/family-orbit-data.json","site/room-variant-reduction.json","site/source-room-region-guide.mjs"];
 for(const relative of resources){
  let failure;
  for(let attempt=0;attempt<5;attempt++){
@@ -36,22 +36,27 @@ fs.mkdirSync(output,{recursive:true});
 const chrome=process.env.CHROME_BIN||"google-chrome";
 const flags=["--headless=new","--no-sandbox","--disable-dev-shm-usage","--disable-background-networking","--no-first-run",
  "--window-size=1300,920","--virtual-time-budget=7000"];
-function snapshot(id,yaw,variant=null){
+function snapshot(id,yaw,variant=null,showZones=false){
  const profile=fs.mkdtempSync(path.join(os.tmpdir(),"sceneology-proxy-"));
  try{
   const url=new URL("site/room-proxy-review.html",base);
   url.searchParams.set("room",id);url.searchParams.set("yaw",String(yaw));
   if(variant)url.searchParams.set("variant-"+variant.id,variant.key);
+  if(showZones)url.searchParams.set("zones","1");
   const process=spawnSync(chrome,[...flags,"--user-data-dir="+profile,"--dump-dom",url.href],
    {encoding:"utf8",timeout:100000,maxBuffer:28*1024*1024});
   if(process.error||process.status!==0)throw Error("Proxy browser execution failed "+String(process.error||process.stderr).slice(-650));
   const dom=process.stdout;
-  const suffix=(variant?"-"+variant.key:"")+"-"+yaw;
+  const suffix=(variant?"-"+variant.key:"")+(showZones?"-with-zones":"")+"-"+yaw;
   fs.writeFileSync(path.join(output,id+suffix+".dom.html"),dom);
   const tag=dom.match(/<div\b[^>]*\bid="proxy-stage"[^>]*>/)?.[0]||"";
   assert.ok(tag.includes('data-room="'+id+'"'),"Historical room selector did not update");
   assert.ok(tag.includes('data-rendered="true"'),"Source proxies did not render");
   assert.ok(tag.includes('data-yaw="'+yaw+'"'),"Camera setting ignored");
+  const guidedCount=showZones?(id==="cozy-bedroom-study-v1.3"?5:4):0;
+  const expectedFootprint=showZones&&id==="cozy-bedroom-study-v1.3"?"original-source-only":"not-shown";
+  assert.ok(tag.includes('data-zone-count="'+guidedCount+'"'),"Source zones visibility/count wrong");
+  assert.ok(tag.includes('data-footprint="'+expectedFootprint+'"'),"A source-unverified footprint was drawn");
   assert.ok(!dom.includes("Unable to show research room:")&&!dom.includes("Technical projection unavailable:"));
   const geometryStatus=dom.match(/<section\b[^>]*\bid="proxy-clearance"[^>]*>/)?.[0]||"";
   assert.ok(geometryStatus.includes('data-status="technical-only"'),"Live conservative bounds audit missing");
@@ -60,6 +65,9 @@ function snapshot(id,yaw,variant=null){
   const expected=data.rooms.find(r=>r.id===id);
   assert.ok(expected);
   assert.equal((dom.match(/class="proxy-choice"/g)||[]).length,expected.placed.length);
+  const expectedPolygons=guidedCount+(expectedFootprint==="original-source-only"?1:0);
+  assert.equal((dom.match(/data-zone-guide="/g)||[]).length,expectedPolygons);
+  assert.equal((dom.match(/data-zone-label="/g)||[]).length,expectedPolygons);
   const reductions=JSON.parse(fs.readFileSync(path.join(root,"site/room-variant-reduction.json"),"utf8"));
   const expectedReductions=reductions.rooms.find(r=>r.id===id).one_change_reductions;
   assert.equal((dom.match(/data-reduction="/g)||[]).length,expectedReductions.length);
@@ -85,6 +93,10 @@ const study=snapshot("study-corner-v1.1",130);
 const sleep=snapshot("sleep-room-v1",130);
 const rotated=snapshot("study-corner-v1.1",-45);
 const alternate=snapshot("study-corner-v1.1",130,{id:"desk",key:"wide-writing-desk"});
+const guidedCozy=snapshot("cozy-bedroom-study-v1.3",130,null,true);
+const guidedStudy=snapshot("study-corner-v1.1",130,null,true);
+const guidedSleep=snapshot("sleep-room-v1",130,null,true);
+for(const item of [guidedCozy,guidedStudy,guidedSleep])assert.ok(item.faces>20,"Zone guide obscured all model bodies");
 assert.notEqual(study.digest,rotated.digest,"Camera rotation had no effect");
 assert.notEqual(study.digest,alternate.digest,"Alternate staged model failed to change room geometry");
 assert.equal(new Set([cozy.digest,study.digest,sleep.digest]).size,3,"Distinct historical layouts appear identical");
