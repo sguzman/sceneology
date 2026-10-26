@@ -46,8 +46,11 @@ for (const id of showcase.approved_ids) {
   const record = library.records.find(item => item.id === id);
   assert.ok(record, "Selected work not found in library: " + id);
   assert.ok(record.viewer && record.thumbnail, "Selected work missing real viewer or thumbnail: " + id);
+  assert.notEqual(record.status, "failed", "Failed studies must not appear in the curated gallery: " + id);
 }
 for (const required of ["index.html","site/main.js","site/style.css","ontology/README.md","CONSTITUTION.md"]) {
   assert.ok(fileExists(required), "Missing project foundation: " + required);
 }
 console.log(`Sceneology validation passed: ${library.records.length} technical records, ${showcase.approved_ids.length} curated exhibits.`);
+
+await import("./check-roadmap.mjs");
