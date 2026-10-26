@@ -54,3 +54,4 @@ for (const required of ["index.html","site/main.js","site/style.css","ontology/R
 console.log(`Sceneology validation passed: ${library.records.length} technical records, ${showcase.approved_ids.length} curated exhibits.`);
 
 await import("./check-roadmap.mjs");
+await import("./check-ontology.mjs");
