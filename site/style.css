@@ -78,3 +78,10 @@ footer { border-top: 1px solid var(--stroke); padding: 25px 0 40px; color: var(-
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; }
 }
+
+/* Keep separate approved categories discoverable as the exhibition grows. */
+.gallery-filters{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0 10px}
+.gallery-filters[hidden]{display:none}
+.gallery-filter{font:inherit;font-size:.91rem;font-weight:600;color:var(--fg);background:var(--surface);border:1px solid var(--stroke);border-radius:999px;padding:8px 16px;cursor:pointer}
+.gallery-filter[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
+.gallery-filter:focus-visible{outline:2px solid var(--accent);outline-offset:3px}

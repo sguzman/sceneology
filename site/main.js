@@ -87,8 +87,32 @@ async function loadGallery(){
       region.textContent="No works have been selected for the public showcase yet.";
       return;
     }
-    region.className="gallery";
-    region.replaceChildren(...selected.map(createCard));
+    const buttons=document.getElementById("gallery-filters");
+    const filters=[
+      {key:"all",label:"All",matches:()=>true},
+      {key:"scene",label:"Environments",matches:r=>r.kind==="scene"},
+      {key:"object",label:"Models & objects",matches:r=>r.kind==="object"},
+      {key:"character",label:"Characters",matches:r=>r.kind==="character"}
+    ].filter(f=>selected.some(f.matches));
+    function present(filter){
+      const shown=selected.filter(filter.matches);
+      region.className="gallery";
+      region.replaceChildren(...shown.map(createCard));
+      for(const button of buttons.querySelectorAll("button")){
+        const current=button.dataset.kind===filter.key;
+        button.setAttribute("aria-pressed",String(current));
+      }
+    }
+    const menu=filters.map(f=>{
+      const button=tag("button","gallery-filter",f.label+" ("+selected.filter(f.matches).length+")");
+      button.type="button";
+      button.dataset.kind=f.key;
+      button.addEventListener("click",()=>present(f));
+      return button;
+    });
+    buttons.replaceChildren(...menu);
+    buttons.hidden=false;
+    present(filters[0]);
   }catch(error){
     region.className="empty";
     region.textContent="The gallery could not be loaded.";
