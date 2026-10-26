@@ -72,7 +72,10 @@ try{
   const state=await evaluate("({text:document.querySelector('#gallery')?.textContent?.trim()||'',ids:[...document.querySelectorAll('#gallery [data-record-id]')].map(x=>x.dataset.recordId),images:[...document.querySelectorAll('#gallery img')].map(x=>({complete:x.complete,width:x.naturalWidth}))})");
   if(approved.length===0){
    if(state.text.includes("No works have been selected")){loaded=true;break;}
-  }else if(state.ids.length===approved.length&&state.images.every(x=>x.complete&&x.width>0)){
+  }else if(state.ids.length===approved.length){
+   await evaluate("([...document.querySelectorAll(\'#gallery img\')].forEach(img=>{img.loading=\'eager\'}),true)");
+   const images=await evaluate("[...document.querySelectorAll(\'#gallery img\')].map(img=>({complete:img.complete,width:img.naturalWidth}))");
+   if(images.length!==approved.length||images.some(img=>!img.complete||img.width<=0))continue;
    assert.deepEqual(state.ids,approved,"Live gallery order differs from the approved allowlist");
    loaded=true;break;
   }
