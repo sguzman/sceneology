@@ -2,6 +2,8 @@ import {analyzeProxyGeometry} from "./room-geometry-audit.mjs";
 const stage=document.getElementById("reading-stage");
 const clearance=document.getElementById("reading-clearance");
 const showCharacter=document.getElementById("reading-show-character");
+const showPillow=document.getElementById("reading-show-pillow");
+const pillowNotice=document.getElementById("reading-pillow-notice");
 const alignCharacter=document.getElementById("reading-align-character");
 const characterNotice=document.getElementById("reading-character-notice");
 const status=document.getElementById("reading-status");
@@ -18,7 +20,7 @@ function shade(hex,factor){
  const n=parseInt(hex.slice(1),16);
  return "#"+[n>>16,n>>8&255,n&255].map(x=>Math.min(255,Math.max(0,Math.round(x*factor+7))).toString(16).padStart(2,"0")).join("");
 }
-let room=null,library=null,occupancy=null;
+let room=null,library=null,occupancy=null,lumbar=null;
 function draw(){
  if(!room||!library)return;
  const yawDeg=Number(yaw.value),elevationDeg=Number(elevation.value);
@@ -36,10 +38,15 @@ function draw(){
   occupancy.authored_character.translate[1]+(aligned?support.proposed_visualization_only_y_offset:0),
   occupancy.authored_character.translate[2]
  ]:null;
- const drawn=characterShown?[...room.instances,{
-  id:"quest-girl",model_key:occupancy.model.key,model_sha:occupancy.model.source_sha,
-  translate:characterTranslation,yaw_deg:occupancy.authored_character.yaw_deg
- }]:room.instances;
+ const pillowShown=Boolean(showPillow.checked&&lumbar);
+ const drawn=[
+  ...room.instances,
+  ...(pillowShown?[lumbar.instance]:[]),
+  ...(characterShown?[{
+   id:"quest-girl",model_key:occupancy.model.key,model_sha:occupancy.model.source_sha,
+   translate:characterTranslation,yaw_deg:occupancy.authored_character.yaw_deg
+  }]:[])
+ ];
  for(const instance of drawn){
   const model=library.get(instance.model_key);
   if(!model||model.source_sha!==instance.model_sha)throw Error("Unmatched source family binding");
@@ -80,6 +87,8 @@ function draw(){
  stage.dataset.yaw=String(yawDeg);stage.dataset.elevation=String(elevationDeg);
  stage.dataset.viewportTop=String(Math.round(stage.getBoundingClientRect().top));
  stage.dataset.occupancy=characterShown?"research-candidate":"hidden";
+ stage.dataset.pillow=pillowShown?"seat-back-proposal":"hidden";
+ stage.dataset.pillowOverhang=pillowShown?String(lumbar.candidate_support.horizontal_pillow_overhang_each_side):"none";
  stage.dataset.support=aligned?"alignment-proposal":characterShown?"authored-unaligned":"hidden";
  stage.dataset.characterY=characterShown?String(characterTranslation[1]):"none";
  caption.textContent="Six authored positions · "+room.omitted_parented_instances.length+" deliberately omitted attachments · camera "+yawDeg+"° / "+elevationDeg+"°";
@@ -99,6 +108,12 @@ function draw(){
   const li=document.createElement("li");li.textContent="No overlapping proxy AABBs. Original room collision clearance remains uncertified.";list.append(li);
  }
  clearance.replaceChildren(heading,explanation,list);
+ if(pillowShown){
+  pillowNotice.textContent="Source pillow aligned to candidate chair cushion Y "+lumbar.candidate_support.source_chair_seat_top_y+
+   " and backrest front Z "+lumbar.candidate_support.source_chair_back_front_z+
+   ". Wider by 0.20 source units per side than the cushion; overhang and visual fidelity require review. "+
+   "This is not an original-world-placement or contact certificate.";
+ }else pillowNotice.textContent="Lumbar pillow placement proposal hidden by default; historical placement remains unknown.";
  if(characterShown){
   characterNotice.textContent="Character source translation "+
     occupancy.authored_character.translate.join(", ")+", yaw "+
@@ -113,13 +128,14 @@ function draw(){
  }
 }
 try{
- const [mr,fr,cr]=await Promise.all([
+ const [mr,fr,cr,pr]=await Promise.all([
   fetch("./reading-corner-study-data.json",{cache:"no-cache"}),
   fetch("./family-orbit-data.json",{cache:"no-cache"}),
-  fetch("./reading-corner-occupancy-data.json",{cache:"no-cache"})
+  fetch("./reading-corner-occupancy-data.json",{cache:"no-cache"}),
+  fetch("./reading-lumbar-placement-data.json",{cache:"no-cache"})
  ]);
- if(!mr.ok||!fr.ok||!cr.ok)throw Error("Technical geometry not available");
- room=await mr.json();const modelData=await fr.json();occupancy=await cr.json();
+ if(!mr.ok||!fr.ok||!cr.ok||!pr.ok)throw Error("Technical geometry not available");
+ room=await mr.json();const modelData=await fr.json();occupancy=await cr.json();lumbar=await pr.json();
  if(room.instances?.length!==6||room.omitted_parented_instances?.length!==2||
     room.rendering_is_original_accepted!==false||room.gallery_approved!==false||
     room.complete_room!==false||modelData.models?.length!==30||
@@ -128,9 +144,14 @@ try{
     occupancy.showcase_approved!==false||occupancy.model.key!=="quest-girl-v7"||
     occupancy.comparison.source_shoe_support_research?.original_occupancy_position_preserved!==true||
     occupancy.comparison.source_shoe_support_research?.proposal_is_original_source_transform!==false||
-    occupancy.comparison.source_shoe_support_research?.exact_mesh_contact_certified!==false)
+    occupancy.comparison.source_shoe_support_research?.exact_mesh_contact_certified!==false||
+    lumbar.schema_version!==1||lumbar.proposal_accepted!==false||
+    lumbar.approved_original_room_placement_recovered!==false||
+    lumbar.artistically_approved!==false||lumbar.gallery_approved!==false||
+    lumbar.candidate_support?.width_mismatch_requires_owner_review!==true||
+    lumbar.instance.id!=="lumbar-pillow"||lumbar.model.key!=="reading-lumbar-upright-proposal")
   throw Error("Room completeness or approval boundary changed");
- library=new Map([...modelData.models,occupancy.model].map(x=>[x.key,x]));
+ library=new Map([...modelData.models,occupancy.model,lumbar.model].map(x=>[x.key,x]));
  attachments.replaceChildren(...room.omitted_parented_instances.map(item=>{
   const li=document.createElement("li");
   li.dataset.omittedInstance=item.id;
@@ -140,6 +161,8 @@ try{
  const params=new URLSearchParams(location.search);
  const preferred=Number(params.get("yaw"));
  if(params.has("yaw")&&Number.isFinite(preferred)&&preferred>=-180&&preferred<=180)yaw.value=String(preferred);
+ showPillow.checked=params.get("pillow")==="1";
+ showPillow.addEventListener("change",draw);
  showCharacter.checked=params.get("occupancy")==="1";
  alignCharacter.checked=params.get("support")==="1";
  alignCharacter.disabled=!showCharacter.checked;

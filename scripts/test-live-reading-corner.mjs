@@ -13,7 +13,7 @@ assert.equal(scene.instances.length,6);
 assert.equal(scene.omitted_parented_instances.length,2);
 assert.equal(scene.gallery_approved,false);
 assert.equal(scene.complete_room,false);
-const resources=["site/reading-corner-study.html","site/reading-corner-study.js","site/reading-corner-study-data.json","site/family-orbit-data.json","site/reading-corner-occupancy-data.json","site/reading-support-alignment.mjs"];
+const resources=["site/reading-corner-study.html","site/reading-corner-study.js","site/reading-corner-study-data.json","site/family-orbit-data.json","site/reading-corner-occupancy-data.json","site/reading-support-alignment.mjs","site/reading-lumbar-placement-data.json"];
 for(const relative of resources){
  let issue;
  for(let i=0;i<5;i++){
@@ -93,6 +93,34 @@ try{
  assert.notDeepEqual(origin,raised,"Viewer alignment has no visible effect on actual character pixels");
  fs.rmSync(occupancyProfile+"-aligned",{recursive:true,force:true});
 }finally{fs.rmSync(occupancyProfile,{recursive:true,force:true});}
+// Optional pillow research must render a distinct source-derived object and preserve the accepted-room source.
+const pillowProfile=fs.mkdtempSync(path.join(os.tmpdir(),"sceneology-reading-lumbar-"));
+try{
+ const url=new URL("site/reading-corner-study.html?yaw=130&pillow=1",base);
+ const result=spawnSync(browser,[...flags,"--user-data-dir="+pillowProfile,"--dump-dom",url.href],
+  {encoding:"utf8",timeout:100000,maxBuffer:32*1024*1024});
+ if(result.error||result.status!==0)throw Error("Lumbar support browser rendering failed");
+ const dom=result.stdout;
+ fs.writeFileSync(path.join(output,"reading-lumbar-proposal.dom.html"),dom);
+ const stage=dom.match(/<div[^>]*\bid="reading-stage"[^>]*>/)?.[0]||"";
+ assert.ok(stage.includes('data-pillow="seat-back-proposal"'),"Source-aware lumbar support candidate not selected");
+ assert.ok(stage.includes('data-pillow-overhang="0.2"'),"Pillow width compatibility warning disappeared");
+ assert.ok(dom.includes('data-instance="lumbar-pillow"'),"Lumbar pillow geometry is not visible");
+ assert.ok(dom.includes("historical placement remains unknown")||dom.includes("not an original-world-placement"),
+  "Pillow proposal lost original-source qualification");
+ const faces=[...dom.matchAll(/<polygon[^>]*data-instance="lumbar-pillow"[^>]*points="([^"]+)"/g)];
+ assert.ok(faces.length>=5&&faces.every(m=>!/(?:NaN|Infinity)/.test(m[1])),"Pillow projection is not finite");
+ const screenshotProfile=fs.mkdtempSync(path.join(os.tmpdir(),"sceneology-lumbar-capture-"));
+ try{
+  const png=path.join(output,"reading-lumbar-placement-proposal.png");
+  const shot=spawnSync(browser,[...flags,"--window-size=1250,1460","--user-data-dir="+screenshotProfile,
+   "--screenshot="+png,url.href],{encoding:"utf8",timeout:100000});
+  if(shot.error||shot.status!==0)throw Error("Lumbar review screenshot not captured");
+  const b=fs.readFileSync(png);
+  assert.ok(b.length>7000&&b.subarray(0,8).toString("hex")==="89504e470d0a1a0a");
+ }finally{fs.rmSync(screenshotProfile,{recursive:true,force:true});}
+}finally{fs.rmSync(pillowProfile,{recursive:true,force:true});}
+
 assert.notEqual(first.digest,second.digest,"Camera rotation did not change source-composition geometry");
 const shotProfile=fs.mkdtempSync(path.join(os.tmpdir(),"sceneology-reading-shot-"));
 try{
