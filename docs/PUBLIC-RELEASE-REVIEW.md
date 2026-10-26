@@ -4,7 +4,7 @@
 
 ## Current public surface
 
-The published repository contains **68 tracked text files** at this review checkpoint. The release validation [run 40348573119](https://github.com/sguzman/sceneology/actions/runs/40348573119) passed a whole-repository text scan, including hidden GitHub workflows, scripts, catalog, ontology, scene source, experiments, public docs, and root project files.
+At the initial whole-repository screening checkpoint, **68 tracked text files** were scanned. Additional source, manifest and review files have since been committed; the whole-tree safety check runs against the updated checkout on every validation and Pages deployment. The release validation [run 40348573119](https://github.com/sguzman/sceneology/actions/runs/40348573119) passed a whole-repository text scan, including hidden GitHub workflows, scripts, catalog, ontology, scene source, experiments, public docs, and root project files.
 
 The checks reject common credential shapes, explicit local user directories and private network host patterns. The scanner is not exhaustive: it cannot detect every private utterance, licensed asset, image metadata, or semantic risk. Human file review remains mandatory for every newly selected source transfer.
 
@@ -32,3 +32,9 @@ The reviewer must inspect the precise staged content and commit message before e
 This record supports roadmap **P03** for the current public release and its outgoing validation surface. It **does not** close **P01/P02** for all future candidate material, certify historical author provenance without caveat, or prove that unpublished assets are safe or redistributable. The source-census and version-variant review deliberately leave unresolved candidates outside this repository.
 
 No production build or browser test may imply owner approval of visual beauty. Future gallery admission requires a separate specific selection.
+
+## Machine-checked dependency and rights declarations
+
+The [public source/provenance manifest](PROVENANCE-MANIFEST.json) enumerates all six admitted technical catalog entries, exact released Git blob hashes, embedded asset classifications, review-scoped rights assertions, and every declared local runtime file. The [provenance checker](../scripts/check-provenance.mjs) recomputes Git blob digests, requires a manifest entry for every technical record, rejects missing or altered local dependencies, rejects unexplained linked scripts/media, and rejects undeclared network-loaded resources. [GitHub Actions validation run 40349243751](https://github.com/sguzman/sceneology/actions/runs/40349243751) passed those release checks.
+
+This closes the transitive dependency and attribution review **for the currently admitted six artifacts** under roadmap P02. The rights basis is the owner's authorship and control of the original work; the public source links support provenance but do not constitute an independent court-tested copyright determination. The unreviewed private corpus remains on hold. Any later inclusion adds new dependencies and requires a new rights/content audit.
