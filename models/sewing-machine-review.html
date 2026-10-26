@@ -1,0 +1,134 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Scenarium — vintage sewing machine</title><style>
+:root{color-scheme:dark;font-family:system-ui,sans-serif}*{box-sizing:border-box}
+body{margin:0;background:#1a2225;color:#f1e8d6}
+main{height:100vh;display:grid;grid-template-rows:auto 1fr auto}
+header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;background:#29312d;border-bottom:1px solid #59614b;padding:12px 16px}
+strong{font-size:15px}small{font-size:11px;color:#d7c9a8}
+section{position:relative;min-height:470px;overflow:hidden;background:#1c2830}
+canvas{width:100%;height:100%;touch-action:none;cursor:grab;display:block}
+canvas:active{cursor:grabbing}
+button{font:13px system-ui;color:#f9e8c1;background:#4d4432;border:1px solid #95774f;padding:9px 12px;border-radius:7px;cursor:pointer}
+button[aria-pressed="true"]{background:#8b6545}
+.controls{display:flex;align-items:center;flex-wrap:wrap;gap:10px}
+label{font:12px system-ui;color:#e3d3af;display:flex;align-items:center;gap:8px}
+input{accent-color:#cfad6b;cursor:pointer}
+#meta{position:absolute;bottom:14px;left:14px;background:#0f1c20cf;padding:9px 11px;border-radius:7px;font:12px system-ui;pointer-events:none}
+footer{background:#29312d;color:#d5c5a9;font:12px system-ui;padding:10px 16px}
+</style></head><body><main>
+<header><div><strong>Vintage Sewing Machine v1</strong><div><small>Scenarium · 166 source-derived 3D meshes · additive review candidate</small></div></div>
+<div class="controls"><button id="run" aria-pressed="false">▶ Start sewing</button><label>Stitches/min <input id="speed" type="range" min="40" max="360" step="10" value="150"/><output id="speedVal">150</output></label><button id="reset">Reset view</button></div></header>
+<section id="stage"><canvas id="view"></canvas><div id="meta">Stopped · Drag to orbit · Wheel to zoom</div></section>
+<footer>SC3D model: <code>assets/constructive-3d/sewing-machines/block-chibi-sewing-machine-v1.sc3d.yml</code> · Silent illustrative mechanics, visual review pending.</footer>
+</main><script>
+const MODEL=[["b",[[2.2,0.14,1.25],[0,0.07,0],[0,0,0]],"#513329",0],["b",[[2.14,0.084,1.18],[0,0.168,0],[0,0,0]],"#7e4c35",0],["b",[[2.16,0.032,0.038],[0,0.185,-0.608],[0,0,0]],"#b68158",0],["b",[[2.16,0.032,0.038],[0,0.185,0.609],[0,0,0]],"#b68158",0],["b",[[0.19,0.065,0.2],[-0.96,0.039,-0.49],[0,0,0]],"#b68158",0],["b",[[0.19,0.065,0.2],[-0.96,0.039,0.49],[0,0,0]],"#b68158",0],["b",[[0.19,0.065,0.2],[0.96,0.039,-0.49],[0,0,0]],"#b68158",0],["b",[[0.19,0.065,0.2],[0.96,0.039,0.49],[0,0,0]],"#b68158",0],["b",[[1.94,0.17,1.01],[0,0.296,0],[0,0,0]],"#273d37",0],["b",[[1.99,0.043,1.055],[0,0.391,0],[0,0,0]],"#bd9555",0],["b",[[1.91,0.041,0.974],[0,0.416,0],[0,0,0]],"#446a56",0],["b",[[0.72,0.022,0.45],[-0.66,0.445,-0.22],[0,0,0]],"#a6aba9",0],["b",[[0.042,0.006,0.17],[-0.71,0.459,-0.22],[0,0,0]],"#202425",0],["b",[[0.035,0.006,0.035],[-0.95,0.461,-0.37],[0,0,0]],"#bd9555",0],["b",[[0.035,0.006,0.035],[-0.37,0.461,-0.37],[0,0,0]],"#bd9555",0],["b",[[0.41,0.47,0.49],[0.63,0.696,0.23],[0,0,0]],"#273d37",0],["b",[[0.43,0.4,0.51],[0.61,1.085,0.22],[0,0,0]],"#273d37",0],["b",[[0.3,0.54,0.025],[0.615,0.999,-0.046],[0,0,0]],"#3b5648",0],["b",[[0.024,0.43,0.037],[0.405,1.02,-0.05],[0,0,0]],"#bd9555",0],["b",[[1.18,0.22,0.4],[-0.003,1.292,0.19],[0,0,0]],"#273d37",0],["b",[[1.16,0.03,0.044],[-0.007,1.38,-0.031],[0,0,0]],"#bd9555",0],["b",[[1.16,0.023,0.04],[-0.007,1.378,0.408],[0,0,0]],"#e9c57c",0],["l",[[[-0.017,[[0.66,1.292],[0.6277,1.32908],[0.53395,1.36253],[0.38794,1.38908],[0.20395,1.40613],[0,1.412],[-0.20395,1.40613],[-0.38794,1.38908],[-0.53395,1.36253],[-0.6277,1.32908],[-0.66,1.292],[-0.6277,1.25492],[-0.53395,1.22147],[-0.38794,1.19492],[-0.20395,1.17787],[0,1.172],[0.20395,1.17787],[0.38794,1.19492],[0.53395,1.22147],[0.6277,1.25492]]],[0.11,[[0.66,1.292],[0.6277,1.33681],[0.53395,1.37723],[0.38794,1.40931],[0.20395,1.4299],[0,1.437],[-0.20395,1.4299],[-0.38794,1.40931],[-0.53395,1.37723],[-0.6277,1.33681],[-0.66,1.292],[-0.6277,1.24719],[-0.53395,1.20677],[-0.38794,1.17469],[-0.20395,1.1541],[0,1.147],[0.20395,1.1541],[0.38794,1.17469],[0.53395,1.20677],[0.6277,1.24719]]],[0.235,[[0.66,1.292],[0.6277,1.33681],[0.53395,1.37723],[0.38794,1.40931],[0.20395,1.4299],[0,1.437],[-0.20395,1.4299],[-0.38794,1.40931],[-0.53395,1.37723],[-0.6277,1.33681],[-0.66,1.292],[-0.6277,1.24719],[-0.53395,1.20677],[-0.38794,1.17469],[-0.20395,1.1541],[0,1.147],[0.20395,1.1541],[0.38794,1.17469],[0.53395,1.20677],[0.6277,1.24719]]],[0.38,[[0.66,1.292],[0.6277,1.32908],[0.53395,1.36253],[0.38794,1.38908],[0.20395,1.40613],[0,1.412],[-0.20395,1.40613],[-0.38794,1.38908],[-0.53395,1.36253],[-0.6277,1.32908],[-0.66,1.292],[-0.6277,1.25492],[-0.53395,1.22147],[-0.38794,1.19492],[-0.20395,1.17787],[0,1.172],[0.20395,1.17787],[0.38794,1.19492],[0.53395,1.22147],[0.6277,1.25492]]]]],"#273d37",0],["b",[[0.53,0.065,0.016],[0.025,1.304,-0.053],[0,0,0]],"#e9c57c",0],["b",[[0.02,0.037,0.014],[-0.18,1.302,-0.067],[0,0,0]],"#172923",0],["b",[[0.02,0.037,0.014],[-0.131,1.302,-0.067],[0,0,0]],"#172923",0],["b",[[0.02,0.037,0.014],[-0.082,1.302,-0.067],[0,0,0]],"#172923",0],["b",[[0.02,0.037,0.014],[-0.033,1.302,-0.067],[0,0,0]],"#172923",0],["b",[[0.02,0.037,0.014],[0.016,1.302,-0.067],[0,0,0]],"#172923",0],["b",[[0.02,0.037,0.014],[0.065,1.302,-0.067],[0,0,0]],"#172923",0],["b",[[0.02,0.037,0.014],[0.114,1.302,-0.067],[0,0,0]],"#172923",0],["b",[[0.02,0.037,0.014],[0.163,1.302,-0.067],[0,0,0]],"#172923",0],["b",[[0.305,0.43,0.38],[-0.685,1.112,0.14],[0,0,0]],"#273d37",0],["b",[[0.29,0.51,0.064],[-0.69,0.958,-0.072],[0,0,0]],"#3b5648",0],["b",[[0.021,0.43,0.036],[-0.81,0.951,-0.12],[0,0,0]],"#bd9555",0],["c",[0.183,0.35,18,[-0.714,1.295,0.17],[90,0,0]],"#273d37",0],["b",[[0.14,0.13,0.14],[-0.715,0.722,-0.188],[0,0,0]],"#a6aba9",0],["b",[[0.088,0.083,0.1],[-0.715,0.636,-0.195],[0,0,0]],"#151c1d",0],["b",[[0.255,0.31,0.33],[0.792,0.784,0.427],[0,0,0]],"#172923",0],["b",[[0.265,0.035,0.34],[0.798,0.925,0.427],[0,0,0]],"#bd9555",0],["c",[0.125,0.06,24,[0.45,1.055,-0.09],[90,0,0]],"#bd9555",0],["c",[0.088,0.07,24,[0.45,1.056,-0.129],[90,0,0]],"#efe1c5",0],["c",[0.021,0.081,12,[0.454,1.073,-0.165],[90,0,0]],"#172923",0],["r",[[[0.38558,1.13148,-0.137],[0.38042,1.1376,-0.137]],0.008,0.008],"#172923",0],["r",[[[0.39988,1.14153,-0.137],[0.39587,1.14845,-0.137]],0.008,0.008],"#172923",0],["r",[[[0.41571,1.14894,-0.137],[0.41297,1.15645,-0.137]],0.008,0.008],"#172923",0],["r",[[[0.43259,1.15347,-0.137],[0.4312,1.16135,-0.137]],0.008,0.008],"#172923",0],["r",[[[0.45,1.155,-0.137],[0.45,1.163,-0.137]],0.008,0.008],"#172923",0],["r",[[[0.46741,1.15347,-0.137],[0.4688,1.16135,-0.137]],0.008,0.008],"#172923",0],["r",[[[0.48429,1.14894,-0.137],[0.48703,1.15645,-0.137]],0.008,0.008],"#172923",0],["r",[[[0.50012,1.14153,-0.137],[0.50413,1.14845,-0.137]],0.008,0.008],"#172923",0],["r",[[[0.51442,1.13148,-0.137],[0.51958,1.1376,-0.137]],0.008,0.008],"#172923",0],["r",[[[-0.38,1.235,-0.052],[-0.357,1.27,-0.057],[-0.37,1.316,-0.052]],0.013,0.012],"#e9c57c",0],["r",[[[-0.26,1.235,-0.052],[-0.237,1.27,-0.057],[-0.25,1.316,-0.052]],0.013,0.012],"#e9c57c",0],["r",[[[-0.14,1.235,-0.052],[-0.117,1.27,-0.057],[-0.13,1.316,-0.052]],0.013,0.012],"#e9c57c",0],["r",[[[-0.02,1.235,-0.052],[0.003,1.27,-0.057],[-0.01,1.316,-0.052]],0.013,0.012],"#e9c57c",0],["r",[[[0.1,1.235,-0.052],[0.123,1.27,-0.057],[0.11,1.316,-0.052]],0.013,0.012],"#e9c57c",0],["r",[[[0.22,1.235,-0.052],[0.243,1.27,-0.057],[0.23,1.316,-0.052]],0.013,0.012],"#e9c57c",0],["r",[[[0.34,1.235,-0.052],[0.363,1.27,-0.057],[0.35,1.316,-0.052]],0.013,0.012],"#e9c57c",0],["r",[[[0.505,0.76,-0.061],[0.547,0.795,-0.067],[0.505,0.825,-0.061]],0.01,0.01],"#e9c57c",0],["r",[[[0.675,0.76,-0.061],[0.717,0.795,-0.067],[0.675,0.825,-0.061]],0.01,0.01],"#e9c57c",0],["r",[[[0.505,0.93,-0.061],[0.547,0.965,-0.067],[0.505,0.995,-0.061]],0.01,0.01],"#e9c57c",0],["r",[[[0.675,0.93,-0.061],[0.717,0.965,-0.067],[0.675,0.995,-0.061]],0.01,0.01],"#e9c57c",0],["c",[0.016,0.29,12,[0.41,1.562,0.15],[0,0,0]],"#687477",0],["c",[0.077,0.206,20,[0.41,1.557,0.15],[0,0,0]],"#b68158",0],["c",[0.075,0.142,20,[0.41,1.576,0.15],[0,0,0]],"#ecd598",0],["c",[0.084,0.017,20,[0.41,1.492,0.15],[0,0,0]],"#513329",0],["c",[0.084,0.017,20,[0.41,1.658,0.15],[0,0,0]],"#513329",0],["r",[[[0.41,1.65,0.1],[0.52,1.59,-0.028],[0.21,1.45,-0.08],[-0.59,1.44,-0.079]],0.008,0.008],"#ecd598",0],["r",[[[-0.59,1.44,-0.079],[-0.825,1.13,-0.093],[-0.79,0.8,-0.119],[-0.712,0.57,-0.178]],0.007,0.007],"#ecd598",0],["r",[[[1.026,1.3649999999999998,0.23],[1.026,1.32012,0.36813]],0.038,0.043],"#a6aba9",1],["r",[[[1.06,1.375,0.23],[1.06,1.32821,0.37401]],0.014,0.014],"#bd9555",1],["r",[[[1.026,1.32012,0.36813],[1.026,1.2026199999999998,0.4535]],0.038,0.043],"#a6aba9",1],["r",[[[1.06,1.32821,0.37401],[1.06,1.2057099999999998,0.46301000000000003]],0.014,0.014],"#bd9555",1],["r",[[[1.026,1.2026199999999998,0.4535],[1.026,1.05738,0.4535]],0.038,0.043],"#a6aba9",1],["r",[[[1.06,1.2057099999999998,0.46301000000000003],[1.06,1.05429,0.46301000000000003]],0.014,0.014],"#bd9555",1],["r",[[[1.026,1.05738,0.4535],[1.026,0.9398799999999998,0.36813]],0.038,0.043],"#a6aba9",1],["r",[[[1.06,1.05429,0.46301000000000003],[1.06,0.9317899999999999,0.37401]],0.014,0.014],"#bd9555",1],["r",[[[1.026,0.9398799999999998,0.36813],[1.026,0.8949999999999999,0.23]],0.038,0.043],"#a6aba9",1],["r",[[[1.06,0.9317899999999999,0.37401],[1.06,0.8849999999999999,0.23]],0.014,0.014],"#bd9555",1],["r",[[[1.026,0.8949999999999999,0.23],[1.026,0.9398799999999998,0.09187000000000001]],0.038,0.043],"#a6aba9",1],["r",[[[1.06,0.8849999999999999,0.23],[1.06,0.9317899999999999,0.08599000000000001]],0.014,0.014],"#bd9555",1],["r",[[[1.026,0.9398799999999998,0.09187000000000001],[1.026,1.05738,0.006500000000000006]],0.038,0.043],"#a6aba9",1],["r",[[[1.06,0.9317899999999999,0.08599000000000001],[1.06,1.05429,-0.003009999999999985]],0.014,0.014],"#bd9555",1],["r",[[[1.026,1.05738,0.006500000000000006],[1.026,1.2026199999999998,0.006500000000000006]],0.038,0.043],"#a6aba9",1],["r",[[[1.06,1.05429,-0.003009999999999985],[1.06,1.2057099999999998,-0.003009999999999985]],0.014,0.014],"#bd9555",1],["r",[[[1.026,1.2026199999999998,0.006500000000000006],[1.026,1.32012,0.09187000000000001]],0.038,0.043],"#a6aba9",1],["r",[[[1.06,1.2057099999999998,-0.003009999999999985],[1.06,1.32821,0.08599000000000001]],0.014,0.014],"#bd9555",1],["r",[[[1.026,1.32012,0.09187000000000001],[1.026,1.3649999999999998,0.23]],0.038,0.043],"#a6aba9",1],["r",[[[1.06,1.32821,0.08599000000000001],[1.06,1.375,0.23]],0.014,0.014],"#bd9555",1],["r",[[[1.036,1.184,0.23],[1.036,1.353,0.23]],0.034,0.037],"#a6aba9",1],["r",[[[1.036,1.16818,0.26818000000000003],[1.036,1.28768,0.38768]],0.034,0.037],"#a6aba9",1],["r",[[[1.036,1.13,0.28400000000000003],[1.036,1.13,0.453]],0.034,0.037],"#a6aba9",1],["r",[[[1.036,1.0918199999999998,0.26818000000000003],[1.036,0.9723199999999999,0.38768]],0.034,0.037],"#a6aba9",1],["r",[[[1.036,1.0759999999999998,0.23],[1.036,0.9069999999999999,0.23]],0.034,0.037],"#a6aba9",1],["r",[[[1.036,1.0918199999999998,0.19182000000000002],[1.036,0.9723199999999999,0.07232000000000002]],0.034,0.037],"#a6aba9",1],["r",[[[1.036,1.13,0.17600000000000002],[1.036,1.13,0.007000000000000006]],0.034,0.037],"#a6aba9",1],["r",[[[1.036,1.16818,0.19182000000000002],[1.036,1.28768,0.07232000000000002]],0.034,0.037],"#a6aba9",1],["c",[0.058,0.24,20,[0.986,1.13,0.23],[0,0,90]],"#687477",1],["c",[0.103,0.11,20,[1.073,1.13,0.23],[0,0,90]],"#bd9555",1],["c",[0.031,0.12,12,[1.136,1.13,0.23],[0,0,90]],"#202425",1],["r",[[[1.126,1.13,0.32],[1.126,1.188,0.42000000000000004]],0.037,0.038],"#bd9555",1],["c",[0.033,0.11,12,[1.186,1.188,0.42000000000000004],[0,0,90]],"#513329",1],["c",[0.032,0.32,16,[-0.715,0.752,-0.202],[0,0,0]],"#a6aba9",2],["c",[0.008,0.2,12,[-0.715,0.59,-0.202],[0,0,0]],"#687477",2],["b",[[0.11,0.075,0.076],[-0.715,0.498,-0.215],[0,0,0]],"#bd9555",2],["c",[0.004,0.05,8,[-0.715,0.503,-0.202],[0,0,0]],"#efe1c5",2],["b",[[0.052,0.235,0.064],[-0.608,0.557,-0.23],[0,0,0]],"#a6aba9",0],["b",[[0.17,0.045,0.065],[-0.655,0.472,-0.231],[0,0,0]],"#687477",0],["b",[[0.085,0.03,0.23],[-0.772,0.48,-0.23],[0,0,0]],"#a6aba9",0],["b",[[0.074,0.029,0.23],[-0.613,0.48,-0.23],[0,0,0]],"#a6aba9",0],["b",[[0.073,0.017,0.21],[-0.609,0.501,-0.23],[0,0,0]],"#bd9555",0],["r",[[[-0.54,0.7,-0.04],[-0.45,0.67,-0.03],[-0.45,0.58,-0.02]],0.024,0.026],"#bd9555",0],["b",[[0.72,0.018,0.96],[-0.706,0.466,-0.15],[0,0,0]],"#66a5a3",3],["r",[[[-1.046,0.479,-0.61],[-1.046,0.479,0.31]],0.019,0.017],"#b7d1c8",3],["r",[[[-0.366,0.479,-0.61],[-0.366,0.479,0.31]],0.019,0.017],"#b7d1c8",3],["r",[[[-1.005,0.477,-0.55],[-0.41,0.477,-0.53]],0.003,0.004],"#b7d1c8",3],["r",[[[-1.005,0.477,-0.5],[-0.41,0.477,-0.48]],0.003,0.004],"#66a5a3",3],["r",[[[-1.005,0.477,-0.45],[-0.41,0.477,-0.43]],0.003,0.004],"#66a5a3",3],["r",[[[-1.005,0.477,-0.4],[-0.41,0.477,-0.38]],0.003,0.004],"#b7d1c8",3],["r",[[[-1.005,0.477,-0.35],[-0.41,0.477,-0.33]],0.003,0.004],"#66a5a3",3],["r",[[[-1.005,0.477,-0.3],[-0.41,0.477,-0.28]],0.003,0.004],"#66a5a3",3],["r",[[[-1.005,0.477,-0.25],[-0.41,0.477,-0.23]],0.003,0.004],"#b7d1c8",3],["r",[[[-1.005,0.477,-0.2],[-0.41,0.477,-0.18]],0.003,0.004],"#66a5a3",3],["r",[[[-1.005,0.477,-0.15],[-0.41,0.477,-0.13]],0.003,0.004],"#66a5a3",3],["r",[[[-1.005,0.477,-0.1],[-0.41,0.477,-0.08]],0.003,0.004],"#b7d1c8",3],["r",[[[-1.005,0.477,-0.05],[-0.41,0.477,-0.03]],0.003,0.004],"#66a5a3",3],["r",[[[-1.005,0.477,0],[-0.41,0.477,0.02]],0.003,0.004],"#66a5a3",3],["r",[[[-1.005,0.477,0.05],[-0.41,0.477,0.07]],0.003,0.004],"#b7d1c8",3],["r",[[[-1.005,0.477,0.1],[-0.41,0.477,0.12]],0.003,0.004],"#66a5a3",3],["r",[[[-1.005,0.477,0.15],[-0.41,0.477,0.17]],0.003,0.004],"#66a5a3",3],["r",[[[-1.005,0.477,0.2],[-0.41,0.477,0.22]],0.003,0.004],"#b7d1c8",3],["r",[[[-1.005,0.477,0.25],[-0.41,0.477,0.27]],0.003,0.004],"#66a5a3",3],["r",[[[-1.005,0.477,0.3],[-0.41,0.477,0.32]],0.003,0.004],"#66a5a3",3],["r",[[[-0.715,0.482,-0.575],[-0.715,0.482,-0.558]],0.008,0.005],"#f7ecce",3],["r",[[[-0.715,0.482,-0.536],[-0.715,0.482,-0.519]],0.008,0.005],"#f7ecce",3],["r",[[[-0.715,0.482,-0.497],[-0.715,0.482,-0.48]],0.008,0.005],"#f7ecce",3],["r",[[[-0.715,0.482,-0.458],[-0.715,0.482,-0.441]],0.008,0.005],"#f7ecce",3],["r",[[[-0.715,0.482,-0.419],[-0.715,0.482,-0.402]],0.008,0.005],"#f7ecce",3],["r",[[[-0.715,0.482,-0.38],[-0.715,0.482,-0.363]],0.008,0.005],"#f7ecce",3],["r",[[[-0.715,0.482,-0.341],[-0.715,0.482,-0.324]],0.008,0.005],"#f7ecce",3],["r",[[[-0.715,0.482,-0.302],[-0.715,0.482,-0.285]],0.008,0.005],"#f7ecce",3],["r",[[[-0.715,0.482,-0.263],[-0.715,0.482,-0.246]],0.008,0.005],"#f7ecce",3],["r",[[[-0.715,0.482,-0.224],[-0.715,0.482,-0.207]],0.008,0.005],"#f7ecce",3],["r",[[[-0.715,0.482,-0.185],[-0.715,0.482,-0.168]],0.008,0.005],"#f7ecce",3],["r",[[[-0.715,0.482,-0.146],[-0.715,0.482,-0.129]],0.008,0.005],"#f7ecce",3],["r",[[[-0.715,0.482,-0.107],[-0.715,0.482,-0.09]],0.008,0.005],"#f7ecce",3],["r",[[[-0.715,0.482,-0.068],[-0.715,0.482,-0.051]],0.008,0.005],"#f7ecce",3],["r",[[[-0.715,0.482,-0.029],[-0.715,0.482,-0.012]],0.008,0.005],"#f7ecce",3],["r",[[[-0.715,0.482,0.01],[-0.715,0.482,0.027]],0.008,0.005],"#f7ecce",3],["r",[[[-0.715,0.482,0.049],[-0.715,0.482,0.066]],0.008,0.005],"#f7ecce",3],["r",[[[-0.715,0.482,0.088],[-0.715,0.482,0.105]],0.008,0.005],"#f7ecce",3],["r",[[[-0.715,0.482,0.127],[-0.715,0.482,0.144]],0.008,0.005],"#f7ecce",3],["r",[[[-0.715,0.482,0.166],[-0.715,0.482,0.183]],0.008,0.005],"#f7ecce",3],["r",[[[-0.715,0.482,0.205],[-0.715,0.482,0.222]],0.008,0.005],"#f7ecce",3],["r",[[[-0.715,0.482,0.244],[-0.715,0.482,0.261]],0.008,0.005],"#f7ecce",3],["c",[0.059,0.055,12,[-0.85,0.204,-0.42],[0,0,0]],"#202425",0],["c",[0.059,0.055,12,[-0.85,0.204,0.42],[0,0,0]],"#202425",0],["c",[0.059,0.055,12,[0.85,0.204,-0.42],[0,0,0]],"#202425",0],["c",[0.059,0.055,12,[0.85,0.204,0.42],[0,0,0]],"#202425",0],["c",[0.072,0.055,20,[-0.5,0.975,-0.09],[90,0,0]],"#bd9555",0],["r",[[[-0.5,1.045,-0.13],[-0.5,1.06,-0.13]],0.006,0.006],"#172923",0],["r",[[[-0.46341,1.03468,-0.13],[-0.45557,1.04746,-0.13]],0.006,0.006],"#172923",0],["r",[[[-0.43762,1.00675,-0.13],[-0.42425,1.01356,-0.13]],0.006,0.006],"#172923",0],["r",[[[-0.43022,0.96946,-0.13],[-0.41527,0.96827,-0.13]],0.006,0.006],"#172923",0],["r",[[[-0.44341,0.9338,-0.13],[-0.43128,0.92498,-0.13]],0.006,0.006],"#172923",0]];
+const gl=document.querySelector('#view').getContext('webgl2',{antialias:true,alpha:false});
+const stage=document.querySelector('#stage'),canvas=document.querySelector('#view'),meta=document.querySelector('#meta');
+if(!gl){meta.textContent='WebGL2 unavailable';throw Error('WebGL2 unavailable')}
+const add=(a,b)=>a.map((x,i)=>x+b[i]),sub=(a,b)=>a.map((x,i)=>x-b[i]),mul=(a,k)=>a.map(x=>x*k);
+const cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];
+const norm=a=>{const l=Math.hypot(...a)||1;return mul(a,1/l)};
+const fbox=[[0,2,1],[0,3,2],[4,5,6],[4,6,7],[0,1,5],[0,5,4],[1,2,6],[1,6,5],[2,3,7],[2,7,6],[3,0,4],[3,4,7]];
+const groups=[[],[],[],[]];
+function rotate(p,deg){
+let [x,y,z]=p,[ax,ay,az]=deg.map(v=>v*Math.PI/180),c=Math.cos(ax),s=Math.sin(ax);
+[y,z]=[c*y-s*z,s*y+c*z];c=Math.cos(ay);s=Math.sin(ay);[x,z]=[c*x+s*z,-s*x+c*z];c=Math.cos(az);s=Math.sin(az);return[c*x-s*y,s*x+c*y,z];
+}
+function emit(tris,hex,group){
+const arr=groups[group],rgb=[1,3,5].map(i=>parseInt(hex.slice(i,i+2),16)/255);
+for(const [a,b,c] of tris){const normal=norm(cross(sub(b,a),sub(c,a)));for(const p of [a,b,c])arr.push(...p,...normal,...rgb);}
+}
+function box(size,at,angles,color,group){
+const [x,y,z]=size.map(q=>q/2),p=[[-x,-y,-z],[x,-y,-z],[x,y,-z],[-x,y,-z],[-x,-y,z],[x,-y,z],[x,y,z],[-x,y,z]].map(q=>add(rotate(q,angles),at));
+emit(fbox.map(f=>f.map(i=>p[i])),color,group);
+}
+function cylinder(radius,height,segments,at,angles,color,group){
+const tris=[],lo=-height/2,hi=height/2,pt=(x,y,z)=>add(rotate([x,y,z],angles),at);
+for(let i=0;i<segments;i++){const a=i*2*Math.PI/segments,b=(i+1)*2*Math.PI/segments;
+const A=pt(radius*Math.cos(a),lo,radius*Math.sin(a)),B=pt(radius*Math.cos(b),lo,radius*Math.sin(b)),C=pt(radius*Math.cos(b),hi,radius*Math.sin(b)),D=pt(radius*Math.cos(a),hi,radius*Math.sin(a));
+tris.push([A,C,B],[A,D,C],[pt(0,hi,0),C,D],[pt(0,lo,0),A,B]);
+}emit(tris,color,group);
+}
+function ribbon(points,width,depth,color,group){
+const tris=[];
+for(let i=1;i<points.length;i++){
+const a=points[i-1],b=points[i],dir=norm(sub(b,a)),guide=Math.abs(dir[1])>.92?[1,0,0]:[0,1,0],right=mul(norm(cross(dir,guide)),width/2),up=mul(norm(cross(right,dir)),depth/2);
+const ring=p=>[add(add(p,right),up),add(sub(p,right),up),sub(sub(p,right),up),add(sub(p,up),right)];
+const v=[...ring(a),...ring(b)];for(const f of fbox)tris.push(f.map(j=>v[j]));
+}emit(tris,color,group);
+}
+function loft(sections,color,group){
+const tris=[],v=sections.map(([z,pts])=>pts.map(([x,y])=>[x,y,z]));
+for(let i=0;i<v.length-1;i++){const n=v[i].length;if(v[i+1].length!==n)throw Error('Loft cross-section mismatch');
+for(let j=0;j<n;j++){const k=(j+1)%n;tris.push([v[i][j],v[i][k],v[i+1][k]],[v[i][j],v[i+1][k],v[i+1][j]]);}}
+for(let j=1;j<v[0].length-1;j++){tris.push([v[0][0],v[0][j+1],v[0][j]]);
+let last=v.at(-1);tris.push([last[0],last[j],last[j+1]]);}
+emit(tris,color,group);
+}
+for(const [kind,args,color,group] of MODEL){
+if(kind==='b')box(...args,color,group);
+else if(kind==='c')cylinder(...args,color,group);
+else if(kind==='r')ribbon(...args,color,group);
+else if(kind==='l')loft(...args,color,group);
+}
+const vbuf=new Float32Array(groups.flat()),segments=[];let cursor=0;
+for(let i=0;i<groups.length;i++){segments.push({begin:cursor,count:groups[i].length/9});cursor+=groups[i].length/9;}
+const VS=[
+'#version 300 es','precision highp float;precision highp int;',
+'in vec3 pos,nrm,col;uniform vec3 eye,right,up,forward;',
+'uniform float aspect,focal,wheelAngle,needleDrop,clothFeed;',
+'uniform int component;out vec3 vColor;out float vLight;',
+'void main(){vec3 p=pos;vec3 n=nrm;',
+'if(component==1){vec3 q=p-vec3(.986,1.13,.23);float c=cos(wheelAngle),s=sin(wheelAngle);',
+'p=vec3(.986,1.13,.23)+vec3(q.x,c*q.y-s*q.z,s*q.y+c*q.z);',
+'n=vec3(n.x,c*n.y-s*n.z,s*n.y+c*n.z);}',
+'else if(component==2)p.y+=needleDrop;',
+'else if(component==3)p.z+=clothFeed;',
+'vec3 d=p-eye;float z=dot(d,forward);',
+'gl_Position=vec4(dot(d,right)*focal/aspect,dot(d,up)*focal,1.002002*z-.1001,z);',
+'vColor=col;vLight=.40+.70*max(0.,dot(normalize(n),normalize(vec3(-.45,.85,-.55))));}'
+].join('\n');
+const FS=['#version 300 es','precision highp float;','in vec3 vColor;in float vLight;out vec4 fragment;',
+'void main(){fragment=vec4(min(vec3(1.),vColor*vLight),1.);}'].join('\n');
+function shader(kind,src){const sh=gl.createShader(kind);gl.shaderSource(sh,src);gl.compileShader(sh);if(!gl.getShaderParameter(sh,gl.COMPILE_STATUS))throw Error(gl.getShaderInfoLog(sh));return sh;}
+let program;try{program=gl.createProgram();gl.attachShader(program,shader(gl.VERTEX_SHADER,VS));gl.attachShader(program,shader(gl.FRAGMENT_SHADER,FS));gl.linkProgram(program);if(!gl.getProgramParameter(program,gl.LINK_STATUS))throw Error(gl.getProgramInfoLog(program));}
+catch(e){meta.textContent='Shader error: '+e.message;throw e;}
+gl.useProgram(program);const buffer=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,buffer);gl.bufferData(gl.ARRAY_BUFFER,vbuf,gl.STATIC_DRAW);
+for(const [name,offset] of [['pos',0],['nrm',3],['col',6]]){const loc=gl.getAttribLocation(program,name);gl.enableVertexAttribArray(loc);gl.vertexAttribPointer(loc,3,gl.FLOAT,false,36,offset*4);}
+const u={};for(const x of ['eye','right','up','forward','focal','aspect','wheelAngle','needleDrop','clothFeed','component'])u[x]=gl.getUniformLocation(program,x);
+let az=.63,el=.30,dist=3.85,drag=false,prev=[0,0],running=false,spm=150,phase=0,feed=0,stitches=0,last=performance.now();
+const run=document.querySelector('#run'),speed=document.querySelector('#speed'),speedVal=document.querySelector('#speedVal');
+run.onclick=()=>{running=!running;run.textContent=running?'❚❚ Stop sewing':'▶ Start sewing';run.setAttribute('aria-pressed',String(running));};
+speed.oninput=()=>{spm=Number(speed.value);speedVal.textContent=String(spm);};
+document.querySelector('#reset').onclick=()=>{az=.63;el=.30;dist=3.85;};
+canvas.addEventListener('pointerdown',e=>{drag=true;prev=[e.clientX,e.clientY];canvas.setPointerCapture(e.pointerId);});
+canvas.addEventListener('pointerup',()=>drag=false);canvas.addEventListener('pointercancel',()=>drag=false);
+canvas.addEventListener('pointermove',e=>{if(!drag)return;az+=(e.clientX-prev[0])*.008;el=Math.max(-.6,Math.min(1.12,el+(e.clientY-prev[1])*.007));prev=[e.clientX,e.clientY];});
+canvas.addEventListener('wheel',e=>{e.preventDefault();dist=Math.max(2.6,Math.min(9,dist*Math.exp(e.deltaY*.001)));},{passive:false});
+function render(now){
+if(!stage.isConnected)return;
+const dt=Math.max(0,Math.min((now-last)/1000,.085));last=now;
+if(document.visibilityState!=='hidden'){
+if(running){
+const prevPhase=phase,travel=dt*2*Math.PI*spm/60;
+phase=(phase+travel)%(2*Math.PI);
+const revolutions=Math.floor((prevPhase+travel)/(2*Math.PI));
+stitches+=revolutions;
+const smooth=a=>(a-Math.sin(a))/(2*Math.PI);
+feed=(feed+Math.max(0,(revolutions+smooth(phase)-smooth(prevPhase))*.006))%.18;
+}
+const dpr=Math.min(devicePixelRatio||1,2),W=Math.round(Math.max(1,stage.clientWidth)*dpr),H=Math.round(Math.max(1,stage.clientHeight)*dpr);
+if(canvas.width!==W||canvas.height!==H){canvas.width=W;canvas.height=H;}
+gl.viewport(0,0,W,H);gl.enable(gl.DEPTH_TEST);gl.depthFunc(gl.LEQUAL);gl.clearDepth(1);
+gl.clearColor(.108,.147,.172,1);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
+const target=[0,.82,0],eye=[dist*Math.sin(az)*Math.cos(el),.82+dist*Math.sin(el),-dist*Math.cos(az)*Math.cos(el)];
+const f=norm(sub(target,eye)),right=norm(cross([0,1,0],f)),up=norm(cross(f,right));
+for(const [name,vec] of [['eye',eye],['right',right],['up',up],['forward',f]])gl.uniform3fv(u[name],vec);
+gl.uniform1f(u.aspect,W/H);gl.uniform1f(u.focal,1.85);
+gl.uniform1f(u.wheelAngle,phase);gl.uniform1f(u.needleDrop,-.049*(1-Math.cos(phase)));gl.uniform1f(u.clothFeed,feed);
+for(let i=0;i<4;i++){gl.uniform1i(u.component,i);gl.drawArrays(gl.TRIANGLES,segments[i].begin,segments[i].count);}
+meta.textContent=(running?'SEWING · ':'STOPPED · ')+spm+' stitches/min · '+stitches+' stitches · Drag to orbit · Scroll to zoom';
+}
+requestAnimationFrame(render);
+}requestAnimationFrame(render);
+</script></body></html>
