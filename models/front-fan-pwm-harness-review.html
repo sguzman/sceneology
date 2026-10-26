@@ -1,0 +1,323 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Scenarium — Dual Front Fan PWM Harness</title>
+<style>*{box-sizing:border-box}body{font:13px system-ui,sans-serif;color:#e1edf3;background:#101820;margin:0;display:flex;flex-direction:column;min-height:100vh}
+header{padding:12px 14px;background:#1d2b36}h1{font-size:16px;margin:0 0 3px}small{font-size:11px;color:#a1b9c4}
+#scene{height:600px;flex:1;min-height:390px;position:relative;overflow:hidden;background:radial-gradient(ellipse at 52% 44%,#334658,#0d1720 76%)}
+canvas{display:block;width:100%;height:100%;touch-action:none;cursor:grab}
+canvas:active{cursor:grabbing}#notice{position:absolute;left:10px;bottom:10px;background:#142632eb;border:1px solid #6b8896;border-radius:7px;padding:7px 9px;color:#d7e9f0;max-width:96%;font-size:11px;pointer-events:none}
+nav{background:#182832;padding:10px;display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+button{font:inherit;color:#e3eff3;background:#273b49;border:1px solid #5d8293;padding:8px 11px;border-radius:8px;cursor:pointer}
+button.on{background:#296f84;border-color:#94d0df}
+label{font-size:12px;display:flex;gap:5px;align-items:center}input{accent-color:#78b9d1;width:110px}output{font-variant-numeric:tabular-nums}
+</style></head><body>
+<header><h1>Dual Fan PWM Wiring — 90-Mesh Harness (Populated Motherboard)</h1><small>Approved two 120mm fans, 35-piece carrier, populated 129-piece ATX board, and 90-piece PWM harness</small></header>
+<div id="scene"><canvas></canvas><div id="notice">Validating source-derived SC3D model…</div></div>
+<nav><button id="focusWires" class="on">Wiring route</button><button id="focusBoard">Populated board</button><button id="focusPlug">PWM headers</button><button id="focusFan">Fan exits</button><button id="focusM2">M.2 shield</button>
+<button data-part="0" class="on">Cables</button><button data-part="fans" class="on">Fans</button><button data-part="5" class="on">Carrier</button>
+<button data-part="board" class="on">Board</button><button data-part="frame">Frame</button>
+<button id="spin">Spin</button><label>RPM <output id="rpmOut">620</output><input id="rpm" type="range" min="0" max="1600" step="20" value="620"></label></nav>
+<script>
+"use strict";
+const scene=document.getElementById("scene"),canvas=scene.querySelector("canvas"),status=document.getElementById("notice");
+try {
+const _router=(()=>{// Scenarium PC: 2 independently controlled, unbranded 4-wire case fans.
+
+
+
+
+
+const PC_FAN_PWM_HARNESS_ID="dual-front-fan-4pin-pwm-harness-v1";
+const ATX_MOTHERBOARD_POSE=Object.freeze([0,1.04,.84]);
+const FAN_CENTERS=Object.freeze([[0,2.18,-1.84],[0,3.43,-1.84]]);
+const FAN_MOTHERBOARD_HEADERS=Object.freeze(["fan_header_2","fan_header_1"]);
+const PWM_WIRES=Object.freeze(["ground","12v","tach","pwm"]);
+
+
+
+
+
+const ROUTES=Object.freeze([
+ Object.freeze([
+  [0,2.18,-1.665],[.14,2.04,-1.636],[.34,1.84,-1.618],
+  [.55,1.64,-1.618],[.71,1.58,-1.608],
+  [.82,1.56,-1.46],[.86,1.54,-1.06],
+  [.89,1.52,-.58],[.91,1.52,.10],
+  [.70,1.49,.47],[.384,1.4475,.621]
+ ]),
+ Object.freeze([
+  [0,3.43,-1.665],[.14,3.29,-1.636],[.34,3.09,-1.618],
+  [.55,2.89,-1.618],[.72,2.77,-1.608],
+  [.86,2.66,-1.46],[1.02,2.44,-1.42],
+  [1.03,1.69,-1.42],[1.025,1.54,-1.05],
+  [.99,1.52,-.48],[.62,1.50,.30],
+  [.31,1.47,.56],[-.176,1.4475,.621]
+ ])
+]);
+const PLUG_TARGETS=Object.freeze([
+ Object.freeze({header:"fan_header_2",center:Object.freeze([.384,1.4475,.674])}),
+ Object.freeze({header:"fan_header_1",center:Object.freeze([-.176,1.4475,.674])})
+]);
+const TUBE_RADIUS=.026;
+const STRAND_RADIUS=.009;
+function segmentRotation(a,b){
+ const v=b.map((t,i)=>t-a[i]);
+ const len=Math.hypot(...v);
+ if(!(len>.0001))throw Error("Zero length cable segment");
+
+
+ const rx=Math.atan2(v[2],Math.hypot(v[0],v[1]))*180/Math.PI;
+ const rz=-Math.atan2(v[0],v[1])*180/Math.PI;
+ return {length:len,rotation:[rx,0,rz],mid:a.map((t,i)=>(t+b[i])/2)};
+}
+function routeLength(route){
+ return route.slice(1).reduce((sum,p,i)=>sum+Math.hypot(...p.map((t,k)=>t-route[i][k])),0);
+}
+function cablePlan(){
+ return ROUTES.map((path,i)=>({
+  fanIndex:i,
+  from:"fixed-rear-motor-stator",
+  to:PLUG_TARGETS[i].header,
+  path,
+  routeLengthSceneUnits:routeLength(path),
+  electricalSignals:PWM_WIRES,
+  powerSource:"motherboard-fan-header-not-PSU-direct",
+  fanRoot:FAN_CENTERS[i],
+  connectorCenter:PLUG_TARGETS[i].center
+ }));
+}
+;return {ROUTES,segmentRotation};})();
+const _harness=((ROUTES,segmentRotation)=>{// Deterministic exact-primitive reconstruction. Replaces fragile pasted
+
+const COLORS={sleeve:"#242b32",sleeve_weave:"#48545a",ground:"#121c24",supply:"#373f45",tach:"#5b6772",pwm:"#78858e",rubber:"#10181c",plug:"#1e2a32",copper:"#b19868",latch:"#465662"};
+const R=n=>Math.round(n*1e6)/1e6;
+function makeHarnessMeshes(routes=ROUTES){
+ const parts=[];
+ const box=(id,size,pos,mat,rot=[0,0,0])=>parts.push({id,type:0,size:size.map(R),pos:pos.map(R),rot:rot.map(R),mat});
+ const cyl=(id,r,h,pos,mat,rot=[0,0,0],seg=12)=>parts.push({id,type:1,size:[R(r),R(h),seg],pos:pos.map(R),rot:rot.map(R),mat});
+ const tube=(id,a,b,mat,r,extra)=>{
+  const {length,rotation,mid}=segmentRotation(a,b);
+  cyl(id,r,length+extra,mid,mat,rotation);
+ };
+ for(let f=0;f<2;f++){
+  const path=routes[f],pre=(f===0?"lower":"upper")+"_front_fan";
+  for(const [w,name] of ["ground","12v","tach","pwm"].entries()){
+   const [ox,oz]=[[-.014,.012],[-.004,.018],[.006,.024],[.016,.030]][w];
+   for(let j=0;j<4;j++){
+    const shift=v=>v.map((x,i)=>x+(i===0?ox:i===2?oz:0));
+    tube(pre+"_"+name+"_"+j,shift(path[j]),shift(path[j+1]),name==="12v"?"supply":name,.01,.02);
+   }
+  }
+  for(let j=3;j<path.length-1;j++)
+   tube(pre+"_braided_sleeve_"+(j-3),path[j],path[j+1],"sleeve",.032,.045);
+  const a=path[2],x=f===0?.384:-.176,y=1.4475;
+  box(pre+"_stator_cable_tie",[.038,.045,.066],[a[0],a[1],a[2]+.018],"rubber");
+  box(pre+"_plug_rear_plate",[.135,.124,.017],[x,y,.632],"plug");
+  for(const side of [-1,1]){
+   const tag=side<0?"left":"right";
+   box(pre+"_plug_wall_"+tag,[.018,.118,.077],[x+side*.062,y,.683],"plug");
+   box(pre+"_plug_latch_ear_"+tag,[.023,.028,.033],[x+side*.065,y+.056,.667],"latch");
+   box(pre+"_plug_rim_"+(side<0?"low":"high"),[.125,.018,.077],[x,y+side*.056,.683],"plug");
+  }
+  box(pre+"_plug_lock_tongue",[.058,.018,.075],[x,y+.071,.687],"latch");
+  for(let k=0;k<4;k++)cyl(pre+"_contact_"+k,.0075,.022,[x+(k-1.5)*.0288,y-.00125,.694],"copper",[90,0,0]);
+  tube(pre+"_plug_cable_boot",[x,y,.607],[x,y,.653],"rubber",.038,.026);
+  for(let k=0;k<2;k++)cyl(pre+"_sleeve_termination_"+k,.035,.018,[x,y,k===0?.602:.626],"sleeve_weave",[90,0,0],14);
+ }
+ for(let f=0;f<2;f++){
+  const pre=(f===0?"lower":"upper")+"_front_fan",x=f===0?.384:-.176;
+  cyl(pre+"_fixed_stator_cable_exit_boot",.044,.085,[0,f===0?2.18:3.43,-1.643],"rubber",[90,0,0],16);
+  for(let k=0;k<4;k++)cyl(pre+"_plug_terminal_insulator_"+k,.0128,.075,[x+(k-1.5)*.0288,1.4475,.664],"plug",[90,0,0]);
+ }
+ return parts;
+}
+;return {makeHarnessMeshes,COLORS};})(_router.ROUTES,_router.segmentRotation);
+const _context=(()=>{// Deterministic parametric copies of the already-approved 152-mesh fan
+
+
+const FAN_COLORS={frame:"#202a33",rim:"#384752",edge:"#677780",blade:"#8f9faa",blade_edge:"#bac5cb",rubber:"#151d23",metallic:"#9ca9b2",hub:"#3b4b58"};
+const CARRIER_COLORS={steel:"#5a6b74",graphite:"#283641",edge:"#90a2ab",spring:"#a6b3bb",rubber:"#1c282f"};
+const round=n=>Math.round(n*1e6)/1e6;
+function cube(id,size,pos,mat,rot=[0,0,0],group=1){return {id,type:0,size,pos:pos.map(round),rot:rot.map(round),mat,group};}
+function cyl(id,r,h,pos,mat,rot,seg,group){return {id,type:1,size:[r,h,seg],pos:pos.map(round),rot:rot.map(round),mat,group};}
+function makeFanMeshes(){
+ const a=[],box=(id,s,p,m="frame",r=[0,0,0])=>a.push(cube(id,s,p,m,r,/^(blade_|rotor_hub)/.test(id)?2:1));
+ const circular=(id,r,h,p,m,seg=24)=>a.push(cyl(id,r,h,p,m,[90,0,0],seg,/^rotor_/.test(id)?2:1));
+ box("outer_frame_bottom",[1.19,.03,.25],[0,-.58,0]);
+ box("outer_frame_left",[.03,1.19,.25],[-.58,0,0]);
+ box("outer_frame_top",[1.19,.03,.25],[0,.58,0]);
+ box("outer_frame_right",[.03,1.19,.25],[.58,0,0]);
+ for(let i=0;i<48;i++){let t=i*Math.PI/24;box("annular_shroud_"+String(i).padStart(2,"0"),[.081,.036,.244],[.514*Math.cos(t),.514*Math.sin(t),0],"rim",[0,0,90+i*7.5]);}
+ for(let i=0;i<4;i++){let t=i*Math.PI/2;box("molded_annulus_frame_web_"+i,[.16,.064,.244],[.544*Math.cos(t),.544*Math.sin(t),0],"frame",[0,0,90*i]);}
+ for(const [tag,x,y] of [["lb",-.525,-.525],["lt",-.525,.525],["rb",.525,-.525],["rt",.525,.525]]){
+  for(let i=0;i<12;i++){let t=i*Math.PI/6;box("bolt_aperture_"+tag+"_"+String(i).padStart(2,"0"),[.025,.015,.24],[x+.039*Math.cos(t),y+.039*Math.sin(t),0],"edge",[0,0,90+i*30]);}
+  box("mounting_corner_web_"+tag,[.088,.031,.236],[x,y>0?.556:-.556,0],"rubber");
+ }
+ for(let i=0;i<4;i++){let t=(45+90*i)*Math.PI/180;box("rear_motor_strut_"+i,[.383,.047,.062],[.35*Math.cos(t),.35*Math.sin(t),.088],"frame",[0,0,45+90*i]);}
+ circular("rear_stator_housing",.163,.09,[0,0,.09],"hub",28);
+ circular("shaft_bearing",.071,.193,[0,0,.028],"metallic",24);
+ circular("rotor_hub_shell",.162,.097,[0,0,-.051],"hub",32);
+ circular("rotor_hub_cap",.116,.012,[0,0,-.104],"blade_edge",32);
+ circular("rotor_hub_inset",.052,.015,[0,0,-.112],"frame",24);
+ for(let i=0;i<7;i++){
+  let theta=i*Math.PI*2/7,base=i*360/7;
+  for(const [j,r,s,z,angle] of [[0,.2,[.156,.126,.028],.005,12],[1,.265,[.163,.126,.026],-.005,15],[2,.329,[.147,.12,.023],-.022,17],[3,.388,[.128,.104,.021],-.044,18]])
+    box("blade_"+i+"_"+j,s,[r*Math.cos(theta),r*Math.sin(theta),z],"blade",[0,0,base+angle]);
+ }
+ for(let i=0;i<7;i++){let theta=i*Math.PI*2/7;
+  box("blade_root_fillet_"+i,[.11,.095,.022],[.16*Math.cos(theta),.16*Math.sin(theta),-.037],"hub",[0,0,12+i*360/7]);
+ }
+ return a;
+}
+function makeCarrierMeshes(){
+ const a=[],add=(id,s,p,mat)=>a.push(cube(id,s,p,mat,[0,0,0],5));
+ for(const side of [-1,1]){
+  let tag=side<0?"left":"right",x=side*.63;
+  add("folded_vertical_web_"+tag,[.08,2.66,.292],[x,0,0],"graphite");
+  add("front_chassis_load_flange_"+tag,[.116,2.66,.065],[x,0,-.164],"steel");
+  add("forward_fan_shell_return_"+tag,[.111,2.65,.061],[x,0,-.134],"edge");
+  add("rear_fan_shell_return_"+tag,[.111,2.65,.061],[x,0,.136],"steel");
+  for(const [i,y] of [-1.255,0,1.255].entries()){
+   add("outer_snap_web_"+tag+"_"+i,[.063,.126,.135],[side*.677,y,-.2],"spring");
+   add("forward_snap_hook_"+tag+"_"+i,[.106,.12,.04],[x,y,-.247],"spring");
+   add("snap_edge_grip_"+tag+"_"+i,[.045,.106,.028],[side*.621,y,-.204],"rubber");
+  }
+  for(let f=0;f<2;f++)for(const dy of [-.48,.48]){
+   add("fan_shell_grip_"+tag+"_"+f+"_"+(dy<0?"low":"high"),[.065,.138,.081],[side*.596,(f===0?-.625:.625)+dy,.1],"rubber");
+  }
+ }
+ add("integrated_upper_cross_member",[1.33,.048,.075],[0,1.323,-.174],"graphite");
+ return a;
+}
+;return {makeFanMeshes,makeCarrierMeshes,FAN_COLORS,CARRIER_COLORS};})();
+const _board=(()=>{// Source-derived close-up context for dual-front-fan PWM visual review.
+
+
+
+
+
+
+
+
+const FAN_WIRING_BOARD_CONTEXT=[["board_laminate",0,2.44,3.05,0.055,0,1.825,0,0,0,0,"#202d30"],["board_edge_outline_left",0,0.024,3.045,0.06,-1.213,1.825,0,0,0,0,"#111e22"],["board_edge_outline_right",0,0.024,3.045,0.06,1.213,1.825,0,0,0,0,"#111e22"],["board_edge_outline_top",0,2.435,0.03125,0.06,0,3.3425,0,0,0,0,"#111e22"],["board_edge_outline_bottom",0,2.435,0.03125,0.06,0,0.3075,0,0,0,0,"#111e22"],["rear_io_armor",0,0.228,2.0625,0.145,-1.085,2.29375,-0.107,0,0,0,"#303c49"],["rear_io_shield_inlay",0,0.18,2,0.02,-1.086,2.29375,-0.197,0,0,0,"#273139"],["rear_port_frame_usb_c",0,0.108,0.11875,0.018,-1.08,2.975,-0.236,0,0,0,"#586c77"],["rear_port_void_usb_c",0,0.08,0.08125,0.018,-1.08,2.975,-0.25,0,0,0,"#142333"],["rear_port_frame_usb_a1",0,0.1144,0.10625,0.018,-1.08,2.76875,-0.236,0,0,0,"#586c77"],["rear_port_void_usb_a1",0,0.0864,0.06875,0.018,-1.08,2.76875,-0.25,0,0,0,"#142333"],["rear_port_frame_usb_a2",0,0.1144,0.10625,0.018,-1.08,2.5875,-0.236,0,0,0,"#586c77"],["rear_port_void_usb_a2",0,0.0864,0.06875,0.018,-1.08,2.5875,-0.25,0,0,0,"#142333"],["rear_port_frame_hdmi",0,0.136,0.125,0.018,-1.08,2.325,-0.236,0,0,0,"#586c77"],["rear_port_void_hdmi",0,0.108,0.0875,0.018,-1.08,2.325,-0.25,0,0,0,"#142333"],["rear_port_frame_dp",0,0.132,0.12875,0.018,-1.08,2.1125,-0.236,0,0,0,"#586c77"],["rear_port_void_dp",0,0.104,0.09125,0.018,-1.08,2.1125,-0.25,0,0,0,"#142333"],["rear_port_frame_lan",0,0.1456,0.2025,0.018,-1.08,1.7625,-0.236,0,0,0,"#586c77"],["rear_port_void_lan",0,0.1176,0.165,0.018,-1.08,1.7625,-0.25,0,0,0,"#142333"],["rear_port_frame_audio1",0,0.088,0.125,0.018,-1.08,1.375,-0.236,0,0,0,"#586c77"],["rear_port_void_audio1",0,0.06,0.0875,0.018,-1.08,1.375,-0.25,0,0,0,"#142333"],["rear_port_frame_audio2",0,0.088,0.125,0.018,-1.08,1.16875,-0.236,0,0,0,"#586c77"],["rear_port_void_audio2",0,0.06,0.0875,0.018,-1.08,1.16875,-0.25,0,0,0,"#142333"],["left_vrm_heatsink",0,0.192,1.1,0.17,-0.7416,2.675,-0.115,0,0,0,"#586c77"],["left_vrm_fin_0",0,0.128,0.0325,0.19,-0.7344,2.175,-0.21,0,0,0,"#303c49"],["left_vrm_fin_1",0,0.128,0.0325,0.19,-0.7344,2.27125,-0.21,0,0,0,"#b6c7ca"],["left_vrm_fin_2",0,0.128,0.0325,0.19,-0.7344,2.3675,-0.21,0,0,0,"#b6c7ca"],["left_vrm_fin_3",0,0.128,0.0325,0.19,-0.7344,2.46375,-0.21,0,0,0,"#303c49"],["left_vrm_fin_4",0,0.128,0.0325,0.19,-0.7344,2.56,-0.21,0,0,0,"#b6c7ca"],["left_vrm_fin_5",0,0.128,0.0325,0.19,-0.7344,2.65625,-0.21,0,0,0,"#b6c7ca"],["left_vrm_fin_6",0,0.128,0.0325,0.19,-0.7344,2.7525,-0.21,0,0,0,"#303c49"],["left_vrm_fin_7",0,0.128,0.0325,0.19,-0.7344,2.84875,-0.21,0,0,0,"#b6c7ca"],["left_vrm_fin_8",0,0.128,0.0325,0.19,-0.7344,2.945,-0.21,0,0,0,"#b6c7ca"],["left_vrm_fin_9",0,0.128,0.0325,0.19,-0.7344,3.04125,-0.21,0,0,0,"#303c49"],["top_vrm_heatsink",0,0.76,0.2375,0.19,-0.332,3.00375,-0.133,0,0,0,"#586c77"],["top_vrm_fin_0",0,0.0216,0.175,0.015,-0.6592,3.0125,-0.239,0,0,0,"#b6c7ca"],["top_vrm_fin_1",0,0.0216,0.175,0.015,-0.5928,3.0125,-0.239,0,0,0,"#b6c7ca"],["top_vrm_fin_2",0,0.0216,0.175,0.015,-0.5264,3.0125,-0.239,0,0,0,"#b6c7ca"],["top_vrm_fin_3",0,0.0216,0.175,0.015,-0.46,3.0125,-0.239,0,0,0,"#b6c7ca"],["top_vrm_fin_4",0,0.0216,0.175,0.015,-0.3936,3.0125,-0.239,0,0,0,"#b6c7ca"],["top_vrm_fin_5",0,0.0216,0.175,0.015,-0.3272,3.0125,-0.239,0,0,0,"#b6c7ca"],["top_vrm_fin_6",0,0.0216,0.175,0.015,-0.2608,3.0125,-0.239,0,0,0,"#b6c7ca"],["top_vrm_fin_7",0,0.0216,0.175,0.015,-0.1944,3.0125,-0.239,0,0,0,"#b6c7ca"],["top_vrm_fin_8",0,0.0216,0.175,0.015,-0.128,3.0125,-0.239,0,0,0,"#b6c7ca"],["top_vrm_fin_9",0,0.0216,0.175,0.015,-0.0616,3.0125,-0.239,0,0,0,"#b6c7ca"],["cpu_socket_substrate",0,0.544,0.56,0.055,-0.305,2.3425,-0.115,0,0,0,"#15222a"],["cpu_socket_metal_frame",0,0.492,0.5056,0.025,-0.305,2.3425,-0.153,0,0,0,"#b6c7ca"],["cpu_socket_interior",0,0.4216,0.42,0.019,-0.305,2.3425,-0.176,0,0,0,"#273139"],["cpu_socket_frame_side_left",0,0.0264,0.496,0.028,-0.545,2.3433,-0.199,0,0,0,"#e0e9e8"],["cpu_socket_frame_side_right",0,0.0264,0.496,0.028,-0.065,2.3433,-0.199,0,0,0,"#e0e9e8"],["cpu_socket_frame_top",0,0.496,0.0248,0.023,-0.305,2.5921,-0.199,0,0,0,"#e0e9e8"],["cpu_socket_frame_bottom",0,0.496,0.0248,0.023,-0.305,2.0921,-0.199,0,0,0,"#e0e9e8"],["socket_hinge_barrel",1,0.038,0.09,14,-0.588,2.084,-0.203,0,0,90,"#586c77"],["socket_lever_shaft",0,0.0256,0.488,0.035,-0.588,2.34,-0.275,0,0,0,"#b6c7ca"],["socket_lever_handle",0,0.0504,0.08,0.057,-0.588,2.6008,-0.278,0,0,0,"#15222a"],["dimm_0_lower_mold",0,0.0952,1.7,0.09,0.296,2.45,-0.103,0,0,0,"#15222a"],["dimm_0_upper_side_left",0,0.0184,1.575,0.056,0.2544,2.45,-0.19,0,0,0,"#15222a"],["dimm_0_upper_side_right",0,0.0184,1.575,0.056,0.3376,2.45,-0.19,0,0,0,"#15222a"],["dimm_0_gold_contacts",0,0.028,1.375,0.008,0.296,2.44375,-0.157,0,0,0,"#dfb878"],["dimm_0_center-notch",0,0.0656,0.06375,0.014,0.296,2.3375,-0.169,0,0,0,"#15222a"],["dimm_0_top_latch",0,0.104,0.1275,0.1,0.296,3.285,-0.123,0,0,0,"#f0ebd9"],["dimm_0_bottom_latch",0,0.104,0.1275,0.1,0.296,1.58125,-0.123,0,0,0,"#f0ebd9"],["dimm_1_lower_mold",0,0.0952,1.7,0.09,0.4544,2.45,-0.103,0,0,0,"#303c49"],["dimm_1_upper_side_left",0,0.0184,1.575,0.056,0.4128,2.45,-0.19,0,0,0,"#15222a"],["dimm_1_upper_side_right",0,0.0184,1.575,0.056,0.496,2.45,-0.19,0,0,0,"#15222a"],["dimm_1_gold_contacts",0,0.028,1.375,0.008,0.4544,2.44375,-0.157,0,0,0,"#dfb878"],["dimm_1_center-notch",0,0.0656,0.06375,0.014,0.4544,2.3375,-0.169,0,0,0,"#15222a"],["dimm_1_top_latch",0,0.104,0.1275,0.1,0.4544,3.285,-0.123,0,0,0,"#f0ebd9"],["dimm_1_bottom_latch",0,0.104,0.1275,0.1,0.4544,1.58125,-0.123,0,0,0,"#f0ebd9"],["dimm_2_lower_mold",0,0.0952,1.7,0.09,0.6128,2.45,-0.103,0,0,0,"#15222a"],["dimm_2_upper_side_left",0,0.0184,1.575,0.056,0.5712,2.45,-0.19,0,0,0,"#15222a"],["dimm_2_upper_side_right",0,0.0184,1.575,0.056,0.6544,2.45,-0.19,0,0,0,"#15222a"],["dimm_2_gold_contacts",0,0.028,1.375,0.008,0.6128,2.44375,-0.157,0,0,0,"#dfb878"],["dimm_2_center-notch",0,0.0656,0.06375,0.014,0.6128,2.3375,-0.169,0,0,0,"#15222a"],["dimm_2_top_latch",0,0.104,0.1275,0.1,0.6128,3.285,-0.123,0,0,0,"#f0ebd9"],["dimm_2_bottom_latch",0,0.104,0.1275,0.1,0.6128,1.58125,-0.123,0,0,0,"#f0ebd9"],["dimm_3_lower_mold",0,0.0952,1.7,0.09,0.7712,2.45,-0.103,0,0,0,"#303c49"],["dimm_3_upper_side_left",0,0.0184,1.575,0.056,0.7296,2.45,-0.19,0,0,0,"#15222a"],["dimm_3_upper_side_right",0,0.0184,1.575,0.056,0.8128,2.45,-0.19,0,0,0,"#15222a"],["dimm_3_gold_contacts",0,0.028,1.375,0.008,0.7712,2.44375,-0.157,0,0,0,"#dfb878"],["dimm_3_center-notch",0,0.0656,0.06375,0.014,0.7712,2.3375,-0.169,0,0,0,"#15222a"],["dimm_3_top_latch",0,0.104,0.1275,0.1,0.7712,3.285,-0.123,0,0,0,"#f0ebd9"],["dimm_3_bottom_latch",0,0.104,0.1275,0.1,0.7712,1.58125,-0.123,0,0,0,"#f0ebd9"],["dimm_silkscreen_riser",0,0.0152,1.725,0.012,1,2.45625,-0.067,0,0,0,"#c7d4c4"],["pcie_x16_outer",0,1.816,0.15625,0.114,-0.104,1.3025,-0.101,0,0,0,"#15222a"],["pcie_x16_long_channel",0,1.648,0.0525,0.02,-0.136,1.3025,-0.177,0,0,0,"#586c77"],["pcie_x16_endcap_left",0,0.044,0.1975,0.111,-0.992,1.3025,-0.101,0,0,0,"#586c77"],["pcie_x16_endcap_right",0,0.044,0.1975,0.111,0.76,1.3025,-0.101,0,0,0,"#586c77"],["pcie_x16_lock",0,0.096,0.2,0.085,0.82,1.3025,-0.162,0,0,0,"#f0ebd9"],["m2_pcie_connector",0,0.128,0.1375,0.08,-0.8128,1.65625,-0.1,0,0,0,"#15222a"],["m2_socket_open_channel",0,0.072,0.10625,0.017,-0.8128,1.65625,-0.151,0,0,0,"#dfb878"],["m2_heatsink_plate",0,0.736,0.175,0.055,-0.348,1.65625,-0.221,0,0,0,"#586c77"],["m2_heatshield_rib_0",0,0.02,0.14875,0.016,-0.632,1.65625,-0.26,0,0,0,"#b6c7ca"],["m2_heatshield_rib_1",0,0.02,0.14875,0.016,-0.5424,1.65625,-0.26,0,0,0,"#b6c7ca"],["m2_heatshield_rib_2",0,0.02,0.14875,0.016,-0.4528,1.65625,-0.26,0,0,0,"#b6c7ca"],["m2_heatshield_rib_3",0,0.02,0.14875,0.016,-0.3632,1.65625,-0.26,0,0,0,"#b6c7ca"],["m2_heatshield_rib_4",0,0.02,0.14875,0.016,-0.2736,1.65625,-0.26,0,0,0,"#b6c7ca"],["m2_heatshield_rib_5",0,0.02,0.14875,0.016,-0.184,1.65625,-0.26,0,0,0,"#b6c7ca"],["m2_heatshield_rib_6",0,0.02,0.14875,0.016,-0.0944,1.65625,-0.26,0,0,0,"#b6c7ca"],["chipset_heatsink",0,0.4,0.5375,0.12,0.592,0.76875,-0.107,0,0,0,"#303c49"],["atx24_outer",0,0.104,0.7375,0.16,1.096,2.38125,-0.121,0,0,0,"#15222a"],["eps8_outer",0,0.256,0.18125,0.16,-0.8432,3.225,-0.118,0,0,0,"#15222a"],["sata_port_0",0,0.092,0.1125,0.118,1.0832,0.975,-0.105,0,0,0,"#15222a"],["sata_port_1",0,0.092,0.1125,0.118,1.0832,0.825,-0.105,0,0,0,"#15222a"],["sata_port_2",0,0.092,0.1125,0.118,1.0832,0.675,-0.105,0,0,0,"#15222a"],["sata_port_3",0,0.092,0.1125,0.118,1.0832,0.525,-0.105,0,0,0,"#15222a"],["fan_header_0",0,0.136,0.14375,0.085,-0.736,0.4075,-0.08,0,0,0,"#15222a"],["fan_header_1",0,0.136,0.14375,0.085,-0.176,0.4075,-0.08,0,0,0,"#15222a"],["fan_header_pin_1_0",0,0.0144,0.02625,0.01,-0.22,0.40625,-0.129,0,0,0,"#dfb878"],["fan_header_pin_1_1",0,0.0144,0.02625,0.01,-0.1912,0.40625,-0.129,0,0,0,"#dfb878"],["fan_header_pin_1_2",0,0.0144,0.02625,0.01,-0.1624,0.40625,-0.129,0,0,0,"#dfb878"],["fan_header_pin_1_3",0,0.0144,0.02625,0.01,-0.1336,0.40625,-0.129,0,0,0,"#dfb878"],["fan_header_2",0,0.136,0.14375,0.085,0.384,0.4075,-0.08,0,0,0,"#15222a"],["fan_header_pin_2_0",0,0.0144,0.02625,0.01,0.34,0.40625,-0.129,0,0,0,"#dfb878"],["fan_header_pin_2_1",0,0.0144,0.02625,0.01,0.3688,0.40625,-0.129,0,0,0,"#dfb878"],["fan_header_pin_2_2",0,0.0144,0.02625,0.01,0.3976,0.40625,-0.129,0,0,0,"#dfb878"],["fan_header_pin_2_3",0,0.0144,0.02625,0.01,0.4264,0.40625,-0.129,0,0,0,"#dfb878"],["m2_heatsink_edge_underlay",0,0.816,0.20625,0.011,-0.372,1.65625,-0.074,0,0,0,"#15222a"],["m2_heatsink_thermal_pad",0,0.688,0.14375,0.012,-0.372,1.65625,-0.144,0,0,0,"#586c77"],["m2_heatsink_socket_marker",0,0.136,0.04375,0.013,-0.936,1.65625,-0.087,0,0,0,"#c7d4c4"],["rear_io_sidevent_0",0,0.0744,0.0225,0.012,-1.12,1.4875,-0.211,0,0,0,"#b6c7ca"],["rear_io_sidevent_1",0,0.0744,0.0225,0.012,-1.12,1.6375,-0.211,0,0,0,"#b6c7ca"],["rear_io_sidevent_2",0,0.0744,0.0225,0.012,-1.12,1.7875,-0.211,0,0,0,"#b6c7ca"],["rear_io_sidevent_3",0,0.0744,0.0225,0.012,-1.12,1.9375,-0.211,0,0,0,"#b6c7ca"],["rear_io_sidevent_4",0,0.0744,0.0225,0.012,-1.12,2.0875,-0.211,0,0,0,"#b6c7ca"],["dimm_bank_mark_0",0,0.044,0.01875,0.009,0.384,1.53125,-0.055,0,0,0,"#c7d4c4"],["dimm_bank_mark_1",0,0.044,0.01875,0.009,0.56,1.53125,-0.055,0,0,0,"#c7d4c4"],["dimm_bank_mark_2",0,0.044,0.01875,0.009,0.736,1.53125,-0.055,0,0,0,"#c7d4c4"],["chipset_top_plate_inset",0,0.288,0.3625,0.014,0.592,0.76875,-0.177,0,0,0,"#586c77"]];
+const FAN_WIRING_BOARD_POSE=[0,1.04,.84];
+const FAN_WIRING_BOARD_HEADINGS={
+ cpu:"cpu_socket_substrate",memory:"dimm_0_lower_mold",
+ expansion:"pcie_x16_outer",chipset:"chipset_heatsink",
+ power:"atx24_outer",lowerFan:"fan_header_2",upperFan:"fan_header_1"
+};
+;return {FAN_WIRING_BOARD_CONTEXT,FAN_WIRING_BOARD_POSE};})();
+const _full=((makeHarnessMeshes,H,makeFanMeshes,makeCarrierMeshes,F,C,FAN_WIRING_BOARD_CONTEXT,FAN_WIRING_BOARD_POSE)=>{const R=n=>Math.round(n*1e6)/1e6;
+const move=(mesh,pos,group,color)=>({...mesh,pos:mesh.pos.map((n,i)=>R(n+pos[i])),group,color});
+const box=(id,size,pos,color,group)=>({id,type:0,size,pos,rot:[0,0,0],color,group});
+function makeFullPWMAssembly(){
+ const all=[];
+ for(const mesh of makeHarnessMeshes())all.push({...mesh,color:H[mesh.mat],group:0});
+ for(const [i,center] of [[0,[0,2.18,-1.84]],[1,[0,3.43,-1.84]]])
+  for(const mesh of makeFanMeshes())all.push(move(mesh,center,mesh.group+(i?2:0),F[mesh.mat]));
+ for(const mesh of makeCarrierMeshes())all.push(move(mesh,[0,2.805,-1.84],5,C[mesh.mat]));
+
+
+
+ for(const [id,type,dx,dy,dz,x,y,z,rx,ry,rz,color] of FAN_WIRING_BOARD_CONTEXT){
+  all.push({id,type,size:[dx,dy,dz],
+   pos:[x,y,z].map((v,i)=>R(v+FAN_WIRING_BOARD_POSE[i])),
+   rot:[rx,ry,rz],color,group:id==="board_laminate"?7:6});
+ }
+ for(const sign of [-1,1])all.push(box("vertical_chassis_post_"+(sign<0?"l":"r")+"_front",
+  [.09,4.28,.11],[sign*1.544,2.485,-2.115],"#495b65",8));
+ all.push(box("psu_shroud_top_front",[3.02,.045,2.49],[0,1.27,-.885],"#263039",9));
+ for(let index=1;index<=2;index++)for(const sign of [-1,1])for(const pos of ["b","t"]){
+  const y=index===1?(pos==="b"?1.55:2.81):(pos==="b"?2.8:4.06);
+  all.push(box("front_fan_boss_"+index+"_"+(sign<0?"l":"r")+"_"+pos,
+   [.103,.092,.071],[sign*.63,y,-2.045],"#899ca5",8));
+ }
+ for(const sign of [-1,1])all.push(box("front_fascia_"+(sign<0?"left":"right"),
+  [.091,4.13,.092],[sign*1.48,2.37,-2.13],"#263039",8));
+ if(all.length!==571)throw Error("Geometry recipe drift: "+all.length+" meshes");
+ return all;
+}
+;return makeFullPWMAssembly;})(_harness.makeHarnessMeshes,_harness.COLORS,_context.makeFanMeshes,_context.makeCarrierMeshes,_context.FAN_COLORS,_context.CARRIER_COLORS,_board.FAN_WIRING_BOARD_CONTEXT,_board.FAN_WIRING_BOARD_POSE);
+const _sourceMeshes=_full();
+const PACKET={palette:[...new Set(_sourceMeshes.map(x=>x.color))]};
+const MODEL=_sourceMeshes.map(x=>[x.type,...x.size,...x.pos,...x.rot,PACKET.palette.indexOf(x.color),x.group]);
+if(MODEL.length!==571)throw Error("Expected 571 exact source meshes, got "+MODEL.length);
+for(const id of ["m2_heatsink_plate","m2_heatshield_rib_0","m2_heatshield_rib_6","dimm_0_top_latch","dimm_3_bottom_latch","socket_lever_shaft"]){const v=_sourceMeshes.find(x=>x.id===id&&x.group===6);if(!v||v.pos[1]<1.34)throw Error("Misplaced SC3D child under motherboard: "+id);}
+const gl=canvas.getContext("webgl2",{antialias:true})||canvas.getContext("webgl",{antialias:true});
+if(!gl){status.textContent="WebGL not supported";}
+else{
+const VS=`attribute vec3 aP,aN,aC;uniform float uY,uX,uDist,uAspect,uRotor,uMoving;uniform vec3 uFocus,uPivot;
+varying vec3 vN,vC;
+mat3 rz(float a){float c=cos(a),s=sin(a);return mat3(c,-s,0.,s,c,0.,0.,0.,1.);}
+mat3 ry(float a){float c=cos(a),s=sin(a);return mat3(c,0.,-s,0.,1.,0.,s,0.,c);}
+mat3 rx(float a){float c=cos(a),s=sin(a);return mat3(1.,0.,0.,0.,c,s,0.,-s,c);}
+void main(){mat3 spin=rz(uMoving*uRotor),camera=rx(uX)*ry(uY);
+ vec3 world=uPivot+spin*(aP-uPivot),p=camera*(world-uFocus);p.z-=uDist;
+ vN=normalize(camera*spin*aN);vC=aC;
+ gl_Position=vec4(p.x*1.64/uAspect,p.y*1.64,-40.1/39.9*p.z-8./39.9,-p.z);}`;
+const FS=`precision mediump float;varying vec3 vN,vC;uniform float uBrightness;
+void main(){vec3 n=normalize(vN);float light=.36+.55*max(dot(n,normalize(vec3(-.6,.8,-.5))),0.)+.22*max(dot(n,normalize(vec3(.8,.45,.7))),0.);
+gl_FragColor=vec4(pow(vC,vec3(.86))*light*uBrightness+.021,1.);}`;
+function shader(type,source){const s=gl.createShader(type);gl.shaderSource(s,source);gl.compileShader(s);if(!gl.getShaderParameter(s,gl.COMPILE_STATUS))throw Error(gl.getShaderInfoLog(s));return s;}
+const prog=gl.createProgram();gl.attachShader(prog,shader(gl.VERTEX_SHADER,VS));gl.attachShader(prog,shader(gl.FRAGMENT_SHADER,FS));gl.linkProgram(prog);
+if(!gl.getProgramParameter(prog,gl.LINK_STATUS))throw Error(gl.getProgramInfoLog(prog));
+const at=["aP","aN","aC"].map(n=>gl.getAttribLocation(prog,n)),uni=Object.fromEntries(["uY","uX","uDist","uAspect","uRotor","uMoving","uFocus","uPivot","uBrightness"].map(n=>[n,gl.getUniformLocation(prog,n)]));
+const groups=Array.from({length:10},()=>[]);
+function rotate([x,y,z],[aa,bb,cc]){const [a,b,c]=[aa,bb,cc].map(v=>v*Math.PI/180);
+let Y=y*Math.cos(a)-z*Math.sin(a),Z=y*Math.sin(a)+z*Math.cos(a);y=Y;z=Z;
+let X=x*Math.cos(b)+z*Math.sin(b);Z=-x*Math.sin(b)+z*Math.cos(b);x=X;z=Z;
+X=x*Math.cos(c)-y*Math.sin(c);Y=x*Math.sin(c)+y*Math.cos(c);return [X,Y,z];}
+function tri(g,a,b,c,color){const u=b.map((v,i)=>v-a[i]),v=c.map((v,i)=>v-a[i]);
+let n=[u[1]*v[2]-u[2]*v[1],u[2]*v[0]-u[0]*v[2],u[0]*v[1]-u[1]*v[0]],len=Math.hypot(...n)||1;
+for(const p of [a,b,c])groups[g].push(...p,...n.map(v=>v/len),...color);}
+for(const row of MODEL){
+ const [type,sx,sy,sz,x,y,z,ax,ay,az,mi,g]=row;
+ const color=PACKET.palette[mi],c=[1,3,5].map(i=>parseInt(color.slice(i,i+2),16)/255),world=p=>rotate(p,[ax,ay,az]).map((v,i)=>v+[x,y,z][i]);
+ if(type===0){const a=sx/2,b=sy/2,c0=sz/2;
+ const v=[[-a,-b,-c0],[a,-b,-c0],[a,b,-c0],[-a,b,-c0],[-a,-b,c0],[a,-b,c0],[a,b,c0],[-a,b,c0]].map(world);
+ for(const f of [[0,3,2,1],[4,5,6,7],[0,1,5,4],[3,7,6,2],[1,2,6,5],[0,4,7,3]]){tri(g,v[f[0]],v[f[1]],v[f[2]],c);tri(g,v[f[0]],v[f[2]],v[f[3]],c);}}
+ else{
+  for(let i=0;i<sz;i++){const a=i*2*Math.PI/sz,b=(i+1)*2*Math.PI/sz;
+  const a0=world([sx*Math.cos(a),-sy/2,sx*Math.sin(a)]),a1=world([sx*Math.cos(a),sy/2,sx*Math.sin(a)]);
+  const b0=world([sx*Math.cos(b),-sy/2,sx*Math.sin(b)]),b1=world([sx*Math.cos(b),sy/2,sx*Math.sin(b)]);
+  tri(g,a0,b0,b1,c);tri(g,a0,b1,a1,c);tri(g,world([0,sy/2,0]),a1,b1,c);tri(g,world([0,-sy/2,0]),b0,a0,c);}
+ }
+}
+const buffers=groups.map(a=>{const b=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,b);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(a),gl.STATIC_DRAW);return {buffer:b,count:a.length/9};});
+gl.enable(gl.DEPTH_TEST);gl.disable(gl.CULL_FACE);
+const shown=[true,true,true,true,true,true,true,true,false,false];
+let yaw=.40,pitch=.27,dist=7.1,focus=[0,2.48,-.9],angle=0,rpm=620,spinning=false,last=null;
+function one(g){gl.bindBuffer(gl.ARRAY_BUFFER,buffers[g].buffer);at.forEach((a,i)=>{if(a>=0){gl.enableVertexAttribArray(a);gl.vertexAttribPointer(a,3,gl.FLOAT,false,36,i*12);}});
+gl.uniform1f(uni.uMoving,(g===2||g===4)?1:0);gl.uniform3fv(uni.uPivot,g===2?[0,2.18,-1.84]:g===4?[0,3.43,-1.84]:[0,0,0]);
+gl.uniform1f(uni.uBrightness,g===0?2.15:1);
+gl.drawArrays(gl.TRIANGLES,0,buffers[g].count);}
+function draw(){const px=Math.min(2,devicePixelRatio||1),w=Math.max(1,Math.floor(canvas.clientWidth*px)),h=Math.max(1,Math.floor(canvas.clientHeight*px));
+if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h;}gl.viewport(0,0,w,h);
+gl.clearColor(.055,.081,.105,1);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);gl.useProgram(prog);
+gl.uniform1f(uni.uY,yaw);gl.uniform1f(uni.uX,pitch);gl.uniform1f(uni.uDist,dist);gl.uniform1f(uni.uAspect,w/h);
+gl.uniform1f(uni.uRotor,angle);gl.uniform3fv(uni.uFocus,focus);
+for(let i=0;i<shown.length;i++)if(shown[i])one(i);}
+const presets={wires:[.47,.22,7.0,[0,2.42,-.50]],board:[-.20,.08,3.9,[0,2.83,.67]],plug:[-.28,.15,2.65,[.10,1.46,.62]],fan:[.32,.12,3.65,[.55,2.6,-1.60]],m2:[-.27,.15,2.35,[-.35,2.69,.56]]};
+const viewIds=["focusWires","focusBoard","focusPlug","focusFan","focusM2"];
+const viewNames=["wires","board","plug","fan","m2"];
+const buttons=viewIds.map(id=>document.getElementById(id));
+function setView(which){[yaw,pitch,dist,focus]=presets[which];buttons.forEach((b,i)=>b.classList.toggle("on",viewNames[i]===which));draw();}
+buttons.forEach((b,i)=>b.onclick=()=>setView(viewNames[i]));
+for(const b of document.querySelectorAll("[data-part]"))b.onclick=()=>{
+const v=b.dataset.part,indices=v==="fans"?[1,2,3,4]:v==="board"?[6,7]:v==="frame"?[8,9]:[+v];
+const next=!shown[indices[0]];indices.forEach(i=>shown[i]=next);b.classList.toggle("on",next);draw();};
+document.getElementById("spin").onclick=()=>{
+spinning=!spinning;last=null;const b=document.getElementById("spin");b.classList.toggle("on",spinning);b.textContent=spinning?"Stop":"Spin";draw();};
+const slider=document.getElementById("rpm"),output=document.getElementById("rpmOut");
+slider.oninput=()=>{rpm=+slider.value;output.textContent=String(rpm);};
+let ptr=null;canvas.onpointerdown=e=>{ptr=[e.clientX,e.clientY];canvas.setPointerCapture(e.pointerId);};
+canvas.onpointermove=e=>{if(!ptr)return;yaw+=(e.clientX-ptr[0])*.009;pitch=Math.max(-1.42,Math.min(1.42,pitch+(e.clientY-ptr[1])*.007));ptr=[e.clientX,e.clientY];draw();};
+for(const e of ["pointerup","pointercancel","lostpointercapture"])canvas.addEventListener(e,()=>ptr=null);
+canvas.addEventListener("wheel",e=>{e.preventDefault();dist=Math.max(1.6,Math.min(16,dist*Math.exp(e.deltaY*.0009)));draw();},{passive:false});
+if(typeof ResizeObserver!=="undefined")new ResizeObserver(draw).observe(canvas);
+function tick(t){if(last===null)last=t;const dt=Math.max(0,Math.min(.075,(t-last)/1000));last=t;
+if(spinning){angle=(angle+dt*rpm/60*Math.PI*2)%(2*Math.PI);draw();}requestAnimationFrame(tick);}
+draw();requestAnimationFrame(tick);
+status.textContent="571 verified source meshes · 90 wiring meshes · M.2 + DIMM hierarchy corrected";
+}
+} catch(e) {status.textContent="3D viewer failed: "+(e&&e.message?e.message:String(e));}
+</script></body></html>

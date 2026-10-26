@@ -1,0 +1,176 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Scenarium — 2x120 mm fan carrier mounted to approved chassis</title>
+<style>*{box-sizing:border-box}body{height:100vh;margin:0;display:flex;flex-direction:column;background:#0e1721;color:#e2edf1;font:13px system-ui,-apple-system,sans-serif}
+header{padding:11px 14px;border-bottom:1px solid #344852;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+h1{font-size:16px;margin:0}header small{display:block;color:#91aebc;margin-top:4px}
+#scene{min-height:390px;flex:1;position:relative;overflow:hidden}canvas{width:100%;height:100%;display:block;touch-action:none;cursor:grab}
+canvas:active{cursor:grabbing}#notice{position:absolute;bottom:12px;left:12px;padding:7px 9px;border-radius:7px;background:#111e29e9;border:1px solid #547481;color:#d6e7ed;max-width:90%;font-size:11px;pointer-events:none}
+nav{padding:10px 13px;border-top:1px solid #344852;display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:#172630}
+button{font:inherit;cursor:pointer;color:#e2edf1;background:#263946;border:1px solid #637d89;border-radius:8px;padding:8px 11px}button.active{background:#296d81;border-color:#8dc9d8}
+input[type=range]{accent-color:#86bdcb;width:125px}label{display:flex;gap:7px;align-items:center;font-size:12px}output{font-variant-numeric:tabular-nums}
+</style></head>
+<body><header><div><h1>Two-Fan Carrier — Upper Front Installation</h1><small>515 source-derived meshes · approved fan × 2 · approved chassis front · new snap carrier</small></div><small>Drag to orbit · Scroll to zoom</small></header>
+<div id="scene"><canvas id="stage"></canvas><div id="notice">Checking geometry integrity…</div></div>
+<nav><button id="viewAll" class="active">Front assembly</button><button id="viewDetail">Latch detail</button>
+<button id="viewLower">Lower bay conflict</button>
+<button data-group="1" class="active">Carrier</button>
+<button data-group="6">Front grille</button>
+<button data-group="7" class="active">PSU shroud</button>
+<button id="hideFans">Hide fans</button>
+<button id="run">Spin</button><label>RPM <output id="rpmOut">520</output><input id="rpm" type="range" min="0" max="1600" step="20" value="520"></label>
+</nav>
+<script>
+"use strict";
+const PACKET={"version":3,"asset":"dual-120mm-front-fan-snap-carrier-v1","fullCount":515,"reducedCount":291,"codes":3455,"bytes":4831,"rawChars":15694,"hash":"d8dbc57c","expandedHash":"20ec9d5c","palette":["#495b65","#899ca5","#263039","#283641","#5a6b74","#90a2ab","#a6b3bb","#1c282f","#202a33","#384752","#677780","#151d23","#3b4b58","#9ca9b2","#bac5cb","#8f9faa","#7a949e"],"sourceSha":{"chassis":"a968919b2bd496bf33b8d6c24a94fbf5ab96fdd9","fan":"fde0d8d8246e3e0844600d00033558639237ac00","carrier":"48003ad2c38fe5898cf2a35bc702af1314489e8f"},"data":"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"};
+const scene=document.getElementById("scene"),canvas=document.getElementById("stage"),notice=document.getElementById("notice");
+const ABC="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+function checksum(t){let h=2166136261;for(let i=0;i<t.length;i++)h=Math.imul(h^t.charCodeAt(i),16777619)>>>0;return h.toString(16).padStart(8,"0");}
+
+
+
+const DUAL_FAN_PREVIEW_MESHES=515;
+function expandTwoFanPacketRows(input){
+ if(!Array.isArray(input)||input.length!==291)
+  throw new Error("Compact front-carrier packet must contain 291 source-derived rows");
+ const c=input.filter(p=>p[11]===0),
+  a=input.filter(p=>p[11]===1),
+  f=input.filter(p=>p[11]===2||p[11]===3),
+  grille=input.filter(p=>p[11]===6),
+  shroud=input.filter(p=>p[11]===7);
+ if(c.length!==75||a.length!==35||f.length!==152||grille.length!==28||shroud.length!==1)
+  throw new Error("Unexpected compact front-carrier mesh groups");
+ const ring=c.slice(5,41),
+  shift=(p,y,g)=>p.map((v,i)=>i===5?Math.round((v+y)*1e6)/1e6:i===11?v+g:v);
+ const caseFront=[...c.slice(0,45),...ring.map(p=>shift(p,1.25,0)),
+   ...c.slice(45,49),...ring.map(p=>shift(p,2.50,0)),...c.slice(49)];
+ const full=[...caseFront,...a,...f,...f.map(p=>shift(p,1.25,2)),...grille,...shroud];
+ if(full.length!==DUAL_FAN_PREVIEW_MESHES)
+  throw new Error("Expanded mesh count incorrect");
+ return full;
+}
+function fnv1aSourceChecksum(input){
+ let hash=2166136261;
+ for(let i=0;i<input.length;i++)hash=Math.imul(hash^input.charCodeAt(i),16777619)>>>0;
+ return hash.toString(16).padStart(8,"0");
+}
+function decodeDualFanCompactPacket(packet){
+ if(packet.version!==3||packet.fullCount!==515||packet.reducedCount!==291||
+    typeof packet.data!=="string"||packet.data.length%4||
+    !/^[A-Za-z0-9+/]+={0,2}$/.test(packet.data))
+  throw new Error("Invalid compact two-fan packet");
+ const alphabet="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+ const bytes=[];
+ for(let i=0;i<packet.data.length;i+=4){
+  const b=[0,1,2,3].map(j=>packet.data[i+j]==="="?0:alphabet.indexOf(packet.data[i+j]));
+  if(b.some(v=>v<0))throw new Error("Bad base64 character");
+  const n=b[0]<<18|b[1]<<12|b[2]<<6|b[3];
+  bytes.push(n>>>16&255);
+  if(packet.data[i+2]!=="=")bytes.push(n>>>8&255);
+  if(packet.data[i+3]!=="=")bytes.push(n&255);
+ }
+ if(bytes.length!==packet.bytes)throw new Error("Truncated packed mesh data");
+ let offset=0,reg=0,bits=0,codes=[];
+ for(let i=0;i<packet.codes;i++){
+  const w=Math.max(9,Math.ceil(Math.log2(256+i)));
+  while(bits<w){
+   if(offset>=bytes.length)throw new Error("Missing compressed source bytes");
+   reg=(reg<<8)|bytes[offset++];bits+=8;
+  }
+  bits-=w;codes.push(reg>>bits&((1<<w)-1));reg&=(1<<bits)-1;
+ }
+ if(offset!==bytes.length)throw new Error("Extra compressed source bytes");
+ const dict=new Map();let next=256,prev=String.fromCharCode(codes[0]),raw=prev;
+ for(let i=1;i<codes.length;i++){
+  const n=codes[i],entry=n<256?String.fromCharCode(n):(dict.get(n)||(n===next?prev+prev[0]:""));
+  if(!entry)throw new Error("Invalid LZW code");
+  raw+=entry;dict.set(next++,prev+entry[0]);prev=entry;
+ }
+ if(raw.length!==packet.rawChars||fnv1aSourceChecksum(raw)!==packet.hash)
+  throw new Error("Compact source geometry checksum mismatch");
+ const expanded=expandTwoFanPacketRows(JSON.parse(raw));
+ if(fnv1aSourceChecksum(JSON.stringify(expanded))!==packet.expandedHash)
+  throw new Error("Expanded full geometry checksum mismatch");
+ return expanded;
+}
+
+let MODEL;try{MODEL=decodeDualFanCompactPacket(PACKET);}catch(e){notice.textContent="Data error: "+e.message;throw e;}
+const gl=canvas.getContext("webgl2",{antialias:true})||canvas.getContext("webgl",{antialias:true});
+if(!gl){notice.textContent="WebGL is unavailable";}
+else{
+const VS=`attribute vec3 aP,aN,aC;uniform float uYaw,uPitch,uDist,uAspect,uAngle,uRotor;uniform vec3 uFocus,uPivot;varying vec3 vN,vC;
+mat3 rz(float a){float c=cos(a),s=sin(a);return mat3(c,-s,0.,s,c,0.,0.,0.,1.);}
+mat3 ry(float a){float c=cos(a),s=sin(a);return mat3(c,0.,-s,0.,1.,0.,s,0.,c);}
+mat3 rx(float a){float c=cos(a),s=sin(a);return mat3(1.,0.,0.,0.,c,s,0.,-s,c);}
+void main(){mat3 rotor=rz(uAngle*uRotor);mat3 camera=rx(uPitch)*ry(uYaw);
+vec3 w=uPivot+rotor*(aP-uPivot);vec3 p=camera*(w-uFocus);p.z-=uDist;
+vN=normalize(camera*rotor*aN);vC=aC;gl_Position=vec4(p.x*1.66/uAspect,p.y*1.66,-40.1/39.9*p.z-8./39.9,-p.z);}`;
+const FS=`precision mediump float;varying vec3 vN,vC;
+void main(){vec3 n=normalize(vN);float light=.39+.51*max(dot(n,normalize(vec3(-.65,.79,-.54))),0.)+.2*max(dot(n,normalize(vec3(.83,.32,.64))),0.);
+gl_FragColor=vec4(pow(vC,vec3(.86))*light+.023,1.);}`;
+function compile(type,t){const shader=gl.createShader(type);gl.shaderSource(shader,t);gl.compileShader(shader);if(!gl.getShaderParameter(shader,gl.COMPILE_STATUS))throw Error(gl.getShaderInfoLog(shader));return shader;}
+const program=gl.createProgram();gl.attachShader(program,compile(gl.VERTEX_SHADER,VS));gl.attachShader(program,compile(gl.FRAGMENT_SHADER,FS));gl.linkProgram(program);
+if(!gl.getProgramParameter(program,gl.LINK_STATUS))throw Error(gl.getProgramInfoLog(program));
+const att=["aP","aN","aC"].map(n=>gl.getAttribLocation(program,n)),uni=Object.fromEntries(["uYaw","uPitch","uDist","uAspect","uAngle","uRotor","uFocus","uPivot"].map(n=>[n,gl.getUniformLocation(program,n)]));
+const groupVerts=Array.from({length:8},()=>[]);
+const rot=([x,y,z],[a,b,c])=>{a*=Math.PI/180;b*=Math.PI/180;c*=Math.PI/180;
+let Y=y*Math.cos(a)-z*Math.sin(a),Z=y*Math.sin(a)+z*Math.cos(a);y=Y;z=Z;
+let X=x*Math.cos(b)+z*Math.sin(b);Z=-x*Math.sin(b)+z*Math.cos(b);x=X;z=Z;
+X=x*Math.cos(c)-y*Math.sin(c);Y=x*Math.sin(c)+y*Math.cos(c);return[X,Y,z];};
+function tri(g,a,b,c,col){const d=b.map((v,i)=>v-a[i]),e=c.map((v,i)=>v-a[i]);
+let n=[d[1]*e[2]-d[2]*e[1],d[2]*e[0]-d[0]*e[2],d[0]*e[1]-d[1]*e[0]];
+const len=Math.hypot(...n)||1;n=n.map(x=>x/len);
+for(const p of [a,b,c])groupVerts[g].push(...p,...n,...col);}
+for(const p of MODEL){const [kind,sx,sy,sz,x,y,z,ax,ay,az,mat,g]=p,col=PACKET.palette[mat],c=[1,3,5].map(i=>parseInt(col.slice(i,i+2),16)/255);
+const w=q=>rot(q,[ax,ay,az]).map((v,i)=>v+[x,y,z][i]);
+if(kind===0){const A=sx/2,B=sy/2,C=sz/2,v=[[-A,-B,-C],[A,-B,-C],[A,B,-C],[-A,B,-C],[-A,-B,C],[A,-B,C],[A,B,C],[-A,B,C]].map(w);
+for(const f of [[0,3,2,1],[4,5,6,7],[0,1,5,4],[3,7,6,2],[1,2,6,5],[0,4,7,3]]){tri(g,v[f[0]],v[f[1]],v[f[2]],c);tri(g,v[f[0]],v[f[2]],v[f[3]],c);}
+}else{for(let i=0;i<sz;i++){const a=i*2*Math.PI/sz,b=(i+1)*2*Math.PI/sz,r=sx,h=sy;
+const a0=w([r*Math.cos(a),-h/2,r*Math.sin(a)]),a1=w([r*Math.cos(a),h/2,r*Math.sin(a)]);
+const b0=w([r*Math.cos(b),-h/2,r*Math.sin(b)]),b1=w([r*Math.cos(b),h/2,r*Math.sin(b)]);
+tri(g,a0,b0,b1,c);tri(g,a0,b1,a1,c);tri(g,w([0,h/2,0]),a1,b1,c);tri(g,w([0,-h/2,0]),b0,a0,c);}}
+}
+const buffers=groupVerts.map(a=>{const b=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,b);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(a),gl.STATIC_DRAW);return{buffer:b,count:a.length/9};});
+const shown=[true,true,true,true,true,true,false,true];let yaw=3.2,pitch=.15,distance=6.25,focus=[0,2.35,-1.94],angle=0,rpm=520,running=false,last=null;
+gl.enable(gl.DEPTH_TEST);gl.disable(gl.CULL_FACE);
+function renderGroup(g){gl.bindBuffer(gl.ARRAY_BUFFER,buffers[g].buffer);
+att.forEach((a,i)=>{if(a>=0){gl.enableVertexAttribArray(a);gl.vertexAttribPointer(a,3,gl.FLOAT,false,36,i*12);}});
+gl.uniform1f(uni.uRotor,(g===3||g===5)?1:0);gl.uniform3fv(uni.uPivot,g===3?[0,2.18,-1.84]:g===5?[0,3.43,-1.84]:[0,0,0]);
+gl.drawArrays(gl.TRIANGLES,0,buffers[g].count);
+}
+function draw(){const pixel=Math.min(2,window.devicePixelRatio||1),w=Math.max(1,Math.floor(canvas.clientWidth*pixel)),h=Math.max(1,Math.floor(canvas.clientHeight*pixel));
+if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h;}
+gl.viewport(0,0,w,h);gl.clearColor(.057,.084,.107,1);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);gl.useProgram(program);
+gl.uniform1f(uni.uYaw,yaw);gl.uniform1f(uni.uPitch,pitch);gl.uniform1f(uni.uDist,distance);
+gl.uniform1f(uni.uAspect,w/h);gl.uniform1f(uni.uAngle,angle);gl.uniform3fv(uni.uFocus,focus);
+for(let g=0;g<8;g++)if(shown[g])renderGroup(g);
+}
+const presets={
+front:{yaw:3.2,pitch:.15,distance:6.25,focus:[0,2.35,-1.94]},
+detail:{yaw:2.42,pitch:.24,distance:2.55,focus:[.62,2.81,-1.98]},
+lower:{yaw:2.85,pitch:.24,distance:3.3,focus:[0,.95,-1.95]}
+};
+function view(key){const a=presets[key];yaw=a.yaw;pitch=a.pitch;distance=a.distance;focus=[...a.focus];
+for(const [k,id] of [["front","viewAll"],["detail","viewDetail"],["lower","viewLower"]])document.getElementById(id).classList.toggle("active",k===key);
+notice.textContent=key==="lower"?"Lower bay: NO fan installed. Existing PSU shroud prevents the approved fan frame fitting.":"515 verified source meshes · upper two fans carried in original chassis tabs";
+draw();}
+document.getElementById("viewAll").onclick=()=>view("front");
+document.getElementById("viewDetail").onclick=()=>view("detail");
+document.getElementById("viewLower").onclick=()=>view("lower");
+for(const b of document.querySelectorAll("[data-group]"))b.onclick=()=>{const g=+b.dataset.group;shown[g]=!shown[g];b.classList.toggle("active",shown[g]);draw();};
+const hide=document.getElementById("hideFans");
+hide.onclick=()=>{const now=shown[2];for(let g=2;g<=5;g++)shown[g]=!now;hide.textContent=now?"Show fans":"Hide fans";hide.classList.toggle("active",now);draw();};
+const run=document.getElementById("run"),slider=document.getElementById("rpm"),out=document.getElementById("rpmOut");
+run.onclick=()=>{running=!running;run.textContent=running?"Stop":"Spin";run.classList.toggle("active",running);last=null;draw();};
+slider.oninput=()=>{rpm=+slider.value;out.textContent=String(rpm);};
+let pointer=null;
+canvas.onpointerdown=e=>{pointer=[e.clientX,e.clientY];canvas.setPointerCapture(e.pointerId);};
+canvas.onpointermove=e=>{if(!pointer)return;yaw+=(e.clientX-pointer[0])*.009;pitch=Math.max(-1.42,Math.min(1.42,pitch+(e.clientY-pointer[1])*.007));pointer=[e.clientX,e.clientY];draw();};
+for(const name of ["pointerup","pointercancel","lostpointercapture"])canvas.addEventListener(name,()=>pointer=null);
+canvas.addEventListener("wheel",e=>{e.preventDefault();distance=Math.max(1.7,Math.min(15,distance*Math.exp(e.deltaY*.0009)));draw();},{passive:false});
+new ResizeObserver(draw).observe(canvas);
+function tick(now){if(last===null)last=now;const dt=Math.max(0,Math.min(.075,(now-last)/1000));last=now;
+if(running){angle=(angle+dt*rpm/60*Math.PI*2)%(Math.PI*2);draw();}
+requestAnimationFrame(tick);}
+view("front");requestAnimationFrame(tick);
+}
+</script></body></html>
