@@ -4,7 +4,8 @@ The public ontology describes what a scene and its parts **mean**, independently
 
 - [Scenes](SCENES.md) — starting scene vocabulary.
 - [Full human-readable v1 representation](REPRESENTATION.md) — dimension, spatial grammar, animation, interaction, effects, audio, experiments and evidence boundaries.
-- [Scene schema](schemas/scene-v1.schema.json), [entity schema](schemas/entity-v1.schema.json), [experiment schema](schemas/experiment-v1.schema.json) — versioned machine-readable definitions.
+- [Scene schema](schemas/scene-v1.schema.json), [entity schema](schemas/entity-v1.schema.json), [experiment schema](schemas/experiment-v1.schema.json), and [renderer mapping schema](schemas/representation-map-v1.schema.json) — versioned machine-readable definitions.
+- [Renderer mappings](MAPPINGS.md) — correspondence, source identity, limitations and loss-aware targets.
 - [Synthetic fixtures](examples/) — standalone 2D, motion, 3D, interaction, reusable entity, and failed-hypothesis examples.
 - [Semantic checker](../scripts/check-ontology.mjs) — reference, dimension and timeline integrity with negative controls.
 - [Experiments](EXPERIMENTS.md) — reproducible inquiry, outcomes and non-artistic quality statuses.
