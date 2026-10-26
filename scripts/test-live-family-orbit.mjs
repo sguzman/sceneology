@@ -44,7 +44,7 @@ function snapshot(model,yaw){
   if(run.error||run.status!==0)throw Error("Orbit browser startup failed: "+String(run.error||run.stderr).slice(-600));
   const dom=run.stdout;
   fs.writeFileSync(path.join(output,model+"-"+yaw+".dom.html"),dom);
-  const stage=dom.match(/<div id="orbit-stage"[^>]*>/)?.[0]||"";
+  const stage=dom.match(/<div\b[^>]*\bid="orbit-stage"[^>]*>/)?.[0]||"";
   assert.ok(stage.includes('data-model="'+model+'"')&&stage.includes('data-rendered="true"'),"Orbit model did not render "+model);
   assert.ok(stage.includes('data-yaw="'+yaw+'"'),"Camera yaw ignored");
   assert.ok(!dom.includes("Unable to show source model:")&&!dom.includes("Orbit preview error:"));
