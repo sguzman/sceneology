@@ -32,3 +32,9 @@ This report is tied to exact scene bytes and a public asset-tree revision. If ei
 The [four-room technical review](https://sguzman.github.io/sceneology/site/room-recovery.html) draws only original source zones, explicitly authored object anchors and parent-relation labels. The builder validates source Git blobs first. Where the source omits room dimensions, diagram boundaries are fitted to zones and anchors; **that frame is not a fabricated room wall**.
 
 The diagnostics aid exact placement recovery but do **not** establish object geometry, model dimensions, render fidelity, visual approval, or completed room migration. All 24 aliases remain unbound, including those with only one current source candidate. The generated diagrams are checked in CI and tested after live deployment.
+
+## Exact-source staging coverage
+
+The model-family recovery catalog now stages at least one verified, unchanged candidate for **22 of 24** room asset aliases. This is an *inventory coverage* measure, not a reconstruction or an approved asset binding: aliases can still have multiple plausible model variants, no selected binding, unresolved orientation, and unverified visual compatibility.
+
+The two source-staging gaps are both blanket aliases: the existing bed-cover v1 candidate has not been admitted as an accepted visual family, and the explicitly requested bed-cover v1.3 still has no matching public source version. All **24/24 asset aliases remain unbound**. A machine check now computes staged coverage from exact source blob identities and rejects accidentally misattributed candidate paths.

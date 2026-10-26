@@ -46,4 +46,16 @@ for(const row of manifest.aliases){
  statuses[row.status]++;
 }
 assert.deepEqual(statuses,{"single-candidate-not-certified":7,"ambiguous-many-candidates":16,"unresolved-no-version-match":1});
+const prepared=JSON.parse(fs.readFileSync(path.join(root,"catalog/accepted-family-sources.json"),"utf8"));
+const stagedBlobs=new Set(prepared.items.map(item=>item.sha));
+assert.equal(stagedBlobs.size,prepared.items.length,"Duplicate staged source blobs");
+const covered=manifest.aliases.filter(alias=>alias.candidates.some(candidate=>stagedBlobs.has(candidate.blob_sha)));
+const uncovered=manifest.aliases.filter(alias=>!alias.candidates.some(candidate=>stagedBlobs.has(candidate.blob_sha)));
+assert.ok(uncovered.every(alias=>alias.alias.startsWith("accepted:block-chibi-room::blanket/")),"Unexpected accepted-family source gap");
+for(const item of covered){
+ const matches=item.candidates.filter(candidate=>stagedBlobs.has(candidate.blob_sha));
+ assert.ok(matches.length>0);
+ for(const match of matches)assert.ok(prepared.items.some(p=>p.sha===match.blob_sha&&p.source_path===match.path),"Staged alias source identity mismatch");
+}
+console.log("Sceneology room staged-source coverage: "+covered.length+"/"+manifest.alias_count+" aliases have at least one exact source staged; "+uncovered.length+" remain without a staged exact-source candidate. All 24 remain unbound, not approved.");
 console.log("Sceneology room dependency census passed: 4 accepted source-only compositions; 37 placements, 24 distinct aliases; 7 one-source candidates, 16 ambiguous, 1 missing exact version. No automatic binding/visual approval.");
