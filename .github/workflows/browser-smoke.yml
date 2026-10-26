@@ -4,36 +4,31 @@ on:
     branches: [main]
     paths:
       - 'experiments/backyard-daynight-legacy-webgl2.html'
+      - 'experiments/backyard-outline-inverted-hull-rejected.html'
+      - 'experiments/backyard-outline-screen-space-v2.html'
+      - 'scripts/test-webgl-browser.mjs'
       - '.github/workflows/browser-smoke.yml'
   workflow_dispatch:
 jobs:
   browser:
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 10
     permissions:
       contents: read
     steps:
       - uses: actions/checkout@v4
-      - name: Verify Chrome is installed
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Identify software renderer environment
         run: google-chrome --version
-      - name: Render real WebGL scene in headless Chrome
-        shell: bash
-        run: |
-          set -euo pipefail
-          google-chrome --headless=new --no-sandbox --enable-webgl --enable-unsafe-swiftshader --use-angle=swiftshader --disable-dev-shm-usage --virtual-time-budget=6000 --dump-dom "file://$GITHUB_WORKSPACE/experiments/backyard-daynight-legacy-webgl2.html" > rendered-dom.html 2> browser-stderr.log
-          python3 -c 'from html.parser import HTMLParser
-          class Reader(HTMLParser):
-              def __init__(self): super().__init__(); self.tag = False; self.result = ""
-              def handle_starttag(self, tag, attrs): self.tag = dict(attrs).get("id") == "dn-status"
-              def handle_data(self, data):
-                  if self.tag: self.result += data
-          p = Reader(); p.feed(open("rendered-dom.html").read()); print(p.result); assert "181 archived geometry parts" in p.result'
-      - name: Upload diagnostics on failure
-        if: failure()
+      - name: Exercise three archival WebGL2 viewers
+        run: node scripts/test-webgl-browser.mjs
+      - name: Preserve render and failure evidence
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: archived-webgl2-browser-failure
-          path: |
-            rendered-dom.html
-            browser-stderr.log
-          if-no-files-found: ignore
+          name: archived-webgl2-browser-evidence
+          path: artifacts/browser-smoke/
+          if-no-files-found: warn
+          retention-days: 7
