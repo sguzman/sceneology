@@ -64,6 +64,8 @@ An [experiment](schemas/experiment-v1.schema.json) separates question, falsifiab
 
 ## Mapping and machine checks
 
+The [representation mapping contract](MAPPINGS.md) explains how stable scene element IDs are mapped onto renderer-specific nodes without asserting capability parity. Its [formal schema](schemas/representation-map-v1.schema.json) and [declarative fixture](examples/static-2d.mapping.json) are checked for source identity, one-to-one bindings and dimensional conventions.
+
 The JSON Schemas establish field names, enumerations, basic types and conditional structure. `scripts/check-ontology.mjs` additionally enforces cross-field invariants: IDs/references, dimensional consistency, hierarchy cycles, rendering order, timeline bounds and shape restrictions. **This lightweight checker is not a full Draft 2020-12 JSON Schema implementation**; a separate standards-conformant schema engine should be used by downstream consumers when available. The included positive and negative fixtures check the exact scope supported here.
 
 The public examples are standalone synthetic data; they do not contain historical private ontology, source paths, captured reviews or third-party art. When real source migrations begin, compare their semantics against v1 explicitly and evolve the vocabulary rather than pretending that private materials were already reconciled.
@@ -76,3 +78,4 @@ The public examples are standalone synthetic data; they do not contain historica
 - [2D interactive scene](examples/interactive-2d.scene.json)
 - [Failure record](examples/failed-experiment.json)
 - [Reusable entity](examples/reusable-entity.json)
+- [2D rendering map](examples/static-2d.mapping.json)
