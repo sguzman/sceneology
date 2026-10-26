@@ -13,7 +13,7 @@ assert.equal(scene.instances.length,6);
 assert.equal(scene.omitted_parented_instances.length,2);
 assert.equal(scene.gallery_approved,false);
 assert.equal(scene.complete_room,false);
-const resources=["site/reading-corner-study.html","site/reading-corner-study.js","site/reading-corner-study-data.json","site/family-orbit-data.json","site/reading-corner-occupancy-data.json"];
+const resources=["site/reading-corner-study.html","site/reading-corner-study.js","site/reading-corner-study-data.json","site/family-orbit-data.json","site/reading-corner-occupancy-data.json","site/reading-support-alignment.mjs"];
 for(const relative of resources){
  let issue;
  for(let i=0;i<5;i++){
@@ -72,9 +72,26 @@ try{
  const stage=dom.match(/<div[^>]*\bid="reading-stage"[^>]*>/)?.[0]||"";
  assert.ok(stage.includes('data-occupancy="research-candidate"'),"Source-authored occupancy toggle did not render");
  assert.ok(dom.includes('data-instance="quest-girl"'),"Accepted static character geometry was not incorporated");
- assert.ok(dom.includes("not verified contact"),"Missing source support warning");
+ assert.ok(/NOT verified contact/i.test(dom),"Missing source support warning");
+ assert.ok(stage.includes('data-support="authored-unaligned"'),"Original source-authored pose not retained");
+ assert.ok(stage.includes('data-character-y="0"'),"Original character Y was silently modified");
  const unique=new Set([...dom.matchAll(/data-instance="([^"]+)"/g)].map(x=>x[1]));
  assert.ok(unique.has("quest-girl")&&unique.has("chair")&&unique.has("rug"));
+ const altered=new URL("site/reading-corner-study.html?yaw=130&occupancy=1&support=1",base);
+ const alternative=spawnSync(browser,[...flags,"--user-data-dir="+occupancyProfile+"-aligned","--dump-dom",altered.href],
+  {encoding:"utf8",timeout:100000,maxBuffer:32*1024*1024});
+ if(alternative.error||alternative.status!==0)throw Error("Optional shoe support alignment Chrome failed");
+ const dom2=alternative.stdout;
+ fs.writeFileSync(path.join(output,"reading-corner-support-proposal.dom.html"),dom2);
+ const stage2=dom2.match(/<div[^>]*\bid="reading-stage"[^>]*>/)?.[0]||"";
+ assert.ok(stage2.includes('data-support="alignment-proposal"'),"Source-specific support toggle was not respected");
+ assert.ok(stage2.includes('data-character-y="0.99"'),"Foot correction does not match source-measured rug field offset");
+ assert.ok(dom2.includes("original geometry and scene coordinates unchanged"),"Support alignment was incorrectly described as source");
+ const characterPolygons=body=>[...body.matchAll(/<polygon\b[^>]*data-instance="quest-girl"[^>]*points="([^"]+)"/g)].map(x=>x[1]);
+ const origin=characterPolygons(dom),raised=characterPolygons(dom2);
+ assert.ok(origin.length>80&&raised.length===origin.length,"Aligned overlay lost source character geometry");
+ assert.notDeepEqual(origin,raised,"Viewer alignment has no visible effect on actual character pixels");
+ fs.rmSync(occupancyProfile+"-aligned",{recursive:true,force:true});
 }finally{fs.rmSync(occupancyProfile,{recursive:true,force:true});}
 assert.notEqual(first.digest,second.digest,"Camera rotation did not change source-composition geometry");
 const shotProfile=fs.mkdtempSync(path.join(os.tmpdir(),"sceneology-reading-shot-"));
@@ -96,6 +113,8 @@ try{
  const png=fs.readFileSync(pngPath);
  assert.ok(png.length>8500&&png.subarray(0,8).toString("hex")==="89504e470d0a1a0a","Invalid research occupancy PNG");
 }finally{fs.rmSync(occupancyScreenshotProfile,{recursive:true,force:true});}
-const report={schema_version:1,status:"passed",artwork_approved:false,original_accepted_room_render:false,partial_placed_instances:6,unplaced_instances:2,cameras:[first,second]};
+const report={schema_version:1,status:"passed",artwork_approved:false,original_accepted_room_render:false,
+ partial_placed_instances:6,unplaced_instances:2,source_shoe_gap:-.99,
+ opt_in_support_offset:.99,original_occupancy_transform_preserved:true,cameras:[first,second]};
 fs.writeFileSync(path.join(output,"room-report.json"),JSON.stringify(report,null,2)+"\n");
 console.log("Partial Reading Corner Chrome QA: 6/8 authored instances with distinct camera projections, byte-exact release assets; no gallery approval.");
