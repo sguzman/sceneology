@@ -54,7 +54,7 @@ for(const id of candidates.ids){
  const result={id,title:rec.title,kind:rec.kind,status:rec.status,summary:rec.summary,viewer:rec.viewer,limitations:rec.limitations,approved:false};
  try{
   const dom=run([...flags,"--user-data-dir="+profile,"--dump-dom",uri],id+"-dom");
-  const match=dom.match(new RegExp('<[^>]+id=["\\\x27]'+spec.id+'["\\\x27][^>]*>([^<]+)<',"i"));
+  const match=dom.match(new RegExp('id="'+spec.id+'"[^>]*>([^<]+)<', "i"));
   if(!match||!match[1].includes(spec.phrase))throw Error("First-draw status missing for "+id);
   const image=path.join(output,id+".png");
   run([...flags,"--user-data-dir="+profile+"-capture","--screenshot="+image,uri],id+"-image");
