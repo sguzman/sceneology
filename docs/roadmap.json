@@ -186,8 +186,14 @@
         {
           "id": "M02",
           "points": 5,
-          "status": "todo",
-          "evidence": []
+          "status": "done",
+          "evidence": [
+            "scenes/mirror-vector-motion-study.html",
+            "runtime/timeline-lite.js",
+            "scenes/mirror-vector-motion-study.md",
+            "scripts/test-2d-browser.mjs",
+            "docs/RELEASE-EVIDENCE.md"
+          ]
         },
         {
           "id": "M03",
@@ -226,8 +232,14 @@
         {
           "id": "G02",
           "points": 4,
-          "status": "todo",
-          "evidence": []
+          "status": "done",
+          "evidence": [
+            "site/main.js",
+            "site/style.css",
+            "index.html",
+            "scripts/test-site-gallery.mjs",
+            "docs/RELEASE-EVIDENCE.md"
+          ]
         },
         {
           "id": "G03",
