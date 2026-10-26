@@ -6,6 +6,8 @@ const reductionsList=document.getElementById("proxy-reductions");
 const roomSelect=document.getElementById("proxy-room");
 const variantList=document.getElementById("proxy-variants");
 const attachmentList=document.getElementById("proxy-attachments");
+const bareBedInput=document.getElementById("proxy-bare-bed");
+const bedMaskNotice=document.getElementById("proxy-bed-mask-notice");
 const yawInput=document.getElementById("proxy-yaw");
 const elevationInput=document.getElementById("proxy-elevation");
 const zonesInput=document.getElementById("proxy-zones");
@@ -22,7 +24,7 @@ const shade=(hex,factor)=>{
  const value=parseInt(hex.slice(1),16);
  return "#"+[value>>16,value>>8&255,value&255].map(x=>Math.min(255,Math.max(0,Math.round(x*factor+7))).toString(16).padStart(2,"0")).join("");
 };
-let rooms=[],library=null,current=null,variantReductions=null;
+let rooms=[],library=null,current=null,variantReductions=null,attachmentFit=null;
 const chosen=new Map();
 function render(){
  if(!current||!library)return;
@@ -32,6 +34,9 @@ function render(){
  const eye=unit([Math.sin(a)*Math.cos(e),Math.sin(e),Math.cos(a)*Math.cos(e)]);
  const right=unit([-eye[2],0,eye[0]]),up=unit(cross(right,eye)),light=unit([.48,.92,-.34]);
  const faces=[];
+ const hasSourceBed=current.placed.some(item=>item.id==="bed");
+ const experiment=hasSourceBed&&bareBedInput.checked;
+ let withheldBedFaces=0;
  for(const inst of current.placed){
   const selection=chosen.get(inst.id)||inst.default_model_key;
   const permitted=inst.choices.find(c=>c.key===selection);
@@ -39,7 +44,15 @@ function render(){
   if(!permitted||!model||model.source_sha!==permitted.source_sha)throw Error("Unverified model choice "+inst.id);
   const angle=inst.yaw_deg*Math.PI/180,c=Math.cos(angle),s=Math.sin(angle);
   const place=v=>[c*v[0]+s*v[2]+inst.translate[0],v[1]+inst.translate[1],-s*v[0]+c*v[2]+inst.translate[2]];
+  const vettedBed=inst.id==="bed"?attachmentFit?.bed_pillow?.bed_candidates.find(
+   c=>c.source_key===selection&&c.source_blob===permitted.source_sha&&
+     c.original_bed_contains_embedded_pillow&&c.original_bed_contains_embedded_blanket
+  ):null;
+  if(inst.id==="bed"&&!vettedBed)throw Error("Bed geometry has no verified source-embedded dressing record");
   for(const face of model.faces){
+   if(experiment&&inst.id==="bed"&&(face.part==="pillow"||face.part==="blanket")){
+    withheldBedFaces++;continue;
+   }
    const vs=face.vertices.map(place);
    if(!vs.every(v=>v.length===3&&v.every(Number.isFinite)))throw Error("Invalid authored model geometry");
    const normal=unit(cross(sub(vs[1],vs[0]),sub(vs[2],vs[0])));
@@ -72,6 +85,14 @@ function render(){
  stage.dataset.faces=String(faces.length);
  stage.dataset.yaw=String(yaw);
  stage.dataset.variantChoices=String([...chosen].length);
+ stage.dataset.embeddedBed="not-present";
+ if(hasSourceBed)stage.dataset.embeddedBed=experiment?"experimental-hidden":"source-raw";
+ stage.dataset.withheldBedFaces=String(withheldBedFaces);
+ if(experiment&&withheldBedFaces!==12)throw Error("Not exactly two source-pinned embedded bed parts withheld");
+ bedMaskNotice.textContent=hasSourceBed?
+  (experiment?"Research-only source-face mask: hidden the selected bed model's built-in pillow and blanket. The original file is intact; no replacement pillow or blanket has been placed. NOT a recovered original scene.":
+   "Source bed includes built-in pillow and blanket meshes. The accepted composition independently declares bedding attachments. Their original renderer relationship is unresolved."):
+  "This source room has no bed, so no bedding mask applies.";
  stage.dataset.zoneCount=String(sourceZones.filter(z=>z.kind==="zone-only").length);
  stage.dataset.footprint=sourceZones.some(z=>z.kind==="explicit-footprint")?"original-source-only":"not-shown";
  counter.textContent=current.placed.length+" placed furniture proxies · "+current.omitted_parented.length+" parent-attached objects deliberately omitted · yaw "+yaw+"°";
@@ -108,6 +129,9 @@ function chooseRoom(){
  const wanted=rooms.find(r=>r.id===roomSelect.value);
  if(!wanted)throw Error("Unknown historical room");
  current=wanted;chosen.clear();
+ const hasBed=current.placed.some(item=>item.id==="bed");
+ bareBedInput.disabled=!hasBed;
+ bareBedInput.checked=hasBed&&new URLSearchParams(location.search).get("bed")==="bare";
  const controls=[];
  for(const item of current.placed){
   const group=document.createElement("div");group.className="proxy-choice";
@@ -175,14 +199,24 @@ function chooseRoom(){
  status.textContent="Source coordinate fidelity checked. Model identities are proxies; zero original room bindings certified.";
 }
 try{
- const [roomsResponse,modelResponse,reductionsResponse]=await Promise.all([
+ const [roomsResponse,modelResponse,reductionsResponse,fitResponse]=await Promise.all([
   fetch("./room-proxy-review-data.json",{cache:"no-cache"}),
   fetch("./family-orbit-data.json",{cache:"no-cache"}),
-  fetch("./room-variant-reduction.json",{cache:"no-cache"})
+  fetch("./room-variant-reduction.json",{cache:"no-cache"}),
+  fetch("./room-attachment-fit-audit.json",{cache:"no-cache"})
  ]);
- if(!roomsResponse.ok||!modelResponse.ok||!reductionsResponse.ok)throw Error("Room source data is not available");
+ if(!roomsResponse.ok||!modelResponse.ok||!reductionsResponse.ok||!fitResponse.ok)throw Error("Room source data is not available");
  const data=await roomsResponse.json(),modelData=await modelResponse.json();
  variantReductions=await reductionsResponse.json();
+ attachmentFit=await fitResponse.json();
+ if(attachmentFit.schema_version!==1||
+    attachmentFit.original_asset_binding_recovered!==false||
+    attachmentFit.accepted_character_or_scene_geometry_rewritten!==false||
+    attachmentFit.bed_pillow?.bed_candidates?.length!==3||
+    !attachmentFit.bed_pillow.bed_candidates.every(c=>
+      c.original_bed_contains_embedded_pillow===true&&c.original_bed_contains_embedded_blanket===true&&
+      c.source_model_not_automatically_modified===true))
+  throw Error("Source bed masking research boundary changed");
  if(variantReductions.schema_version!==1||variantReductions.rooms?.length!==3||
     variantReductions.automatic_source_binding!==false||
     variantReductions.original_historical_variants_inferred!==false||
@@ -205,6 +239,7 @@ try{
  roomSelect.addEventListener("change",chooseRoom);
  yawInput.addEventListener("input",onRender);
  elevationInput.addEventListener("input",onRender);
+ bareBedInput.addEventListener("change",onRender);
  zonesInput.checked=query.get("zones")==="1";
  zonesInput.addEventListener("change",onRender);
  chooseRoom();

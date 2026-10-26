@@ -15,7 +15,7 @@ assert.equal(data.source_model_bindings_certified,false);
 assert.equal(data.showcase_approved,false);
 assert.equal(data.rooms.length,3);
 assert.equal(gallery.approved_ids.length,24);
-const resources=["site/room-proxy-review.html","site/room-proxy-review.js","site/room-proxy-review-data.json","site/family-orbit-data.json","site/room-variant-reduction.json","site/source-room-region-guide.mjs"];
+const resources=["site/room-proxy-review.html","site/room-proxy-review.js","site/room-proxy-review-data.json","site/family-orbit-data.json","site/room-variant-reduction.json","site/source-room-region-guide.mjs","site/room-attachment-fit-audit.json"];
 for(const relative of resources){
  let failure;
  for(let attempt=0;attempt<5;attempt++){
@@ -36,21 +36,26 @@ fs.mkdirSync(output,{recursive:true});
 const chrome=process.env.CHROME_BIN||"google-chrome";
 const flags=["--headless=new","--no-sandbox","--disable-dev-shm-usage","--disable-background-networking","--no-first-run",
  "--window-size=1300,920","--virtual-time-budget=7000"];
-function snapshot(id,yaw,variant=null,showZones=false){
+function snapshot(id,yaw,variant=null,showZones=false,bareBed=false){
  const profile=fs.mkdtempSync(path.join(os.tmpdir(),"sceneology-proxy-"));
  try{
   const url=new URL("site/room-proxy-review.html",base);
   url.searchParams.set("room",id);url.searchParams.set("yaw",String(yaw));
   if(variant)url.searchParams.set("variant-"+variant.id,variant.key);
   if(showZones)url.searchParams.set("zones","1");
+  if(bareBed)url.searchParams.set("bed","bare");
   const process=spawnSync(chrome,[...flags,"--user-data-dir="+profile,"--dump-dom",url.href],
    {encoding:"utf8",timeout:100000,maxBuffer:28*1024*1024});
   if(process.error||process.status!==0)throw Error("Proxy browser execution failed "+String(process.error||process.stderr).slice(-650));
   const dom=process.stdout;
-  const suffix=(variant?"-"+variant.key:"")+(showZones?"-with-zones":"")+"-"+yaw;
+  const suffix=(variant?"-"+variant.key:"")+(showZones?"-with-zones":"")+(bareBed?"-without-embedded-bedding":"")+"-"+yaw;
   fs.writeFileSync(path.join(output,id+suffix+".dom.html"),dom);
   const tag=dom.match(/<div\b[^>]*\bid="proxy-stage"[^>]*>/)?.[0]||"";
   assert.ok(tag.includes('data-room="'+id+'"'),"Historical room selector did not update");
+  const expectedBedState=id==="study-corner-v1.1"?"not-present":bareBed?"experimental-hidden":"source-raw";
+  assert.ok(tag.includes('data-embedded-bed="'+expectedBedState+'"'),"Technical bed source mask state incorrect");
+  assert.ok(tag.includes('data-withheld-bed-faces="'+(bareBed&&id!=="study-corner-v1.1"?12:0)+'"'),"Source pillow/blanket face filter must suppress exactly two original parts");
+  if(bareBed)assert.ok(dom.includes("no replacement pillow or blanket has been placed"),"Experimental bed mask disclosure missing");
   assert.ok(tag.includes('data-rendered="true"'),"Source proxies did not render");
   assert.ok(tag.includes('data-yaw="'+yaw+'"'),"Camera setting ignored");
   const guidedCount=showZones?(id==="cozy-bedroom-study-v1.3"?5:4):0;
@@ -97,6 +102,10 @@ const alternate=snapshot("study-corner-v1.1",130,{id:"desk",key:"wide-writing-de
 const guidedCozy=snapshot("cozy-bedroom-study-v1.3",130,null,true);
 const guidedStudy=snapshot("study-corner-v1.1",130,null,true);
 const guidedSleep=snapshot("sleep-room-v1",130,null,true);
+const rawBed=snapshot("sleep-room-v1",130);
+const hiddenBed=snapshot("sleep-room-v1",130,null,false,true);
+assert.notEqual(rawBed.digest,hiddenBed.digest,"Hidden embedded bedding did not alter projected source geometry");
+assert.ok(hiddenBed.faces<rawBed.faces,"Bed masking must remove visible original source bedding faces");
 for(const item of [guidedCozy,guidedStudy,guidedSleep])assert.ok(item.faces>20,"Zone guide obscured all model bodies");
 assert.notEqual(study.digest,rotated.digest,"Camera rotation had no effect");
 assert.notEqual(study.digest,alternate.digest,"Alternate staged model failed to change room geometry");

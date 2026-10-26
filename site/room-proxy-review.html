@@ -15,7 +15,7 @@ main{padding-top:22px}h1{font-size:clamp(2.1rem,4.4vw,3.6rem);line-height:1.06;m
 <header><nav class="wrap" aria-label="Main navigation"><a class="brand" href="../">Sceneology</a><div class="navlinks"><a href="./room-recovery.html">Four original layouts</a><a href="../#gallery-section">Approved gallery</a></div></nav></header>
 <main class="wrap" id="main-content"><p class="eyebrow">Room source investigation · not an accepted rendering</p>
 <h1>Three partial room studies</h1>
-<p class="lead" style="max-width:76ch;margin-bottom:12px">Explore source-authored placements with selectable, SHA-pinned <strong>technical model proxies</strong>. These are not certified original room bindings or approved room renders.</p>
+<p class="lead" style="max-width:76ch;margin-bottom:12px">Explore source-authored placements with selectable, SHA-pinned <strong>technical model proxies</strong>. These are not certified original room bindings or approved room renders. The optional bare-bed view suppresses source faces only; it does not recover external bedding or change the original model.</p>
 <div class="proxy-layout">
 <div><div class="proxy-stage" id="proxy-stage" aria-label="Partial source-derived room model projection"></div><p class="source-note" id="proxy-count"></p><p id="proxy-status" class="source-note" aria-live="polite">Loading source-pinned room geometry…</p><section id="proxy-clearance" class="source-note" aria-label="Conservative bounds and possible overlap review"></section></div>
 <div class="proxy-controls">
@@ -23,6 +23,8 @@ main{padding-top:22px}h1{font-size:clamp(2.1rem,4.4vw,3.6rem);line-height:1.06;m
 <label for="proxy-yaw">Horizontal camera angle</label><input type="range" id="proxy-yaw" min="-180" max="180" value="130" step="1">
 <label for="proxy-zones">Source zone overlay</label><label><input type="checkbox" id="proxy-zones" style="width:auto;margin-right:7px">Show exact X/Z zone rectangles (guides only)</label>
 <label for="proxy-elevation">Camera elevation</label><input type="range" id="proxy-elevation" min="5" max="85" value="35" step="1">
+<label for="proxy-bare-bed">Built-in bed dressing</label><label><input type="checkbox" id="proxy-bare-bed" style="width:auto;margin-right:7px">Hide original bed model's embedded pillow and blanket (technical comparison only)</label>
+<p class="source-note" id="proxy-bed-mask-notice"></p>
 <h2>Research model variants</h2><p class="source-note">The first choice is an alphabetical default for inspection, never a reconstruction verdict.</p>
 <div id="proxy-variants"></div>
 <h2>Single-change overlap reduction candidates</h2>
