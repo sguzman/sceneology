@@ -1,0 +1,157 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Scenarium — Standalone CPU Tower Cooler v1</title>
+<style>
+*{box-sizing:border-box}:root{color-scheme:dark;font-family:system-ui,sans-serif}body{margin:0;background:#17242a;color:#e8f4f1}
+main{height:100vh;min-height:540px;display:grid;grid-template-rows:auto minmax(360px,1fr) auto}
+header{background:#283f48;padding:10px;display:flex;align-items:center;gap:9px;justify-content:space-between;flex-wrap:wrap}
+strong{font-size:14px}small{color:#b6d1d5;font-size:11px}nav{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+button{font:12px system-ui;background:#385663;border:1px solid #809fab;color:white;border-radius:7px;padding:8px 10px;cursor:pointer}
+button.active{background:#267981}label{font:12px system-ui;display:flex;align-items:center;gap:6px}input{width:105px;accent-color:#76d2d6}
+section{position:relative;background:#142732}canvas{width:100%;height:100%;display:block;touch-action:none;cursor:grab}
+#hud{position:absolute;bottom:12px;left:12px;border:1px solid #547985;border-radius:6px;padding:7px 10px;background:#182f39e0;font:12px system-ui;pointer-events:none}
+footer{background:#283f48;padding:9px 11px;font:11px system-ui;color:#bbd5d9}
+</style></head><body><main>
+<header><div><strong>CPU Tower Air Cooler v1</strong><div><small>199 real meshes · 29 open fin gaps · Four copper heatpipes · Real fan rotor</small></div></div>
+<nav><button id="run" class="active">Stop fan</button><label>Fan <input id="rpm" type="range" min="150" max="1800" step="50" value="950"><output id="readout">950 RPM</output></label>
+<button id="badge">Accent on</button><button id="reset">Reset</button><button id="side">Side view</button></nav></header>
+<section id="stage"><canvas id="gl"></canvas><div id="hud">Drag to orbit · Scroll to zoom</div></section>
+<footer>Real GPU geometry and depth · Static uploaded meshes · Fan blur prevents strobing · Separate installable cooler, no decorative stand</footer>
+</main><script>
+(()=>{
+const MODEL=[["b",[[0.305,0.305,0.026],[0,0,-0.013],[0,0,0]],"#d1d8d7",0],["b",[[0.289,0.289,0.07],[0,0,-0.061],[0,0,0]],"#bf845e",0],["b",[[0.39,0.185,0.054],[0,0,-0.108],[0,0,0]],"#303c46",0],["b",[[0.036,0.071,0.15],[-0.26,0,-0.047],[0,0,0]],"#657983",0],["b",[[0.17,0.051,0.057],[-0.237,0,-0.085],[0,0,0]],"#aebdc0",0],["c",[0.035,0.087,16,[-0.256,0,-0.157],[90,0,0]],"#93a5a8",0],["c",[0.044,0.02,16,[-0.256,0,-0.21],[90,0,0]],"#d1d8d7",0],["b",[[0.054,0.009,0.008],[-0.256,0,-0.225],[0,0,0]],"#303c46",0],["b",[[0.036,0.071,0.15],[0.26,0,-0.047],[0,0,0]],"#657983",0],["b",[[0.17,0.051,0.057],[0.237,0,-0.085],[0,0,0]],"#aebdc0",0],["c",[0.035,0.087,16,[0.256,0,-0.157],[90,0,0]],"#93a5a8",0],["c",[0.044,0.02,16,[0.256,0,-0.21],[90,0,0]],"#d1d8d7",0],["b",[[0.054,0.009,0.008],[0.256,0,-0.225],[0,0,0]],"#303c46",0],["c",[0.018,0.68,14,[-0.165,0,-0.465],[90,0,0]],"#cc9268",0],["b",[[0.028,0.036,0.31],[-0.165,-0.185,-0.24],[0,0,0]],"#bf845e",0],["b",[[0.03,0.036,0.2],[-0.165,0.245,-0.335],[0,0,0]],"#cc9268",0],["c",[0.024,0.036,12,[-0.165,0.304,-0.58],[0,0,0]],"#bf845e",0],["c",[0.018,0.68,14,[-0.055,0,-0.465],[90,0,0]],"#cc9268",0],["b",[[0.028,0.036,0.31],[-0.055,-0.185,-0.24],[0,0,0]],"#bf845e",0],["b",[[0.03,0.036,0.2],[-0.055,0.245,-0.335],[0,0,0]],"#cc9268",0],["c",[0.024,0.036,12,[-0.055,0.304,-0.58],[0,0,0]],"#bf845e",0],["c",[0.018,0.68,14,[0.055,0,-0.465],[90,0,0]],"#cc9268",0],["b",[[0.028,0.036,0.31],[0.055,-0.185,-0.24],[0,0,0]],"#bf845e",0],["b",[[0.03,0.036,0.2],[0.055,0.245,-0.335],[0,0,0]],"#cc9268",0],["c",[0.024,0.036,12,[0.055,0.304,-0.58],[0,0,0]],"#bf845e",0],["c",[0.018,0.68,14,[0.165,0,-0.465],[90,0,0]],"#cc9268",0],["b",[[0.028,0.036,0.31],[0.165,-0.185,-0.24],[0,0,0]],"#bf845e",0],["b",[[0.03,0.036,0.2],[0.165,0.245,-0.335],[0,0,0]],"#cc9268",0],["c",[0.024,0.036,12,[0.165,0.304,-0.58],[0,0,0]],"#bf845e",0],["b",[[0.78,0.775,0.0048],[0,0,-0.265],[0,0,0]],"#d3dada",0],["b",[[0.016,0.752,0.0085],[-0.385,0,-0.265],[0,0,0]],"#93a5a8",0],["b",[[0.016,0.752,0.0085],[0.385,0,-0.265],[0,0,0]],"#93a5a8",0],["b",[[0.78,0.775,0.0048],[0,0,-0.2796],[0,0,0]],"#bac5c6",0],["b",[[0.016,0.752,0.0085],[-0.385,0,-0.2796],[0,0,0]],"#93a5a8",0],["b",[[0.016,0.752,0.0085],[0.385,0,-0.2796],[0,0,0]],"#93a5a8",0],["b",[[0.78,0.775,0.0048],[0,0,-0.2942],[0,0,0]],"#bac5c6",0],["b",[[0.016,0.752,0.0085],[-0.385,0,-0.2942],[0,0,0]],"#93a5a8",0],["b",[[0.016,0.752,0.0085],[0.385,0,-0.2942],[0,0,0]],"#93a5a8",0],["b",[[0.78,0.775,0.0048],[0,0,-0.3088],[0,0,0]],"#bac5c6",0],["b",[[0.016,0.752,0.0085],[-0.385,0,-0.3088],[0,0,0]],"#93a5a8",0],["b",[[0.016,0.752,0.0085],[0.385,0,-0.3088],[0,0,0]],"#93a5a8",0],["b",[[0.78,0.775,0.0048],[0,0,-0.3234],[0,0,0]],"#bac5c6",0],["b",[[0.016,0.752,0.0085],[-0.385,0,-0.3234],[0,0,0]],"#93a5a8",0],["b",[[0.016,0.752,0.0085],[0.385,0,-0.3234],[0,0,0]],"#93a5a8",0],["b",[[0.78,0.775,0.0048],[0,0,-0.338],[0,0,0]],"#bac5c6",0],["b",[[0.016,0.752,0.0085],[-0.385,0,-0.338],[0,0,0]],"#93a5a8",0],["b",[[0.016,0.752,0.0085],[0.385,0,-0.338],[0,0,0]],"#93a5a8",0],["b",[[0.78,0.775,0.0048],[0,0,-0.3526],[0,0,0]],"#bac5c6",0],["b",[[0.016,0.752,0.0085],[-0.385,0,-0.3526],[0,0,0]],"#93a5a8",0],["b",[[0.016,0.752,0.0085],[0.385,0,-0.3526],[0,0,0]],"#93a5a8",0],["b",[[0.78,0.775,0.0048],[0,0,-0.3672],[0,0,0]],"#d3dada",0],["b",[[0.016,0.752,0.0085],[-0.385,0,-0.3672],[0,0,0]],"#93a5a8",0],["b",[[0.016,0.752,0.0085],[0.385,0,-0.3672],[0,0,0]],"#93a5a8",0],["b",[[0.78,0.775,0.0048],[0,0,-0.3818],[0,0,0]],"#bac5c6",0],["b",[[0.016,0.752,0.0085],[-0.385,0,-0.3818],[0,0,0]],"#93a5a8",0],["b",[[0.016,0.752,0.0085],[0.385,0,-0.3818],[0,0,0]],"#93a5a8",0],["b",[[0.78,0.775,0.0048],[0,0,-0.3964],[0,0,0]],"#bac5c6",0],["b",[[0.016,0.752,0.0085],[-0.385,0,-0.3964],[0,0,0]],"#93a5a8",0],["b",[[0.016,0.752,0.0085],[0.385,0,-0.3964],[0,0,0]],"#93a5a8",0],["b",[[0.78,0.775,0.0048],[0,0,-0.411],[0,0,0]],"#bac5c6",0],["b",[[0.016,0.752,0.0085],[-0.385,0,-0.411],[0,0,0]],"#93a5a8",0],["b",[[0.016,0.752,0.0085],[0.385,0,-0.411],[0,0,0]],"#93a5a8",0],["b",[[0.78,0.775,0.0048],[0,0,-0.4256],[0,0,0]],"#bac5c6",0],["b",[[0.016,0.752,0.0085],[-0.385,0,-0.4256],[0,0,0]],"#93a5a8",0],["b",[[0.016,0.752,0.0085],[0.385,0,-0.4256],[0,0,0]],"#93a5a8",0],["b",[[0.78,0.775,0.0048],[0,0,-0.4402],[0,0,0]],"#bac5c6",0],["b",[[0.016,0.752,0.0085],[-0.385,0,-0.4402],[0,0,0]],"#93a5a8",0],["b",[[0.016,0.752,0.0085],[0.385,0,-0.4402],[0,0,0]],"#93a5a8",0],["b",[[0.78,0.775,0.0048],[0,0,-0.4548],[0,0,0]],"#bac5c6",0],["b",[[0.016,0.752,0.0085],[-0.385,0,-0.4548],[0,0,0]],"#93a5a8",0],["b",[[0.016,0.752,0.0085],[0.385,0,-0.4548],[0,0,0]],"#93a5a8",0],["b",[[0.78,0.775,0.0048],[0,0,-0.4694],[0,0,0]],"#d3dada",0],["b",[[0.016,0.752,0.0085],[-0.385,0,-0.4694],[0,0,0]],"#93a5a8",0],["b",[[0.016,0.752,0.0085],[0.385,0,-0.4694],[0,0,0]],"#93a5a8",0],["b",[[0.78,0.775,0.0048],[0,0,-0.484],[0,0,0]],"#bac5c6",0],["b",[[0.016,0.752,0.0085],[-0.385,0,-0.484],[0,0,0]],"#93a5a8",0],["b",[[0.016,0.752,0.0085],[0.385,0,-0.484],[0,0,0]],"#93a5a8",0],["b",[[0.78,0.775,0.0048],[0,0,-0.4986],[0,0,0]],"#bac5c6",0],["b",[[0.016,0.752,0.0085],[-0.385,0,-0.4986],[0,0,0]],"#93a5a8",0],["b",[[0.016,0.752,0.0085],[0.385,0,-0.4986],[0,0,0]],"#93a5a8",0],["b",[[0.78,0.775,0.0048],[0,0,-0.5132],[0,0,0]],"#bac5c6",0],["b",[[0.016,0.752,0.0085],[-0.385,0,-0.5132],[0,0,0]],"#93a5a8",0],["b",[[0.016,0.752,0.0085],[0.385,0,-0.5132],[0,0,0]],"#93a5a8",0],["b",[[0.78,0.775,0.0048],[0,0,-0.5278],[0,0,0]],"#bac5c6",0],["b",[[0.016,0.752,0.0085],[-0.385,0,-0.5278],[0,0,0]],"#93a5a8",0],["b",[[0.016,0.752,0.0085],[0.385,0,-0.5278],[0,0,0]],"#93a5a8",0],["b",[[0.78,0.775,0.0048],[0,0,-0.5424],[0,0,0]],"#bac5c6",0],["b",[[0.016,0.752,0.0085],[-0.385,0,-0.5424],[0,0,0]],"#93a5a8",0],["b",[[0.016,0.752,0.0085],[0.385,0,-0.5424],[0,0,0]],"#93a5a8",0],["b",[[0.78,0.775,0.0048],[0,0,-0.557],[0,0,0]],"#bac5c6",0],["b",[[0.016,0.752,0.0085],[-0.385,0,-0.557],[0,0,0]],"#93a5a8",0],["b",[[0.016,0.752,0.0085],[0.385,0,-0.557],[0,0,0]],"#93a5a8",0],["b",[[0.78,0.775,0.0048],[0,0,-0.5716],[0,0,0]],"#d3dada",0],["b",[[0.016,0.752,0.0085],[-0.385,0,-0.5716],[0,0,0]],"#93a5a8",0],["b",[[0.016,0.752,0.0085],[0.385,0,-0.5716],[0,0,0]],"#93a5a8",0],["b",[[0.78,0.775,0.0048],[0,0,-0.5862],[0,0,0]],"#bac5c6",0],["b",[[0.016,0.752,0.0085],[-0.385,0,-0.5862],[0,0,0]],"#93a5a8",0],["b",[[0.016,0.752,0.0085],[0.385,0,-0.5862],[0,0,0]],"#93a5a8",0],["b",[[0.78,0.775,0.0048],[0,0,-0.6008],[0,0,0]],"#bac5c6",0],["b",[[0.016,0.752,0.0085],[-0.385,0,-0.6008],[0,0,0]],"#93a5a8",0],["b",[[0.016,0.752,0.0085],[0.385,0,-0.6008],[0,0,0]],"#93a5a8",0],["b",[[0.78,0.775,0.0048],[0,0,-0.6154],[0,0,0]],"#bac5c6",0],["b",[[0.016,0.752,0.0085],[-0.385,0,-0.6154],[0,0,0]],"#93a5a8",0],["b",[[0.016,0.752,0.0085],[0.385,0,-0.6154],[0,0,0]],"#93a5a8",0],["b",[[0.78,0.775,0.0048],[0,0,-0.63],[0,0,0]],"#bac5c6",0],["b",[[0.016,0.752,0.0085],[-0.385,0,-0.63],[0,0,0]],"#93a5a8",0],["b",[[0.016,0.752,0.0085],[0.385,0,-0.63],[0,0,0]],"#93a5a8",0],["b",[[0.78,0.775,0.0048],[0,0,-0.6446],[0,0,0]],"#bac5c6",0],["b",[[0.016,0.752,0.0085],[-0.385,0,-0.6446],[0,0,0]],"#93a5a8",0],["b",[[0.016,0.752,0.0085],[0.385,0,-0.6446],[0,0,0]],"#93a5a8",0],["b",[[0.78,0.775,0.0048],[0,0,-0.6592],[0,0,0]],"#bac5c6",0],["b",[[0.016,0.752,0.0085],[-0.385,0,-0.6592],[0,0,0]],"#93a5a8",0],["b",[[0.016,0.752,0.0085],[0.385,0,-0.6592],[0,0,0]],"#93a5a8",0],["b",[[0.78,0.775,0.0048],[0,0,-0.6738],[0,0,0]],"#d3dada",0],["b",[[0.016,0.752,0.0085],[-0.385,0,-0.6738],[0,0,0]],"#93a5a8",0],["b",[[0.016,0.752,0.0085],[0.385,0,-0.6738],[0,0,0]],"#93a5a8",0],["b",[[0.794,0.798,0.013],[0,0,-0.248],[0,0,0]],"#303c46",0],["b",[[0.014,0.777,0.448],[-0.396,0,-0.461],[0,0,0]],"#303c46",0],["b",[[0.014,0.777,0.448],[0.396,0,-0.461],[0,0,0]],"#303c46",0],["b",[[0.055,0.856,0.084],[-0.43,0,-0.816],[0,0,0]],"#222d36",0],["b",[[0.84,0.06,0.084],[0,-0.428,-0.816],[0,0,0]],"#222d36",0],["b",[[0.09,0.09,0.035],[-0.414,-0.412,-0.866],[0,0,0]],"#111b24",0],["c",[0.02,0.013,14,[-0.415,-0.413,-0.89],[90,0,0]],"#303c46",0],["b",[[0.09,0.09,0.035],[-0.414,0.412,-0.866],[0,0,0]],"#111b24",0],["c",[0.02,0.013,14,[-0.415,0.413,-0.89],[90,0,0]],"#303c46",0],["b",[[0.055,0.856,0.084],[0.43,0,-0.816],[0,0,0]],"#222d36",0],["b",[[0.84,0.06,0.084],[0,0.428,-0.816],[0,0,0]],"#222d36",0],["b",[[0.09,0.09,0.035],[0.414,-0.412,-0.866],[0,0,0]],"#111b24",0],["c",[0.02,0.013,14,[0.415,-0.413,-0.89],[90,0,0]],"#303c46",0],["b",[[0.09,0.09,0.035],[0.414,0.412,-0.866],[0,0,0]],"#111b24",0],["c",[0.02,0.013,14,[0.415,0.413,-0.89],[90,0,0]],"#303c46",0],["b",[[0.096,0.029,0.039],[0.374,0,-0.86],[0,0,90]],"#657983",0],["b",[[0.096,0.029,0.039],[0.36832,0.06494,-0.86],[0,0,100]],"#657983",0],["b",[[0.096,0.029,0.039],[0.35145,0.12792,-0.86],[0,0,110]],"#657983",0],["b",[[0.096,0.029,0.039],[0.32389,0.187,-0.86],[0,0,120]],"#657983",0],["b",[[0.096,0.029,0.039],[0.2865,0.2404,-0.86],[0,0,130]],"#657983",0],["b",[[0.096,0.029,0.039],[0.2404,0.2865,-0.86],[0,0,140]],"#657983",0],["b",[[0.096,0.029,0.039],[0.187,0.32389,-0.86],[0,0,150]],"#657983",0],["b",[[0.096,0.029,0.039],[0.12792,0.35145,-0.86],[0,0,160]],"#657983",0],["b",[[0.096,0.029,0.039],[0.06494,0.36832,-0.86],[0,0,170]],"#657983",0],["b",[[0.096,0.029,0.039],[0,0.374,-0.86],[0,0,180]],"#657983",0],["b",[[0.096,0.029,0.039],[-0.06494,0.36832,-0.86],[0,0,190]],"#657983",0],["b",[[0.096,0.029,0.039],[-0.12792,0.35145,-0.86],[0,0,200]],"#657983",0],["b",[[0.096,0.029,0.039],[-0.187,0.32389,-0.86],[0,0,210]],"#657983",0],["b",[[0.096,0.029,0.039],[-0.2404,0.2865,-0.86],[0,0,220]],"#657983",0],["b",[[0.096,0.029,0.039],[-0.2865,0.2404,-0.86],[0,0,230]],"#657983",0],["b",[[0.096,0.029,0.039],[-0.32389,0.187,-0.86],[0,0,239.99999999999997]],"#657983",0],["b",[[0.096,0.029,0.039],[-0.35145,0.12792,-0.86],[0,0,250]],"#657983",0],["b",[[0.096,0.029,0.039],[-0.36832,0.06494,-0.86],[0,0,260]],"#657983",0],["b",[[0.096,0.029,0.039],[-0.374,0,-0.86],[0,0,270]],"#657983",0],["b",[[0.096,0.029,0.039],[-0.36832,-0.06494,-0.86],[0,0,280]],"#657983",0],["b",[[0.096,0.029,0.039],[-0.35145,-0.12792,-0.86],[0,0,290]],"#657983",0],["b",[[0.096,0.029,0.039],[-0.32389,-0.187,-0.86],[0,0,300]],"#657983",0],["b",[[0.096,0.029,0.039],[-0.2865,-0.2404,-0.86],[0,0,310]],"#657983",0],["b",[[0.096,0.029,0.039],[-0.2404,-0.2865,-0.86],[0,0,320]],"#657983",0],["b",[[0.096,0.029,0.039],[-0.187,-0.32389,-0.86],[0,0,330]],"#657983",0],["b",[[0.096,0.029,0.039],[-0.12792,-0.35145,-0.86],[0,0,340]],"#657983",0],["b",[[0.096,0.029,0.039],[-0.06494,-0.36832,-0.86],[0,0,350]],"#657983",0],["b",[[0.096,0.029,0.039],[0,-0.374,-0.86],[0,0,360]],"#657983",0],["b",[[0.096,0.029,0.039],[0.06494,-0.36832,-0.86],[0,0,370]],"#657983",0],["b",[[0.096,0.029,0.039],[0.12792,-0.35145,-0.86],[0,0,380.00000000000006]],"#657983",0],["b",[[0.096,0.029,0.039],[0.187,-0.32389,-0.86],[0,0,389.99999999999994]],"#657983",0],["b",[[0.096,0.029,0.039],[0.2404,-0.2865,-0.86],[0,0,400]],"#657983",0],["b",[[0.096,0.029,0.039],[0.2865,-0.2404,-0.86],[0,0,410]],"#657983",0],["b",[[0.096,0.029,0.039],[0.32389,-0.187,-0.86],[0,0,420.00000000000006]],"#657983",0],["b",[[0.096,0.029,0.039],[0.35145,-0.12792,-0.86],[0,0,430]],"#657983",0],["b",[[0.096,0.029,0.039],[0.36832,-0.06494,-0.86],[0,0,440.00000000000006]],"#657983",0],["b",[[0.234,0.078,0.039],[0.163,0,-0.852],[0,0,28]],"#56656c",1],["b",[[0.15,0.011,0.012],[0.174,0,-0.875],[0,0,28]],"#87969b",1],["b",[[0.234,0.078,0.039],[0.12487,0.10477,-0.852],[0,0,68]],"#56656c",1],["b",[[0.15,0.011,0.012],[0.13329,0.11185,-0.875],[0,0,68]],"#87969b",1],["b",[[0.234,0.078,0.039],[0.0283,0.16052,-0.852],[0,0,108]],"#56656c",1],["b",[[0.15,0.011,0.012],[0.03021,0.17136,-0.875],[0,0,108]],"#87969b",1],["b",[[0.234,0.078,0.039],[-0.0815,0.14116,-0.852],[0,0,148]],"#56656c",1],["b",[[0.15,0.011,0.012],[-0.087,0.15069,-0.875],[0,0,148]],"#87969b",1],["b",[[0.234,0.078,0.039],[-0.15317,0.05575,-0.852],[0,0,188]],"#56656c",1],["b",[[0.15,0.011,0.012],[-0.16351,0.05951,-0.875],[0,0,188]],"#87969b",1],["b",[[0.234,0.078,0.039],[-0.15317,-0.05575,-0.852],[0,0,228]],"#56656c",1],["b",[[0.15,0.011,0.012],[-0.16351,-0.05951,-0.875],[0,0,228]],"#87969b",1],["b",[[0.234,0.078,0.039],[-0.0815,-0.14116,-0.852],[0,0,268]],"#56656c",1],["b",[[0.15,0.011,0.012],[-0.087,-0.15069,-0.875],[0,0,268]],"#87969b",1],["b",[[0.234,0.078,0.039],[0.0283,-0.16052,-0.852],[0,0,308]],"#56656c",1],["b",[[0.15,0.011,0.012],[0.03021,-0.17136,-0.875],[0,0,308]],"#87969b",1],["b",[[0.234,0.078,0.039],[0.12487,-0.10477,-0.852],[0,0,348]],"#56656c",1],["b",[[0.15,0.011,0.012],[0.13329,-0.11185,-0.875],[0,0,348]],"#87969b",1],["c",[0.1,0.048,24,[0,0,-0.892],[90,0,0]],"#3d4b54",1],["c",[0.068,0.022,18,[0,0,-0.925],[90,0,0]],"#aebdc0",1],["c",[0.025,0.012,14,[0,0,-0.944],[90,0,0]],"#93a5a8",1],["b",[[0.306,0.024,0.033],[0.18,0,-0.782],[0,0,0]],"#303c46",0],["b",[[0.306,0.024,0.033],[0,0.18,-0.782],[0,0,90]],"#303c46",0],["b",[[0.306,0.024,0.033],[-0.18,0,-0.782],[0,0,180]],"#303c46",0],["b",[[0.306,0.024,0.033],[0,-0.18,-0.782],[0,0,270]],"#303c46",0],["b",[[0.017,0.72,0.02],[-0.417,0,-0.789],[0,0,0]],"#9dadb5",0],["b",[[0.07,0.017,0.02],[-0.415,-0.345,-0.814],[0,0,0]],"#657983",0],["b",[[0.07,0.017,0.02],[-0.415,0.345,-0.814],[0,0,0]],"#657983",0],["b",[[0.017,0.72,0.02],[0.417,0,-0.789],[0,0,0]],"#9dadb5",0],["b",[[0.07,0.017,0.02],[0.415,-0.345,-0.814],[0,0,0]],"#657983",0],["b",[[0.07,0.017,0.02],[0.415,0.345,-0.814],[0,0,0]],"#657983",0],["b",[[0.056,0.009,0.008],[0,-0.11,-0.936],[0,0,0]],"#738892",2]];
+const cv=document.getElementById('gl'),stage=document.getElementById('stage'),hud=document.getElementById('hud'),B=k=>document.getElementById(k);
+try{
+const gl=cv.getContext('webgl2',{depth:true,antialias:true,alpha:false})||cv.getContext('webgl',{depth:true,antialias:true,alpha:false});
+if(!gl){hud.textContent='WebGL unavailable; no CPU raster fallback';return;}
+const batches=[[],[],[]],add=(a,b)=>a.map((x,i)=>x+b[i]),sub=(a,b)=>a.map((x,i)=>x-b[i]),cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]],unit=a=>{let n=Math.hypot(...a)||1;return a.map(x=>x/n)};
+const face=[[0,2,1],[0,3,2],[4,5,6],[4,6,7],[0,1,5],[0,5,4],[1,2,6],[1,6,5],[2,3,7],[2,7,6],[3,0,4],[3,4,7]];
+function rot(v,d){let[x,y,z]=v,[ax,ay,az]=d.map(n=>n*Math.PI/180),c=Math.cos(ax),s=Math.sin(ax);[y,z]=[c*y-s*z,s*y+c*z];c=Math.cos(ay);s=Math.sin(ay);[x,z]=[c*x+s*z,-s*x+c*z];c=Math.cos(az);s=Math.sin(az);return[c*x-s*y,s*x+c*y,z];}
+function emit(tris,color,g){const rgb=[1,3,5].map(i=>parseInt(color.slice(i,i+2),16)/255);for(const t of tris){const norm=unit(cross(sub(t[1],t[0]),sub(t[2],t[0])));for(const p of t)batches[g].push(...p,...norm,...rgb);}}
+function cube(dim,at,rgbrot,color,g){const[x,y,z]=dim.map(v=>v/2),p=[[-x,-y,-z],[x,-y,-z],[x,y,-z],[-x,y,-z],[-x,-y,z],[x,-y,z],[x,y,z],[-x,y,z]].map(v=>add(rot(v,rgbrot),at));emit(face.map(f=>f.map(i=>p[i])),color,g);}
+function cylinder(rad,height,n,at,rotation,color,g){const t=[],p=(x,y,z)=>add(rot([x,y,z],rotation),at);for(let i=0;i<n;i++){const a=i*Math.PI*2/n,b=(i+1)*Math.PI*2/n,A=p(rad*Math.cos(a),-height/2,rad*Math.sin(a)),B=p(rad*Math.cos(b),-height/2,rad*Math.sin(b)),C=p(rad*Math.cos(b),height/2,rad*Math.sin(b)),D=p(rad*Math.cos(a),height/2,rad*Math.sin(a));t.push([A,C,B],[A,D,C],[p(0,height/2,0),C,D],[p(0,-height/2,0),A,B]);}emit(t,color,g);}
+for(const[k,g,color,id] of MODEL){if(k==='b')cube(...g,color,id);else cylinder(...g,color,id);}
+const vertexCount=batches.reduce((s,a)=>s+a.length,0),vertices=new Float32Array(vertexCount),ranges=[];let off=0;
+for(const a of batches){ranges.push([off/9,a.length/9]);vertices.set(a,off);off+=a.length;}
+const VERT=`precision highp float;attribute vec3 p,n,c;
+uniform vec3 eye,right,up,forward;uniform float focal,aspect,fanAngle,badgeScale;uniform int group;
+varying vec3 col,vLocal;varying float diffuse,vEmit;
+vec3 spin(vec3 v,float a){float c=cos(a),s=sin(a);return vec3(c*v.x-s*v.y,s*v.x+c*v.y,v.z);}
+void main(){vec3 v=p,N=n;if(group==1){vec3 o=vec3(0.,0.,-.797);v=o+spin(v-o,fanAngle);N=spin(N,fanAngle);}
+if(group==2){vec3 o=vec3(0.,-.110,-.936);v=o+(v-o)*badgeScale;}
+vec3 d=v-eye;float z=dot(d,forward);
+gl_Position=vec4(dot(d,right)*focal/aspect,dot(d,up)*focal,1.002002*z-.2002,z);
+col=c;vLocal=v;vEmit=group==2?badgeScale:0.;diffuse=.46+.58*max(0.,dot(normalize(N),normalize(vec3(-.6,.82,-.6))));}`;
+const FRAG=`precision mediump float;varying vec3 col,vLocal;varying float diffuse,vEmit;uniform float uLightOn;
+void main(){float d=length(vLocal-vec3(0.,-.11,-.944));
+float attenuation=pow(clamp(1.-d/.48,0.,1.),2.);
+vec3 rgb=col*diffuse+uLightOn*vec3(.24,.67,.65)*attenuation+vEmit*col*3.0;
+gl_FragColor=vec4(min(vec3(1.),rgb),1.);}`;
+const BLUR_V=`precision highp float;attribute vec2 corner;uniform vec3 center,eye,right,up,forward;uniform float focal,aspect;varying vec2 plane;
+void main(){plane=corner;vec3 p=center+vec3(corner*.36,0.);vec3 d=p-eye;float z=dot(d,forward);
+gl_Position=vec4(dot(d,right)*focal/aspect,dot(d,up)*focal,1.002002*z-.2002,z);}`;
+const BLUR_F=`precision mediump float;varying vec2 plane;uniform float strength,phase;
+void main(){float radius=length(plane);if(radius>=.965||radius<=.255)discard;
+float edge=smoothstep(.26,.35,radius)*(1.-smoothstep(.89,.965,radius));
+float a=atan(plane.y,plane.x);float sheen=.90+.10*sin(3.*a-phase+radius*11.);
+float radial=.90+.10*cos(radius*38.);
+vec3 metal=mix(vec3(.27,.35,.41),vec3(.67,.76,.79),radial*sheen);
+gl_FragColor=vec4(metal,edge*strength*.94);}`;
+function shader(t,x){const a=gl.createShader(t);gl.shaderSource(a,x);gl.compileShader(a);if(!gl.getShaderParameter(a,gl.COMPILE_STATUS))throw Error(gl.getShaderInfoLog(a));return a;}
+function link(v,f){const p=gl.createProgram();gl.attachShader(p,shader(gl.VERTEX_SHADER,v));gl.attachShader(p,shader(gl.FRAGMENT_SHADER,f));gl.linkProgram(p);if(!gl.getProgramParameter(p,gl.LINK_STATUS))throw Error(gl.getProgramInfoLog(p));return p;}
+const program=link(VERT,FRAG),blurProgram=link(BLUR_V,BLUR_F);
+const meshBuffer=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,meshBuffer);gl.bufferData(gl.ARRAY_BUFFER,vertices,gl.STATIC_DRAW);
+const blurBuffer=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,blurBuffer);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,-1,1,1,-1,1,1]),gl.STATIC_DRAW);
+const U={};for(const k of ['eye','right','up','forward','focal','aspect','fanAngle','badgeScale','group','uLightOn'])U[k]=gl.getUniformLocation(program,k);
+const V={};for(const k of ['center','eye','right','up','forward','focal','aspect','strength','phase'])V[k]=gl.getUniformLocation(blurProgram,k);
+let running=true,rpm=950,lighting=false,angle=0,elapsed=0,last=null,az=-.38,elev=.25,dist=2.35,drag=false,mouse=[0,0],alive=true;
+const clamp=(v,a,b)=>Math.min(b,Math.max(a,v));
+function sync(){B('run').textContent=running?'Stop fan':'Start fan';B('badge').textContent=lighting?'Accent off':'Accent on';B('readout').textContent=rpm+' RPM';B('rpm').value=rpm;}
+B('run').onclick=()=>{running=!running;sync();};
+B('badge').onclick=()=>{lighting=!lighting;sync();};
+B('rpm').oninput=e=>{rpm=Number(e.target.value);sync();};
+B('reset').onclick=()=>{running=true;rpm=950;lighting=false;angle=0;elapsed=0;last=null;sync();};
+B('side').onclick=()=>{az=-1.10;elev=.12;dist=2.55;};
+cv.onpointerdown=e=>{drag=true;mouse=[e.clientX,e.clientY];cv.setPointerCapture?.(e.pointerId);};cv.onpointerup=cv.onpointercancel=()=>drag=false;
+cv.onpointermove=e=>{if(!drag)return;az+=(e.clientX-mouse[0])*.009;elev=clamp(elev+(e.clientY-mouse[1])*.007,-.85,1.20);mouse=[e.clientX,e.clientY];};
+cv.addEventListener('wheel',e=>{e.preventDefault();dist=clamp(dist*Math.exp(e.deltaY*.001),1.5,4.4);},{passive:false});
+cv.addEventListener('webglcontextlost',e=>{e.preventDefault();alive=false;hud.textContent='GPU context lost';});
+
+const PC_GLOW_VS=`precision highp float;attribute vec2 corner;
+uniform vec3 center,eye,right,up,forward;uniform float focal,aspect,radius;
+varying vec2 uv;
+void main(){uv=corner;
+vec3 pos=center+radius*(right*corner.x+up*corner.y);
+vec3 d=pos-eye;float depth=dot(d,forward);
+gl_Position=vec4(dot(d,right)*focal/aspect,dot(d,up)*focal,1.002002*depth-.2002,depth);
+}`;
+const PC_GLOW_FS=`precision mediump float;varying vec2 uv;uniform vec3 tint;uniform float strength;
+void main(){float r=length(uv);float a=exp(-5.5*r*r)*(1.-smoothstep(.69,1.,r));
+gl_FragColor=vec4(tint,a*strength);}`;
+function pcLightShader(type,source){const obj=gl.createShader(type);gl.shaderSource(obj,source);
+gl.compileShader(obj);if(!gl.getShaderParameter(obj,gl.COMPILE_STATUS))throw Error('PC light shader: '+gl.getShaderInfoLog(obj));return obj;}
+const pcGlowProgram=gl.createProgram();
+gl.attachShader(pcGlowProgram,pcLightShader(gl.VERTEX_SHADER,PC_GLOW_VS));
+gl.attachShader(pcGlowProgram,pcLightShader(gl.FRAGMENT_SHADER,PC_GLOW_FS));
+gl.linkProgram(pcGlowProgram);if(!gl.getProgramParameter(pcGlowProgram,gl.LINK_STATUS))throw Error('PC glow link: '+gl.getProgramInfoLog(pcGlowProgram));
+const pcGlowBuffer=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,pcGlowBuffer);
+gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,-1,1,1,-1,1,1]),gl.STATIC_DRAW);
+const pcGlowAttr=gl.getAttribLocation(pcGlowProgram,'corner');
+if(pcGlowAttr<0)throw Error('Missing glow vertex attribute');
+const PG={};for(const k of ['center','eye','right','up','forward','focal','aspect','radius','tint','strength'])PG[k]=gl.getUniformLocation(pcGlowProgram,k);
+function drawPcGlow(points,eye,right,up,forward,focal,aspect){
+if(!points.length)return;
+gl.useProgram(pcGlowProgram);gl.bindBuffer(gl.ARRAY_BUFFER,pcGlowBuffer);
+gl.enableVertexAttribArray(pcGlowAttr);gl.vertexAttribPointer(pcGlowAttr,2,gl.FLOAT,false,8,0);
+gl.enable(gl.BLEND);gl.blendFunc(gl.SRC_ALPHA,gl.ONE);
+gl.disable(gl.DEPTH_TEST);gl.depthMask(false);
+for(const[k,v]of[['eye',eye],['right',right],['up',up],['forward',forward]])gl.uniform3fv(PG[k],v);
+gl.uniform1f(PG.focal,focal);gl.uniform1f(PG.aspect,aspect);
+for(const point of points){
+ const [pos,r,color,intensity]=point;
+ gl.uniform3fv(PG.center,pos);gl.uniform1f(PG.radius,r);
+ gl.uniform3fv(PG.tint,color);gl.uniform1f(PG.strength,intensity);
+ gl.drawArrays(gl.TRIANGLES,0,6);
+}
+gl.depthMask(true);gl.disable(gl.BLEND);gl.enable(gl.DEPTH_TEST);
+gl.disableVertexAttribArray(pcGlowAttr);
+
+
+gl.useProgram(program);gl.bindBuffer(gl.ARRAY_BUFFER,meshBuffer);
+for(const [name,index] of [['p',0],['n',3],['c',6]]){
+ const loc=gl.getAttribLocation(program,name);
+ gl.enableVertexAttribArray(loc);gl.vertexAttribPointer(loc,3,gl.FLOAT,false,36,index*4);
+}
+}
+
+function draw(now){if(!alive||!stage.isConnected)return;requestAnimationFrame(draw);
+if(last===null)last=now;const dt=clamp((now-last)/1000,0,.05);last=now;
+if(document.visibilityState==='hidden')return;
+if(running){angle=(angle+dt*rpm*Math.PI/30)%(Math.PI*2);elapsed+=dt;}
+const scale=Math.min(1.5,window.devicePixelRatio||1),w=Math.max(1,Math.floor(stage.clientWidth*scale)),h=Math.max(1,Math.floor(stage.clientHeight*scale));
+if(cv.width!==w||cv.height!==h){cv.width=w;cv.height=h;}
+gl.viewport(0,0,w,h);gl.enable(gl.DEPTH_TEST);gl.depthFunc(gl.LEQUAL);gl.clearColor(.062,.125,.17,1);gl.clearDepth(1);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
+const target=[0,0,-.48],eye=[dist*Math.sin(az)*Math.cos(elev),dist*Math.sin(elev),-.48-dist*Math.cos(az)*Math.cos(elev)];
+const forward=unit(sub(target,eye)),right=unit(cross([0,1,0],forward)),up=unit(cross(forward,right));
+gl.useProgram(program);gl.bindBuffer(gl.ARRAY_BUFFER,meshBuffer);
+for(const[key,index]of[['p',0],['n',3],['c',6]]){const loc=gl.getAttribLocation(program,key);gl.enableVertexAttribArray(loc);gl.vertexAttribPointer(loc,3,gl.FLOAT,false,36,index*4);}
+for(const[k,v]of[['eye',eye],['right',right],['up',up],['forward',forward]])gl.uniform3fv(U[k],v);
+for(const[k,v]of[['focal',1.68],['aspect',w/h],['fanAngle',angle],['badgeScale',lighting?1:.00001],['uLightOn',lighting?1:0]])gl.uniform1f(U[k],v);
+for(let g=0;g<3;g++){gl.uniform1i(U.group,g);gl.drawArrays(gl.TRIANGLES,ranges[g][0],ranges[g][1]);}
+const raw=clamp((rpm-160)/460,0,1),blur=running?raw*raw*(3-2*raw):0;
+if(blur>0){
+ gl.useProgram(blurProgram);gl.bindBuffer(gl.ARRAY_BUFFER,blurBuffer);
+ const loc=gl.getAttribLocation(blurProgram,'corner');gl.enableVertexAttribArray(loc);gl.vertexAttribPointer(loc,2,gl.FLOAT,false,8,0);
+ gl.enable(gl.BLEND);gl.blendFunc(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA);gl.depthMask(false);
+ for(const[k,v]of[['eye',eye],['right',right],['up',up],['forward',forward]])gl.uniform3fv(V[k],v);
+ gl.uniform3fv(V.center,[0,0,-.891]);
+ for(const[k,v]of[['focal',1.68],['aspect',w/h],['strength',blur],['phase',elapsed*(1.1+rpm/1800*1.4)]])gl.uniform1f(V[k],v);
+ gl.drawArrays(gl.TRIANGLES,0,6);gl.depthMask(true);gl.disable(gl.BLEND);gl.disableVertexAttribArray(loc);
+}
+if(lighting)drawPcGlow([[[0,-.110,-.947],.26,[.28,.96,.92],.82]],eye,right,up,forward,1.68,w/h);
+
+hud.textContent=(running?'Fan spinning':'Fan stopped')+' · '+rpm+' RPM · 29 actual fin plates';
+}
+requestAnimationFrame(draw);
+}catch(e){hud.textContent='GPU error: '+String(e?.message||e);}
+})();
+</script></body></html>

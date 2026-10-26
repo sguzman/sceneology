@@ -1,0 +1,205 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Scenarium — Consumer Dual-Fan Graphics Card</title>
+<style>:root{color-scheme:dark;font-family:system-ui,sans-serif}*{box-sizing:border-box}body{margin:0;background:#101e2b;color:#e9f6f7}main{min-height:100vh;display:grid;grid-template-rows:auto minmax(350px,1fr) auto}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;background:#22394a;padding:12px}
+strong{font-size:15px}small{color:#b7d6d7;font-size:11px}nav{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+button{font:12px system-ui;color:#e8fafb;background:#30536a;border:1px solid #6994a5;padding:8px 11px;border-radius:7px;cursor:pointer}button:hover{filter:brightness(1.2)}button.primary{background:#277c8a}
+label{font-size:12px;display:flex;gap:7px;align-items:center}input{accent-color:#68d6d9}output{min-width:45px;font:11px monospace}
+.screen{position:relative;overflow:hidden;background:#112c3d}canvas{width:100%;height:100%;display:block;touch-action:none;cursor:grab}.hud{position:absolute;bottom:11px;left:11px;background:#142e3be0;padding:8px 11px;border:1px solid #567e91;border-radius:7px;font-size:12px;pointer-events:none}footer{background:#22394a;padding:10px 12px;color:#bedcde;font-size:11px}
+</style></head><body><main>
+<header><div><strong>Dual-Fan Graphics Card · v1</strong><div><small>318 actual source meshes · two axial rotors · real PCIe gold contacts</small></div></div>
+<nav><button id="fan" class="primary">Stop fans</button><label>Fan speed <input id="speed" type="range" min="150" max="2200" step="50" value="950"><output id="readout">950 RPM</output></label>
+<button id="led">Lighting off</button><button id="reset">Reset</button><button id="view">Reset view</button></nav></header>
+<section class="screen" id="stage"><canvas id="gl"></canvas><div class="hud" id="hud">GPU cooling demonstrator · Drag to orbit · Scroll to zoom</div></section>
+<footer>Source-derived constructive geometry, hardware depth testing and GPU fan rotation; simulated rotation speed, not measured hardware telemetry</footer>
+</main><script>
+(()=>{
+const MODEL=[["b",[[3.02,0.155,1.07],[0,0.083,0],[0,0,0]],"#141d27",0],["b",[[2.98,0.02,1],[0,0.17,0],[0,0,0]],"#4c5b67",0],["b",[[0.125,0.41,0.145],[-0.88,0.393,0.145],[0,0,0]],"#8e9fa9",0],["b",[[0.125,0.41,0.145],[0.88,0.393,0.145],[0,0,0]],"#8e9fa9",0],["b",[[2.49,0.84,0.055],[0,1.045,0.058],[0,0,0]],"#23544a",0],["b",[[2.5,0.82,0.1],[0,1.075,-0.007],[0,0,0]],"#141d27",0],["b",[[2.52,0.035,0.3],[0,1.507,0.02],[0,0,0]],"#0a111a",0],["b",[[2.56,0.87,0.055],[0,1.07,0.196],[0,0,0]],"#8e9fa9",0],["b",[[0.18,0.12,0.015],[-1.09,1.42,0.234],[0,0,0]],"#141d27",0],["b",[[0.18,0.12,0.015],[1.09,1.42,0.234],[0,0,0]],"#141d27",0],["b",[[0.12,0.015,0.016],[-1.03,0.704,0.235],[0,0,0]],"#141d27",0],["b",[[0.12,0.015,0.016],[-0.69,0.704,0.235],[0,0,0]],"#141d27",0],["b",[[0.12,0.015,0.016],[-0.35,0.704,0.235],[0,0,0]],"#141d27",0],["b",[[0.12,0.015,0.016],[-0.01,0.704,0.235],[0,0,0]],"#141d27",0],["b",[[0.12,0.015,0.016],[0.33,0.704,0.235],[0,0,0]],"#141d27",0],["b",[[0.12,0.015,0.016],[0.67,0.704,0.235],[0,0,0]],"#141d27",0],["b",[[0.12,0.015,0.016],[1.01,0.704,0.235],[0,0,0]],"#141d27",0],["b",[[0.35,0.032,0.1],[-0.94,1.532,-0.054],[0,0,0]],"#29323c",0],["b",[[0.35,0.032,0.1],[-0.47,1.532,-0.054],[0,0,0]],"#29323c",0],["b",[[0.35,0.032,0.1],[0,1.532,-0.054],[0,0,0]],"#29323c",0],["b",[[0.35,0.032,0.1],[0.47,1.532,-0.054],[0,0,0]],"#29323c",0],["b",[[0.35,0.032,0.1],[0.94,1.532,-0.054],[0,0,0]],"#29323c",0],["b",[[0.027,0.75,0.2],[-1.13,1.07,-0.112],[0,0,0]],"#8e9fa9",0],["b",[[0.027,0.75,0.2],[-1.0635,1.07,-0.112],[0,0,0]],"#4c5b67",0],["b",[[0.027,0.75,0.2],[-0.997,1.07,-0.112],[0,0,0]],"#4c5b67",0],["b",[[0.027,0.75,0.2],[-0.9305,1.07,-0.112],[0,0,0]],"#4c5b67",0],["b",[[0.027,0.75,0.2],[-0.864,1.07,-0.112],[0,0,0]],"#4c5b67",0],["b",[[0.027,0.75,0.2],[-0.7975,1.07,-0.112],[0,0,0]],"#4c5b67",0],["b",[[0.027,0.75,0.2],[-0.731,1.07,-0.112],[0,0,0]],"#8e9fa9",0],["b",[[0.027,0.75,0.2],[-0.6645,1.07,-0.112],[0,0,0]],"#4c5b67",0],["b",[[0.027,0.75,0.2],[-0.598,1.07,-0.112],[0,0,0]],"#4c5b67",0],["b",[[0.027,0.75,0.2],[-0.5315,1.07,-0.112],[0,0,0]],"#4c5b67",0],["b",[[0.027,0.75,0.2],[-0.465,1.07,-0.112],[0,0,0]],"#4c5b67",0],["b",[[0.027,0.75,0.2],[-0.3985,1.07,-0.112],[0,0,0]],"#4c5b67",0],["b",[[0.027,0.75,0.2],[-0.332,1.07,-0.112],[0,0,0]],"#8e9fa9",0],["b",[[0.027,0.75,0.2],[-0.2655,1.07,-0.112],[0,0,0]],"#4c5b67",0],["b",[[0.027,0.75,0.2],[-0.199,1.07,-0.112],[0,0,0]],"#4c5b67",0],["b",[[0.027,0.75,0.2],[-0.1325,1.07,-0.112],[0,0,0]],"#4c5b67",0],["b",[[0.027,0.75,0.2],[-0.066,1.07,-0.112],[0,0,0]],"#4c5b67",0],["b",[[0.027,0.75,0.2],[0.0005,1.07,-0.112],[0,0,0]],"#4c5b67",0],["b",[[0.027,0.75,0.2],[0.067,1.07,-0.112],[0,0,0]],"#8e9fa9",0],["b",[[0.027,0.75,0.2],[0.1335,1.07,-0.112],[0,0,0]],"#4c5b67",0],["b",[[0.027,0.75,0.2],[0.2,1.07,-0.112],[0,0,0]],"#4c5b67",0],["b",[[0.027,0.75,0.2],[0.2665,1.07,-0.112],[0,0,0]],"#4c5b67",0],["b",[[0.027,0.75,0.2],[0.333,1.07,-0.112],[0,0,0]],"#4c5b67",0],["b",[[0.027,0.75,0.2],[0.3995,1.07,-0.112],[0,0,0]],"#4c5b67",0],["b",[[0.027,0.75,0.2],[0.466,1.07,-0.112],[0,0,0]],"#8e9fa9",0],["b",[[0.027,0.75,0.2],[0.5325,1.07,-0.112],[0,0,0]],"#4c5b67",0],["b",[[0.027,0.75,0.2],[0.599,1.07,-0.112],[0,0,0]],"#4c5b67",0],["b",[[0.027,0.75,0.2],[0.6655,1.07,-0.112],[0,0,0]],"#4c5b67",0],["b",[[0.027,0.75,0.2],[0.732,1.07,-0.112],[0,0,0]],"#4c5b67",0],["b",[[0.027,0.75,0.2],[0.7985,1.07,-0.112],[0,0,0]],"#4c5b67",0],["b",[[0.027,0.75,0.2],[0.865,1.07,-0.112],[0,0,0]],"#8e9fa9",0],["b",[[0.027,0.75,0.2],[0.9315,1.07,-0.112],[0,0,0]],"#4c5b67",0],["b",[[0.027,0.75,0.2],[0.998,1.07,-0.112],[0,0,0]],"#4c5b67",0],["b",[[0.027,0.75,0.2],[1.0645,1.07,-0.112],[0,0,0]],"#4c5b67",0],["b",[[0.027,0.75,0.2],[1.131,1.07,-0.112],[0,0,0]],"#4c5b67",0],["b",[[2.37,0.032,0.009],[0,0.59,-0.09],[0,0,0]],"#8e9fa9",0],["b",[[2.37,0.032,0.009],[0,0.59,-0.07],[0,0,0]],"#c3d0d4",0],["b",[[2.37,0.032,0.009],[0,0.59,-0.05],[0,0,0]],"#c3d0d4",0],["b",[[2.37,0.032,0.009],[0,0.59,-0.03],[0,0,0]],"#8e9fa9",0],["b",[[2.37,0.032,0.009],[0,0.59,-0.01],[0,0,0]],"#c3d0d4",0],["b",[[2.37,0.032,0.009],[0,0.59,0.01],[0,0,0]],"#c3d0d4",0],["b",[[2.37,0.032,0.009],[0,0.59,0.03],[0,0,0]],"#8e9fa9",0],["b",[[2.37,0.032,0.009],[0,0.59,0.05],[0,0,0]],"#c3d0d4",0],["b",[[2.37,0.032,0.009],[0,0.59,0.07],[0,0,0]],"#c3d0d4",0],["b",[[2.37,0.032,0.009],[0,0.59,0.09],[0,0,0]],"#8e9fa9",0],["b",[[2.37,0.032,0.009],[0,0.59,0.11],[0,0,0]],"#c3d0d4",0],["b",[[2.37,0.032,0.009],[0,0.59,0.13],[0,0,0]],"#c3d0d4",0],["b",[[2.71,0.155,0.105],[0,1.551,-0.16],[0,0,0]],"#29323c",0],["b",[[2.71,0.15,0.095],[0,0.566,-0.165],[0,0,0]],"#29323c",0],["b",[[0.12,0.925,0.13],[-1.31,1.06,-0.15],[0,0,0]],"#4c5b67",0],["b",[[0.027,0.68,0.024],[-1.371,1.075,-0.228],[0,0,0]],"#c3d0d4",0],["b",[[0.12,0.925,0.13],[1.31,1.06,-0.15],[0,0,0]],"#4c5b67",0],["b",[[0.027,0.68,0.024],[1.371,1.075,-0.228],[0,0,0]],"#c3d0d4",0],["b",[[0.12,0.93,0.105],[0,1.06,-0.16],[0,0,0]],"#29323c",0],["b",[[0.15,0.09,0.03],[0,1.504,-0.24],[0,0,0]],"#c3d0d4",0],["b",[[0.14,0.04,0.026],[0,0.604,-0.239],[0,0,0]],"#8e9fa9",0],["b",[[0.115,0.059,0.082],[-0.209,1.055,-0.249],[0,0,90]],"#c3d0d4",0],["b",[[0.115,0.012,0.025],[-0.209,1.055,-0.301],[0,0,90]],"#61d4d9",0],["b",[[0.115,0.059,0.082],[-0.2193,1.14646,-0.249],[0,0,102.85714]],"#4c5b67",0],["b",[[0.115,0.012,0.025],[-0.2193,1.14646,-0.301],[0,0,102.85714]],"#8e9fa9",0],["b",[[0.115,0.059,0.082],[-0.2497,1.23333,-0.249],[0,0,115.71429]],"#4c5b67",0],["b",[[0.115,0.012,0.025],[-0.2497,1.23333,-0.301],[0,0,115.71429]],"#8e9fa9",0],["b",[[0.115,0.059,0.082],[-0.29867,1.31125,-0.249],[0,0,128.57143]],"#4c5b67",0],["b",[[0.115,0.012,0.025],[-0.29867,1.31125,-0.301],[0,0,128.57143]],"#8e9fa9",0],["b",[[0.115,0.059,0.082],[-0.36375,1.37633,-0.249],[0,0,141.42857]],"#4c5b67",0],["b",[[0.115,0.012,0.025],[-0.36375,1.37633,-0.301],[0,0,141.42857]],"#8e9fa9",0],["b",[[0.115,0.059,0.082],[-0.44167,1.4253,-0.249],[0,0,154.28571]],"#4c5b67",0],["b",[[0.115,0.012,0.025],[-0.44167,1.4253,-0.301],[0,0,154.28571]],"#8e9fa9",0],["b",[[0.115,0.059,0.082],[-0.52854,1.4557,-0.249],[0,0,167.14286]],"#4c5b67",0],["b",[[0.115,0.012,0.025],[-0.52854,1.4557,-0.301],[0,0,167.14286]],"#8e9fa9",0],["b",[[0.115,0.059,0.082],[-0.62,1.466,-0.249],[0,0,180]],"#c3d0d4",0],["b",[[0.115,0.012,0.025],[-0.62,1.466,-0.301],[0,0,180]],"#61d4d9",0],["b",[[0.115,0.059,0.082],[-0.71146,1.4557,-0.249],[0,0,192.85714]],"#4c5b67",0],["b",[[0.115,0.012,0.025],[-0.71146,1.4557,-0.301],[0,0,192.85714]],"#8e9fa9",0],["b",[[0.115,0.059,0.082],[-0.79833,1.4253,-0.249],[0,0,205.71429]],"#4c5b67",0],["b",[[0.115,0.012,0.025],[-0.79833,1.4253,-0.301],[0,0,205.71429]],"#8e9fa9",0],["b",[[0.115,0.059,0.082],[-0.87625,1.37633,-0.249],[0,0,218.57143]],"#4c5b67",0],["b",[[0.115,0.012,0.025],[-0.87625,1.37633,-0.301],[0,0,218.57143]],"#8e9fa9",0],["b",[[0.115,0.059,0.082],[-0.94133,1.31125,-0.249],[0,0,231.42857]],"#4c5b67",0],["b",[[0.115,0.012,0.025],[-0.94133,1.31125,-0.301],[0,0,231.42857]],"#8e9fa9",0],["b",[[0.115,0.059,0.082],[-0.9903,1.23333,-0.249],[0,0,244.28571]],"#4c5b67",0],["b",[[0.115,0.012,0.025],[-0.9903,1.23333,-0.301],[0,0,244.28571]],"#8e9fa9",0],["b",[[0.115,0.059,0.082],[-1.0207,1.14646,-0.249],[0,0,257.14286]],"#4c5b67",0],["b",[[0.115,0.012,0.025],[-1.0207,1.14646,-0.301],[0,0,257.14286]],"#8e9fa9",0],["b",[[0.115,0.059,0.082],[-1.031,1.055,-0.249],[0,0,270]],"#c3d0d4",0],["b",[[0.115,0.012,0.025],[-1.031,1.055,-0.301],[0,0,270]],"#61d4d9",0],["b",[[0.115,0.059,0.082],[-1.0207,0.96354,-0.249],[0,0,282.85714]],"#4c5b67",0],["b",[[0.115,0.012,0.025],[-1.0207,0.96354,-0.301],[0,0,282.85714]],"#8e9fa9",0],["b",[[0.115,0.059,0.082],[-0.9903,0.87667,-0.249],[0,0,295.71429]],"#4c5b67",0],["b",[[0.115,0.012,0.025],[-0.9903,0.87667,-0.301],[0,0,295.71429]],"#8e9fa9",0],["b",[[0.115,0.059,0.082],[-0.94133,0.79875,-0.249],[0,0,308.57143]],"#4c5b67",0],["b",[[0.115,0.012,0.025],[-0.94133,0.79875,-0.301],[0,0,308.57143]],"#8e9fa9",0],["b",[[0.115,0.059,0.082],[-0.87625,0.73367,-0.249],[0,0,321.42857]],"#4c5b67",0],["b",[[0.115,0.012,0.025],[-0.87625,0.73367,-0.301],[0,0,321.42857]],"#8e9fa9",0],["b",[[0.115,0.059,0.082],[-0.79833,0.6847,-0.249],[0,0,334.28571]],"#4c5b67",0],["b",[[0.115,0.012,0.025],[-0.79833,0.6847,-0.301],[0,0,334.28571]],"#8e9fa9",0],["b",[[0.115,0.059,0.082],[-0.71146,0.6543,-0.249],[0,0,347.14286]],"#4c5b67",0],["b",[[0.115,0.012,0.025],[-0.71146,0.6543,-0.301],[0,0,347.14286]],"#8e9fa9",0],["b",[[0.115,0.059,0.082],[-0.62,0.644,-0.249],[0,0,360]],"#c3d0d4",0],["b",[[0.115,0.012,0.025],[-0.62,0.644,-0.301],[0,0,360]],"#61d4d9",0],["b",[[0.115,0.059,0.082],[-0.52854,0.6543,-0.249],[0,0,372.85714]],"#4c5b67",0],["b",[[0.115,0.012,0.025],[-0.52854,0.6543,-0.301],[0,0,372.85714]],"#8e9fa9",0],["b",[[0.115,0.059,0.082],[-0.44167,0.6847,-0.249],[0,0,385.71429]],"#4c5b67",0],["b",[[0.115,0.012,0.025],[-0.44167,0.6847,-0.301],[0,0,385.71429]],"#8e9fa9",0],["b",[[0.115,0.059,0.082],[-0.36375,0.73367,-0.249],[0,0,398.57143]],"#4c5b67",0],["b",[[0.115,0.012,0.025],[-0.36375,0.73367,-0.301],[0,0,398.57143]],"#8e9fa9",0],["b",[[0.115,0.059,0.082],[-0.29867,0.79875,-0.249],[0,0,411.42857]],"#4c5b67",0],["b",[[0.115,0.012,0.025],[-0.29867,0.79875,-0.301],[0,0,411.42857]],"#8e9fa9",0],["b",[[0.115,0.059,0.082],[-0.2497,0.87667,-0.249],[0,0,424.28571]],"#4c5b67",0],["b",[[0.115,0.012,0.025],[-0.2497,0.87667,-0.301],[0,0,424.28571]],"#8e9fa9",0],["b",[[0.115,0.059,0.082],[-0.2193,0.96354,-0.249],[0,0,437.14286]],"#4c5b67",0],["b",[[0.115,0.012,0.025],[-0.2193,0.96354,-0.301],[0,0,437.14286]],"#8e9fa9",0],["c",[0.345,0.025,28,[-0.62,1.055,-0.177],[90,0,0]],"#0a111a",0],["b",[[0.305,0.035,0.023],[-0.465,1.055,-0.219],[0,0,0]],"#708a96",0],["b",[[0.305,0.035,0.023],[-0.52336,1.17618,-0.219],[0,0,51.42857]],"#708a96",0],["b",[[0.305,0.035,0.023],[-0.65449,1.20611,-0.219],[0,0,102.85714]],"#708a96",0],["b",[[0.305,0.035,0.023],[-0.75965,1.12225,-0.219],[0,0,154.28571]],"#708a96",0],["b",[[0.305,0.035,0.023],[-0.75965,0.98775,-0.219],[0,0,205.71429]],"#708a96",0],["b",[[0.305,0.035,0.023],[-0.65449,0.90389,-0.219],[0,0,257.14286]],"#708a96",0],["b",[[0.305,0.035,0.023],[-0.52336,0.93382,-0.219],[0,0,308.57143]],"#708a96",0],["b",[[0.262,0.093,0.035],[-0.449,1.055,-0.319],[0,0,25]],"#e0e8e7",1],["b",[[0.175,0.012,0.01],[-0.435,1.055,-0.341],[0,0,25]],"#8e9fa9",1],["b",[[0.262,0.093,0.035],[-0.48901,1.16492,-0.319],[0,0,65]],"#e0e8e7",1],["b",[[0.175,0.012,0.01],[-0.47828,1.17392,-0.341],[0,0,65]],"#8e9fa9",1],["b",[[0.262,0.093,0.035],[-0.59031,1.2234,-0.319],[0,0,105]],"#e0e8e7",1],["b",[[0.175,0.012,0.01],[-0.58788,1.23719,-0.341],[0,0,105]],"#8e9fa9",1],["b",[[0.262,0.093,0.035],[-0.7055,1.20309,-0.319],[0,0,145]],"#e0e8e7",1],["b",[[0.175,0.012,0.01],[-0.7125,1.21521,-0.341],[0,0,145]],"#8e9fa9",1],["b",[[0.262,0.093,0.035],[-0.78069,1.11349,-0.319],[0,0,185]],"#e0e8e7",1],["b",[[0.175,0.012,0.01],[-0.79384,1.11827,-0.341],[0,0,185]],"#8e9fa9",1],["b",[[0.262,0.093,0.035],[-0.78069,0.99651,-0.319],[0,0,225]],"#e0e8e7",1],["b",[[0.175,0.012,0.01],[-0.79384,0.99173,-0.341],[0,0,225]],"#8e9fa9",1],["b",[[0.262,0.093,0.035],[-0.7055,0.90691,-0.319],[0,0,265]],"#e0e8e7",1],["b",[[0.175,0.012,0.01],[-0.7125,0.89479,-0.341],[0,0,265]],"#8e9fa9",1],["b",[[0.262,0.093,0.035],[-0.59031,0.8866,-0.319],[0,0,305]],"#e0e8e7",1],["b",[[0.175,0.012,0.01],[-0.58788,0.87281,-0.341],[0,0,305]],"#8e9fa9",1],["b",[[0.262,0.093,0.035],[-0.48901,0.94508,-0.319],[0,0,345]],"#e0e8e7",1],["b",[[0.175,0.012,0.01],[-0.47828,0.93608,-0.341],[0,0,345]],"#8e9fa9",1],["c",[0.096,0.066,24,[-0.62,1.055,-0.378],[90,0,0]],"#29323c",1],["c",[0.066,0.011,24,[-0.62,1.055,-0.419],[90,0,0]],"#c3d0d4",1],["c",[0.025,0.015,16,[-0.62,1.055,-0.43],[90,0,0]],"#61d4d9",1],["b",[[0.115,0.059,0.082],[1.031,1.055,-0.249],[0,0,90]],"#c3d0d4",0],["b",[[0.115,0.012,0.025],[1.031,1.055,-0.301],[0,0,90]],"#61d4d9",0],["b",[[0.115,0.059,0.082],[1.0207,1.14646,-0.249],[0,0,102.85714]],"#4c5b67",0],["b",[[0.115,0.012,0.025],[1.0207,1.14646,-0.301],[0,0,102.85714]],"#8e9fa9",0],["b",[[0.115,0.059,0.082],[0.9903,1.23333,-0.249],[0,0,115.71429]],"#4c5b67",0],["b",[[0.115,0.012,0.025],[0.9903,1.23333,-0.301],[0,0,115.71429]],"#8e9fa9",0],["b",[[0.115,0.059,0.082],[0.94133,1.31125,-0.249],[0,0,128.57143]],"#4c5b67",0],["b",[[0.115,0.012,0.025],[0.94133,1.31125,-0.301],[0,0,128.57143]],"#8e9fa9",0],["b",[[0.115,0.059,0.082],[0.87625,1.37633,-0.249],[0,0,141.42857]],"#4c5b67",0],["b",[[0.115,0.012,0.025],[0.87625,1.37633,-0.301],[0,0,141.42857]],"#8e9fa9",0],["b",[[0.115,0.059,0.082],[0.79833,1.4253,-0.249],[0,0,154.28571]],"#4c5b67",0],["b",[[0.115,0.012,0.025],[0.79833,1.4253,-0.301],[0,0,154.28571]],"#8e9fa9",0],["b",[[0.115,0.059,0.082],[0.71146,1.4557,-0.249],[0,0,167.14286]],"#4c5b67",0],["b",[[0.115,0.012,0.025],[0.71146,1.4557,-0.301],[0,0,167.14286]],"#8e9fa9",0],["b",[[0.115,0.059,0.082],[0.62,1.466,-0.249],[0,0,180]],"#c3d0d4",0],["b",[[0.115,0.012,0.025],[0.62,1.466,-0.301],[0,0,180]],"#61d4d9",0],["b",[[0.115,0.059,0.082],[0.52854,1.4557,-0.249],[0,0,192.85714]],"#4c5b67",0],["b",[[0.115,0.012,0.025],[0.52854,1.4557,-0.301],[0,0,192.85714]],"#8e9fa9",0],["b",[[0.115,0.059,0.082],[0.44167,1.4253,-0.249],[0,0,205.71429]],"#4c5b67",0],["b",[[0.115,0.012,0.025],[0.44167,1.4253,-0.301],[0,0,205.71429]],"#8e9fa9",0],["b",[[0.115,0.059,0.082],[0.36375,1.37633,-0.249],[0,0,218.57143]],"#4c5b67",0],["b",[[0.115,0.012,0.025],[0.36375,1.37633,-0.301],[0,0,218.57143]],"#8e9fa9",0],["b",[[0.115,0.059,0.082],[0.29867,1.31125,-0.249],[0,0,231.42857]],"#4c5b67",0],["b",[[0.115,0.012,0.025],[0.29867,1.31125,-0.301],[0,0,231.42857]],"#8e9fa9",0],["b",[[0.115,0.059,0.082],[0.2497,1.23333,-0.249],[0,0,244.28571]],"#4c5b67",0],["b",[[0.115,0.012,0.025],[0.2497,1.23333,-0.301],[0,0,244.28571]],"#8e9fa9",0],["b",[[0.115,0.059,0.082],[0.2193,1.14646,-0.249],[0,0,257.14286]],"#4c5b67",0],["b",[[0.115,0.012,0.025],[0.2193,1.14646,-0.301],[0,0,257.14286]],"#8e9fa9",0],["b",[[0.115,0.059,0.082],[0.209,1.055,-0.249],[0,0,270]],"#c3d0d4",0],["b",[[0.115,0.012,0.025],[0.209,1.055,-0.301],[0,0,270]],"#61d4d9",0],["b",[[0.115,0.059,0.082],[0.2193,0.96354,-0.249],[0,0,282.85714]],"#4c5b67",0],["b",[[0.115,0.012,0.025],[0.2193,0.96354,-0.301],[0,0,282.85714]],"#8e9fa9",0],["b",[[0.115,0.059,0.082],[0.2497,0.87667,-0.249],[0,0,295.71429]],"#4c5b67",0],["b",[[0.115,0.012,0.025],[0.2497,0.87667,-0.301],[0,0,295.71429]],"#8e9fa9",0],["b",[[0.115,0.059,0.082],[0.29867,0.79875,-0.249],[0,0,308.57143]],"#4c5b67",0],["b",[[0.115,0.012,0.025],[0.29867,0.79875,-0.301],[0,0,308.57143]],"#8e9fa9",0],["b",[[0.115,0.059,0.082],[0.36375,0.73367,-0.249],[0,0,321.42857]],"#4c5b67",0],["b",[[0.115,0.012,0.025],[0.36375,0.73367,-0.301],[0,0,321.42857]],"#8e9fa9",0],["b",[[0.115,0.059,0.082],[0.44167,0.6847,-0.249],[0,0,334.28571]],"#4c5b67",0],["b",[[0.115,0.012,0.025],[0.44167,0.6847,-0.301],[0,0,334.28571]],"#8e9fa9",0],["b",[[0.115,0.059,0.082],[0.52854,0.6543,-0.249],[0,0,347.14286]],"#4c5b67",0],["b",[[0.115,0.012,0.025],[0.52854,0.6543,-0.301],[0,0,347.14286]],"#8e9fa9",0],["b",[[0.115,0.059,0.082],[0.62,0.644,-0.249],[0,0,360]],"#c3d0d4",0],["b",[[0.115,0.012,0.025],[0.62,0.644,-0.301],[0,0,360]],"#61d4d9",0],["b",[[0.115,0.059,0.082],[0.71146,0.6543,-0.249],[0,0,372.85714]],"#4c5b67",0],["b",[[0.115,0.012,0.025],[0.71146,0.6543,-0.301],[0,0,372.85714]],"#8e9fa9",0],["b",[[0.115,0.059,0.082],[0.79833,0.6847,-0.249],[0,0,385.71429]],"#4c5b67",0],["b",[[0.115,0.012,0.025],[0.79833,0.6847,-0.301],[0,0,385.71429]],"#8e9fa9",0],["b",[[0.115,0.059,0.082],[0.87625,0.73367,-0.249],[0,0,398.57143]],"#4c5b67",0],["b",[[0.115,0.012,0.025],[0.87625,0.73367,-0.301],[0,0,398.57143]],"#8e9fa9",0],["b",[[0.115,0.059,0.082],[0.94133,0.79875,-0.249],[0,0,411.42857]],"#4c5b67",0],["b",[[0.115,0.012,0.025],[0.94133,0.79875,-0.301],[0,0,411.42857]],"#8e9fa9",0],["b",[[0.115,0.059,0.082],[0.9903,0.87667,-0.249],[0,0,424.28571]],"#4c5b67",0],["b",[[0.115,0.012,0.025],[0.9903,0.87667,-0.301],[0,0,424.28571]],"#8e9fa9",0],["b",[[0.115,0.059,0.082],[1.0207,0.96354,-0.249],[0,0,437.14286]],"#4c5b67",0],["b",[[0.115,0.012,0.025],[1.0207,0.96354,-0.301],[0,0,437.14286]],"#8e9fa9",0],["c",[0.345,0.025,28,[0.62,1.055,-0.177],[90,0,0]],"#0a111a",0],["b",[[0.305,0.035,0.023],[0.775,1.055,-0.219],[0,0,0]],"#708a96",0],["b",[[0.305,0.035,0.023],[0.71664,1.17618,-0.219],[0,0,51.42857]],"#708a96",0],["b",[[0.305,0.035,0.023],[0.58551,1.20611,-0.219],[0,0,102.85714]],"#708a96",0],["b",[[0.305,0.035,0.023],[0.48035,1.12225,-0.219],[0,0,154.28571]],"#708a96",0],["b",[[0.305,0.035,0.023],[0.48035,0.98775,-0.219],[0,0,205.71429]],"#708a96",0],["b",[[0.305,0.035,0.023],[0.58551,0.90389,-0.219],[0,0,257.14286]],"#708a96",0],["b",[[0.305,0.035,0.023],[0.71664,0.93382,-0.219],[0,0,308.57143]],"#708a96",0],["b",[[0.262,0.093,0.035],[0.791,1.055,-0.319],[0,0,25]],"#e0e8e7",2],["b",[[0.175,0.012,0.01],[0.805,1.055,-0.341],[0,0,25]],"#8e9fa9",2],["b",[[0.262,0.093,0.035],[0.75099,1.16492,-0.319],[0,0,65]],"#e0e8e7",2],["b",[[0.175,0.012,0.01],[0.76172,1.17392,-0.341],[0,0,65]],"#8e9fa9",2],["b",[[0.262,0.093,0.035],[0.64969,1.2234,-0.319],[0,0,105]],"#e0e8e7",2],["b",[[0.175,0.012,0.01],[0.65212,1.23719,-0.341],[0,0,105]],"#8e9fa9",2],["b",[[0.262,0.093,0.035],[0.5345,1.20309,-0.319],[0,0,145]],"#e0e8e7",2],["b",[[0.175,0.012,0.01],[0.5275,1.21521,-0.341],[0,0,145]],"#8e9fa9",2],["b",[[0.262,0.093,0.035],[0.45931,1.11349,-0.319],[0,0,185]],"#e0e8e7",2],["b",[[0.175,0.012,0.01],[0.44616,1.11827,-0.341],[0,0,185]],"#8e9fa9",2],["b",[[0.262,0.093,0.035],[0.45931,0.99651,-0.319],[0,0,225]],"#e0e8e7",2],["b",[[0.175,0.012,0.01],[0.44616,0.99173,-0.341],[0,0,225]],"#8e9fa9",2],["b",[[0.262,0.093,0.035],[0.5345,0.90691,-0.319],[0,0,265]],"#e0e8e7",2],["b",[[0.175,0.012,0.01],[0.5275,0.89479,-0.341],[0,0,265]],"#8e9fa9",2],["b",[[0.262,0.093,0.035],[0.64969,0.8866,-0.319],[0,0,305]],"#e0e8e7",2],["b",[[0.175,0.012,0.01],[0.65212,0.87281,-0.341],[0,0,305]],"#8e9fa9",2],["b",[[0.262,0.093,0.035],[0.75099,0.94508,-0.319],[0,0,345]],"#e0e8e7",2],["b",[[0.175,0.012,0.01],[0.76172,0.93608,-0.341],[0,0,345]],"#8e9fa9",2],["c",[0.096,0.066,24,[0.62,1.055,-0.378],[90,0,0]],"#29323c",2],["c",[0.066,0.011,24,[0.62,1.055,-0.419],[90,0,0]],"#c3d0d4",2],["c",[0.025,0.015,16,[0.62,1.055,-0.43],[90,0,0]],"#61d4d9",2],["b",[[1.44,0.22,0.035],[0,0.467,0.035],[0,0,0]],"#23544a",0],["b",[[0.034,0.16,0.012],[-0.67,0.461,0.008],[0,0,0]],"#dcae59",0],["b",[[0.034,0.16,0.012],[-0.612,0.461,0.008],[0,0,0]],"#dcae59",0],["b",[[0.034,0.16,0.012],[-0.554,0.461,0.008],[0,0,0]],"#dcae59",0],["b",[[0.034,0.16,0.012],[-0.496,0.461,0.008],[0,0,0]],"#dcae59",0],["b",[[0.034,0.16,0.012],[-0.438,0.461,0.008],[0,0,0]],"#dcae59",0],["b",[[0.034,0.16,0.012],[-0.38,0.461,0.008],[0,0,0]],"#dcae59",0],["b",[[0.034,0.16,0.012],[-0.322,0.461,0.008],[0,0,0]],"#dcae59",0],["b",[[0.034,0.16,0.012],[-0.264,0.461,0.008],[0,0,0]],"#dcae59",0],["b",[[0.034,0.16,0.012],[-0.206,0.461,0.008],[0,0,0]],"#dcae59",0],["b",[[0.034,0.16,0.012],[-0.148,0.461,0.008],[0,0,0]],"#dcae59",0],["b",[[0.034,0.16,0.012],[-0.09,0.461,0.008],[0,0,0]],"#dcae59",0],["b",[[0.034,0.16,0.012],[-0.032,0.461,0.008],[0,0,0]],"#dcae59",0],["b",[[0.034,0.16,0.012],[0.026,0.461,0.008],[0,0,0]],"#dcae59",0],["b",[[0.034,0.16,0.012],[0.084,0.461,0.008],[0,0,0]],"#dcae59",0],["b",[[0.034,0.16,0.012],[0.142,0.461,0.008],[0,0,0]],"#dcae59",0],["b",[[0.034,0.16,0.012],[0.2,0.461,0.008],[0,0,0]],"#dcae59",0],["b",[[0.034,0.16,0.012],[0.258,0.461,0.008],[0,0,0]],"#dcae59",0],["b",[[0.034,0.16,0.012],[0.316,0.461,0.008],[0,0,0]],"#dcae59",0],["b",[[0.034,0.16,0.012],[0.374,0.461,0.008],[0,0,0]],"#dcae59",0],["b",[[0.034,0.16,0.012],[0.432,0.461,0.008],[0,0,0]],"#dcae59",0],["b",[[0.034,0.16,0.012],[0.49,0.461,0.008],[0,0,0]],"#dcae59",0],["b",[[0.034,0.16,0.012],[0.548,0.461,0.008],[0,0,0]],"#dcae59",0],["b",[[0.034,0.16,0.012],[0.606,0.461,0.008],[0,0,0]],"#dcae59",0],["b",[[0.034,0.16,0.012],[0.664,0.461,0.008],[0,0,0]],"#dcae59",0],["b",[[0.055,0.085,0.03],[0.29,0.424,0.012],[0,0,0]],"#0a111a",0],["b",[[0.08,1.16,0.335],[-1.41,1.03,0.05],[0,0,0]],"#c3d0d4",0],["b",[[0.11,0.075,0.4],[-1.42,1.64,0.05],[0,0,0]],"#8e9fa9",0],["c",[0.038,0.018,12,[-1.419,1.66,-0.166],[90,0,0]],"#29323c",0],["b",[[0.025,0.135,0.135],[-1.461,1.275,-0.055],[0,0,0]],"#4c5b67",0],["b",[[0.026,0.088,0.101],[-1.48,1.275,-0.055],[0,0,0]],"#0a111a",0],["b",[[0.025,0.135,0.135],[-1.461,1.051,-0.055],[0,0,0]],"#4c5b67",0],["b",[[0.026,0.088,0.101],[-1.48,1.051,-0.055],[0,0,0]],"#0a111a",0],["b",[[0.025,0.135,0.135],[-1.461,0.827,-0.055],[0,0,0]],"#4c5b67",0],["b",[[0.026,0.088,0.101],[-1.48,0.827,-0.055],[0,0,0]],"#0a111a",0],["b",[[0.031,0.134,0.133],[-1.466,0.606,-0.055],[0,0,0]],"#8e9fa9",0],["b",[[0.032,0.088,0.087],[-1.485,0.606,-0.055],[0,0,0]],"#0a111a",0],["b",[[0.012,0.024,0.1],[-1.467,1.405,0.163],[0,0,0]],"#141d27",0],["b",[[0.012,0.024,0.1],[-1.467,1.284,0.163],[0,0,0]],"#141d27",0],["b",[[0.012,0.024,0.1],[-1.467,1.163,0.163],[0,0,0]],"#141d27",0],["b",[[0.012,0.024,0.1],[-1.467,1.042,0.163],[0,0,0]],"#141d27",0],["b",[[0.012,0.024,0.1],[-1.467,0.921,0.163],[0,0,0]],"#141d27",0],["b",[[0.012,0.024,0.1],[-1.467,0.8,0.163],[0,0,0]],"#141d27",0],["b",[[0.012,0.024,0.1],[-1.467,0.679,0.163],[0,0,0]],"#141d27",0],["b",[[0.012,0.024,0.1],[-1.467,0.558,0.163],[0,0,0]],"#141d27",0],["b",[[0.35,0.145,0.205],[0.874,1.621,0.124],[0,0,0]],"#0a111a",0],["b",[[0.053,0.028,0.022],[0.749,1.704,0.007],[0,0,0]],"#4c5b67",0],["b",[[0.053,0.028,0.022],[0.829,1.704,0.007],[0,0,0]],"#4c5b67",0],["b",[[0.053,0.028,0.022],[0.909,1.704,0.007],[0,0,0]],"#4c5b67",0],["b",[[0.053,0.028,0.022],[0.989,1.704,0.007],[0,0,0]],"#4c5b67",0],["b",[[0.053,0.028,0.022],[0.749,1.65,0.007],[0,0,0]],"#4c5b67",0],["b",[[0.053,0.028,0.022],[0.829,1.65,0.007],[0,0,0]],"#4c5b67",0],["b",[[0.053,0.028,0.022],[0.909,1.65,0.007],[0,0,0]],"#4c5b67",0],["b",[[0.053,0.028,0.022],[0.989,1.65,0.007],[0,0,0]],"#4c5b67",0],["b",[[1.89,0.033,0.037],[0,1.504,0.005],[0,0,0]],"#bd7754",0],["b",[[0.048,0.34,0.035],[-0.97,1.333,0.005],[0,0,0]],"#bd7754",0],["b",[[0.048,0.34,0.035],[0.97,1.333,0.005],[0,0,0]],"#bd7754",0],["b",[[1.89,0.033,0.037],[0,1.504,0.063],[0,0,0]],"#bd7754",0],["b",[[0.048,0.34,0.035],[-0.97,1.333,0.063],[0,0,0]],"#bd7754",0],["b",[[0.048,0.34,0.035],[0.97,1.333,0.063],[0,0,0]],"#bd7754",0],["b",[[1.89,0.033,0.037],[0,1.504,0.121],[0,0,0]],"#bd7754",0],["b",[[0.048,0.34,0.035],[-0.97,1.333,0.121],[0,0,0]],"#bd7754",0],["b",[[0.048,0.34,0.035],[0.97,1.333,0.121],[0,0,0]],"#bd7754",0],["b",[[2.32,0.02,0.013],[0,1.585,-0.235],[0,0,0]],"#61d4d9",3],["b",[[0.08,0.025,0.014],[-0.87,1.586,-0.246],[0,0,0]],"#61d4d9",3],["b",[[0.08,0.025,0.014],[-0.522,1.586,-0.246],[0,0,0]],"#a18de0",3],["b",[[0.08,0.025,0.014],[-0.174,1.586,-0.246],[0,0,0]],"#61d4d9",3],["b",[[0.08,0.025,0.014],[0.174,1.586,-0.246],[0,0,0]],"#a18de0",3],["b",[[0.08,0.025,0.014],[0.522,1.586,-0.246],[0,0,0]],"#61d4d9",3],["b",[[0.08,0.025,0.014],[0.87,1.586,-0.246],[0,0,0]],"#a18de0",3]];
+const cv=document.getElementById('gl'),stage=document.getElementById('stage'),hud=document.getElementById('hud');
+try{
+const gl=cv.getContext('webgl2',{depth:true,alpha:false,antialias:true})||cv.getContext('webgl',{depth:true,alpha:false,antialias:true});
+if(!gl){hud.textContent='GPU preview unavailable. CPU pixel fallback disabled.';return;}
+const add=(a,b)=>a.map((n,i)=>n+b[i]),sub=(a,b)=>a.map((n,i)=>n-b[i]),mul=(a,s)=>a.map(n=>n*s),cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]],unit=a=>mul(a,1/(Math.hypot(...a)||1));
+const faces=[[0,2,1],[0,3,2],[4,5,6],[4,6,7],[0,1,5],[0,5,4],[1,2,6],[1,6,5],[2,3,7],[2,7,6],[3,0,4],[3,4,7]];
+const streams=Array.from({length:4},()=>[]);
+function rot(v,d){let [x,y,z]=v,[rx,ry,rz]=d.map(q=>q*Math.PI/180),c=Math.cos(rx),s=Math.sin(rx);[y,z]=[c*y-s*z,s*y+c*z];c=Math.cos(ry);s=Math.sin(ry);[x,z]=[c*x+s*z,-s*x+c*z];c=Math.cos(rz);s=Math.sin(rz);return[c*x-s*y,s*x+c*y,z];}
+function emit(tris,col,g){const rgb=[1,3,5].map(i=>parseInt(col.slice(i,i+2),16)/255);for(const t of tris){const n=unit(cross(sub(t[1],t[0]),sub(t[2],t[0])));for(const p of t)streams[g].push(...p,...n,...rgb);}}
+function cube(s,t,d,col,g){const[x,y,z]=s.map(v=>v/2),v=[[-x,-y,-z],[x,-y,-z],[x,y,-z],[-x,y,-z],[-x,-y,z],[x,-y,z],[x,y,z],[-x,y,z]].map(p=>add(rot(p,d),t));emit(faces.map(f=>f.map(i=>v[i])),col,g);}
+function cylinder(rad,h,n,t,d,col,g){let tri=[],p=(x,y,z)=>add(rot([x,y,z],d),t);for(let i=0;i<n;i++){const a=2*Math.PI*i/n,b=2*Math.PI*(i+1)/n,A=p(rad*Math.cos(a),-h/2,rad*Math.sin(a)),B=p(rad*Math.cos(b),-h/2,rad*Math.sin(b)),C=p(rad*Math.cos(b),h/2,rad*Math.sin(b)),D=p(rad*Math.cos(a),h/2,rad*Math.sin(a));tri.push([A,C,B],[A,D,C],[p(0,h/2,0),C,D],[p(0,-h/2,0),A,B]);}emit(tri,col,g);}
+for(const [k,a,c,g] of MODEL){if(k==='b')cube(...a,c,g);else cylinder(...a,c,g);}
+const ranges=[],N=streams.reduce((s,x)=>s+x.length,0),vertices=new Float32Array(N);let offset=0;
+for(const a of streams){ranges.push([offset/9,a.length/9]);vertices.set(a,offset);offset+=a.length;}
+const VS=`precision highp float;
+attribute vec3 p,n,c;uniform vec3 eye,right,up,forward;
+uniform float focal,aspect,leftAngle,rightAngle,ledScale;
+uniform int group;varying vec3 color,vLocal;varying float diffuse,vEmit;
+vec3 rz(vec3 x,float a){float c=cos(a),s=sin(a);return vec3(c*x.x-s*x.y,s*x.x+c*x.y,x.z);}
+void main(){
+vec3 v=p,N=n;
+if(group==1||group==2){vec3 center=vec3(group==1?-.62:.62,1.055,-.252);
+float spin=group==1?leftAngle:rightAngle;
+v=center+rz(v-center,spin);N=rz(N,spin);}
+if(group==3){vec3 c=vec3(0,1.585,-.235);v=c+(v-c)*ledScale;}
+vec3 d=v-eye;float z=dot(d,forward);
+gl_Position=vec4(dot(d,right)*focal/aspect,dot(d,up)*focal,1.002002*z-.2002,z);
+color=c;vLocal=v;vEmit=group==3?ledScale:0.;diffuse=.42+.63*max(0.,dot(normalize(N),normalize(vec3(-.51,.83,-.68))));
+}`;
+const FS=`precision mediump float;varying vec3 color,vLocal;varying float diffuse,vEmit;uniform float uLightOn;
+void main(){vec3 rgb=color*diffuse;
+float lampDist=length(vec2((vLocal.y-1.585)*1.8,max(0.,abs(vLocal.x)-1.16)));
+float depthDist=abs(vLocal.z+.24);
+float attenuation=pow(clamp(1.-length(vec2(lampDist,depthDist))/.44,0.,1.),2.);
+rgb+=uLightOn*vec3(.25,.69,.75)*attenuation+vEmit*color*2.8;
+gl_FragColor=vec4(min(vec3(1.),rgb),1.);}`;
+function makeShader(t,source){let s=gl.createShader(t);gl.shaderSource(s,source);gl.compileShader(s);if(!gl.getShaderParameter(s,gl.COMPILE_STATUS))throw Error(gl.getShaderInfoLog(s));return s;}
+const program=gl.createProgram();gl.attachShader(program,makeShader(gl.VERTEX_SHADER,VS));gl.attachShader(program,makeShader(gl.FRAGMENT_SHADER,FS));gl.linkProgram(program);
+if(!gl.getProgramParameter(program,gl.LINK_STATUS))throw Error(gl.getProgramInfoLog(program));
+gl.useProgram(program);const gpu=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,gpu);gl.bufferData(gl.ARRAY_BUFFER,vertices,gl.STATIC_DRAW);
+for(const [name,index]of[['p',0],['n',3],['c',6]]){const loc=gl.getAttribLocation(program,name);if(loc<0)throw Error('Missing GPU attribute '+name);gl.enableVertexAttribArray(loc);gl.vertexAttribPointer(loc,3,gl.FLOAT,false,36,index*4);}
+const U={};for(const key of ['eye','right','up','forward','focal','aspect','leftAngle','rightAngle','ledScale','group','uLightOn'])U[key]=gl.getUniformLocation(program,key);
+
+const BLUR_VS=`precision highp float;
+attribute vec2 corner;
+uniform vec3 center,eye,right,up,forward;
+uniform float focal,aspect;
+varying vec2 vPlane;
+void main(){
+ vPlane=corner;
+ vec3 p=center+vec3(corner*.36,0.);
+ vec3 d=p-eye;float z=dot(d,forward);
+ gl_Position=vec4(dot(d,right)*focal/aspect,dot(d,up)*focal,1.002002*z-.2002,z);
+}`;
+const BLUR_FS=`precision mediump float;
+varying vec2 vPlane;
+uniform float uStrength,uPhase,uDirection;
+void main(){
+ float radius=length(vPlane);
+ if(radius>=.965||radius<=.255)discard;
+ float angle=atan(vPlane.y,vPlane.x);
+ float edge=smoothstep(.26,.35,radius)*(1.0-smoothstep(.89,.965,radius));
+ float sheen=.90+.10*sin(3.0*angle-uDirection*uPhase+radius*11.0);
+ float radial=.90+.10*cos(radius*38.0);
+ vec3 metal=mix(vec3(.27,.35,.41),vec3(.67,.76,.79),radial*sheen);
+ gl_FragColor=vec4(metal,edge*uStrength*.94);
+}`;
+
+
+
+
+const blurProgram=gl.createProgram();
+gl.attachShader(blurProgram,makeShader(gl.VERTEX_SHADER,BLUR_VS));
+gl.attachShader(blurProgram,makeShader(gl.FRAGMENT_SHADER,BLUR_FS));
+gl.linkProgram(blurProgram);
+if(!gl.getProgramParameter(blurProgram,gl.LINK_STATUS))throw Error(gl.getProgramInfoLog(blurProgram));
+const blurBuffer=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,blurBuffer);
+gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,-1,1,1,-1,1,1]),gl.STATIC_DRAW);
+const blurAttr=gl.getAttribLocation(blurProgram,'corner');if(blurAttr<0)throw Error('Missing fan-blur corner');
+const BU={};for(const key of ['center','eye','right','up','forward','focal','aspect','uStrength','uPhase','uDirection'])BU[key]=gl.getUniformLocation(blurProgram,key);
+const blurStrength=rate=>{const x=Math.min(1,Math.max(0,(rate-160)/460));return x*x*(3-2*x);};
+function drawFanBlur(eye,right,up,forward,w,h,strength,phase){
+ if(strength<=0)return;
+ gl.useProgram(blurProgram);gl.bindBuffer(gl.ARRAY_BUFFER,blurBuffer);
+ gl.enableVertexAttribArray(blurAttr);gl.vertexAttribPointer(blurAttr,2,gl.FLOAT,false,8,0);
+ gl.enable(gl.BLEND);gl.blendFunc(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA);
+ gl.depthMask(false);gl.enable(gl.DEPTH_TEST);
+ for(const [key,value]of[['eye',eye],['right',right],['up',up],['forward',forward]])gl.uniform3fv(BU[key],value);
+ gl.uniform1f(BU.focal,1.73);gl.uniform1f(BU.aspect,w/h);
+ gl.uniform1f(BU.uStrength,strength);gl.uniform1f(BU.uPhase,phase);
+ for(const [x,direction]of [[-.62,1],[.62,-1]]){
+  gl.uniform3fv(BU.center,[x,1.055,-.385]);
+  gl.uniform1f(BU.uDirection,direction);
+  gl.drawArrays(gl.TRIANGLES,0,6);
+ }
+ gl.depthMask(true);gl.disable(gl.BLEND);gl.disableVertexAttribArray(blurAttr);
+}
+
+let running=true,rpm=950,ledOn=true,angle=0,activeSeconds=0,last=null,az=.52,el=.22,dist=5.5,drag=false,point=[0,0],active=true;
+const clamp=(v,a,b)=>Math.min(b,Math.max(a,v));
+const updateControls=()=>{document.getElementById('fan').textContent=running?'Stop fans':'Start fans';document.getElementById('led').textContent=ledOn?'Lighting off':'Lighting on';document.getElementById('readout').textContent=rpm+' RPM';};
+document.getElementById('fan').onclick=()=>{running=!running;updateControls();};
+document.getElementById('led').onclick=()=>{ledOn=!ledOn;updateControls();};
+document.getElementById('speed').oninput=e=>{rpm=Number(e.target.value);updateControls();};
+document.getElementById('reset').onclick=()=>{running=true;rpm=950;ledOn=true;angle=0;activeSeconds=0;last=null;document.getElementById('speed').value=950;updateControls();};
+document.getElementById('view').onclick=()=>{az=.52;el=.22;dist=5.5;};
+cv.onpointerdown=e=>{drag=true;point=[e.clientX,e.clientY];cv.setPointerCapture?.(e.pointerId);};
+cv.onpointerup=cv.onpointercancel=()=>drag=false;
+cv.onpointermove=e=>{if(!drag)return;az+=(e.clientX-point[0])*.008;el=clamp(el+(e.clientY-point[1])*.006,-.55,1.15);point=[e.clientX,e.clientY];};
+cv.addEventListener('wheel',e=>{e.preventDefault();dist=clamp(dist*Math.exp(e.deltaY*.001),3.4,9);},{passive:false});
+cv.addEventListener('webglcontextlost',e=>{e.preventDefault();active=false;hud.textContent='GPU context lost. Reopen preview.';});
+
+const PC_GLOW_VS=`precision highp float;attribute vec2 corner;
+uniform vec3 center,eye,right,up,forward;uniform float focal,aspect,radius;
+varying vec2 uv;
+void main(){uv=corner;
+vec3 pos=center+radius*(right*corner.x+up*corner.y);
+vec3 d=pos-eye;float depth=dot(d,forward);
+gl_Position=vec4(dot(d,right)*focal/aspect,dot(d,up)*focal,1.002002*depth-.2002,depth);
+}`;
+const PC_GLOW_FS=`precision mediump float;varying vec2 uv;uniform vec3 tint;uniform float strength;
+void main(){float r=length(uv);float a=exp(-5.5*r*r)*(1.-smoothstep(.69,1.,r));
+gl_FragColor=vec4(tint,a*strength);}`;
+function pcLightShader(type,source){const obj=gl.createShader(type);gl.shaderSource(obj,source);
+gl.compileShader(obj);if(!gl.getShaderParameter(obj,gl.COMPILE_STATUS))throw Error('PC light shader: '+gl.getShaderInfoLog(obj));return obj;}
+const pcGlowProgram=gl.createProgram();
+gl.attachShader(pcGlowProgram,pcLightShader(gl.VERTEX_SHADER,PC_GLOW_VS));
+gl.attachShader(pcGlowProgram,pcLightShader(gl.FRAGMENT_SHADER,PC_GLOW_FS));
+gl.linkProgram(pcGlowProgram);if(!gl.getProgramParameter(pcGlowProgram,gl.LINK_STATUS))throw Error('PC glow link: '+gl.getProgramInfoLog(pcGlowProgram));
+const pcGlowBuffer=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,pcGlowBuffer);
+gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,-1,1,1,-1,1,1]),gl.STATIC_DRAW);
+const pcGlowAttr=gl.getAttribLocation(pcGlowProgram,'corner');
+if(pcGlowAttr<0)throw Error('Missing glow vertex attribute');
+const PG={};for(const k of ['center','eye','right','up','forward','focal','aspect','radius','tint','strength'])PG[k]=gl.getUniformLocation(pcGlowProgram,k);
+function drawPcGlow(points,eye,right,up,forward,focal,aspect){
+if(!points.length)return;
+gl.useProgram(pcGlowProgram);gl.bindBuffer(gl.ARRAY_BUFFER,pcGlowBuffer);
+gl.enableVertexAttribArray(pcGlowAttr);gl.vertexAttribPointer(pcGlowAttr,2,gl.FLOAT,false,8,0);
+gl.enable(gl.BLEND);gl.blendFunc(gl.SRC_ALPHA,gl.ONE);
+gl.disable(gl.DEPTH_TEST);gl.depthMask(false);
+for(const[k,v]of[['eye',eye],['right',right],['up',up],['forward',forward]])gl.uniform3fv(PG[k],v);
+gl.uniform1f(PG.focal,focal);gl.uniform1f(PG.aspect,aspect);
+for(const point of points){
+ const [pos,r,color,intensity]=point;
+ gl.uniform3fv(PG.center,pos);gl.uniform1f(PG.radius,r);
+ gl.uniform3fv(PG.tint,color);gl.uniform1f(PG.strength,intensity);
+ gl.drawArrays(gl.TRIANGLES,0,6);
+}
+gl.depthMask(true);gl.disable(gl.BLEND);gl.enable(gl.DEPTH_TEST);
+gl.disableVertexAttribArray(pcGlowAttr);
+
+
+gl.useProgram(program);gl.bindBuffer(gl.ARRAY_BUFFER,gpu);
+for(const [name,index] of [['p',0],['n',3],['c',6]]){
+ const loc=gl.getAttribLocation(program,name);
+ gl.enableVertexAttribArray(loc);gl.vertexAttribPointer(loc,3,gl.FLOAT,false,36,index*4);
+}
+}
+
+function draw(now){
+ if(!active||!stage.isConnected)return;
+ requestAnimationFrame(draw);
+ if(last===null)last=now;const dt=clamp((now-last)/1000,0,.05);last=now;
+ if(document.visibilityState==='hidden')return;
+ if(running){angle=(angle+dt*rpm*Math.PI/30)%(Math.PI*2);activeSeconds+=dt;}
+ const ratio=Math.min(1.6,window.devicePixelRatio||1);
+ const w=Math.max(1,Math.round(stage.clientWidth*ratio)),h=Math.max(1,Math.round(stage.clientHeight*ratio));
+ if(cv.width!==w||cv.height!==h){cv.width=w;cv.height=h;}
+ gl.viewport(0,0,w,h);gl.enable(gl.DEPTH_TEST);gl.depthFunc(gl.LEQUAL);gl.disable(gl.BLEND);
+ gl.clearColor(.065,.142,.196,1);gl.clearDepth(1);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
+ const target=[0,1.09,0],eye=[dist*Math.sin(az)*Math.cos(el),1.09+dist*Math.sin(el),-dist*Math.cos(az)*Math.cos(el)];
+ const forward=unit(sub(target,eye)),right=unit(cross([0,1,0],forward)),up=unit(cross(forward,right));
+ for(const [key,value]of[['eye',eye],['right',right],['up',up],['forward',forward]])gl.uniform3fv(U[key],value);
+ for(const [key,value]of[['focal',1.73],['aspect',w/h],['leftAngle',angle],['rightAngle',-angle],['ledScale',ledOn?1:.00001],['uLightOn',ledOn?1:0]])gl.uniform1f(U[key],value);
+ for(let group=0;group<4;group++){gl.uniform1i(U.group,group);gl.drawArrays(gl.TRIANGLES,ranges[group][0],ranges[group][1]);}
+ drawFanBlur(eye,right,up,forward,w,h,running?blurStrength(rpm):0,activeSeconds*(1.1+rpm/2200*1.4));
+ if(ledOn){
+ const lamps=[];for(let i=0;i<11;i++){
+  const x=-1.1+i*.22;lamps.push([[x,1.591,-.284],.16,i%3===1?[.60,.50,.96]:[.23,.87,.94],.47]);
+ }
+ drawPcGlow(lamps,eye,right,up,forward,1.73,w/h);
+}
+
+hud.textContent=(running?'Cooling fans · ':'Fan stop · ')+rpm+' RPM · '+(ledOn?'Accent on':'Accent off')+' · Drag to orbit';
+}
+requestAnimationFrame(draw);
+}catch(e){hud.textContent='GPU preview error: '+String(e?.message||e);}
+})();
+</script></body></html>
