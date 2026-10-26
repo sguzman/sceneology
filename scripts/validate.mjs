@@ -9,10 +9,10 @@ await import("./build-quest-girl-preview.mjs");
 await import("./test-model-preview-browser.mjs");
 const load = relative => JSON.parse(fs.readFileSync(path.join(root, relative), "utf8"));
 const fileExists = relative => fs.statSync(path.join(root, relative), {throwIfNoEntry: false})?.isFile() === true;
-const allowedKinds = new Set(["scene","object","experiment","effect","animation","renderer","tool","ontology","other"]);
+const allowedKinds = new Set(["scene","object","character","experiment","effect","animation","renderer","tool","ontology","other"]);
 const allowedStatuses = new Set(["planned","active","experimental","validated","failed","complete","archived"]);
 const allowedRights = new Set(["original","permitted-third-party","mixed-cleared"]);
-const allowedSourceDirectories = new Set(["scenes","source-scenes","models","experiments","ontology","runtime","assets","tools","docs"]);
+const allowedSourceDirectories = new Set(["scenes","source-scenes","models","characters","experiments","ontology","runtime","assets","tools","docs"]);
 const safePath = (value, roots) => typeof value === "string" &&
   /^[a-zA-Z0-9._/-]+$/.test(value) && value.split("/").length > 1 &&
   roots.has(value.split("/")[0]) && !value.split("/").some(segment => !segment || segment === "." || segment === "..");
@@ -43,7 +43,7 @@ for (const entry of library.records) {
   assert.ok(safePath(entry.path, allowedSourceDirectories) && fileExists(entry.path), "Missing source path: " + entry.id);
   for (const optional of ["viewer","thumbnail"]) {
     if (entry[optional] !== undefined)
-      assert.ok(safePath(entry[optional], new Set(["scenes","models","experiments","site","assets"])) &&
+      assert.ok(safePath(entry[optional], new Set(["scenes","models","characters","experiments","site","assets"])) &&
         fileExists(entry[optional]), "Invalid " + optional + " for " + entry.id);
   }
 }

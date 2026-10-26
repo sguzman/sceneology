@@ -603,6 +603,32 @@
         "dependency_closure": "self-contained",
         "notes": "Screened standalone viewer copied without private commentary. Actual browser screenshot verified against source implementation; review scope retained."
       }
+    },
+    {
+      "id": "quest-girl-v7",
+      "title": "Quest Girl v7",
+      "kind": "character",
+      "status": "archived",
+      "summary": "Previously accepted static block-chibi character, represented by its genuine 44-part constructive geometry and independently derived illustration.",
+      "path": "characters/quest-girl-v7.json",
+      "viewer": "characters/quest-girl-v7.html",
+      "thumbnail": "site/generated/quest-girl-v7.svg",
+      "rights": "original",
+      "limitations": "Static source appearance was accepted. Isometric SVG is a source-based alternate approximation, not a reproduction of the original Three.js pixels; motion-v0.2 functional approval is not animation aesthetic acceptance.",
+      "tags": [
+        "3d",
+        "character",
+        "block-chibi",
+        "static-art",
+        "previously-owner-accepted"
+      ],
+      "provenance": {
+        "origin": "cleared-transfer",
+        "reviewed_on": "2026-10-26",
+        "rights_basis": "Owner-authored static SC3D character with explicitly recorded prior visual acceptance",
+        "dependency_closure": "self-contained",
+        "notes": "Only geometry, geometry colors, transforms and anchor structure migrated. Original private evaluation wording and source Git history excluded."
+      }
     }
   ]
 }

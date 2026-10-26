@@ -6,7 +6,7 @@ async function readJson(relative) {
 }
 function safePath(value) {
   return typeof value==="string" &&
-    /^(scenes|models|experiments|site|assets)\/[A-Za-z0-9._/-]+$/.test(value) &&
+    /^(scenes|models|characters|experiments|site|assets)\/[A-Za-z0-9._/-]+$/.test(value) &&
     !value.split("/").some(segment=>!segment||segment==="."||segment==="..");
 }
 function safePublicSource(value){

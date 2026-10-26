@@ -355,6 +355,21 @@
       "assets_class": "owner-authored-inline-WebGL-model",
       "review_summary": "Self-contained authored mechanical model with positive scoped in-chat historical appearance review and verified browser PNG capture.",
       "limitations": "Browser screenshot was software-rendered; technical tests and previous scoped visual approval do not validate hardware performance or every control."
+    },
+    {
+      "id": "quest-girl-v7",
+      "path": "characters/quest-girl-v7.json",
+      "git_blob_sha": "e2c766d97d6666217d0529a2569682c7a70aa9dc",
+      "kind": "character",
+      "technical_status": "archived",
+      "rights": "original",
+      "source_origin": "cleared-transfer",
+      "source_blob": null,
+      "required_local_files": [],
+      "external_resources": [],
+      "assets_class": "original-static-constructive-character-geometry",
+      "review_summary": "44 owner-authored parts, ten locally described materials and exact source geometry parameters extracted from accepted static character version. Alternate SVG static preview was rendered and visually inspected after CI.",
+      "limitations": "Two wedge shapes represented as cuboids in alternate static preview. Character's later motion set is functionally but not aesthetically approved."
     }
   ]
 }
