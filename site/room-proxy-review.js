@@ -1,4 +1,6 @@
+import {analyzeProxyGeometry} from "./room-geometry-audit.mjs";
 const stage=document.getElementById("proxy-stage");
+const clearance=document.getElementById("proxy-clearance");
 const roomSelect=document.getElementById("proxy-room");
 const variantList=document.getElementById("proxy-variants");
 const attachmentList=document.getElementById("proxy-attachments");
@@ -65,6 +67,31 @@ function render(){
  stage.dataset.yaw=String(yaw);
  stage.dataset.variantChoices=String([...chosen].length);
  counter.textContent=current.placed.length+" placed furniture proxies · "+current.omitted_parented.length+" parent-attached objects deliberately omitted · yaw "+yaw+"°";
+ const geometry=current.placed.map(item=>{
+  const key=chosen.get(item.id)||item.default_model_key;
+  const match=item.choices.find(c=>c.key===key);
+  if(!match)throw Error("Unknown clearance source choice "+item.id);
+  return {id:item.id,model_key:match.key,model_sha:match.source_sha,translate:item.translate,yaw_deg:item.yaw_deg};
+ });
+ const audit=analyzeProxyGeometry(geometry,library);
+ clearance.dataset.candidates=String(audit.total_candidate_pairs);
+ clearance.dataset.status="technical-only";
+ const heading=document.createElement("strong");
+ heading.textContent="Conservative geometry screen: "+audit.total_candidate_pairs+" possible bounding-box overlap pairs";
+ const explanation=document.createElement("p");
+ explanation.textContent="These are overlaps of transformed model proxy bounds, NOT confirmed mesh collisions or accepted room clearance. Different source variants can change the result. Placement origin y=0 is not a verified floor-contact plane.";
+ const list=document.createElement("ul");
+ for(const pair of audit.broad_phase_candidates.slice(0,12)){
+  const li=document.createElement("li");
+  li.textContent=pair.first+" / "+pair.second+": "+pair.part_bound_candidate_pairs+" overlapping source-part bounding-box pairs (unverified contact)";
+  list.append(li);
+ }
+ const tail=document.createElement("p");
+ if(audit.total_candidate_pairs>12)tail.textContent=(audit.total_candidate_pairs-12)+" more broad-phase pairs in this variant; inspect source data.";
+ else if(audit.total_candidate_pairs===0)tail.textContent="No overlap found among these proxy instance AABBs. This does not establish physical contact, clearance for other variants or original-renderer accuracy.";
+ const footer=document.createElement("p");
+ footer.textContent="Origin-relative model-bottom heights: "+audit.instances.map(item=>item.id+" "+item.origin_plane_min_y).join("; ")+" (diagnostic coordinates only).";
+ clearance.replaceChildren(heading,explanation,list,tail,footer);
 }
 function onRender(){try{render();}catch(e){status.textContent="Technical projection unavailable: "+e.message;}}
 function chooseRoom(){

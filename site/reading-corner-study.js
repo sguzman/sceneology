@@ -1,4 +1,6 @@
+import {analyzeProxyGeometry} from "./room-geometry-audit.mjs";
 const stage=document.getElementById("reading-stage");
+const clearance=document.getElementById("reading-clearance");
 const status=document.getElementById("reading-status");
 const yaw=document.getElementById("reading-yaw");
 const elevation=document.getElementById("reading-elevation");
@@ -62,6 +64,22 @@ function draw(){
  stage.dataset.rendered="true";stage.dataset.faceCount=String(visible.length);
  stage.dataset.yaw=String(yawDeg);stage.dataset.elevation=String(elevationDeg);
  caption.textContent="Six authored positions · "+room.omitted_parented_instances.length+" deliberately omitted attachments · camera "+yawDeg+"° / "+elevationDeg+"°";
+ const audit=analyzeProxyGeometry(room.instances,library);
+ clearance.dataset.candidates=String(audit.total_candidate_pairs);
+ clearance.dataset.status="technical-only";
+ const heading=document.createElement("strong");
+ heading.textContent="Conservative geometry screen: "+audit.total_candidate_pairs+" possible bounding-box overlap pairs";
+ const explanation=document.createElement("p");
+ explanation.textContent="Research model proxy bounds only; neither confirmed collisions nor verified walkable-floor contact. The two parent-attached objects and original room shell are absent.";
+ const list=document.createElement("ul");
+ for(const pair of audit.broad_phase_candidates){
+  const li=document.createElement("li");li.textContent=pair.first+" / "+pair.second+": "+pair.part_bound_candidate_pairs+" source-part bounding-box candidates";
+  list.append(li);
+ }
+ if(!audit.total_candidate_pairs){
+  const li=document.createElement("li");li.textContent="No overlapping proxy AABBs. Original room collision clearance remains uncertified.";list.append(li);
+ }
+ clearance.replaceChildren(heading,explanation,list);
 }
 try{
  const [mr,fr]=await Promise.all([
