@@ -65,7 +65,7 @@ assert.equal(technical.gallery_approved,false);
 assert.equal(technical.room_binding_approved,false);
 assert.equal(technical.source_accepted_as_current_room_asset,false);
 const archivedBytes=fs.readFileSync(path.join(root,technical.public_path));
-const archivedSha=crypto.createHash("sha1").update(Buffer.from("blob "+archivedBytes.length+"\\0")).update(archivedBytes).digest("hex");
+const archivedSha=crypto.createHash("sha1").update(Buffer.from("blob "+archivedBytes.length+"\0")).update(archivedBytes).digest("hex");
 assert.equal(archivedSha,technical.sha,"Technical blanket copy changed");
 const alias=manifest.aliases.find(a=>a.alias===technical.alias);
 assert.ok(alias?.candidates.some(c=>c.blob_sha===technical.sha&&c.path===technical.source_path));
