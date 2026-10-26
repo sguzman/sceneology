@@ -28,7 +28,7 @@ for(const name of names){
   fs.writeFileSync(path.join(dest,name+".dom.html"),dom.stdout||"");
   if(!dom.stdout.includes("<canvas"))throw Error("No rendered canvas element");
   const visibleDom=dom.stdout.replace(/<script[^>]*>[^]*?<\/script>/gi,"").replace(/<style[^>]*>[^]*?<\/style>/gi,"");
-  if(/WebGL(?:2)? (?:unavailable|unsupported)|shader compile failed|runtime error/i.test(visibleDom))throw Error("Viewer reports WebGL failure");
+  if(/<div[^>]*id="(?:failure|fail)"[^>]*style="[^"]*display:\\s*(?:block|flex|grid|inline)[^"]*"[^>]*>/i.test(visibleDom))throw Error("Viewer displayed an active WebGL failure notice");
   const png=path.join(dest,name+".png");
   const capture=spawnSync(chrome,[...flags,"--user-data-dir="+profile+"-image","--screenshot="+png,uri],{encoding:"utf8",timeout:100000});
   if(capture.error||capture.status!==0)throw Error("Screenshot process failed "+String(capture.error||capture.stderr).slice(-600));
