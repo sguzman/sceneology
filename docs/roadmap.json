@@ -1,0 +1,246 @@
+{
+  "schema_version": 1,
+  "project": "sceneology",
+  "scope": "bounded-public-scene-migration-mvp",
+  "as_of": "2026-10-26",
+  "point_policy": "Points are accepted only when all named task gates and verifiable evidence pass; incomplete tasks earn zero. Neither migration nor gallery approval is implied by roadmap progress.",
+  "baseline": {
+    "session": "2026-10-26-roadmap",
+    "completed_task_ids": [
+      "F01",
+      "F02",
+      "O01",
+      "G01",
+      "Q01"
+    ]
+  },
+  "milestones": [
+    {
+      "id": "F",
+      "emoji": "🧱",
+      "title": "Public foundations",
+      "tasks": [
+        {
+          "id": "F01",
+          "points": 4,
+          "status": "done",
+          "evidence": [
+            "CONSTITUTION.md",
+            "docs/PUBLICATION.md"
+          ]
+        },
+        {
+          "id": "F02",
+          "points": 4,
+          "status": "done",
+          "evidence": [
+            "AGENTS.md",
+            "catalog/library.json",
+            "catalog/showcase.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "R",
+      "emoji": "🗺️",
+      "title": "Roadmap and admission contract",
+      "tasks": [
+        {
+          "id": "R01",
+          "points": 2,
+          "status": "done",
+          "evidence": [
+            "docs/ROADMAP.md"
+          ]
+        },
+        {
+          "id": "R02",
+          "points": 3,
+          "status": "done",
+          "evidence": [
+            "docs/ROADMAP.md",
+            "docs/roadmap.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "A",
+      "emoji": "🔎",
+      "title": "Census and selection",
+      "tasks": [
+        {
+          "id": "A01",
+          "points": 6,
+          "status": "todo",
+          "evidence": []
+        },
+        {
+          "id": "A02",
+          "points": 5,
+          "status": "todo",
+          "evidence": []
+        },
+        {
+          "id": "A03",
+          "points": 6,
+          "status": "todo",
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "id": "P",
+      "emoji": "🛡️",
+      "title": "Confidentiality, rights and provenance",
+      "tasks": [
+        {
+          "id": "P01",
+          "points": 7,
+          "status": "todo",
+          "evidence": []
+        },
+        {
+          "id": "P02",
+          "points": 6,
+          "status": "todo",
+          "evidence": []
+        },
+        {
+          "id": "P03",
+          "points": 4,
+          "status": "todo",
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "id": "O",
+      "emoji": "🧠",
+      "title": "Human and machine ontology",
+      "tasks": [
+        {
+          "id": "O01",
+          "points": 2,
+          "status": "done",
+          "evidence": [
+            "ontology/SCENES.md",
+            "ontology/schemas/record-v1.schema.json"
+          ]
+        },
+        {
+          "id": "O02",
+          "points": 6,
+          "status": "todo",
+          "evidence": []
+        },
+        {
+          "id": "O03",
+          "points": 6,
+          "status": "todo",
+          "evidence": []
+        },
+        {
+          "id": "O04",
+          "points": 4,
+          "status": "todo",
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "id": "M",
+      "emoji": "🔧",
+      "title": "Screened implementation migrations",
+      "tasks": [
+        {
+          "id": "M01",
+          "points": 5,
+          "status": "todo",
+          "evidence": []
+        },
+        {
+          "id": "M02",
+          "points": 5,
+          "status": "todo",
+          "evidence": []
+        },
+        {
+          "id": "M03",
+          "points": 4,
+          "status": "todo",
+          "evidence": []
+        },
+        {
+          "id": "M04",
+          "points": 4,
+          "status": "todo",
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "id": "G",
+      "emoji": "🖼️",
+      "title": "Curated public website",
+      "tasks": [
+        {
+          "id": "G01",
+          "points": 2,
+          "status": "done",
+          "evidence": [
+            "index.html",
+            "site/main.js",
+            "catalog/showcase.json"
+          ]
+        },
+        {
+          "id": "G02",
+          "points": 4,
+          "status": "todo",
+          "evidence": []
+        },
+        {
+          "id": "G03",
+          "points": 3,
+          "status": "todo",
+          "evidence": []
+        },
+        {
+          "id": "G04",
+          "points": 2,
+          "status": "todo",
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "id": "Q",
+      "emoji": "🧪",
+      "title": "Validation and release evidence",
+      "tasks": [
+        {
+          "id": "Q01",
+          "points": 1,
+          "status": "done",
+          "evidence": [
+            "scripts/validate.mjs"
+          ]
+        },
+        {
+          "id": "Q02",
+          "points": 3,
+          "status": "todo",
+          "evidence": []
+        },
+        {
+          "id": "Q03",
+          "points": 2,
+          "status": "todo",
+          "evidence": []
+        }
+      ]
+    }
+  ]
+}
