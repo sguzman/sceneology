@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import assert from "node:assert/strict";
+import { errorsFor } from "./schema-subset.mjs";
 
 const root = path.resolve(import.meta.dirname, "..");
 const load = relative => JSON.parse(fs.readFileSync(path.join(root, relative), "utf8"));
@@ -13,6 +14,7 @@ const safePath = (value, roots) => typeof value === "string" &&
   /^[a-zA-Z0-9._/-]+$/.test(value) && value.split("/").length > 1 &&
   roots.has(value.split("/")[0]) && !value.split("/").some(segment => !segment || segment === "." || segment === "..");
 
+const recordSchema = load("ontology/schemas/record-v1.schema.json");
 const library = load("catalog/library.json");
 const showcase = load("catalog/showcase.json");
 assert.equal(library.schema_version, 1);
@@ -23,6 +25,10 @@ assert.ok(Array.isArray(showcase.approved_ids));
 const ids = new Set();
 for (const entry of library.records) {
   assert.ok(entry && typeof entry === "object" && !Array.isArray(entry));
+  assert.deepEqual(errorsFor(entry, recordSchema, recordSchema), [], "Invalid catalog record schema: " + entry.id);
+  if (entry.provenance.origin === "previously-public") {
+    assert.ok(entry.provenance.public_source && entry.provenance.source_blob, "Public source evidence required: " + entry.id);
+  }
   assert.match(entry.id, /^[a-z][a-z0-9-]*$/);
   assert.ok(!ids.has(entry.id), "Duplicate record " + entry.id);
   ids.add(entry.id);
