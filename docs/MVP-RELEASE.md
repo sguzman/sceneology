@@ -2,10 +2,10 @@
 
 > **Updated current-state link:** [Current gallery and migration checkpoint](ROADMAP.md). The zero-exhibit figures below describe the earlier historical state, not today's public exhibition. The bounded roadmap's gallery gate has subsequently been satisfied by a real source-backed exhibition of source-backed works; see [the current collection](CURRENT-COLLECTION.md) for the present audited total.
 
-> **Current status correction (October 26, 2026):** This document records the earlier *migration-readiness* release, not fulfillment of the user's requested public showcase. With no owner-approved scene and zero exhibited works, the active [roadmap](roadmap.json) correctly reads **97/100**. The final 3-point showcase gate is blocked until an actual preferred scene is explicitly selected, given a real approved thumbnail/card and verified live. No exhibition has been approved.
+> **Historical checkpoint only:** The 97/100 and empty-gallery status below occurred *before* owner-approved environments, objects, and a character were exhibited. Those figures are preserved solely to explain the earlier premature 100% claim; they are **not current project status**. Read the [live roadmap](roadmap.json) and [current collection](CURRENT-COLLECTION.md) for today's evidence-backed results.
 
 **Review date:** October 26, 2026  
-**Historical interpretation:** the earlier 100% measured preparation for owner curation, not the requested final outcome. The current acceptance ledger is 97/100, because the real public gallery is still empty.
+**Historical interpretation:** the initial 100% declaration covered migration preparation, not a functioning exhibition. The subsequent 97/100 checkpoint correctly reopened the gallery milestone. That gallery milestone has since been completed by a nonempty source-backed exhibition.
 
 ## Delivered and verified
 
