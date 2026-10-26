@@ -23,7 +23,7 @@ This project is self-contained: public code, ontology, metadata, viewers and pub
 - `scripts/` and `tests/` — validation and integrity checks.
 - `docs/` — public-facing project methodology and publication policy.
 
-The project is bootstrapped without importing any existing private project material. Existing art, source, ontology and historical technical records will be considered separately before migration.
+The repository began as a clean public foundation. Subsequent scene and experiment transfers undergo individual review and public reconstruction; source histories and unpublished reference material are never imported wholesale.
 
 ## Migration roadmap and progress
 
@@ -31,8 +31,9 @@ The project is bootstrapped without importing any existing private project mater
 - [🛡️ Source-admission policy](docs/MIGRATION.md) — file-by-file screening, confidentiality, licensing, provenance, failure retention and separation from artistic approval.
 - [Private intake decision schema](docs/migration-intake.schema.json) — structural contract for unpublished screening records; do not commit populated private records.
 - [Machine-readable progress ledger](docs/roadmap.json) — weighted tasks, supporting file evidence, measured baseline and current score.
+- [Browser and deployment evidence](docs/RELEASE-EVIDENCE.md) — scoped software-renderer, schema, gallery safety and live-site verification results.
 
-Initial source-family reconnaissance is complete, but **no historical artifact has been admitted or copied**. Detailed source inventories and rejected or unresolved material remain outside this public repository. Gallery approvals are never inferred from technical admission; unsuccessful scenes are not featured.
+Source inventories remain in nonpublic review records. **The technical catalog now contains independently screened historical experiments and an archived editable 2D SVG motion study**; their real technical states are preserved and none is automatically shown on the curated website. Approval for gallery placement must be explicit.
 
 ## Development
 
@@ -42,7 +43,7 @@ Requires Node.js 22 or newer for validation; the website itself works as static 
 node scripts/validate.mjs
 ```
 
-GitHub Pages publishes `index.html` when the Pages source points to the `main` branch root. The site starts with no approved exhibits, not fictional examples.
+GitHub Actions validates and deploys the static website from `main`; live asset bytes, desktop/mobile gallery empty state, and browser screenshots are verified after deployment. The exhibition remains empty until actual individual owner selections are authorized.
 
 ## License
 
