@@ -5,6 +5,7 @@ import { errorsFor } from "./schema-subset.mjs";
 
 const root = path.resolve(import.meta.dirname, "..");
 await import("./build-accepted-previews.mjs");
+await import("./test-model-preview-browser.mjs");
 const load = relative => JSON.parse(fs.readFileSync(path.join(root, relative), "utf8"));
 const fileExists = relative => fs.statSync(path.join(root, relative), {throwIfNoEntry: false})?.isFile() === true;
 const allowedKinds = new Set(["scene","object","experiment","effect","animation","renderer","tool","ontology","other"]);
