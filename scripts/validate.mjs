@@ -77,4 +77,7 @@ await import("./check-curation.mjs");
 
 await import("./check-room-aliases.mjs");
 
+await import("./build-room-diagnostics.mjs");
+await import("./test-room-diagnostics.mjs");
+
 await import("./check-character-variants.mjs");
