@@ -16,7 +16,7 @@ The smoke script uses Chrome headless with SwiftShader flags and checks first-dr
 
 [Validation run 40341885061](https://github.com/sguzman/sceneology/actions/runs/40341885061) passed the ontology, technical record schema, source path, provenance and approval-boundary checks after both outline entries were given public source and dependency declarations.
 
-[Pages deployment run 40341884999](https://github.com/sguzman/sceneology/actions/runs/40341884999) completed successfully. **External HTTP reachability, live catalog fetch, responsive appearance and keyboard behavior have not been independently tested here yet.** Deployment workflow success alone does not close the full website QA gate.
+[Pages deployment and live verification run 40342524477](https://github.com/sguzman/sceneology/actions/runs/40342524477) completed successfully. The post-deployment test fetched six public resources and verified they matched the checked-out repository byte-for-byte. Chrome completed the gallery's empty-state rendering at desktop (1280×900) and mobile (390×844) window sizes and captured PNG evidence. **Keyboard focus navigation, mobile visual quality and broader accessibility still require dedicated tests; screenshots existing is not a human visual evaluation.**
 
 ## Excluded from gallery
 
@@ -26,4 +26,4 @@ All three experiments are recorded in `catalog/library.json` with technical stat
 
 The first-draw tests do not establish that every viewer control or input works. HTML viewers were sourced from already-public implementations with documented original blob identifiers and narrowly modified on-screen archival labels. Their source code contains self-contained shader/geometry payloads, and release review found no referenced external media/CDNs or copied nonpublic discussion. Automated screening is a supplement to manual source review.
 
-**Next release evidence:** verify the live Pages URL, asset fetches, curated empty state, keyboard reachability and mobile viewport. The user alone chooses future gallery exhibits.
+**Next release evidence:** exercise keyboard navigation and reader-facing links, inspect responsive output rather than relying only on PNG existence, and maintain source-to-deployment parity after subsequent content changes. The user alone chooses future gallery exhibits.
