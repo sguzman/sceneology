@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "id": "simple-panel",
+  "name": "Simple panel",
+  "description": "Reusable abstract rectangle for synthetic 2D tests.",
+  "roles": [
+    "object",
+    "environment"
+  ],
+  "dimensions": [
+    "2d"
+  ],
+  "properties": [
+    "position",
+    "scale",
+    "rotation",
+    "opacity",
+    "visible",
+    "color",
+    "layer"
+  ],
+  "relation_capabilities": [
+    "inside",
+    "occludes",
+    "in-front-of"
+  ],
+  "realization_options": [
+    "authored-vector",
+    "constructive"
+  ],
+  "constraints": [
+    "A placed panel needs a scene-local transform."
+  ],
+  "examples": [
+    "static-shapes-two-d"
+  ]
+}
