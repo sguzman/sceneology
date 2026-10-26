@@ -24,7 +24,7 @@ jobs:
         run: node scripts/build-family-previews.mjs
       - name: Capture actual SVG browser output
         run: node scripts/test-family-previews.mjs
-      - name: Preserve 21 screenshots for human visual QA
+      - name: Preserve 30 screenshots for human visual QA
         if: always()
         uses: actions/upload-artifact@v4
         with:

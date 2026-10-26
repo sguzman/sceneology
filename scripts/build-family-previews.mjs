@@ -6,7 +6,7 @@ import path from "node:path";
 const root=path.resolve(import.meta.dirname,"..");
 const manifest=JSON.parse(fs.readFileSync(path.join(root,"catalog/accepted-family-sources.json"),"utf8"));
 assert.equal(manifest.schema_version,1);
-assert.equal(manifest.items.length,21);
+assert.equal(manifest.items.length,30);
 const output=path.join(root,"site","family-previews");
 fs.mkdirSync(output,{recursive:true});
 
@@ -130,7 +130,7 @@ for(const record of manifest.items){
  const sourceSha=crypto.createHash("sha1").update(Buffer.from("blob "+bytes.length+"\0")).update(bytes).digest("hex");
  assert.equal(sourceSha,record.sha,"Family source modified without review: "+record.key);
  assert.equal(record.new_renderer_visual_approval,false,"New renderer was auto-approved");
- const result=projectArtifact(bytes.toString("utf8"),record.key,record.family==="rugs"?3:8);
+ const result=projectArtifact(bytes.toString("utf8"),record.key,record.family==="rugs"?3:record.family==="pillows"?5:8);
  if(record.key==="task-lamp")assert.match(result.svg,/<polygon data-part="emitter" data-face="0"/,"The task lamp's source-defined downward-facing emitter must be visible");
  const name=path.basename(record.public_path,".sc3d.yml")+".svg";
  fs.writeFileSync(path.join(output,name),result.svg);

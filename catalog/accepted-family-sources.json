@@ -10,9 +10,12 @@
     "block-chibi-chair-family-v1",
     "block-chibi-desk-family-v1",
     "block-chibi-rug-family-v1",
-    "block-chibi-window-family-v1"
+    "block-chibi-window-family-v1",
+    "block-chibi-book-family-v1",
+    "block-chibi-pillow-family-v1",
+    "block-chibi-snake-plant-family-v1"
   ],
-  "scope": "Exact source copies of 21 models from seven historically owner-accepted families; new SVG presentations must be independently reviewed before gallery selection.",
+  "scope": "Exact source copies of 30 publicly sourced models with historically accepted family or asset geometry: ten family categories, new SVG output unapproved pending owner review. Generic plant morphology failures excluded.",
   "items": [
     {
       "key": "simple-study-bed",
@@ -220,6 +223,96 @@
       "source_path": "assets/constructive-3d/windows/block-chibi-wide-three-pane-window-v1.sc3d.yml",
       "public_path": "models/families/block-chibi-wide-three-pane-window-v1.sc3d.yml",
       "sha": "4c89cb813135be773996c475822a9106c9daab56",
+      "source_acceptance": "owner-accepted-family",
+      "new_renderer_visual_approval": false,
+      "selection_status": "source-staged-not-in-gallery"
+    },
+    {
+      "key": "closed-desk-book",
+      "family": "books",
+      "source_path": "assets/constructive-3d/books/block-chibi-closed-desk-book-v1.sc3d.yml",
+      "public_path": "models/families/block-chibi-closed-desk-book-v1.sc3d.yml",
+      "sha": "835f6f2e63ebcdef4e141aa8874aafc1cec91bc6",
+      "source_acceptance": "owner-accepted-family",
+      "new_renderer_visual_approval": false,
+      "selection_status": "source-staged-not-in-gallery"
+    },
+    {
+      "key": "open-reading-book",
+      "family": "books",
+      "source_path": "assets/constructive-3d/books/block-chibi-open-reading-book-v1.sc3d.yml",
+      "public_path": "models/families/block-chibi-open-reading-book-v1.sc3d.yml",
+      "sha": "6e36e31b5b15f34a1627a75a6a84f9a913f2ca05",
+      "source_acceptance": "owner-accepted-family",
+      "new_renderer_visual_approval": false,
+      "selection_status": "source-staged-not-in-gallery"
+    },
+    {
+      "key": "upright-shelf-book",
+      "family": "books",
+      "source_path": "assets/constructive-3d/books/block-chibi-upright-shelf-book-v1.sc3d.yml",
+      "public_path": "models/families/block-chibi-upright-shelf-book-v1.sc3d.yml",
+      "sha": "5aa3b9fd5d8dd52a01b5bf471826ade45c7bb643",
+      "source_acceptance": "owner-accepted-family",
+      "new_renderer_visual_approval": false,
+      "selection_status": "source-staged-not-in-gallery"
+    },
+    {
+      "key": "bed-pillow",
+      "family": "pillows",
+      "source_path": "assets/constructive-3d/pillows/block-chibi-bed-pillow-v1.sc3d.yml",
+      "public_path": "models/families/block-chibi-bed-pillow-v1.sc3d.yml",
+      "sha": "e6d4b03d89b53b48cb605dd587f532937a05e263",
+      "source_acceptance": "owner-accepted-asset",
+      "new_renderer_visual_approval": false,
+      "selection_status": "source-staged-not-in-gallery"
+    },
+    {
+      "key": "lumbar-pillow",
+      "family": "pillows",
+      "source_path": "assets/constructive-3d/pillows/block-chibi-lumbar-pillow-v1.sc3d.yml",
+      "public_path": "models/families/block-chibi-lumbar-pillow-v1.sc3d.yml",
+      "sha": "8e2eab0bea9f68f22025e93042cfeaf7b04e471b",
+      "source_acceptance": "owner-accepted-asset",
+      "new_renderer_visual_approval": false,
+      "selection_status": "source-staged-not-in-gallery"
+    },
+    {
+      "key": "square-throw-pillow",
+      "family": "pillows",
+      "source_path": "assets/constructive-3d/pillows/block-chibi-square-throw-pillow-v1.sc3d.yml",
+      "public_path": "models/families/block-chibi-square-throw-pillow-v1.sc3d.yml",
+      "sha": "0eaafaa81523e4c35ee8ca94d3c82a892bd97f1f",
+      "source_acceptance": "owner-accepted-asset",
+      "new_renderer_visual_approval": false,
+      "selection_status": "source-staged-not-in-gallery"
+    },
+    {
+      "key": "medium-snake-plant",
+      "family": "snake-plants",
+      "source_path": "assets/constructive-3d/plants/block-chibi-medium-snake-plant-v1.sc3d.yml",
+      "public_path": "models/families/block-chibi-medium-snake-plant-v1.sc3d.yml",
+      "sha": "c3a3078aa779270929d5053510b0bc38b0c47366",
+      "source_acceptance": "owner-accepted-family",
+      "new_renderer_visual_approval": false,
+      "selection_status": "source-staged-not-in-gallery"
+    },
+    {
+      "key": "small-snake-plant",
+      "family": "snake-plants",
+      "source_path": "assets/constructive-3d/plants/block-chibi-small-snake-plant-v1.sc3d.yml",
+      "public_path": "models/families/block-chibi-small-snake-plant-v1.sc3d.yml",
+      "sha": "ad4417537c801847cc4dc4046f307865bb512bf2",
+      "source_acceptance": "owner-accepted-family",
+      "new_renderer_visual_approval": false,
+      "selection_status": "source-staged-not-in-gallery"
+    },
+    {
+      "key": "tall-snake-plant",
+      "family": "snake-plants",
+      "source_path": "assets/constructive-3d/plants/block-chibi-tall-snake-plant-v1.sc3d.yml",
+      "public_path": "models/families/block-chibi-tall-snake-plant-v1.sc3d.yml",
+      "sha": "ebca01a9ededc1b11211ef181f0297f88fa56abf",
       "source_acceptance": "owner-accepted-family",
       "new_renderer_visual_approval": false,
       "selection_status": "source-staged-not-in-gallery"
