@@ -38,7 +38,7 @@ for(const rel of urls){
  if(rel.endsWith(".svg")){
   const svg=remote.toString("utf8").replace('xmlns="http://www.w3.org/2000/svg"',"");
   assert.ok(svg.startsWith("<svg")&&(svg.match(/<polygon /g)||[]).length>=8,"Invalid source-generated SVG "+rel);
-  assert.ok(!/<(?:script|image|foreignObject)\\b|https?:\/\//i.test(svg),"External resource in published preview "+rel);
+  assert.ok(!/<(?:script|image|foreignObject)\b|https?:\/\//i.test(svg),"External resource in published preview "+rel);
  }
 }
 const out=path.join(root,"artifacts","live-family-review");
