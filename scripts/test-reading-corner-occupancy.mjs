@@ -35,6 +35,15 @@ assert.equal(support.original_sole_y,-.945);
 assert.equal(support.original_vertical_gap_to_field,-.99);
 assert.equal(support.proposed_visualization_only_y_offset,.99);
 assert.equal(support.corrected_sole_y_if_offset_applied,.045);
+const aligned=data.comparison.alignment_proxy_comparison;
+assert.equal(aligned.alignment_is_only_research_proposal,true);
+assert.equal(aligned.revised_source_scene_position,false);
+assert.equal(aligned.source_pose_possible_pairs,1);
+assert.equal(aligned.aligned_pose_possible_pairs,1);
+assert.equal(aligned.aligned_part_box_pairs,0);
+assert.ok(aligned.source_part_box_pairs>0);
+assert.equal(aligned.border_aabb_vertical_overlap,.008);
+assert.equal(aligned.part_box_overlap_is_not_exact_mesh_contact,true);
 assert.equal(support.shoes.length,2);
 for(const shoe of support.shoes){
  assert.equal(shoe.sole_corner_count,4);

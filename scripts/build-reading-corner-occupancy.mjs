@@ -95,6 +95,18 @@ assert.ok(rugModel&&rugModel.source_sha===rugPlacement.model_sha);
 const support=measureSourceShoeSupport(character,rugModel,represented,rugPlacement);
 assert.equal(support.all_shoe_corners_within_rug_field,true,"Both authored shoe soles must lie within the rug field");
 assert.ok(Math.abs(support.original_vertical_gap_to_field+.990)<.00001,"Historical character support discrepancy changed");
+const alignedOnlyForComparison={...represented,
+ translate:[translation[0],translation[1]+support.proposed_visualization_only_y_offset,translation[2]]};
+const alignedBounds=analyzeProxyGeometry([...reading.instances,alignedOnlyForComparison],modelMap);
+const sourceWarning=geometry.broad_phase_candidates.filter(
+ p=>p.first==="quest-girl"||p.second==="quest-girl");
+const alignedWarning=alignedBounds.broad_phase_candidates.filter(
+ p=>p.first==="quest-girl"||p.second==="quest-girl");
+assert.equal(sourceWarning.length,1,"Original pose/rug broad-phase changed");
+assert.equal(alignedWarning.length,1,"Expected conservative rug-border AABB warning for aligned pose");
+assert.ok(alignedWarning[0].aabb_overlap[1]<.01,"Corrected-shoe proxy AABB overlap unexpectedly large");
+assert.equal(alignedWarning[0].part_bound_candidate_pairs,0,
+ "No source-part AABB overlaps expected after vertical shoe alignment");
 const characterBounds=geometry.instances.find(item=>item.id==="quest-girl");
 const rugBounds=geometry.instances.find(item=>item.id==="rug");
 assert.ok(characterBounds&&rugBounds);
@@ -132,6 +144,16 @@ const output={
   signed_character_bottom_minus_rug_top:offset,
   not_a_support_or_contact_verdict:true,
   source_shoe_support_research:support,
+  alignment_proxy_comparison:{
+   alignment_is_only_research_proposal:true,
+   source_pose_possible_pairs:sourceWarning.length,
+   aligned_pose_possible_pairs:alignedWarning.length,
+   source_part_box_pairs:sourceWarning.reduce((n,p)=>n+p.part_bound_candidate_pairs,0),
+   aligned_part_box_pairs:alignedWarning.reduce((n,p)=>n+p.part_bound_candidate_pairs,0),
+   border_aabb_vertical_overlap:alignedWarning[0].aabb_overlap[1],
+   part_box_overlap_is_not_exact_mesh_contact:true,
+   revised_source_scene_position:false
+  },
   possible_volume_overlaps:geometry.broad_phase_candidates.filter(p=>p.first==="quest-girl"||p.second==="quest-girl")
  },
  model:character
