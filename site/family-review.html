@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Compare nine source-derived constructive models before any gallery selection.">
+<title>Unselected model-family previews — Sceneology</title>
+<link rel="stylesheet" href="./style.css">
+<style>
+.review-intro{max-width:75ch}.review-status{color:var(--muted);font-size:.87rem}
+.review-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:18px;margin:26px 0 45px}
+.review-item{border:1px solid var(--stroke);border-radius:13px;background:var(--surface);overflow:hidden}
+.review-item figure{margin:0;background:#e7eded;aspect-ratio:3/2}
+.review-item img{display:block;width:100%;height:100%;object-fit:contain}
+.review-item .copy{padding:17px}
+.review-item h3{font-size:1.07rem;margin:0 0 8px}
+.review-item p{margin:8px 0;color:var(--muted);font-size:.9rem}
+.review-item a{font-size:.9rem;overflow-wrap:anywhere}
+.review-controls{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:20px}
+.review-controls select{background:var(--surface);border:1px solid var(--stroke);border-radius:8px;padding:10px;color:var(--fg)}
+</style>
+<script type="module" src="./family-review.js"></script></head>
+<body><header><nav class="wrap" aria-label="Main navigation"><a class="brand" href="../">Sceneology</a><div class="navlinks"><a href="../#gallery-section">Selected works</a><a href="./models.html">Models and objects</a></div></nav></header>
+<main class="wrap" id="main-content"><section>
+<p class="eyebrow">Accepted source families · visual re-review</p>
+<h1>Nine model-family studies</h1>
+<p class="lead review-intro">Beds, bookshelves, and lamps previously accepted as source families, shown through new source-derived geometric illustrations. These previews are <strong>not owner-approved gallery exhibits</strong>; reconstruction may differ from the earlier approved renderer. The technical sources remain intact.</p>
+<div class="review-controls"><label for="family-filter">Family</label><select id="family-filter"><option value="">All families</option><option value="beds">Beds</option><option value="bookshelves">Bookshelves</option><option value="lamps">Lamps</option></select></div>
+<p id="family-count" class="review-status" aria-live="polite">Loading reviewed sources…</p>
+<div id="family-items" class="review-grid"></div>
+<p class="review-status">A browser screenshot confirms that pixels were captured, not that a new renderer preserved the original scene's exact appearance. A separate owner selection and release review is required before any of these appears in the curated exhibition.</p>
+</section></main><footer><div class="wrap">Sceneology · Source-derived visual review, separate from the curated gallery</div></footer></body></html>
