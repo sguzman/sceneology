@@ -65,13 +65,19 @@ try{
  });
  await rpc("Page.enable");await rpc("Runtime.enable");
  await rpc("Page.navigate",{url:site});
+ const approved=JSON.parse(fs.readFileSync(path.join(root,"catalog/showcase.json"),"utf8")).approved_ids;
  let loaded=false;
- for(let i=0;i<40;i++){
+ for(let i=0;i<50;i++){
   await sleep(500);
-  const state=await evaluate("document.querySelector('#gallery')?.textContent?.trim() || ''");
-  if(state.includes("No works have been selected")){loaded=true;break;}
+  const state=await evaluate("({text:document.querySelector('#gallery')?.textContent?.trim()||'',ids:[...document.querySelectorAll('#gallery [data-record-id]')].map(x=>x.dataset.recordId),images:[...document.querySelectorAll('#gallery img')].map(x=>({complete:x.complete,width:x.naturalWidth}))})");
+  if(approved.length===0){
+   if(state.text.includes("No works have been selected")){loaded=true;break;}
+  }else if(state.ids.length===approved.length&&state.images.every(x=>x.complete&&x.width>0)){
+   assert.deepEqual(state.ids,approved,"Live gallery order differs from the approved allowlist");
+   loaded=true;break;
+  }
  }
- assert.ok(loaded,"Live gallery did not resolve its owner-curated empty state");
+ assert.ok(loaded,"Live gallery did not render every approved work with real loaded thumbnails");
  await rpc("Runtime.evaluate",{expression:"document.activeElement?.blur?.()"});
  await key("Tab","Tab",9);
  report.keyboard.first_tab=await evaluate("document.activeElement?.className || ''");
