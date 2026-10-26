@@ -169,8 +169,13 @@
         {
           "id": "M01",
           "points": 5,
-          "status": "todo",
-          "evidence": []
+          "status": "done",
+          "evidence": [
+            "experiments/backyard-daynight-legacy-webgl2.html",
+            "experiments/backyard-daynight-legacy-webgl2.md",
+            "catalog/library.json",
+            ".github/workflows/browser-smoke.yml"
+          ]
         },
         {
           "id": "M02",
