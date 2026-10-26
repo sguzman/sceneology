@@ -109,14 +109,24 @@
         {
           "id": "P02",
           "points": 6,
-          "status": "todo",
-          "evidence": []
+          "status": "done",
+          "evidence": [
+            "docs/PROVENANCE-MANIFEST.json",
+            "scripts/check-provenance.mjs",
+            "catalog/library.json",
+            "docs/PUBLIC-RELEASE-REVIEW.md"
+          ]
         },
         {
           "id": "P03",
           "points": 4,
-          "status": "todo",
-          "evidence": []
+          "status": "done",
+          "evidence": [
+            "scripts/publication-gate.mjs",
+            "scripts/validate.mjs",
+            ".github/workflows/pages.yml",
+            "docs/PUBLIC-RELEASE-REVIEW.md"
+          ]
         }
       ]
     },
