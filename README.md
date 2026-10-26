@@ -25,6 +25,14 @@ This project is self-contained: public code, ontology, metadata, viewers and pub
 
 The project is bootstrapped without importing any existing private project material. Existing art, source, ontology and historical technical records will be considered separately before migration.
 
+## Migration roadmap and progress
+
+- [🗺️ Evidence-weighted roadmap](docs/ROADMAP.md) — bounded completion gates, source-cohort priorities, migration waves and end-of-session reporting.
+- [🛡️ Source-admission policy](docs/MIGRATION.md) — file-by-file screening, confidentiality, licensing, provenance, failure retention and separation from artistic approval.
+- [Machine-readable progress ledger](docs/roadmap.json) — weighted tasks, supporting file evidence, measured baseline and current score.
+
+Initial source-family reconnaissance is complete, but **no historical artifact has been admitted or copied**. Detailed source inventories and rejected or unresolved material remain outside this public repository. Gallery approvals are never inferred from technical admission; unsuccessful scenes are not featured.
+
 ## Development
 
 Requires Node.js 22 or newer for validation; the website itself works as static HTML/CSS/JavaScript.
