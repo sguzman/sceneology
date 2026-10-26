@@ -13,6 +13,12 @@ This page presents **real, playable technical candidates for your visual judgmen
 
 **Not nominated:** the inverted-hull outline variant and the editable SVG character-motion study. Both retain their historical failed visual-quality outcome in the technical repository and must **not** be placed in the curated exhibition merely because a browser smoke test passed.
 
+## Actual browser screenshot contact sheet
+
+The [owner-review workflow run](https://github.com/sguzman/sceneology/actions/runs/40351750015) produced a GitHub Actions artifact named **sceneology-owner-review-contact-sheet**, with four real browser PNG captures, a responsive `index.html` comparison sheet, and a machine-readable review manifest. Download and open the artifact to compare the current results visually; it is a review bundle and **is not published in the Sceneology gallery**.
+
+The screenshots were rendered in automated Chrome software WebGL and verified by first-draw status. They do not replace using the interactive viewers or provide human approval. The gallery remains empty until an explicit owner selection, a genuine thumbnail, and a final approved card are established.
+
 ## Selection procedure
 
 1. The owner inspects any real viewer and explicitly identifies a particular artifact ID for the exhibition. No approval can be inferred from a technical test, an older project's acceptance, or appearance on this review list.
