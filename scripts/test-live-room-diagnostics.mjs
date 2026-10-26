@@ -14,7 +14,7 @@ assert.equal(manifest.scenes.length,4);
 assert.equal(manifest.artistic_approval,false);
 assert.equal(manifest.geometry_reconstructed,false);
 for(const scene of manifest.scenes)assert.ok(!gallery.approved_ids.includes(scene.id),"Room diagram incorrectly selected");
-const paths=["site/room-recovery.html","site/room-recovery.js","site/room-previews/manifest.json",...manifest.scenes.map(s=>s.svg)];
+const paths=["site/room-recovery.html","site/room-recovery.js","site/room-previews/manifest.json","site/room-attachment-fit-audit.json",...manifest.scenes.map(s=>s.svg)];
 async function exact(rel){
  let last;
  for(let trial=0;trial<5;trial++){
@@ -31,6 +31,13 @@ async function exact(rel){
  throw last;
 }
 for(const rel of paths)await exact(rel);
+const sourceFit=JSON.parse(fs.readFileSync(path.join(root,"site/room-attachment-fit-audit.json"),"utf8"));
+assert.equal(sourceFit.original_asset_binding_recovered,false);
+assert.equal(sourceFit.no_new_gallery_approval,true);
+assert.equal(sourceFit.lumbar_pillow.chair_candidates.length,3);
+assert.equal(sourceFit.lumbar_pillow.one_to_one_unscaled_fully_supported_by_any_candidate,false);
+assert.equal(sourceFit.bed_pillow.bed_candidates.filter(x=>x.original_bed_contains_embedded_pillow&&x.original_bed_contains_embedded_blanket).length,3);
+assert.equal(sourceFit.accepted_room_bedding_dependencies.length,2);
 const out=path.join(root,"artifacts/live-room-review");
 fs.mkdirSync(out,{recursive:true});
 const profile=fs.mkdtempSync(path.join(os.tmpdir(),"sceneology-room-review-"));
@@ -53,7 +60,7 @@ try{
  if(capture.error||capture.status!==0)throw Error("Live room screenshot failed");
  const png=fs.readFileSync(picture);
  assert.ok(png.length>5000&&png.subarray(0,8).toString("hex")==="89504e470d0a1a0a","No room screenshot");
- console.log("Room diagnostics: 4 rooms, 7 byte-identical live resources, actual Chrome DOM and screenshot, zero gallery changes.");
+ console.log("Room diagnostics: 4 rooms, 8 byte-identical live resources, staged source attachment-fit audit, actual Chrome DOM and screenshot, zero gallery changes.");
 }finally{
  fs.rmSync(profile,{recursive:true,force:true});
  fs.rmSync(profile+"-image",{recursive:true,force:true});
