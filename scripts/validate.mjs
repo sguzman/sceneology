@@ -99,6 +99,8 @@ await import("./build-reading-lumbar-placement.mjs");
 await import("./test-reading-lumbar-placement.mjs");
 await import("./build-room-variant-reduction.mjs");
 await import("./test-room-variant-reduction.mjs");
+await import("./build-room-shelf-content-audit.mjs");
+await import("./test-room-shelf-content-audit.mjs");
 
 await import("./build-room-diagnostics.mjs");
 await import("./test-room-diagnostics.mjs");
