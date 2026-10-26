@@ -1,0 +1,118 @@
+{
+  "schema_version": 1,
+  "id": "static-table-three-d",
+  "title": "Constructed table assembly",
+  "summary": "Synthetic three-dimensional composition fixture.",
+  "dimension": "3d",
+  "units": "m",
+  "frame": {
+    "width": 4,
+    "height": 3,
+    "depth": 4
+  },
+  "elements": [
+    {
+      "id": "floor",
+      "role": "environment",
+      "shape": "box",
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rotation": 0,
+        "opacity": 1,
+        "visible": true
+      },
+      "size": [
+        4,
+        0.1,
+        4
+      ],
+      "color": "#e0d5bc"
+    },
+    {
+      "id": "tabletop",
+      "role": "object",
+      "shape": "box",
+      "transform": {
+        "position": [
+          0,
+          1.2,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rotation": 0,
+        "opacity": 1,
+        "visible": true
+      },
+      "size": [
+        1.5,
+        0.1,
+        0.8
+      ],
+      "color": "#886743"
+    },
+    {
+      "id": "camera",
+      "role": "camera",
+      "shape": "none",
+      "transform": {
+        "position": [
+          0,
+          2,
+          3
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rotation": 0,
+        "opacity": 1,
+        "visible": true
+      }
+    }
+  ],
+  "relations": [
+    {
+      "subject_id": "tabletop",
+      "predicate": "supported-by",
+      "object_id": "floor"
+    }
+  ],
+  "constraints": [
+    {
+      "kind": "within-frame",
+      "subject_id": "tabletop",
+      "required": true
+    }
+  ],
+  "presentation": {
+    "background": "#e4edf0",
+    "draw_order": [
+      "floor",
+      "tabletop"
+    ],
+    "camera_id": "camera",
+    "style": {
+      "name": "neutral-construction"
+    }
+  },
+  "realization": {
+    "kind": "declarative-only",
+    "engine": "none",
+    "assets": [],
+    "notes": "No camera projection or renderer output is implied."
+  }
+}
