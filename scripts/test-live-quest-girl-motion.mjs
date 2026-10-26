@@ -47,6 +47,7 @@ try{
  assert.ok(/id="motion-stage"[^>]*data-clip="idle-soft"[^>]*data-rendered="true"/.test(dom),
   "Headless Chrome did not actually paint idle clip");
  assert.ok((dom.match(/<polygon /g)||[]).length>=70,"Motion player geometry missing");
+ assert.ok(!/<polygon[^>]*points="[^"]*(?:NaN|Infinity)/i.test(dom),"Animated polygons contain nonfinite projected coordinates");
  assert.ok(dom.includes("not aesthetic approval"),"Motion source review boundary omitted");
  assert.ok(!dom.includes("Unable to load character motion"),"Motion player load failed");
  const pngPath=path.join(output,"motion-desktop.png");

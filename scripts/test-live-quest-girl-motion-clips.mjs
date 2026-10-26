@@ -29,6 +29,7 @@ for(const id of clips){
   const time=Number(stage.match(/data-frame-time="([^"]+)"/)?.[1]);
   const faces=[...dom.matchAll(/<polygon [^>]*points="([^"]+)"/g)].map(match=>match[1]);
   assert.ok(Number.isFinite(time)&&time>0&&faces.length>=70,"Missing nonzero source-based character pose "+id);
+  assert.ok(faces.every(points=>!/(?:NaN|Infinity)/.test(points)),"Nonfinite browser-projected polygon in "+id);
   const hash=crypto.createHash("sha256").update(faces.join("|")).digest("hex");
   digests.add(hash);results.push({id,seconds:time,faces:faces.length,geometry_digest:hash});
  }finally{fs.rmSync(profile,{recursive:true,force:true});}
