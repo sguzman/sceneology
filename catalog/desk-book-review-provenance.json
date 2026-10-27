@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "status": "public-original-review-evidence-not-a-renderer-parity-certification",
+  "upstream_repository": "sguzman/scenarium",
+  "source_records": [
+    {
+      "source_path": "evaluations/block-chibi-book-family-v1.md",
+      "original_git_blob_sha": "308349385d8ae73002b197072afbdf0b7880e0c5",
+      "local_copy": "scenes/review-sources/block-chibi-book-family-v1.md",
+      "acceptance_scope": "original-family-pink-closed-desk-book-specimen-accepted",
+      "original_renderer_reconstruction_certified": false,
+      "new_preview_artistic_approval": false
+    },
+    {
+      "source_path": "evaluations/block-chibi-cozy-bedroom-study-v1.md",
+      "original_git_blob_sha": "6b402e87898d3df9a80497753a2da0a19d19585b",
+      "local_copy": "scenes/review-sources/block-chibi-cozy-bedroom-study-v1.md",
+      "acceptance_scope": "cozy-room-blue-closed-book-repair-accepted",
+      "original_renderer_reconstruction_certified": false,
+      "new_preview_artistic_approval": false
+    },
+    {
+      "source_path": "evaluations/block-chibi-study-corner-v1.md",
+      "original_git_blob_sha": "2e151b61e7b254eeb4b93545e0b9d9afbe7a9c0f",
+      "local_copy": "scenes/review-sources/block-chibi-study-corner-v1.md",
+      "acceptance_scope": "study-corner-v1-1-composition-and-clipping-repair-accepted",
+      "original_renderer_reconstruction_certified": false,
+      "new_preview_artistic_approval": false
+    }
+  ],
+  "facts": {
+    "pink_original_family_source_accepted": true,
+    "blue_closed_book_cozy_room_repair_accepted": true,
+    "study_corner_v1_1_final_art_accepted": true,
+    "pink_specimen_is_identical_to_blue_room_realization": false,
+    "exact_blue_room_mesh_source_recovered": false,
+    "original_attachment_transforms_recovered": false,
+    "no_new_artwork_approved": true
+  }
+}
