@@ -33,7 +33,12 @@ assert.equal(sourceReviews.facts.pink_original_family_source_accepted,true);
 assert.equal(sourceReviews.facts.blue_closed_book_cozy_room_repair_accepted,true);
 assert.equal(sourceReviews.facts.pink_specimen_is_identical_to_blue_room_realization,false);
 assert.equal(sourceReviews.facts.exact_blue_room_mesh_source_recovered,false);
-const resources=["site/room-proxy-review.html","site/room-proxy-review.js","site/room-proxy-review-data.json","site/family-orbit-data.json","site/room-variant-reduction.json","site/source-room-region-guide.mjs","site/room-attachment-fit-audit.json","site/bed-pillow-placement-research.json","site/desk-attachment-compatibility.json","catalog/desk-book-review-provenance.json"];
+const lamps=JSON.parse(fs.readFileSync(path.join(root,"catalog/lamp-review-provenance.json"),"utf8"));
+assert.deepEqual(lamps.reviews.map(x=>x.family_verdict),["failed","partial-not-baseline","accepted-family-baseline"]);
+assert.equal(lamps.original_historical_room_lamp_bindings_certified,false);
+assert.equal(lamps.local_light_transform_parity_certified,false);
+assert.equal(lamps.exact_accepted_power_control_implemented_in_research_viewer,false);
+const resources=["site/room-proxy-review.html","site/room-proxy-review.js","site/room-proxy-review-data.json","site/family-orbit-data.json","site/room-variant-reduction.json","site/source-room-region-guide.mjs","site/room-attachment-fit-audit.json","site/bed-pillow-placement-research.json","site/desk-attachment-compatibility.json","catalog/desk-book-review-provenance.json","catalog/lamp-review-provenance.json"];
 for(const relative of resources){
  let failure;
  for(let attempt=0;attempt<5;attempt++){
