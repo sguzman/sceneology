@@ -29,7 +29,8 @@ assert.match(content[2],/desk-book ordinary-book fidelity = IMPERFECT BUT NON-BL
 assert.equal(info.facts.pink_original_family_source_accepted,true);
 assert.equal(info.facts.blue_closed_book_cozy_room_repair_accepted,true);
 assert.equal(info.facts.study_corner_v1_1_final_art_accepted,true);
-assert.equal(info.facts.pink_specimen_is_identical_to_blue_room_realization,false);
+assert.equal(info.facts.pink_source_material_matches_blue_room_realization,false);
+assert.equal(info.facts.source_mesh_reuse_or_color_override_unknown,true);
 assert.equal(info.facts.exact_blue_room_mesh_source_recovered,false);
 assert.equal(info.facts.original_attachment_transforms_recovered,false);
 assert.equal(info.facts.no_new_artwork_approved,true);

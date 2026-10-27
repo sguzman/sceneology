@@ -32,9 +32,10 @@
     "pink_original_family_source_accepted": true,
     "blue_closed_book_cozy_room_repair_accepted": true,
     "study_corner_v1_1_final_art_accepted": true,
-    "pink_specimen_is_identical_to_blue_room_realization": false,
     "exact_blue_room_mesh_source_recovered": false,
     "original_attachment_transforms_recovered": false,
-    "no_new_artwork_approved": true
+    "no_new_artwork_approved": true,
+    "pink_source_material_matches_blue_room_realization": false,
+    "source_mesh_reuse_or_color_override_unknown": true
   }
 }

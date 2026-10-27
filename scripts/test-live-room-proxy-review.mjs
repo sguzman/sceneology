@@ -31,7 +31,8 @@ const sourceReviews=JSON.parse(fs.readFileSync(path.join(root,"catalog/desk-book
 assert.equal(sourceReviews.source_records.length,3);
 assert.equal(sourceReviews.facts.pink_original_family_source_accepted,true);
 assert.equal(sourceReviews.facts.blue_closed_book_cozy_room_repair_accepted,true);
-assert.equal(sourceReviews.facts.pink_specimen_is_identical_to_blue_room_realization,false);
+assert.equal(sourceReviews.facts.pink_source_material_matches_blue_room_realization,false);
+assert.equal(sourceReviews.facts.source_mesh_reuse_or_color_override_unknown,true);
 assert.equal(sourceReviews.facts.exact_blue_room_mesh_source_recovered,false);
 const lamps=JSON.parse(fs.readFileSync(path.join(root,"catalog/lamp-review-provenance.json"),"utf8"));
 assert.deepEqual(lamps.reviews.map(x=>x.family_verdict),["failed","partial-not-baseline","accepted-family-baseline"]);
