@@ -30,5 +30,11 @@ for(const a of d.attachments){
  for(const file of a.evidence_files)assert.ok(fs.existsSync(path.join(root,file)));
 }
 assert.equal(d.attachments.filter(x=>x.technical_parent_placement_proposal_exists).length,3);
-assert.equal(d.attachments.filter(x=>x.role==="bed-blanket"&&x.blockers.includes("accepted_blanket_v1_3_unrecovered")).length,2);
+assert.equal(d.distinct_technical_proposal_methods,2);
+const blanket=d.attachments.filter(x=>x.role==="bed-blanket");
+assert.equal(blanket.length,2);
+assert.equal(blanket.filter(x=>x.blockers.includes("explicit_accepted_blanket_v1_3_source_unrecovered")).length,1);
+assert.equal(blanket.filter(x=>x.blockers.includes("generic_bed_cover_alias_not_bound_to_exact_accepted_source")).length,1);
+assert.ok(blanket.some(x=>x.original_asset_alias.endsWith("blanket/bed-cover-v1.3")));
+assert.ok(blanket.some(x=>x.original_asset_alias.endsWith("blanket/bed-cover")));
 console.log("Sceneology source-bound parent status census passed: 13 source-unplaced objects and 3 opt-in, unapproved support studies; accepted gallery immutable.");

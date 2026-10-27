@@ -70,6 +70,11 @@ for(const room of initial){
   assert.equal(item.parent_relation,"on_"+item.parent_instance);
   const role=classOf(item);
   const files=evidence[role].files;
+  const blockers=role==="bed-blanket"?
+   (item.alias.endsWith("blanket/bed-cover-v1.3")?
+    ["explicit_accepted_blanket_v1_3_source_unrecovered","embedded_bedding_duplication_risk","historical_parent_transform_unknown"]:
+    ["generic_bed_cover_alias_not_bound_to_exact_accepted_source","embedded_bedding_duplication_risk","historical_parent_transform_unknown"]):
+   evidence[role].blockers;
   for(const f of files)assert.ok(fs.statSync(path.join(root,f)).isFile(),"Missing bounded source evidence "+f);
   const proposal=role==="bed-pillow"||role==="lumbar-pillow";
   counts[role]=(counts[role]||0)+1;
@@ -80,7 +85,7 @@ for(const room of initial){
    exact_accepted_asset_binding_certified:false,
    technical_parent_placement_proposal_exists:proposal,
    technical_proposal_artistically_approved:false,
-   blockers:evidence[role].blockers,evidence_files:files,role});
+   blockers,evidence_files:files,role});
  }
 }
 assert.equal(positioned,24);
@@ -91,6 +96,7 @@ assert.equal(proposed,3);
 const report={schema_version:1,status:"exact-source-four-room-attachment-recovery-census",
  historical_room_count:4,authored_world_positions:positioned,missing_explicit_parent_world_positions:details.length,
  technical_proposal_count:proposed,
+ distinct_technical_proposal_methods:2,
  original_accepted_parent_placements_certified:0,
  certified_historical_room_asset_bindings:0,
  new_artworks_approved:0,
