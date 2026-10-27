@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "source_repo": "sguzman/scenarium",
+  "acceptance_scope": "lamp-family-revision-only-not-original-room-bindings",
+  "original_historical_room_lamp_bindings_certified": false,
+  "local_light_transform_parity_certified": false,
+  "exact_accepted_power_control_implemented_in_research_viewer": false,
+  "revised_curation": false,
+  "reviews": [
+    {
+      "upstream_path": "evaluations/block-chibi-lamp-family-v1.md",
+      "blob_sha": "19d8461ab402762234acf2cd94677b4e79f8dac3",
+      "preserved_local_copy": "scenes/review-sources/block-chibi-lamp-family-v1.md",
+      "family_verdict": "failed"
+    },
+    {
+      "upstream_path": "evaluations/block-chibi-lamp-family-v1.1.md",
+      "blob_sha": "70d612d5a2f6366ca5d049085e65af55b4050f77",
+      "preserved_local_copy": "scenes/review-sources/block-chibi-lamp-family-v1.1.md",
+      "family_verdict": "partial-not-baseline"
+    },
+    {
+      "upstream_path": "evaluations/block-chibi-lamp-family-v1.2.md",
+      "blob_sha": "879e21e0930d0849f2ec2ea26efb76295dabee3d",
+      "preserved_local_copy": "scenes/review-sources/block-chibi-lamp-family-v1.2.md",
+      "family_verdict": "accepted-family-baseline"
+    }
+  ],
+  "repair_requirements": {
+    "use_flat_faced_taper_shading": true,
+    "task_lamp_head_opening_and_direction_agree": true,
+    "power_off_removes_emissive_and_local_light": true,
+    "downward_emission_local_axis": "-Y",
+    "source_review_is_not_live_reimplementation_proof": true
+  }
+}

@@ -114,6 +114,7 @@ await import("./test-bed-pillow-placement-research.mjs");
 await import("./build-desk-attachment-compatibility.mjs");
 await import("./test-desk-attachment-compatibility.mjs");
 await import("./test-desk-book-review-provenance.mjs");
+await import("./test-lamp-review-provenance.mjs");
 
 await import("./build-room-diagnostics.mjs");
 await import("./test-room-diagnostics.mjs");
