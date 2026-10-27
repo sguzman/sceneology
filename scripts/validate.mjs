@@ -115,6 +115,8 @@ await import("./build-desk-attachment-compatibility.mjs");
 await import("./test-desk-attachment-compatibility.mjs");
 await import("./test-desk-book-review-provenance.mjs");
 await import("./test-lamp-review-provenance.mjs");
+await import("./build-room-attachment-recovery-status.mjs");
+await import("./test-room-attachment-recovery-status.mjs");
 
 await import("./build-room-diagnostics.mjs");
 await import("./test-room-diagnostics.mjs");

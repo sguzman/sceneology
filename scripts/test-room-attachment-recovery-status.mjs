@@ -1,0 +1,34 @@
+import assert from "node:assert/strict";
+import fs from "node:fs";
+import path from "node:path";
+const root=path.resolve(import.meta.dirname,"..");
+const load=p=>JSON.parse(fs.readFileSync(path.join(root,p),"utf8"));
+const d=load("site/room-attachment-recovery-status.json"),gallery=load("catalog/showcase.json");
+assert.equal(d.schema_version,1);
+assert.equal(d.historical_room_count,4);
+assert.equal(d.authored_world_positions,24);
+assert.equal(d.missing_explicit_parent_world_positions,13);
+assert.equal(d.attachments.length,13);
+assert.equal(d.technical_proposal_count,3);
+assert.equal(d.original_accepted_parent_placements_certified,0);
+assert.equal(d.certified_historical_room_asset_bindings,0);
+assert.equal(d.new_artworks_approved,0);
+assert.equal(d.original_art_gallery_unchanged,true);
+assert.equal(d.source_uncertainties_must_not_be_turned_into_auto_bindings,true);
+assert.equal(gallery.approved_ids.length,24);
+assert.deepEqual(d.categories,{"bed-pillow":2,"bed-blanket":2,"desk-lamp":2,"desk-book":2,"shelf-books":4,"lumbar-pillow":1});
+const keys=new Set();
+for(const a of d.attachments){
+ assert.ok(!keys.has(a.room_id+"#"+a.original_instance));
+ keys.add(a.room_id+"#"+a.original_instance);
+ assert.equal(a.relation_source_derived,true);
+ assert.equal(a.original_world_transform_known,false);
+ assert.equal(a.exact_accepted_asset_binding_certified,false);
+ assert.equal(a.technical_proposal_artistically_approved,false);
+ assert.equal(a.source_relation,"on_"+a.exact_parent_instance);
+ assert.ok(a.blockers.length>0&&a.evidence_files.length>0);
+ for(const file of a.evidence_files)assert.ok(fs.existsSync(path.join(root,file)));
+}
+assert.equal(d.attachments.filter(x=>x.technical_parent_placement_proposal_exists).length,3);
+assert.equal(d.attachments.filter(x=>x.role==="bed-blanket"&&x.blockers.includes("accepted_blanket_v1_3_unrecovered")).length,2);
+console.log("Sceneology source-bound parent status census passed: 13 source-unplaced objects and 3 opt-in, unapproved support studies; accepted gallery immutable.");
